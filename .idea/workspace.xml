@@ -2,7 +2,70 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d54cf3c7-8c56-4209-a15f-13d0d0e0c8b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/deliveries/immaginevuota.bmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Adrenalized1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Adrenalized1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Adrenalized2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Adrenalized2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/AmmoCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/AmmoCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/AmmoTiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/AmmoTiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board1Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board1Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board2Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board2Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board3Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board3Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Board4Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Board4Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/ColorId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/ColorId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Death.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Death.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FRENZY.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/FRENZY.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/FactoryGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/FactoryGameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/GameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/JustAmmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/JustAmmo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Normal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Normal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/PointToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/PointToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/PowerAndAmmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/PowerAndAmmo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/SpawnPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/SpawnPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/StatePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/StatePlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/DoDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/DoDamage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/MarkTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/MarkTarget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/MoveTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/MoveTarget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/Newton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/Newton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/PowerupCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/PowerupCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/TagbackGranade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/TagbackGranade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/TargettingScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/TargettingScope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/power_up_cards/Teleporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/power_up_cards/Teleporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Cyberblade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Cyberblade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/DoDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/DoDamage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/EletroSchyte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/EletroSchyte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Flamethrower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Flamethrower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Furnace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Furnace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/GranadeLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/GranadeLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/HeatSeeker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/HeatSeeker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Hellion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Hellion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/LockRifle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/LockRifle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/MachineGun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/MachineGun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/MarkTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/MarkTarget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/MoveTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/MoveTarget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/MoveYourself.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/MoveYourself.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/PlasmaGun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/PlasmaGun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/PowerGlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/PowerGlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Railgun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Railgun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/RocketLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/RocketLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Shockwave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Shockwave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Shotgun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Shotgun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Sledgehammer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Sledgehammer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/T.H.O.R.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/T.H.O.R.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/TractorBeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/TractorBeam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/VortexCannon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/VortexCannon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/WeaponCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/WeaponCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/Whisper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/Whisper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/weapon_cards/ZX-2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/weapon_cards/ZX-2.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -17,23 +80,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
-              <caret line="90" selection-start-line="90" selection-end-line="90" />
-            </state>
-          </provider>
-          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+            <state relative-caret-position="170">
+              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -75,6 +135,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -85,14 +147,31 @@
             <path>
               <item name="ing-sw-2019-gallotti-gianchino-guidi" type="b2602c69:ProjectViewProjectNode" />
               <item name="ing-sw-2019-gallotti-gianchino-guidi" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2019-gallotti-gianchino-guidi" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -101,6 +180,9 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553117545143" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RunDashboard">
@@ -166,9 +248,9 @@
     <option name="totallyTimeSpent" value="4906000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26332623" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27458397" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -176,7 +258,7 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49924356" visible="true" weight="0.3289689" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -186,14 +268,14 @@
       <window_info anchor="bottom" id="SonarLint" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32936078" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5026652" side_tool="true" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49733475" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50075644" side_tool="true" visible="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49546143" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Maven" order="5" visible="true" weight="0.32995737" />
+      <window_info anchor="right" id="Maven" order="5" visible="true" weight="0.32980332" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" />
@@ -217,13 +299,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/a.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/a.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        <state relative-caret-position="34">
+          <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
         </state>
       </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polimi/deib/se2018/adrenalina/Model/Adrenalized1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
