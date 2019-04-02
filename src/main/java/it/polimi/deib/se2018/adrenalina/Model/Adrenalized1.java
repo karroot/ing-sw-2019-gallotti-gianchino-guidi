@@ -1,7 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
-
+//commento prova
 public class Adrenalized1 implements StatePlayer {
 
     public Adrenalized1() {
