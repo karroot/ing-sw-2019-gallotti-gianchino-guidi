@@ -1,13 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-/**
- * 
- */
+
 public interface StatePlayer {
 
-    /**
-     * 
-     */
     private Player state;
 
     /**
@@ -15,19 +10,13 @@ public interface StatePlayer {
      */
     public void runAround(unsigned int len);
 
-    /**
-     * 
-     */
+
     public void grabStuff();
 
-    /**
-     * 
-     */
+
     public void shootPeople();
 
-    /**
-     * 
-     */
+
     public void reload();
 
 }

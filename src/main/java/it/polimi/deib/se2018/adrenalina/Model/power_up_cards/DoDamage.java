@@ -2,14 +2,9 @@ package it.polimi.deib.se2018.adrenalina.Model.power_up_cards;
 
 import java.util.*;
 
-/**
- * 
- */
+
 public interface DoDamage {
 
-    /**
-     * 
-     */
     public void doDamage();
 
 }

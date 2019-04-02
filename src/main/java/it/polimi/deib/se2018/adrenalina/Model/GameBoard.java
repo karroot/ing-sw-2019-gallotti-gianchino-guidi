@@ -2,20 +2,15 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
 
-/**
- * 
- */
 public abstract class GameBoard {
 
-    /**
-     * Default constructor
-     */
+
     public GameBoard() {
     }
 
     /**
-     * Si usa un dizionario che ha come chiave il giocatore e come valore un'altra struttura dati che dice quale kill nel tracciato ha fatto e se ha fatto anche inferire.
-     */
+     We use a dictionary that has the player as key and as value
+     another data structure that tells us which kill on the track did and if it did.*/
     protected Map killshotTrack;
 
 
