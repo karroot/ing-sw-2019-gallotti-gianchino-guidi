@@ -7,7 +7,7 @@ public abstract class Square {
 
     protected ColorId color;
 
-    protected boolean[] side;
+    protected SideType[] side;
 
     protected int idSquare;
 
