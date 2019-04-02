@@ -5,5 +5,5 @@ public class SpawnPoint extends Square {
     public SpawnPoint() {
     }
 
-
+//comment for test
 }
