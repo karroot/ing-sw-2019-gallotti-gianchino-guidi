@@ -10,30 +10,30 @@ public class Player {
     public Player() {
     }
 
-    private ColourId color;
+    private ColorId color;
 
-    private unsigned int ammoYellow;
+    private int ammoYellow;
 
-    private unsigned int ammoRed;
+    private  int ammoRed;
 
-    private unsigned int ammoBlue;
+    private  int ammoBlue;
 
     private String name;
 
-    private String action-hero-comment;
+    private String action_hero_comment;
 
     private boolean isFirst;
 
-    private Colour[] damageCounter;
+    private Color[] damageCounter;
 
     /**
      * It has to be a 5x3 matrix
      */
-    private Colour[] markCounter;
+    private Color[] markCounter;
 
-    private unsigned int deathsCounter;
+    private int deathsCounter;
 
-    public unsigned int score;
+    public  int score;
 
 
 

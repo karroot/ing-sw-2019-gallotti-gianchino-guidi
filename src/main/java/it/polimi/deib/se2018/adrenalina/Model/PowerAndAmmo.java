@@ -1,13 +1,15 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerupCard;
+
 public class PowerAndAmmo extends AmmoTiles {
 
     public PowerAndAmmo() {
     }
 
-    private Colour singleAmmo;
+    private Color singleAmmo;
 
-    private Colour secondSingleAmmo;
+    private Color secondSingleAmmo;
 
     private PowerupCard powerUp;
 

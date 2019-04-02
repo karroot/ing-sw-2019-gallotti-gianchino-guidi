@@ -1,16 +1,14 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
-//commento prova
+
 public class Adrenalized1 implements StatePlayer {
 
     public Adrenalized1() {
     }
 
-    /**
-     * @param len
-     */
-    public void runAround(unsigned int len) {
+
+    public void runAround(int len) {
     }
     public void grabStuff() {
     }

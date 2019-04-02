@@ -13,7 +13,7 @@ public class Model {
      example: if it is 0 it means that it is the turn of the player who is in the first position of the array and so on.
      Increased when a round ends.
      */
-    private unsigned int round;
+    private  int round;
 
 
 

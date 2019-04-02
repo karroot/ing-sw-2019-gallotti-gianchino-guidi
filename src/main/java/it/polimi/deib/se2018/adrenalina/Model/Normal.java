@@ -12,7 +12,7 @@ public class Normal implements StatePlayer {
     /**
      * @param len
      */
-    public void runAround(unsigned int len)
+    public void runAround( int len)
     {
 
     }

@@ -9,7 +9,7 @@ public abstract class Square {
 
     protected boolean[] side;
 
-    protected unsigned int idSquare;
+    protected int idSquare;
 
 
 }

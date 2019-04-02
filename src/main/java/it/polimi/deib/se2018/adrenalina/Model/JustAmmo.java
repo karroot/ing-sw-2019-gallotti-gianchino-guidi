@@ -4,8 +4,8 @@ public class JustAmmo extends AmmoTiles {
 
     public JustAmmo() {
     }
-  private Colour singleAmmo;
+  private Color singleAmmo;
 
-    private Colour doubleAmmo;
+    private Color doubleAmmo;
 
 }
