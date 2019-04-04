@@ -1,19 +1,22 @@
 package it.polimi.deib.se2018.adrenalina.Model.weapon_cards;
 
+import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.Player;
+
 import java.util.*;
 
 public abstract class WeaponCard {
 
 
+    private Player player;
 
 
-
-    protected Colour color;
+    protected Color color;
 
     protected int idWP;
 
 
-    protected unsigned int[] ammoCost;
+    protected  int[] ammoCost;
 
     protected boolean isLoaded;
 

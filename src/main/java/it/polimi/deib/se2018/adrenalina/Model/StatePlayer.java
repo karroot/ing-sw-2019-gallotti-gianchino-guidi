@@ -3,12 +3,12 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 public interface StatePlayer {
 
-    private Player state;
+    public Player state;
 
     /**
      * @param len
      */
-    public void runAround(unsigned int len);
+    public void runAround( int len);
 
 
     public void grabStuff();

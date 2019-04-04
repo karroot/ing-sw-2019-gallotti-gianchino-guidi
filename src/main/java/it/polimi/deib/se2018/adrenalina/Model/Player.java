@@ -1,5 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerupCard;
+import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+
 import java.util.*;
 
 public class Player {
@@ -34,6 +37,12 @@ public class Player {
     private int deathsCounter;
 
     public  int score;
+
+    private Square square;
+
+    private List<PowerupCard> powerupCardList;
+
+    private List<WeaponCard> weaponCardList;
 
 
 

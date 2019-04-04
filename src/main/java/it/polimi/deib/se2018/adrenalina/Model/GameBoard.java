@@ -7,10 +7,10 @@ import java.util.*;
 
 public abstract class GameBoard {
 
-    Stack<WeaponCard> weaponCardStackeaponStack;
-    Stack<PowerupCard> powerupCardStack;
-    List<Room> roomList;
-
+    private Stack<WeaponCard> weaponCardStackeaponStack;
+    private Stack<PowerupCard> powerupCardStack;
+    private List<Room> roomList;
+    private List<Square> squareList;
 
     public GameBoard() {
     }
