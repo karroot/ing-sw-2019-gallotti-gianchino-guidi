@@ -2,10 +2,9 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
 
-public class Model {
+public class Model
+{
 
-    public Model() {
-    }
 
     /**
      we use it as a counter to access the player array.
@@ -16,19 +15,26 @@ public class Model {
     private  int round;
 
 
-
-
-    public void seePlayer() {
-
-    }
-
-
-    public void movePlayer() {
+    public Model()
+    {
 
     }
 
 
-    public void shoot() {
+    public void seePlayer()
+    {
+
+    }
+
+
+    public void movePlayer()
+    {
+
+    }
+
+
+    public void shoot()
+    {
 
     }
 

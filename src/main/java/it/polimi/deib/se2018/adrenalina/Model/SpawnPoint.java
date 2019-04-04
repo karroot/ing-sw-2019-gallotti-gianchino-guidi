@@ -1,9 +1,12 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-public class SpawnPoint extends Square {
+public class SpawnPoint extends Square
+{
 
-    public SpawnPoint() {
+
+    public SpawnPoint()
+    {
+
     }
 
-//comment for test 2
 }

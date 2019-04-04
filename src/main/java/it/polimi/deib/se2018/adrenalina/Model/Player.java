@@ -5,13 +5,9 @@ import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
 import java.util.*;
 
-public class Player {
+public class Player
+{
 
-    /**
-     * Default constructor
-     */
-    public Player() {
-    }
 
     private ColorId color;
 
@@ -45,18 +41,25 @@ public class Player {
     private List<WeaponCard> weaponCardList;
 
 
+    public Player()
+    {
 
-
-
-
-
-    public void getWeapon() {
     }
 
-    public void getPowerUp() {
+
+    public void getWeapon()
+    {
+
     }
 
-    public void usePowerUp() {
+    public void getPowerUp()
+    {
+
+    }
+
+    public void usePowerUp()
+    {
+
     }
 
 }

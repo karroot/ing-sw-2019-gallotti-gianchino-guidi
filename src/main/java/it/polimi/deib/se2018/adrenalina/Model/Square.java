@@ -2,10 +2,12 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.List;
 
-public abstract class Square {
+public abstract class Square
+{
 
-    public Square() {
-    }
+    private List<Player> playerList;
+
+    private GameBoard gameBoard;
 
     protected ColorId color;
 
@@ -13,9 +15,13 @@ public abstract class Square {
 
     protected int idSquare;
 
-    private List<Player> playerList;
 
-    private GameBoard gameBoard;
+    public Square()
+    {
+
+    }
+
+
 
 
 }

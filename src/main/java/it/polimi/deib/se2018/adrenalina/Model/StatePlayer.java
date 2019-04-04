@@ -1,13 +1,10 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 
-public interface StatePlayer {
+public interface StatePlayer
+{
 
-    public Player state;
 
-    /**
-     * @param len
-     */
     public void runAround( int len);
 
 

@@ -7,10 +7,18 @@ import java.util.*;
 
 public abstract class GameBoard {
 
+
     private Stack<WeaponCard> weaponCardStackeaponStack;
+
     private Stack<PowerupCard> powerupCardStack;
+
     private List<Room> roomList;
+
     private List<Square> squareList;
+
+    protected Map killshotTrack;
+
+
 
     public GameBoard() {
     }
@@ -18,7 +26,6 @@ public abstract class GameBoard {
     /**
      We use a dictionary that has the player as key and as value
      another data structure that tells us which kill on the track did and if it did.*/
-    protected Map killshotTrack;
 
     //todo grafo
 

@@ -1,7 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 
-public class Normal implements StatePlayer {
+public class Normal implements StatePlayer
+{
 
 
     public Normal()
@@ -9,9 +10,7 @@ public class Normal implements StatePlayer {
 
     }
 
-    /**
-     * @param len
-     */
+
     public void runAround( int len)
     {
 
@@ -22,10 +21,14 @@ public class Normal implements StatePlayer {
 
     }
 
-    public void shootPeople() {
+    public void shootPeople()
+    {
+
     }
 
-    public void reload() {
+    public void reload()
+    {
+
     }
 
 }

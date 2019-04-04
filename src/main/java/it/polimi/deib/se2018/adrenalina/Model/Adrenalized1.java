@@ -2,19 +2,33 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
 
-public class Adrenalized1 implements StatePlayer {
-
-    public Adrenalized1() {
-    }
+public class Adrenalized1 implements StatePlayer
+{
 
 
-    public void runAround (int len) {
+    public Adrenalized1()
+    {
+
     }
-    public void grabStuff() {
+
+    public void runAround (int len)
+    {
+
     }
-    public void shootPeople() {
+
+    public void grabStuff()
+    {
+
     }
-    public void reload() {
+
+    public void shootPeople()
+    {
+
+    }
+
+    public void reload()
+    {
+
     }
 
 }
