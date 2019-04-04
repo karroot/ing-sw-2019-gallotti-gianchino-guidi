@@ -5,17 +5,22 @@ import java.util.*;
 /**
  * 
  */
-public class Shotgun extends WeaponCard implements DoDamage, MarkTarget {
+public class Shotgun extends WeaponCard implements DoDamage, MarkTarget
+{
 
 
-    public Shotgun() {
+    public Shotgun()
+    {
+
     }
 
-    public void doDamage() {
+    public void doDamage()
+    {
 
     }
 
-    public void markTarget() {
+    public void markTarget()
+    {
 
     }
 

@@ -2,11 +2,11 @@ package it.polimi.deib.se2018.adrenalina.Model.weapon_cards;
 
 import java.util.*;
 
-public class MachineGun extends WeaponCard implements DoDamage, MoveTarget
+public class ZX2 extends WeaponCard implements DoDamage, MarkTarget
 {
 
 
-    public MachineGun()
+    public ZX2()
     {
 
     }
@@ -16,7 +16,7 @@ public class MachineGun extends WeaponCard implements DoDamage, MoveTarget
 
     }
 
-    public void moveTarget()
+    public void markTarget()
     {
 
     }

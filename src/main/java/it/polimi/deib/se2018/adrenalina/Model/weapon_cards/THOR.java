@@ -2,11 +2,12 @@ package it.polimi.deib.se2018.adrenalina.Model.weapon_cards;
 
 import java.util.*;
 
-public class Flamethrower extends WeaponCard implements DoDamage
+
+public class THOR extends WeaponCard implements DoDamage
 {
 
 
-    public Flamethrower()
+    public THOR()
     {
 
     }
@@ -15,5 +16,4 @@ public class Flamethrower extends WeaponCard implements DoDamage
     {
 
     }
-
 }
