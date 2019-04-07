@@ -38,4 +38,8 @@ public class Model
 
     }
 
+    public void replaceEntity ()
+    {
+
+    }
 }
