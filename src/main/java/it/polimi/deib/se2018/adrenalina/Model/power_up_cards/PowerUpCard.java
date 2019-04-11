@@ -6,7 +6,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 
-public abstract class PowerupCard
+public abstract class PowerUpCard
 {
 
 
@@ -16,7 +16,7 @@ public abstract class PowerupCard
 
     protected int idPU;
 
-    public PowerupCard()
+    public PowerUpCard()
     {
 
     }

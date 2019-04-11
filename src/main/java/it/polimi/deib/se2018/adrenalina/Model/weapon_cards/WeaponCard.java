@@ -5,8 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
 
-public abstract class WeaponCard
-{
+public abstract class WeaponCard extends Stack<WeaponCard> {
 
     String name;
 
