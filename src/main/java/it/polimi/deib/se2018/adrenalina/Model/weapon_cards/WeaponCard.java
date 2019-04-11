@@ -8,6 +8,7 @@ import java.util.*;
 public abstract class WeaponCard
 {
 
+    String name;
 
     private Player player;
 
@@ -31,4 +32,8 @@ public abstract class WeaponCard
 
     }
 
+    public String getName()
+    {
+        return name;
+    }
 }

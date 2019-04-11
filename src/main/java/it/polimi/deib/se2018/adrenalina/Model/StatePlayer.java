@@ -16,4 +16,6 @@ public interface StatePlayer
 
     public void reload();
 
+
+
 }

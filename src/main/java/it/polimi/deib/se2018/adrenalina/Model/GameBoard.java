@@ -16,6 +16,8 @@ public abstract class GameBoard {
 
     private List<Square> squareList;
 
+
+    //Rep
     protected Map killshotTrack;
 
 
