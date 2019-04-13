@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
@@ -16,7 +17,7 @@ public abstract class GameBoard {
 
     private List<Room> roomList;
 
-    private Map arena; // remember to change in UML
+    private Graph arena; // remember to change in UML
 
     /**
      * Create the GameBoard with its parameters
@@ -26,7 +27,7 @@ public abstract class GameBoard {
      * @param arena Map of the arena
      * @param killshotTrack
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, List<Room> roomList, Map arena, Map killshotTrack) {
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, List<Room> roomList, Graph arena, Map killshotTrack) {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
         this.roomList = roomList;
@@ -41,11 +42,13 @@ public abstract class GameBoard {
 
     //Getter
     //-----------------------------
-    public List<Room> getRoomList() {
+    public List<Room> getRoomList()
+    {
         return roomList;
     }
 
-    public Map getArena() {
+    public Graph getArena()
+    {
         return arena;
     }
 
@@ -83,7 +86,8 @@ public abstract class GameBoard {
      * It set the PowerUp card stack when it gets empty
      * @param powerUpCardStack The new deck that fill the stack
      */
-    public void setPowerUpCardStack(Stack<PowerUpCard> powerUpCardStack) {
+    public void setPowerUpCardStack(Stack<PowerUpCard> powerUpCardStack)
+    {
         this.powerUpCardStack = powerUpCardStack;
     }
 

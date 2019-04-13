@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model.graph;
 
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -8,14 +9,13 @@ import java.util.stream.Collectors;
 /**
  * @author Cysko7927
  * Implements a graph of Square
- * Class immutable
  */
 public class Graph
 {
     private Map<Square, List<Edge>> adjacencyList; //adjacency list of the graph
 
     /**
-     *
+     *It initializes a graph with an adjacency List already done before
      * @param adjacencyList Is the adjacency list inherited from another graph
      */
     public Graph(Map<Square, List<Edge>> adjacencyList)
@@ -57,13 +57,14 @@ public class Graph
     }
 
     /**
-     * Returns the square with coordinate x and y if is present else it returns null
+     * Returns the square with coordinate x and y if is present else it executes an exception
      * It do the translation from coordinates to reference of square
      * @param x Coordinate x of the square to find
      * @param y Coordinate y of square to find
      * @return Square with coordinate x and y
+     * @exception SquareNotInGameBoard is Executed if the square with coordinate x and y is not in the graph
      */
-    public Square getSquare(int x,int y)
+    public Square getSquare(int x,int y) throws SquareNotInGameBoard
     {
         Set<Square> temp = adjacencyList.keySet(); //obtain the set of all squares
         Square squareFounded = null;
@@ -74,18 +75,19 @@ public class Graph
                 squareFounded = x1;
         }
 
+        if (squareFounded == null) //If square hasn't been founded signals it with the exception
+            throw new SquareNotInGameBoard("Square with x ="+ x +" y = " + y + "isn't in the game board");
+
         return squareFounded;
 
     }
-
-
-    //Inserire l'operazione inversa di traduzione dal puntatore alle cordinate
 
 
 
     /**
      *Returns a set of all square that can be reached starting from the square with
      * coordinates x and y through a door or not but no through a wall that are to certain distance
+     * If the coordinate are wrong it returns an empty set
      * It do a BFS modified
      * @param x coordinate x  of starting square
      * @param y coordinate y of starting square
@@ -96,7 +98,18 @@ public class Graph
     {
         //N.B this algorithm works because each square has at least a link of type free or port
 
-        Square start = getSquare(x,y); //obtain starting square
+        Square start = null;
+
+        try
+        {
+            start = getSquare(x,y); //obtain starting square
+        }
+        catch (SquareNotInGameBoard e) //If square is not in the graph
+        {
+            System.err.println(e.toString()); //Signal that x and y are wrong
+            return  new HashSet<>(); //Return an empty Set
+        }
+
         Set<Square> squares = new HashSet<>(); //Create a set empty
 
 

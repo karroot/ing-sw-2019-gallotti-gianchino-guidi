@@ -1,7 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 import it.polimi.deib.se2018.adrenalina.Model.Death;
 
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerupCard;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
 import java.util.*;
@@ -49,7 +49,7 @@ public class Player
 
     private Square square;
 
-    private List<PowerupCard> powerupCardList; //Array of the powerUps
+    private List<PowerUpCard> powerupCardList; //Array of the powerUps
 
     private List<WeaponCard> weaponCardList; //Array of weapons
 
@@ -222,7 +222,7 @@ public class Player
      * Add a power up card in player's deck
      * @param powerupCard power up card to add
      */
-    public void getPowerUp(PowerupCard powerupCard)
+    public void getPowerUp(PowerUpCard powerupCard)
     {
         powerupCardList.add(powerupCard);
     }
@@ -232,9 +232,9 @@ public class Player
      * @param indexDeckCard index of card power up that has been used
      * @return card power up that has been used
      */
-    public PowerupCard usePowerUp(int indexDeckCard)
+    public PowerUpCard usePowerUp(int indexDeckCard)
     {
-        PowerupCard temp = powerupCardList.get(indexDeckCard);
+        PowerUpCard temp = powerupCardList.get(indexDeckCard);
 
         powerupCardList.remove(indexDeckCard);
 

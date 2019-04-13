@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Square
@@ -13,7 +14,7 @@ public abstract class Square
 
     private GameBoard gameBoard;
 
-    protected ColorId color;
+    protected ColorRoom color;
 
     protected SideType[] side;
 
@@ -25,7 +26,8 @@ public abstract class Square
      * @param color //Color of the room that contains the square
      * @param side //Defines what are the different side of the square
      */
-    public Square(int x, int y, GameBoard gameBoard, ColorId color, SideType[] side) {
+    public Square(int x, int y, GameBoard gameBoard, ColorRoom color, SideType[] side)
+    {
         this.x = x;
         this.y = y;
         this.gameBoard = gameBoard;
@@ -54,7 +56,7 @@ public abstract class Square
         return gameBoard;
     }
 
-    public ColorId getColor()
+    public ColorRoom getColor()
     {
         return color;
     }
@@ -82,5 +84,18 @@ public abstract class Square
     {
         if (playerList.contains(player)) //If player there is in the players' list
             playerList.remove(player);//Remove player in players' list
+    }
+
+
+    //AF
+
+    @Override
+    public String toString()
+    {
+        return "Square{" +
+                ", x=" + x +
+                ", y=" + y +
+                ", color=" + color +
+                '}';
     }
 }

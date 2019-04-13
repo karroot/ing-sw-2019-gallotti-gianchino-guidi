@@ -34,4 +34,14 @@ public class Edge
     public Square getNextNode() {
         return nextNode;
     }
+
+    //AF
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "flag=" + flag +
+                ", nextNode=" + nextNode +
+                '}';
+    }
 }
