@@ -38,6 +38,8 @@ public abstract class GameBoard {
 
     private Graph arena; // remember to change in UML
 
+
+    //Rep of kill Shoot track
     private int skullCounter;
 
     private List<Track> killShotTrack;

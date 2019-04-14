@@ -5,7 +5,7 @@ public interface StatePlayer
 {
 
 
-    public void runAround( int len);
+    public void runAround(int len);
 
 
     public void grabStuff();

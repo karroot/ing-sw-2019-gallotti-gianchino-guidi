@@ -11,7 +11,7 @@ public class Normal implements StatePlayer
     }
 
 
-    public void runAround( int len)
+    public void runAround(int len)
     {
 
     }
