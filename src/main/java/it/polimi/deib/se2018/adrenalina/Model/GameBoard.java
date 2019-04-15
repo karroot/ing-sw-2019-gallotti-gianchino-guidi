@@ -107,15 +107,18 @@ public abstract class GameBoard {
         }
     }
 
-    public Stack<AmmoTiles> getAmmoTilesStack() {
+    public Stack<AmmoTiles> getAmmoTilesStack()
+    {
         return ammoTilesStack;
     }
 
-    public int getSkullCounter() {
+    public int getSkullCounter()
+    {
         return skullCounter;
     }
 
-    public List<Track> getKillShotTrack() {
+    public List<Track> getKillShotTrack()
+    {
         return killShotTrack;
     }
 
@@ -134,15 +137,17 @@ public abstract class GameBoard {
 
 
     /**
-     * it reduce the counter of skull when a player die
+     * it reduces the counter of skull when a player die
      * @param skullCounter
      */
-    public void setSkullCounter(int skullCounter) {
+    public void setSkullCounter(int skullCounter)
+    {
         this.skullCounter = skullCounter;
     }
 
 
-    public void setKillShotTrack( ColorId player, int counter) {
+    public void setKillShotTrack( ColorId player, int counter)
+    {
         this.killShotTrack.add(new Track(player,counter));
     }
 

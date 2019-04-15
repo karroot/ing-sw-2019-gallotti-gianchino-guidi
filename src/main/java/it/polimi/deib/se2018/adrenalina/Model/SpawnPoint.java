@@ -30,8 +30,9 @@ public class SpawnPoint extends Square
         return weaponCardList;
     }
 
-    /*
-    It removes the chosenweapon from the eeaponCardList and it returns it
+    /**
+    * It removes the chosenweapon from the weaponCardList and it returns it
+    * @param chosenWeapon is the weapon we will get
      */
     public WeaponCard getWeapon (WeaponCard chosenWeapon)
     {
@@ -39,9 +40,11 @@ public class SpawnPoint extends Square
         return chosenWeapon;
     }
 
-    /*
-    Swap the selected weapon the player has with a new one.
-    It returns the new weapon chosen.
+    /**
+    * Swap the selected weapon the player has with a new one.
+    * It returns the new weapon chosen.
+    * @param chosenNewWeapon is the weapon we will get
+     * @param chosenOldWeapon is the weapon we will drom on the board
      */
     public WeaponCard swapWeapon (WeaponCard chosenNewWeapon, WeaponCard chosenOldWeapon)
     {
@@ -51,7 +54,7 @@ public class SpawnPoint extends Square
     }
 
 
-    /*
+    /**
     pops a new weapon from the gameboard weapon stack and add it to the list of this spawn
      */
     public void addNewWeapon ()
