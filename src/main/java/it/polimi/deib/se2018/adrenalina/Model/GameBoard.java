@@ -8,8 +8,21 @@ import java.util.*;
 
 public abstract class GameBoard {
 
+    class Track
+    {
+        private ColorId player;
+        private int  pointCounter;
+        public Track(ColorId player,int pointCounter){
+            this.player=player;
+            this.pointCounter=pointCounter;
+
+        }
+
+    };
 
     private Stack<WeaponCard> weaponCardStack;
+
+    private Stack<AmmoTiles> ammoTilesStack;
 
 
 
@@ -19,21 +32,29 @@ public abstract class GameBoard {
 
     private Graph arena; // remember to change in UML
 
+    //Rep of kill Shoot track
+    private int skullCounter;
+
+    private List<Track> killShotTrack;
+
+
     /**
      * Create the GameBoard with its parameters
      * @param weaponCardStack Stack of Weapon cards
      * @param powerUpCardStack Stack of PowerUp cards
      * @param roomList list of room
      * @param arena Map of the arena
-     * @param killshotTrack
+     * @param skullCounter counter of the skull on board
+     * @param ammoTilesStack Stack of ammo Cards
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, List<Room> roomList, Graph arena, Map killshotTrack)
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, List<Room> roomList, Graph arena, int skullCounter,Stack<AmmoTiles> ammoTilesStack)
     {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
         this.roomList = roomList;
         this.arena = arena;
-        this.killshotTrack = killshotTrack; // structure must change
+        this.ammoTilesStack=ammoTilesStack;
+        this.skullCounter=skullCounter;
     }
 
     //Rep
@@ -86,6 +107,19 @@ public abstract class GameBoard {
         }
     }
 
+    public Stack<AmmoTiles> getAmmoTilesStack() {
+        return ammoTilesStack;
+    }
+
+    public int getSkullCounter() {
+        return skullCounter;
+    }
+
+    public List<Track> getKillShotTrack() {
+        return killShotTrack;
+    }
+
+
     //Setter
     //-----------------------------
 
@@ -99,7 +133,18 @@ public abstract class GameBoard {
     }
 
 
+    /**
+     * it reduce the counter of skull when a player die
+     * @param skullCounter
+     */
+    public void setSkullCounter(int skullCounter) {
+        this.skullCounter = skullCounter;
+    }
 
+
+    public void setKillShotTrack( ColorId player, int counter) {
+        this.killShotTrack.add(new Track(player,counter));
+    }
 
 
     //---------------------------
