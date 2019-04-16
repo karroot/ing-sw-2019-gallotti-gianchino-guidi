@@ -34,6 +34,10 @@ public class Room
         return playerRoomList;
     }
 
+    /**
+     * getter of the board
+     * @return the gameboard
+     */
     public GameBoard getGameBoard()
     {
         return gameBoard;

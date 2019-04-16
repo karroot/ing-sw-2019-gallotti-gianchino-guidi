@@ -7,6 +7,11 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 public class View
 {
 
+    /*
+    Questa è la virtual view.
+
+    NB gestisce i turni
+     */
 
     private ColorId playerOfRound;
 

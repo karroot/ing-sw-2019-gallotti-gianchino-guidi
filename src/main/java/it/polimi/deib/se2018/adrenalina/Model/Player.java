@@ -85,51 +85,63 @@ public class Player
 
     //Getter
     //-----------------------------
-    public ColorId getColor() {
+    public ColorId getColor()
+    {
         return color;
     }
 
-    public int getAmmoYellow() {
+    public int getAmmoYellow()
+    {
         return ammoYellow;
     }
 
-    public int getAmmoRed() {
+    public int getAmmoRed()
+    {
         return ammoRed;
     }
 
-    public int getAmmoBlue() {
+    public int getAmmoBlue()
+    {
         return ammoBlue;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public String getAction_hero_comment() {
+    public String getAction_hero_comment()
+    {
         return action_hero_comment;
     }
 
-    public boolean isFirst() {
+    public boolean isFirst()
+    {
         return isFirst;
     }
 
-    public ColorId[] getDamageCounter() {
+    public ColorId[] getDamageCounter()
+    {
         return damageCounter;
     }
 
-    public int getDeathsCounter() {
+    public int getDeathsCounter()
+    {
         return deathsCounter;
     }
 
-    public int getScore() {
+    public int getScore()
+    {
         return score;
     }
 
-    public Square getSquare() {
+    public Square getSquare()
+    {
         return square;
     }
 
-    public int getLast() {
+    public int getLast()
+    {
         return last;
     }
 
@@ -138,36 +150,44 @@ public class Player
     //Setter
     //------------------------
 
-    public void setLast(int last) {
+    public void setLast(int last)
+    {
         this.last = last;
     }
 
 
-    public void setAmmoYellow(int ammoYellow) {
+    public void setAmmoYellow(int ammoYellow)
+    {
         this.ammoYellow = ammoYellow;
     }
 
-    public void setAmmoRed(int ammoRed) {
+    public void setAmmoRed(int ammoRed)
+    {
         this.ammoRed = ammoRed;
     }
 
-    public void setAmmoBlue(int ammoBlue) {
+    public void setAmmoBlue(int ammoBlue)
+    {
         this.ammoBlue = ammoBlue;
     }
 
-    public void setState(StatePlayer state) {
+    public void setState(StatePlayer state)
+    {
         this.state = state;
     }
 
-    public void setDeathsCounter(int deathsCounter) {
+    public void setDeathsCounter(int deathsCounter)
+    {
         this.deathsCounter = deathsCounter;
     }
 
-    public void setScore(int score) {
+    public void setScore(int score)
+    {
         this.score = score;
     }
 
-    public void setSquare(Square square) {
+    public void setSquare(Square square)
+    {
         this.square = square;
     }
 
@@ -222,7 +242,7 @@ public class Player
      * Add a power up card in player's deck
      * @param powerupCard power up card to add
      */
-    public void getPowerUp(PowerUpCard powerupCard)
+    public void addPowerUp(PowerUpCard powerupCard)
     {
         powerupCardList.add(powerupCard);
     }

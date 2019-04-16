@@ -1,6 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-public class JustAmmo extends AmmoTiles
+public class JustAmmo implements AmmoTiles
 {
 // nella funzione che genera gameboard chiami costruttore 36 volte con id diverso
 
@@ -21,6 +21,41 @@ public class JustAmmo extends AmmoTiles
         this.doubleAmmo=doubleAmmo;
 
 
+    }
+
+    /**
+     * This methos will be implemented in the classes JustAmmo and PowerAndAmmo.
+     * It will add the ammos and the powerup card to the player.
+     * @param player is the player that will use the AmmoTile card
+     */
+    @Override
+    public void useAmmoTilesCards(Player player) {
+
+        if (singleAmmo == Color.RED)
+        {
+            player.setAmmoRed(player.getAmmoRed()+1);
+        }
+        else if (singleAmmo == Color.YELLOW)
+        {
+            player.setAmmoYellow(player.getAmmoYellow()+1);
+        }
+        else if (singleAmmo == Color.BLUE)
+        {
+            player.setAmmoBlue(player.getAmmoBlue()+1);
+        }
+
+        if (doubleAmmo == Color.RED)
+        {
+            player.setAmmoRed(player.getAmmoRed()+2);
+        }
+        else if (doubleAmmo == Color.YELLOW)
+        {
+            player.setAmmoYellow(player.getAmmoYellow()+2);
+        }
+        else if (doubleAmmo == Color.BLUE)
+        {
+            player.setAmmoBlue(player.getAmmoBlue()+2);
+        }
     }
 
 

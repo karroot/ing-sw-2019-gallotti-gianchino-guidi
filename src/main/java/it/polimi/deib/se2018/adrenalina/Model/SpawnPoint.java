@@ -44,7 +44,7 @@ public class SpawnPoint extends Square
     * Swap the selected weapon the player has with a new one.
     * It returns the new weapon chosen.
     * @param chosenNewWeapon is the weapon we will get
-     * @param chosenOldWeapon is the weapon we will drom on the board
+     * @param chosenOldWeapon is the weapon we will drop on the board
      */
     public WeaponCard swapWeapon (WeaponCard chosenNewWeapon, WeaponCard chosenOldWeapon)
     {

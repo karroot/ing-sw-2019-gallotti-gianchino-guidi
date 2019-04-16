@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 
-public class PowerAndAmmo extends AmmoTiles
+public class PowerAndAmmo implements AmmoTiles
 {
     /*
     This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
@@ -26,6 +26,44 @@ public class PowerAndAmmo extends AmmoTiles
         this.singleAmmo=singleAmmo;
         this.secondSingleAmmo=secondSingleAmmo;
 
+    }
+
+    /**
+     * This methos will be implemented in the classes JustAmmo and PowerAndAmmo.
+     * It will add the ammos and the powerup card to the player.
+     *
+     * @param player is the player that will use the AmmoTile card
+     */
+    @Override
+    public void useAmmoTilesCards(Player player) {
+
+        if (singleAmmo == Color.RED)
+        {
+            player.setAmmoRed(player.getAmmoRed()+1);
+        }
+        else if (singleAmmo == Color.YELLOW)
+        {
+            player.setAmmoYellow(player.getAmmoYellow()+1);
+        }
+        else if (singleAmmo == Color.BLUE)
+        {
+            player.setAmmoBlue(player.getAmmoBlue()+1);
+        }
+
+        if (secondSingleAmmo == Color.RED)
+        {
+            player.setAmmoRed(player.getAmmoRed()+1);
+        }
+        else if (secondSingleAmmo == Color.YELLOW)
+        {
+            player.setAmmoYellow(player.getAmmoYellow()+1);
+        }
+        else if (secondSingleAmmo == Color.BLUE)
+        {
+            player.setAmmoBlue(player.getAmmoBlue()+1);
+        }
+
+        //todo player.addPowerUp();
     }
 
 
