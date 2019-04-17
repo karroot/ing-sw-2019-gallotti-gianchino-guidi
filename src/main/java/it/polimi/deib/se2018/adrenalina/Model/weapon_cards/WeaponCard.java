@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
 
-public abstract class WeaponCard extends Stack<WeaponCard> {
+public abstract class WeaponCard {
 
     String name;
 
@@ -13,7 +13,7 @@ public abstract class WeaponCard extends Stack<WeaponCard> {
 
     protected Color color;
 
-    protected int idWP;
+    protected int weaponID;
 
     protected  int[] ammoCost;
 

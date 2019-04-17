@@ -2,11 +2,17 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.*;
 
+/**
+ * This interfale will be extended by the classes JustAmmo and PowerAndAmmo.
+ *
+ * @author giovanni
+ */
+
 public interface AmmoTiles
 {
     /**
-     * This methos will be implemented in the classes JustAmmo and PowerAndAmmo.
-     * It will add the ammos and the powerup card to the player.
+     * This public method that uses the ammoTile card will be overrided by the classes JustAmmo and PowerAndAmmo.
+     *
      * @param player is the player that will use the AmmoTile card
      */
     public void useAmmoTilesCards (Player player);

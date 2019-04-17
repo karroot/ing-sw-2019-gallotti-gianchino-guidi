@@ -2,16 +2,29 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 
+/**
+ * This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
+ *  Todo: when we use this we must remeber to call the drawPowerUp action
+ *
+ * @author giovanni
+ */
+
 public class PowerAndAmmo implements AmmoTiles
 {
     /*
-    This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
-    Todo: when we use this we must remeber to call the drawPowerUp action
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      */
     private int ammoCardID;
     private Color singleAmmo;
     private Color secondSingleAmmo;
-    //private PowerUpCard powerUpCard; NB we do not use this but we must drew a powerup card when we drew this card
+    //private PowerUpCard powerUpCard; NB we do not use this but we must draw a powerup card when we draw this card
 
 
     /**
@@ -36,6 +49,8 @@ public class PowerAndAmmo implements AmmoTiles
      */
     @Override
     public void useAmmoTilesCards(Player player) {
+        // The logic behind the method is the following: I check in the order RED, YELLOW, BLUE if the color matches the attribute of the class.
+        // If it matches I will ++ the same color attribute the the player ammostack.
 
         if (singleAmmo == Color.RED)
         {
@@ -49,6 +64,8 @@ public class PowerAndAmmo implements AmmoTiles
         {
             player.setAmmoBlue(player.getAmmoBlue()+1);
         }
+
+        // I repeat the same logic for the second ammo of the class.
 
         if (secondSingleAmmo == Color.RED)
         {

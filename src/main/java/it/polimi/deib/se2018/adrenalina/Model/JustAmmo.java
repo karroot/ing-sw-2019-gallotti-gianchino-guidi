@@ -24,12 +24,15 @@ public class JustAmmo implements AmmoTiles
     }
 
     /**
-     * This methos will be implemented in the classes JustAmmo and PowerAndAmmo.
+     * This method will be implemented in the classes JustAmmo and PowerAndAmmo.
      * It will add the ammos and the powerup card to the player.
      * @param player is the player that will use the AmmoTile card
      */
     @Override
     public void useAmmoTilesCards(Player player) {
+
+        // The logic behind the method is the following: I check in the order RED, YELLOW, BLUE if the color matches the attribute of the class.
+        // If it matches I will ++ the same color attribute the the player ammostack.
 
         if (singleAmmo == Color.RED)
         {
@@ -43,6 +46,8 @@ public class JustAmmo implements AmmoTiles
         {
             player.setAmmoBlue(player.getAmmoBlue()+1);
         }
+
+        // I repeat the same logic for the second pair of ammo of the class.
 
         if (doubleAmmo == Color.RED)
         {

@@ -1,16 +1,19 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+/**
+ * This class implements a Square where there is an AmmoTile.
+ * @author giovanni
+ */
 public class AmmoPoint extends Square
 {
-    /**
-     * This class implements a Square where there is an AmmoTile.
-     * This point has 1 AmmoTile to grab.
+    /*
+     * @attribute ammotiles is the  AmmoTile to grab.
      */
     private AmmoTiles ammoTiles;
 
 
     /**
-     * This method is a getter the the private attribute ammoTiles.
+     * This method is a public getter for the ammoTiles.
      *
      * @return the ammoTiles card
      */
@@ -20,9 +23,9 @@ public class AmmoPoint extends Square
     }
 
     /**
-     * This method draw uses the AmmoTiles card that is on the point, sets the ammoTiles on null
+     * This method draw the AmmoTiles card that is on the point, and it sets the ammoTiles of the point to null
      *
-     * @param player is who will gte the ammo and the powerup if present
+     * @param player is who will get the ammo and the powerup if present
      * @return the AmmoTiles that is used
      */
     public AmmoTiles useAmmoTiles (Player player)

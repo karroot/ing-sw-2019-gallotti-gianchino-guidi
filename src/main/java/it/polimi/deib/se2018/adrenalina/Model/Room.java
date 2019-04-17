@@ -2,15 +2,20 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.List;
 
+/**
+ * This class implements a room.
+ *
+ * @author giovanni
+ */
 public class Room
 {
     /*
-    This class implements a room. The idea is that we have 3 private attributes:
-    gameBoard to have a reference to the gameBoard
-    squareList is a list of the square in the room
-    playerRoomList is a list of the player in the room. Useful for certain weapons.
-
-    squareList is set by the gameBoard, instead playerRoomList can change during the game
+     * We have 3 private attributes:
+     * @attribute gameBoard to have a reference to the gameBoard
+     * @attribute squareList is a list of the square in the room
+     * @attribute playerRoomList is a list of the player in the room. Useful for certain weapons.
+     *
+     * We need to observe that squareList is set by the gameBoard, instead playerRoomList can change during the game
      */
 
 
@@ -19,15 +24,15 @@ public class Room
     private List<Player> playerRoomList;
 
 
-    /*
-     *  This metod @returns a list of all the player in a room. Useful for certain weapons.
+    /**
      * The initialization with null is needed to reset it everytime, and return an empty list if there are no player when it is called
      *
+     * @return a list of all the player in a room. Useful for certain weapons.
      */
     public List<Player> getPlayerRoomList ()
     {
-        playerRoomList = null;
-        for (Square square: squareList)
+        playerRoomList = null; //initialize the list
+        for (Square square: squareList) //iterates in the square of the room to find the players
         {
             playerRoomList.addAll(square.getPlayerList());
         }
@@ -35,14 +40,18 @@ public class Room
     }
 
     /**
-     * getter of the board
-     * @return the gameboard
+     * This method is the public getter of the board
+     * @return
      */
     public GameBoard getGameBoard()
     {
         return gameBoard;
     }
 
+    /**
+     * This method is the public getter if the squareList
+     * @return
+     */
     public List<Square> getSquareList()
     {
         return squareList;
