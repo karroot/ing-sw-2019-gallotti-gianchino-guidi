@@ -6,7 +6,10 @@ import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
 import java.util.*;
 
-
+/**
+ * @author Gallotti
+ * It represents the structure of Track
+ */
 class Track
 {
     private ColorId player;
@@ -25,12 +28,11 @@ class Track
         return pointCounter;
     }
 };
-
+/**
+ * @author Gallotti
+ * It represents the gameboard and performs the aviable actions that he can do on the elements of gameboard
+ */
 public abstract class GameBoard {
-
-
-
-
 
 
 
@@ -42,7 +44,7 @@ public abstract class GameBoard {
 
     private List<Room> roomList;
 
-    private Graph arena; // remember to change in UML
+    private static Graph arena; // remember to change in UML
 
     private int skullCounter;
 
@@ -81,7 +83,7 @@ public abstract class GameBoard {
         return roomList;
     }
 
-    public Graph getArena()
+    public static Graph getArena()
     {
         return arena;
     }

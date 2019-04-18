@@ -47,7 +47,7 @@ public class Player
 
     private boolean overKill;
 
-    private Square square;
+    private static Square square;
 
     private List<PowerUpCard> powerupCardList; //Array of the powerUps
 
@@ -135,7 +135,7 @@ public class Player
         return score;
     }
 
-    public Square getSquare()
+    public static Square getSquare()
     {
         return square;
     }

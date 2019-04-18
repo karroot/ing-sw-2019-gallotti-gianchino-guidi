@@ -11,12 +11,12 @@ public class Adrenalized1 implements StatePlayer
 
     }
 
-    public void runAround (int len)
+    public Set<Square> runAround()
     {
 
     }
 
-    public void grabStuff()
+    public Set<Square> grabStuff()
     {
 
     }
@@ -26,7 +26,7 @@ public class Adrenalized1 implements StatePlayer
 
     }
 
-    public void reload()
+    public void checkReload()
     {
 
     }

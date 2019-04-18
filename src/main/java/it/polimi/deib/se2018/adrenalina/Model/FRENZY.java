@@ -1,5 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.Set;
+
 public class FRENZY implements StatePlayer
 {
 
@@ -14,7 +16,7 @@ public class FRENZY implements StatePlayer
 
     }
 
-    public void grabStuff()
+    public Set<Square> grabStuff()
     {
 
     }

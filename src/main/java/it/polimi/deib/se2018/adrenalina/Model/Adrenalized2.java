@@ -1,5 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.Set;
+
 public class Adrenalized2 implements StatePlayer
 {
 
@@ -9,12 +11,12 @@ public class Adrenalized2 implements StatePlayer
 
     }
 
-    public void runAround(int len)
+    public Set<Square> runAround()
     {
 
     }
 
-    public void grabStuff()
+    public Set<Square> grabStuff()
     {
 
     }
@@ -24,7 +26,7 @@ public class Adrenalized2 implements StatePlayer
 
     }
 
-    public void reload()
+    public void checkReload()
     {
 
     }
