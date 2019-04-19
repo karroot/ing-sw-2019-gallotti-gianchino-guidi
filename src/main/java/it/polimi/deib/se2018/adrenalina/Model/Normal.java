@@ -15,24 +15,25 @@ public class Normal implements StatePlayer
     /**
      * it return the reachable square with a maximum distance of 3
      */
-    public Set<Square> runAround()
+    public void lookForRunAround()
     {
-        return GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
+         GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
     }
 
     /**
      * it return the reachable square with a maximum distance of 1
      * then
      */
-    public Set<Square>,AmmoTiles grabStuff()
+    public void lookForGrabStuff()
     {
-        return GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
-         Player.getSquare().useAmmoTiles(Player);
+         GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
+        Player.getSquare().getAmmoTiles();
+
     }
 
-    public void shootPeople()
+    public void lookForShootPeople()
     {
-
+        Player.getSquare().getPlayerRoomList();
     }
 
     public void checkReload()

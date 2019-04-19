@@ -11,19 +11,21 @@ public class Adrenalized2 implements StatePlayer
 
     }
 
-    public Set<Square> runAround()
+    public void lookForRunAround()
     {
-
+        GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
     }
 
-    public Set<Square> grabStuff()
+    public void lookForGrabStuff()
     {
-
+        GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 2);
+        Player.getSquare().getAmmoTiles();
     }
 
-    public void shootPeople()
+    public void lookForShootPeople()
     {
-
+        GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
+        Player.getSquare().getPlayerRoomList();
     }
 
     public void checkReload()

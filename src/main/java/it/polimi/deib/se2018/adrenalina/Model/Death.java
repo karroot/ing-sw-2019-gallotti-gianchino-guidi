@@ -14,17 +14,17 @@ public class Death implements StatePlayer {
 
     }
 
-    public Set<Square> runAround()
+    public void lookForRunAround()
     {
 
     }
 
-    public Set<Square> grabStuff()
+    public void lookForGrabStuff()
     {
 
     }
 
-    public void shootPeople()
+    public void lookForShootPeople()
     {
 
     }
