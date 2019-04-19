@@ -24,7 +24,19 @@ public class Adrenalized1 implements StatePlayer
 
     public void lookForShootPeople()
     {
-        Player.getSquare().getPlayerRoomList();
+
+        for (Square varSquare : GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1))
+        {
+            if (!(Player.getSquare().getColor().equals(varSquare.getColor())))
+            {
+                for (Square tempSquare : varSquare.getRoom().getSquareList())
+                {
+                    tempSquare.getPlayerList();
+                }
+            }
+
+            else varSquare.getPlayerList();
+        }
     }
 
     public void checkReload()

@@ -1,6 +1,0 @@
-projectKey=it.polimi.se2019:adrenalina
-serverUrl=http://localhost:9000
-serverVersion=6.7.6.38781
-dashboardUrl=http://localhost:9000/dashboard/index/it.polimi.se2019:adrenalina
-ceTaskId=AWoWBR9DqZJqFCQBwqSg
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWoWBR9DqZJqFCQBwqSg

@@ -18,6 +18,8 @@ public abstract class Square
 
     protected SideType[] side;
 
+    protected  Room room;
+
     /**
      * Create a square with its parameters
      * @param x coordinate x of the square
@@ -44,6 +46,10 @@ public abstract class Square
     public int getY()
     {
         return y;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     public List<Player> getPlayerList()

@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 //Test with the gameBoard that it is in the second and third page of the manual
-public class TestGraphGameboard1
+public class TestSkullConter1
 {
 
     private Graph test;

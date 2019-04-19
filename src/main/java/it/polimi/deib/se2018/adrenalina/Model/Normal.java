@@ -27,13 +27,30 @@ public class Normal implements StatePlayer
     public void lookForGrabStuff()
     {
          GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
-        Player.getSquare().getAmmoTiles();
+
 
     }
 
+    /**
+     * it return the reachable player for shooting , checking the square in room that the player can see
+     */
     public void lookForShootPeople()
     {
-        Player.getSquare().getPlayerRoomList();
+
+        for (Square varSquare : GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1))
+        {
+            if (!(Player.getSquare().getColor().equals(varSquare.getColor())))
+            {
+                for (Square tempSquare : varSquare.getRoom().getSquareList())
+                {
+                tempSquare.getPlayerList();
+                }
+            }
+
+            else varSquare.getPlayerList();
+        }
+
+
     }
 
     public void checkReload()

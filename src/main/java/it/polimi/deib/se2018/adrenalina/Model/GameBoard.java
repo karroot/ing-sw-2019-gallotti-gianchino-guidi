@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.NegativeCounter;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
@@ -144,8 +145,11 @@ public abstract class GameBoard {
      * it reduce the counter of skull when a player die
      * @param skullCounter
      */
-    public void setSkullCounter(int skullCounter) {
-        this.skullCounter = skullCounter;
+    public void setSkullCounter(int skullCounter) throws NegativeCounter {
+        if(skullCounter<0){
+            throw new NegativeCounter();
+        }
+        else this.skullCounter = skullCounter;
     }
 
     /**
