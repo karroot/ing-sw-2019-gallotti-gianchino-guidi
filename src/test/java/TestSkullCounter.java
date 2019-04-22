@@ -49,7 +49,7 @@ public class TestSkullCounter
         }
         catch (NegativeCounter e)
         {
-            System.out.println("ok");
+            System.out.println("fine");
         }
 
 

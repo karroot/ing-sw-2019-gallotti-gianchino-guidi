@@ -19,7 +19,7 @@ public class Adrenalized2 implements StatePlayer
     public void lookForGrabStuff()
     {
         GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 2);
-        Player.getSquare().getAmmoTiles();
+        //Player.getSquare().getAmmoTiles();
     }
 
     public void lookForShootPeople()
