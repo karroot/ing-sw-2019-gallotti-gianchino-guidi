@@ -135,7 +135,7 @@ public class Player
         return score;
     }
 
-    public static Square getSquare()
+    public Square getSquare()
     {
         return square;
     }

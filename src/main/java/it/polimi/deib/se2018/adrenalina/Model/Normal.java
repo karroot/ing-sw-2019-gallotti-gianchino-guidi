@@ -26,7 +26,7 @@ public class Normal implements StatePlayer
     public Set<Square> lookForRunAround(Player player, GameBoard gameBoard)
     {
          Set<Square>  squareSet;
-         squareSet = GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
+         squareSet = GameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
          return squareSet;
     }
 
@@ -41,7 +41,7 @@ public class Normal implements StatePlayer
     public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
     {
          Set<Square> squareSet;
-         squareSet = GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
+         squareSet = GameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
          return squareSet;
     }
 
@@ -53,9 +53,9 @@ public class Normal implements StatePlayer
     public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
     {
 
-        for (Square varSquare : GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1)) //for every square returned by squareReachableNoWall with distance 1
+        for (Square varSquare : GameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1)) //for every square returned by squareReachableNoWall with distance 1
         {
-            if (!(Player.getSquare().getColor().equals(varSquare.getColor()))) // if the color of the reachable square is different from the color of the square where the player is this means player can see in a different room
+            if (!(player.getSquare().getColor().equals(varSquare.getColor()))) // if the color of the reachable square is different from the color of the square where the player is this means player can see in a different room
             {
                 for (Square tempSquare : varSquare.getRoom().getSquareList()) //for every square in this different room
                 {
