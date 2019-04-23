@@ -7,13 +7,13 @@ public interface StatePlayer
 {
 
 
-    public void lookForRunAround();
+    public Set<Square> lookForRunAround(Player player, GameBoard gameBoard);
 
 
-    public void lookForGrabStuff();
+    public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard);
 
 
-    public void lookForShootPeople();
+    public void lookForShootPeople(Player player, GameBoard gameBoard);
 
 
     public void checkReload();

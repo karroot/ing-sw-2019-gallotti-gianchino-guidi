@@ -22,6 +22,8 @@ public class AmmoPoint extends Square
         return ammoTiles;
     }
 
+
+
     /**
      * This method draw the AmmoTiles card that is on the point, and it sets the ammoTiles of the point to null
      *

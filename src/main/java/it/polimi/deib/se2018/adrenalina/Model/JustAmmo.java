@@ -1,6 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-public class JustAmmo implements AmmoTiles
+public abstract class JustAmmo implements AmmoTiles
 {
 // nella funzione che genera gameboard chiami costruttore 36 volte con id diverso
 

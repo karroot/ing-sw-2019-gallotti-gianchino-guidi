@@ -1,7 +1,10 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 
-import java.util.Set;
+import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+
+import java.util.*;
+
 
 public class Normal implements StatePlayer
 {
@@ -13,28 +16,41 @@ public class Normal implements StatePlayer
     }
 
     /**
-     * it return the reachable square with a maximum distance of 3
+     * When the player is in the normal status he can reach Square to a max distance of 3. This method make the player see all the possible reachable squares.
+     *
+     * @param player is the player that is looking where to move
+     * @param gameBoard is needed to call the squareReachableNoWall function
+     * @return a set of possible reachable squares with max distance 3
      */
-    public void lookForRunAround()
+    @Override
+    public Set<Square> lookForRunAround(Player player, GameBoard gameBoard)
     {
-         GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
+         Set<Square>  squareSet;
+         squareSet = GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 3);
+         return squareSet;
     }
 
     /**
-     * it return the reachable square with a maximum distance of 1
-     * then
+     * When the player is in the normal status he can reach Square to grab stuffs with a max distance of 1. This method make the player see all the possible reachable squares.
+     *
+     * @param player is the player that is looking where to move to grab the stuff
+     * @param gameBoard is needed to call the squareReachableNoWall function
+     * @return a set of possible reachable squares with max distance 1
      */
-    public void lookForGrabStuff()
+    @Override
+    public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
     {
-         GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
-
-
+         Set<Square> squareSet;
+         squareSet = GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1);
+         return squareSet;
     }
+
 
     /**
      * it return the reachable player for shooting , checking the square in room that the player can see
      */
-    public void lookForShootPeople()
+    @Override
+    public void lookForShootPeople(Player player, GameBoard gameBoard)
     {
 
         for (Square varSquare : GameBoard.getArena().squareReachableNoWall(Player.getSquare().getX(), Player.getSquare().getY(), 1))
