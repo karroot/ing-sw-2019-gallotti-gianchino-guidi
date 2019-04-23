@@ -50,6 +50,7 @@ public class AmmoPoint extends Square
 
 
 
+
     /**
      * This is the public constructor of this class.
      *

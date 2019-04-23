@@ -100,6 +100,7 @@ public abstract class Square
         return side;
     }
 
+
     /**
      * It add a player to the square if he is not already present
      * @param player player that gets into the square

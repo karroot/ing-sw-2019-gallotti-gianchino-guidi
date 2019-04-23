@@ -5,6 +5,12 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
 
+/**
+ * This class implements a weapon.
+ *
+ * @author giovanni
+ */
+
 public abstract class WeaponCard {
 
     String name;
@@ -15,9 +21,13 @@ public abstract class WeaponCard {
 
     protected int weaponID;
 
-    protected  int[] ammoCost;
+    protected int redAmmoCost;
+    protected int yellowAmmoCost;
+    protected int blueAmmoCost;
 
     protected boolean isLoaded;
+
+
 
 
     public WeaponCard()
@@ -25,6 +35,17 @@ public abstract class WeaponCard {
 
     }
 
+    public int getRedAmmoCost() {
+        return redAmmoCost;
+    }
+
+    public int getYellowAmmoCost() {
+        return yellowAmmoCost;
+    }
+
+    public int getBlueAmmoCost() {
+        return blueAmmoCost;
+    }
 
     public void basicEffect()
     {

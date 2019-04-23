@@ -200,7 +200,7 @@ public class Player
      * @param weapon weapon that the player grabs from game board
      *
      */
-    public void getWeapon(WeaponCard weapon) //Deve lanciare eccezione full deck weapons
+    public void drawWeapon(WeaponCard weapon) //Deve lanciare eccezione full deck weapons
     {
         if (weaponCardList.size() < 3 && weaponCardList.size() >= 0)
             weaponCardList.add(weapon);
@@ -211,6 +211,9 @@ public class Player
 
     }
 
+    public List<WeaponCard> getWeaponCardList () {
+        return weaponCardList;
+    }
     /**
      * Exchange a old weapon with a new from game board and it returns the old too
      * (requires) the old weapon must be in list of weapon card
