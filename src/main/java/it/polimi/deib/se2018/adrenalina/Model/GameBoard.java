@@ -33,7 +33,7 @@ class Track
  * @author Gallotti
  * It represents the gameboard and performs the aviable actions that he can do on the elements of gameboard
  */
-public abstract class GameBoard {
+public class GameBoard {
 
 
 
@@ -57,17 +57,15 @@ public abstract class GameBoard {
      * Create the GameBoard with its parameters
      * @param weaponCardStack Stack of Weapon cards
      * @param powerUpCardStack Stack of PowerUp cards
-     * @param roomList list of room
-     * @param arena Map of the arena
-
+     * @param codeArena code that identifies the arena
      * @param skullCounter counter of the skull on board
      * @param ammoTilesStack Stack of ammo Cards
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, List<Room> roomList, Graph arena, int skullCounter,Stack<AmmoTiles> ammoTilesStack) {
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack) {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
-        this.roomList = roomList;
-        this.arena = arena;
+        this.arena = FactoryArena.getArena(codeArena,this);
+        this.roomList = FactoryArena.getRooms(this);
         this.skullCounter=skullCounter;
         this.ammoTilesStack=ammoTilesStack;
 
@@ -125,7 +123,8 @@ public abstract class GameBoard {
         return skullCounter;
     }
 
-    public Track getKillShotTrack(int index) {
+    public Track getKillShotTrack(int index)
+    {
         return killShotTrack.get(index);
     }
 
@@ -157,18 +156,14 @@ public abstract class GameBoard {
      * @param player define the player that had made the kill
      * @param counter define how many point you should add
      */
-    public void setKillShotTrack( ColorId player, int counter) {
+    public void setKillShotTrack( ColorId player, int counter)
+    {
         this.killShotTrack.add(new Track(player,counter));
     }
 
 //---------------------------
 
 
-/**
-     We use a dictionary that has the player as key and as value
-     another data structure that tells us which kill on the track did and if it did.*/
-
-    //todo grafo
 
 
 

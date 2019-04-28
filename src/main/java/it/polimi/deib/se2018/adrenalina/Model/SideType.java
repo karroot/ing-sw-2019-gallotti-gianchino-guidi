@@ -10,6 +10,7 @@ public enum SideType
 
     WALL,
     DOOR,
-    OPEN
+    OPEN,
+    LIMIT;
 
 }

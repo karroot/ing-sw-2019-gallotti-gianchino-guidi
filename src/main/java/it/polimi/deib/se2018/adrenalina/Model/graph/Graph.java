@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model.graph;
 
+import it.polimi.deib.se2018.adrenalina.Model.SideType;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
@@ -50,7 +51,7 @@ public class Graph
      * @param node2 a square to connect to node1
      * @param flag Represent if between two square there is a wall,
      */
-    public void addEdge(Square node1, Square node2, TypeSide flag)
+    public void addEdge(Square node1, Square node2, SideType flag)
     {
         adjacencyList.get(node1).add(new Edge(flag, node2)); //Add the edge for node1 in the adjacencyList
         adjacencyList.get(node2).add(new Edge(flag, node1));//Add the edge for node2 in the adjacencyList
@@ -76,7 +77,7 @@ public class Graph
         }
 
         if (squareFounded == null) //If square hasn't been founded signals it with the exception
-            throw new SquareNotInGameBoard("Square with x ="+ x +" y = " + y + "isn't in the game board");
+            throw new SquareNotInGameBoard("Square with x ="+ x +" y = " + y + " isn't in the game board");
 
         return squareFounded;
 
@@ -126,7 +127,7 @@ public class Graph
         {
             for (Edge temp: edgeList) //Search in list of edge of a square
             {
-                if (temp.getFlag() == TypeSide.FREE || temp.getFlag() == TypeSide.PORT) //If flag is ok
+                if (temp.getFlag() == SideType.OPEN || temp.getFlag() == SideType.DOOR) //If flag is ok
                 {
                     squares.add(temp.getNextNode()); //Add next square to the set
                     queue.addAll(this.adjacencyList.get(temp.getNextNode()));//Add all edge that starts from next square the to queue

@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model.graph;
 
+import it.polimi.deib.se2018.adrenalina.Model.SideType;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
 /**
@@ -9,11 +10,11 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
  */
 public class Edge
 {
-    private TypeSide flag; //Flag to indicate if in the side there is a wall, port or is free
+    private SideType flag; //Flag to indicate if in the side there is a wall, port or is free
 
     private Square nextNode;//It is the square of the game board associated to edge
 
-    public Edge(TypeSide flag, Square nextNode)
+    public Edge(SideType flag, Square nextNode)
     {
         this.flag = flag;
         this.nextNode = nextNode;
@@ -23,7 +24,7 @@ public class Edge
      *
      * @return Flag to indicate if in the side there is a wall, port or is free
      */
-    public TypeSide getFlag() {
+    public SideType getFlag() {
         return flag;
     }
 

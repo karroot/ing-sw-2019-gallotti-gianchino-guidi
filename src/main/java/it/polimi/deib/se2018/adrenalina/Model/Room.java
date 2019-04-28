@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class Room
      * We need to observe that squareList is set by the gameBoard, instead playerRoomList can change during the game
      */
 
-
+    private ColorRoom color;
     private GameBoard gameBoard;
     private List<Square> squareList;
     private List<Player> playerRoomList;
@@ -62,13 +63,17 @@ public class Room
      * @param gameBoard reference to the gameBoard
      * @param squareList is a list with all the square in the room. Useful to keep track because some weapons are room based
      */
-    public Room(GameBoard gameBoard, List<Square> squareList)
+    public Room(GameBoard gameBoard, List<Square> squareList, ColorRoom color)
     {
         this.gameBoard = gameBoard;
-        this.squareList = squareList;
+        this.squareList = new ArrayList<>();
+        this.squareList.addAll(squareList);
+        this.color = color;
+        this.playerRoomList = new ArrayList<>();
     }
 
 
-
-
+    public ColorRoom getColor() {
+        return color;
+    }
 }
