@@ -13,6 +13,7 @@ public class FRENZY implements StatePlayer
 
     }
 
+
     @Override
     public Set<Square> lookForRunAround(Player player, GameBoard gameBoard) {
         return null;
