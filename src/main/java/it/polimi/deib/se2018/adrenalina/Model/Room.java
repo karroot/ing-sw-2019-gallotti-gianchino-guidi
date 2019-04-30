@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class Room
      */
     public List<Player> getPlayerRoomList ()
     {
-        playerRoomList = null; //initialize the list
+        playerRoomList = new LinkedList<>(); //initialize the list
         for (Square square: squareList) //iterates in the square of the room to find the players
         {
             playerRoomList.addAll(square.getPlayerList());

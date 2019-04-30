@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -62,14 +63,10 @@ public class Adrenalized2 implements StatePlayer
     @Override
     public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
     {
-        List<Player> playerList = null;
+        List<Player> playerList = new LinkedList<>();
 
-        try {
             playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
-        } catch (NullPointerException e)
-        {
 
-        }
 
         /*
          * Now i have to check if the player is close to a door. In this case i can see all the players in this adiacent room.
@@ -84,12 +81,9 @@ public class Adrenalized2 implements StatePlayer
             if (!(player.getSquare().getColor().equals(square.getColor()))) // if the color of the reachable square is different from the color of the square
             // where the player is this means player can see in a different room
             {
-                try {
-                    playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
-                } catch (NullPointerException e)
-                {
 
-                }
+                    playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
+
             }
 
         }
@@ -109,7 +103,7 @@ public class Adrenalized2 implements StatePlayer
     @Override
     public List<WeaponCard> checkReload(Player player)
     {
-        List<WeaponCard> reloadableWeapons = null; //This is the weaponcard list i will return
+        List<WeaponCard> reloadableWeapons = new LinkedList<>(); //This is the weaponcard list i will return
         /*
          * For each weapon i check if the player has enough ammo to reload that weapon.
          * After a player choose a weapon to reload i have to delete the ammo from the player and reiterate this method.
