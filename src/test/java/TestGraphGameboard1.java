@@ -65,29 +65,29 @@ public class TestGraphGameboard1
         test.addNode(n10);
         test.addNode(n11);
 
-        test.addEdge(n1,n5,TypeSide.PORT);
-        test.addEdge(n1,n2,TypeSide.FREE);
+        test.addEdge(n1,n5,SideType.DOOR);
+        test.addEdge(n1,n2,SideType.OPEN);
 
-        test.addEdge(n2,n3,TypeSide.FREE);
-        test.addEdge(n2,n6,TypeSide.PORT);
+        test.addEdge(n2,n3,SideType.OPEN);
+        test.addEdge(n2,n6,SideType.DOOR);
 
-        test.addEdge(n3,n4,TypeSide.PORT);
-        test.addEdge(n3,n7,TypeSide.WALL);
+        test.addEdge(n3,n4,SideType.DOOR);
+        test.addEdge(n3,n7,SideType.WALL);
 
-        test.addEdge(n4,n8,TypeSide.FREE);
+        test.addEdge(n4,n8,SideType.OPEN);
 
-        test.addEdge(n5,n6,TypeSide.WALL);
-        test.addEdge(n5,n9,TypeSide.FREE);
+        test.addEdge(n5,n6,SideType.WALL);
+        test.addEdge(n5,n9,SideType.OPEN);
 
-        test.addEdge(n6,n10,TypeSide.PORT);
-        test.addEdge(n6,n7,TypeSide.FREE);
+        test.addEdge(n6,n10,SideType.DOOR);
+        test.addEdge(n6,n7,SideType.OPEN);
 
-        test.addEdge(n7,n11,TypeSide.PORT);
-        test.addEdge(n7,n8,TypeSide.PORT);
+        test.addEdge(n7,n11,SideType.DOOR);
+        test.addEdge(n7,n8,SideType.DOOR);
 
-        test.addEdge(n9,n10,TypeSide.PORT);
+        test.addEdge(n9,n10,SideType.DOOR);
 
-        test.addEdge(n10,n11,TypeSide.FREE);
+        test.addEdge(n10,n11,SideType.OPEN);
 
         //Tutta questa roba verrà fatta dalla factory
 
@@ -123,29 +123,29 @@ public class TestGraphGameboard1
         test.addNode(n10);
         test.addNode(n11);
 
-        test.addEdge(n1,n5,TypeSide.PORT);
-        test.addEdge(n1,n2,TypeSide.FREE);
+        test.addEdge(n1,n5,SideType.DOOR);
+        test.addEdge(n1,n2,SideType.OPEN);
 
-        test.addEdge(n2,n3,TypeSide.FREE);
-        test.addEdge(n2,n6,TypeSide.PORT);
+        test.addEdge(n2,n3,SideType.OPEN);
+        test.addEdge(n2,n6,SideType.DOOR);
 
-        test.addEdge(n3,n4,TypeSide.PORT);
-        test.addEdge(n3,n7,TypeSide.WALL);
+        test.addEdge(n3,n4,SideType.DOOR);
+        test.addEdge(n3,n7,SideType.WALL);
 
-        test.addEdge(n4,n8,TypeSide.FREE);
+        test.addEdge(n4,n8,SideType.OPEN);
 
-        test.addEdge(n5,n6,TypeSide.WALL);
-        test.addEdge(n5,n9,TypeSide.FREE);
+        test.addEdge(n5,n6,SideType.WALL);
+        test.addEdge(n5,n9,SideType.OPEN);
 
-        test.addEdge(n6,n10,TypeSide.PORT);
-        test.addEdge(n6,n7,TypeSide.FREE);
+        test.addEdge(n6,n10,SideType.DOOR);
+        test.addEdge(n6,n7,SideType.OPEN);
 
-        test.addEdge(n7,n11,TypeSide.PORT);
-        test.addEdge(n7,n8,TypeSide.PORT);
+        test.addEdge(n7,n11,SideType.DOOR);
+        test.addEdge(n7,n8,SideType.DOOR);
 
-        test.addEdge(n9,n10,TypeSide.PORT);
+        test.addEdge(n9,n10,SideType.DOOR);
 
-        test.addEdge(n10,n11,TypeSide.FREE);
+        test.addEdge(n10,n11,SideType.OPEN);
 
         expectedOut.add(n1);
         expectedOut.add(n2);
@@ -175,29 +175,29 @@ public class TestGraphGameboard1
         test.addNode(n10);
         test.addNode(n11);
 
-        test.addEdge(n1,n5,TypeSide.PORT);
-        test.addEdge(n1,n2,TypeSide.FREE);
+        test.addEdge(n1,n5,SideType.DOOR);
+        test.addEdge(n1,n2,SideType.OPEN);
 
-        test.addEdge(n2,n3,TypeSide.FREE);
-        test.addEdge(n2,n6,TypeSide.PORT);
+        test.addEdge(n2,n3,SideType.OPEN);
+        test.addEdge(n2,n6,SideType.DOOR);
 
-        test.addEdge(n3,n4,TypeSide.PORT);
-        test.addEdge(n3,n7,TypeSide.WALL);
+        test.addEdge(n3,n4,SideType.DOOR);
+        test.addEdge(n3,n7,SideType.WALL);
 
-        test.addEdge(n4,n8,TypeSide.FREE);
+        test.addEdge(n4,n8,SideType.OPEN);
 
-        test.addEdge(n5,n6,TypeSide.WALL);
-        test.addEdge(n5,n9,TypeSide.FREE);
+        test.addEdge(n5,n6,SideType.WALL);
+        test.addEdge(n5,n9,SideType.OPEN);
 
-        test.addEdge(n6,n10,TypeSide.PORT);
-        test.addEdge(n6,n7,TypeSide.FREE);
+        test.addEdge(n6,n10,SideType.DOOR);
+        test.addEdge(n6,n7,SideType.OPEN);
 
-        test.addEdge(n7,n11,TypeSide.PORT);
-        test.addEdge(n7,n8,TypeSide.PORT);
+        test.addEdge(n7,n11,SideType.DOOR);
+        test.addEdge(n7,n8,SideType.DOOR);
 
-        test.addEdge(n9,n10,TypeSide.PORT);
+        test.addEdge(n9,n10,SideType.DOOR);
 
-        test.addEdge(n10,n11,TypeSide.FREE);
+        test.addEdge(n10,n11,SideType.OPEN);
 
         expectedOut.add(n1);
         expectedOut.add(n2);
@@ -235,29 +235,29 @@ public class TestGraphGameboard1
         test.addNode(n10);
         test.addNode(n11);
 
-        test.addEdge(n1,n5,TypeSide.PORT);
-        test.addEdge(n1,n2,TypeSide.FREE);
+        test.addEdge(n1,n5,SideType.DOOR);
+        test.addEdge(n1,n2,SideType.OPEN);
 
-        test.addEdge(n2,n3,TypeSide.FREE);
-        test.addEdge(n2,n6,TypeSide.PORT);
+        test.addEdge(n2,n3,SideType.OPEN);
+        test.addEdge(n2,n6,SideType.DOOR);
 
-        test.addEdge(n3,n4,TypeSide.PORT);
-        test.addEdge(n3,n7,TypeSide.WALL);
+        test.addEdge(n3,n4,SideType.DOOR);
+        test.addEdge(n3,n7,SideType.WALL);
 
-        test.addEdge(n4,n8,TypeSide.FREE);
+        test.addEdge(n4,n8,SideType.OPEN);
 
-        test.addEdge(n5,n6,TypeSide.WALL);
-        test.addEdge(n5,n9,TypeSide.FREE);
+        test.addEdge(n5,n6,SideType.WALL);
+        test.addEdge(n5,n9,SideType.OPEN);
 
-        test.addEdge(n6,n10,TypeSide.PORT);
-        test.addEdge(n6,n7,TypeSide.FREE);
+        test.addEdge(n6,n10,SideType.DOOR);
+        test.addEdge(n6,n7,SideType.OPEN);
 
-        test.addEdge(n7,n11,TypeSide.PORT);
-        test.addEdge(n7,n8,TypeSide.PORT);
+        test.addEdge(n7,n11,SideType.DOOR);
+        test.addEdge(n7,n8,SideType.DOOR);
 
-        test.addEdge(n9,n10,TypeSide.PORT);
+        test.addEdge(n9,n10,SideType.DOOR);
 
-        test.addEdge(n10,n11,TypeSide.FREE);
+        test.addEdge(n10,n11,SideType.OPEN);
 
 
         expectedOut.add(n2);

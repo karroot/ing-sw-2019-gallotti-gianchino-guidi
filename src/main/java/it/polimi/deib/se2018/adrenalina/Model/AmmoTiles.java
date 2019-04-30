@@ -8,7 +8,7 @@ import java.util.*;
  * @author giovanni
  */
 
-public interface AmmoTiles extends Set<Square> {
+public interface AmmoTiles {
     /**
      * This public method that uses the ammoTile card will be overrided by the classes JustAmmo and PowerAndAmmo.
      *

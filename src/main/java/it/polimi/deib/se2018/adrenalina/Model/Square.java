@@ -20,10 +20,6 @@ public abstract class Square
 
     protected  Room room;
 
-    private AmmoPoint ammoPoint;
-
-    private SpawnPoint spawnPoint;
-
     private boolean isAmmoPoint;
 
     private boolean isSpawnPoint;
@@ -58,15 +54,6 @@ public abstract class Square
         return y;
     }
 
-    public AmmoPoint getAmmoPoint()
-    {
-        return ammoPoint;
-    }
-
-    public SpawnPoint getSpawnPoint()
-    {
-        return spawnPoint;
-    }
 
     public boolean isAmmoPoint() {
         return isAmmoPoint;

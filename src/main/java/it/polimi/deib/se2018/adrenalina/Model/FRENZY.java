@@ -13,6 +13,13 @@ public class FRENZY implements StatePlayer
 
     }
 
+    //qui va implementato un po' diverso. Bisognerebbe prima far scegliere se si vuole muovere per sparare o raccogliere e poi lanciare il metodo opportuno.
+    // Forse avrebbe più senso implementarlo a parte
+
+    //Se primo: muovi 2 ricarica e spara OPPURE muove 3 e raccogli
+
+    //se non primo: muovi 1, ricarica e spara OPPURE muovi 4 OPPURE muovi 2 e raccogli
+
 
     @Override
     public Set<Square> lookForRunAround(Player player, GameBoard gameBoard) {

@@ -15,6 +15,7 @@ public class Room
      * @attribute gameBoard to have a reference to the gameBoard
      * @attribute squareList is a list of the square in the room
      * @attribute playerRoomList is a list of the player in the room. Useful for certain weapons.
+     * @attribute color is the color the of room
      *
      * We need to observe that squareList is set by the gameBoard, instead playerRoomList can change during the game
      */
@@ -62,6 +63,7 @@ public class Room
      * Create a room with its parameters
      * @param gameBoard reference to the gameBoard
      * @param squareList is a list with all the square in the room. Useful to keep track because some weapons are room based
+     * @param color is the color of the room
      */
     public Room(GameBoard gameBoard, List<Square> squareList, ColorRoom color)
     {
@@ -73,6 +75,11 @@ public class Room
     }
 
 
+    /**
+     * This is the public getter for the color of the room.
+     *
+     * @return the color of the room
+     */
     public ColorRoom getColor() {
         return color;
     }

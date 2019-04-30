@@ -9,7 +9,7 @@ import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
  * @author giovanni
  */
 
-public abstract class PowerAndAmmo implements AmmoTiles
+public class PowerAndAmmo implements AmmoTiles
 {
     /*
      *

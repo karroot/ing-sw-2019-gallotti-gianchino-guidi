@@ -12,12 +12,15 @@ public class provaMetodi {
     {
         if (player.getSquare().isAmmoPoint())
         {
-            player.getSquare().getAmmoPoint().useAmmoTiles(player);
+            AmmoPoint ammoPoint = (AmmoPoint) player.getSquare();
+            ammoPoint.useAmmoTiles(player);
+
         }
 
         if (player.getSquare().isSpawnPoint())
         {
-            player.getSquare().getSpawnPoint().drawWeapon(chosenWeapon);
+            SpawnPoint spawnPoint = (SpawnPoint) player.getSquare();
+            spawnPoint.drawWeapon(chosenWeapon);
         }
     }
 }

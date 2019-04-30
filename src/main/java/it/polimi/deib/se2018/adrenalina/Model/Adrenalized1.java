@@ -62,9 +62,12 @@ public class Adrenalized1 implements StatePlayer
     public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
     {
         List<Player> playerList = null;
+        try {
+            playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
+        } catch (NullPointerException e)
+        {
 
-        playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
-
+        }
         /*
          * Now i have to check if the player is close to a door. In this case i can see all the players in this adiacent room.
          * I will implement the method in this way:
@@ -78,7 +81,12 @@ public class Adrenalized1 implements StatePlayer
             if (!(player.getSquare().getColor().equals(square.getColor()))) // if the color of the reachable square is different from the color of the square
             // where the player is this means player can see in a different room
             {
-                playerList.addAll(square.getRoom().getPlayerRoomList()); //adds all the players in this room
+                try {
+                    playerList.addAll(player.getSquare().getRoom().getPlayerRoomList()); //adds all the players in the room
+                } catch (NullPointerException e)
+                {
+
+                }
             }
 
         }
