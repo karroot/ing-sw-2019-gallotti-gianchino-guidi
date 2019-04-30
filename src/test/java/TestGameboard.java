@@ -1,40 +1,43 @@
-/* import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.NegativeCounter;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+import java.util.Stack;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import it.polimi.deib.se2018.adrenalina.Model.GameBoard.*;
+
 
 
 import java.util.Set;
 
 
 //Test with the SkullCounter
-public class TestSkullCounter
+
+
+
+
+public class TestGameboard
 {
 
     private GameBoard test;
     private  Stack<WeaponCard> weaponCardStack;
     private Stack<PowerUpCard> powerUpCardStack;
-    private List<Room> roomList;
-    private Graph arena;
+    private int arena=1;
     private int skullCounter;
     private Stack<AmmoTiles> ammoTilesStack;
 
     @Before
     public void setUp()
     {
-        test = new GameBoard(weaponCardStack,powerUpCardStack,roomList,arena,skullCounter,ammoTilesStack);
+        test = new GameBoard(weaponCardStack,powerUpCardStack,arena,skullCounter,ammoTilesStack);
 
 
 
     }
     @After
-    public void tearDown()
-    {
-        expectedOut.clear();
-    }
 
     @Test
     public void InizializeSkull()
@@ -61,4 +64,3 @@ public class TestSkullCounter
 
 
 }
-*/

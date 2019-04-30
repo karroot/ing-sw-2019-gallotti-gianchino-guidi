@@ -61,14 +61,14 @@ public class GameBoard {
      * @param skullCounter counter of the skull on board
      * @param ammoTilesStack Stack of ammo Cards
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack) {
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack ) {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
         this.arena = FactoryArena.getArena(codeArena,this);
         this.roomList = FactoryArena.getRooms(this);
         this.skullCounter=skullCounter;
         this.ammoTilesStack=ammoTilesStack;
-
+        this.killShotTrack= new LinkedList<>();
     }
 
 
