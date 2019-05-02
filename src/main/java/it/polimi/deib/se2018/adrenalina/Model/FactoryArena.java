@@ -12,7 +12,7 @@ import java.util.List;
  * The factory is static then it can be used without instantiate it
  * Operation:
  * 1)To use the method getArena to obtain the arena indicating the code and the Gameboard
- * 2)After and only after the method get arena to use the method getRooms to obtain the corresponding room list
+ * 2)After and only after the method get arena to has been used , to use the method getRooms to obtain the corresponding room list
  * The factory can't be used in other way!!
  */
 public class FactoryArena

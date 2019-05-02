@@ -6,7 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
+//Note
+//Bisognerebbe testare anche il metodo playerthatsee quando avrò metodi per aggiungere player alle room e allo square
 
+
+//Test the evolution of player's state correctly
+//And the possible action that he can undergo
 public class TestPlayer
 {
 
@@ -16,7 +21,7 @@ public class TestPlayer
     @Before
     public void setup()
     {
-        test = new Player(ColorId.YELLOW,"Claudio","Spacchiamo i culi",false);
+        test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
     }
 
     @Test
@@ -26,13 +31,13 @@ public class TestPlayer
         assertEquals(1,test.getAmmoRed());
         assertEquals(1,test.getAmmoYellow());
         assertEquals(0,test.getDeathsCounter());
-        assertEquals("Spacchiamo i culi",test.getAction_hero_comment());
+        assertEquals("Stringa di prova",test.getAction_hero_comment());
         assertEquals(ColorId.YELLOW,test.getColor());
         assertEquals("Claudio",test.getName());
         assertEquals(0,test.getNumberOfDamagePoint());
         assertEquals(0,test.getScore());
         assertFalse(test.isFirst());
-        assertEquals(null,test.getSquare());
+        assertNull(test.getSquare());
         assertFalse(test.isFrenzy());
         assertTrue(test.getWeaponCardList().isEmpty());
     }
@@ -74,6 +79,8 @@ public class TestPlayer
         test.doDamage(ColorId.GREY);
 
         assertTrue(test.isDead()); //Check if the player is dead
+
+        assertFalse(test.isOverKill());//Check that the player is not overkilled
 
         ColorId[] effOut = test.getDamageCounter(); //Expected output
 
@@ -153,6 +160,8 @@ public class TestPlayer
 
         assertEquals(2,test.checkMarker(ColorId.PURPLE));
         assertEquals(1,test.checkMarker(ColorId.GREY));
+
+        assertTrue(test.isOverKill());//Check if the player is overkilled
 
         ColorId[] effOut = test.getDamageCounter(); //Expected output
 

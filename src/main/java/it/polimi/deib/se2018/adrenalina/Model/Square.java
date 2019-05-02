@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class Square
 {
 
-    private List<Player> playerList;
+    private List<Player> playerList; //List of all the players that are located in this room
 
     int x; //Coordinate x of square
 

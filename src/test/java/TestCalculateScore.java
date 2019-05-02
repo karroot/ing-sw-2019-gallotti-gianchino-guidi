@@ -1,4 +1,81 @@
+import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Newton;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.TagbackGranade;
+import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Teleporter;
+import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.*;
+
+import java.util.Map;
+
 public class TestCalculateScore
 {
+    private Player test;
 
+    @Before
+    public void setUp()
+    {
+        test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
+    }
+
+    @Test
+    public void test3playerNoOver()
+    {
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.GREY);
+
+        final Map<ColorId, Integer> scores = test.calculateScoreForEachPlayer();
+
+        assertEquals(8,scores.get(ColorId.BLUE).intValue());
+        assertEquals(5,scores.get(ColorId.PURPLE).intValue());
+        assertEquals(6,scores.get(ColorId.GREY).intValue());
+    }
+
+    @Test
+    public void test3playerOver()
+    {
+        test.doDamage(ColorId.PURPLE); //Purple do 1 damage and 2 marks
+        test.addMark(ColorId.PURPLE);
+        test.addMark(ColorId.PURPLE);
+        test.doDamage(ColorId.GREY);//Grey do 2 damages and 1 mark
+        test.doDamage(ColorId.GREY);
+        test.addMark(ColorId.GREY);
+        test.doDamage(ColorId.PURPLE);//Purple do 1 damage
+        test.useMark(ColorId.PURPLE);//Mark being used
+        test.useMark(ColorId.PURPLE);
+        test.doDamage(ColorId.PURPLE);//Purple do 1 damage
+        test.addMark(ColorId.PURPLE);
+        test.addMark(ColorId.PURPLE); //PURPLE do 4 marks and 1 damage
+        test.addMark(ColorId.PURPLE);
+        test.addMark(ColorId.PURPLE);
+        test.doDamage(ColorId.BLUE);//BLUE do 3 damages and 0 marks
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.PURPLE); //Purple do the 11° damage point and two marks
+        test.useMark(ColorId.PURPLE);//1 mark do the 12° DAMAGE POINTS
+        test.useMark(ColorId.PURPLE);//the other two are lost
+        test.useMark(ColorId.PURPLE);
+        test.addMark(ColorId.PURPLE);
+        test.addMark(ColorId.PURPLE);
+
+       final Map<ColorId, Integer> scores = test.calculateScoreForEachPlayer();
+
+        assertEquals(6,scores.get(ColorId.BLUE).intValue());
+        assertEquals(9,scores.get(ColorId.PURPLE).intValue());
+        assertEquals(4,scores.get(ColorId.GREY).intValue());
+    }
 }

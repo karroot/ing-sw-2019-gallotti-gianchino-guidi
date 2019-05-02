@@ -1,5 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.Objects;
+
 /**
  * This class implements a Square where there is an AmmoTile.
  * @author giovanni
@@ -64,5 +66,6 @@ public class AmmoPoint extends Square
     {
         super(x,y,gameBoard,color,side);
     }
+
 
 }

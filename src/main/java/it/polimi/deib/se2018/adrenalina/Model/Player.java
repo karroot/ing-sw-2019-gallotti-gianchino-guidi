@@ -157,11 +157,19 @@ public class Player
         return deathsCounter;
     }
 
+    /**
+     * Return the score that the player has too
+     * @return integer that represent the score points
+     */
     public int getScore()
     {
         return score;
     }
 
+    /**
+     * Return the square where is located the player
+     * @return object square
+     */
     public  Square getSquare()
     {
         return square;
@@ -194,6 +202,10 @@ public class Player
         return new LinkedList<>(powerupCardList);
     }
 
+    /**
+     * Say if the player is dead or not because has 11 or 12 damage point
+     * @return if it is true then the player is dead
+     */
     public boolean isDead()
     {
         if (last == 11 || last == 12)//If in the board there are 11 or 12 damage points
@@ -212,38 +224,70 @@ public class Player
     //Setter
     //------------------------
 
+
+    /**
+     * Set tne number of blue ammo
+     * @param ammoYellow
+     * @exception IllegalArgumentException If ammoYellow isn't 0,1,2,3
+     */
     public void setAmmoYellow(int ammoYellow)
     {
+        if (ammoYellow < 0 || ammoYellow > 3)
+            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoYellow);
+
         this.ammoYellow = ammoYellow;
     }
 
+    /**
+     * Set tne number of blue ammo
+     * @param ammoRed
+     * @exception IllegalArgumentException If ammoRed isn't 0,1,2,3
+     */
     public void setAmmoRed(int ammoRed)
     {
+        if (ammoRed < 0 || ammoRed > 3)
+            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoRed);
+
         this.ammoRed = ammoRed;
     }
 
-    public void setAmmoBlue(int ammoBlue)
+    /**
+     * Set tne number of blue ammo
+     * @param ammoBlue
+     * @exception IllegalArgumentException If ammoBlue isn't 0,1,2,3
+     */
+    public void setAmmoBlue(int ammoBlue) throws IllegalArgumentException
     {
+        if (ammoBlue < 0 || ammoBlue > 3)
+            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoBlue);
+
         this.ammoBlue = ammoBlue;
     }
 
-    public void setState(StatePlayer state)
+    /**
+     * Set the score of player during the match
+     * @param score quantity of score points to assign at the player
+     * @exception IllegalArgumentException if score is negative
+     */
+    public void setScore(int score) throws IllegalArgumentException
     {
-        this.state = state;
-    }
+        if (score < 0)
+            throw new IllegalArgumentException("score negativo");
 
-    public void setDeathsCounter(int deathsCounter)
-    {
-        this.deathsCounter = deathsCounter;
-    }
-
-    public void setScore(int score)
-    {
         this.score = score;
     }
 
-    public void setSquare(Square square)
+    /**
+     *Change the position of the player in arena
+     * (Requires):The square is must be valid
+     * @param square square where to put the player
+     * @exception NullPointerException if square is null
+     */
+    public void setSquare(Square square) throws NullPointerException
     {
+        if (square == null)
+            throw new NullPointerException("Parametro square nullo");
+
         this.square = square;
     }
 
@@ -257,12 +301,12 @@ public class Player
      * @exception NullPointerException if weapon is null
      * @exception IllegalStateException if player has 3 weapons
      */
-    public void getWeapon(WeaponCard weapon)throws NullPointerException,IllegalStateException
+    public void addWeapon(WeaponCard weapon)throws NullPointerException,IllegalStateException
     {
         if (weapon == null)
             throw new NullPointerException("Parametro weapon con valore nullo");
 
-        if (weaponCardList.size() < 3 && weaponCardList.size() >= 0)
+        if (weaponCardList.size() < 3)
             weaponCardList.add(weapon);
 
         else {
@@ -293,7 +337,6 @@ public class Player
             if (x.getName().equals(oldWeapon)) //If you founded the weapon
             {
                 temp = x; //Save the card
-                weaponCardList.remove(x); //Remove old weapon from deck's player
             }
 
 
@@ -303,6 +346,7 @@ public class Player
             throw new IllegalArgumentException("old weapon da restituire non presente nel mazzo del player");
 
         //else
+        weaponCardList.remove(temp); //Remove old weapon from deck's player
         weaponCardList.add(newWeapon);//Add the new weapon in player's deck
 
         return temp; //Return  old weapon
@@ -319,10 +363,10 @@ public class Player
         if (powerupCard == null) //Check not null
             throw new NullPointerException("Parametro powerupCard è nullo");
 
-        if (powerupCardList.size() < 3 && powerupCardList.size() >= 0) //If player has not 3 weapons
+        if (powerupCardList.size() < 3) //If player has not 3 weapons
             powerupCardList.add(powerupCard);//Add power up to the list
         else
-            throw new IllegalStateException("Player ha già tre carte"); //Launch exceptions
+            throw new IllegalStateException("Player ha già tre carte powerup"); //Launch exceptions
 
     }
 
@@ -334,10 +378,10 @@ public class Player
      */
     public PowerUpCard usePowerUp(int indexDeckCard) throws IllegalArgumentException
     {
-        if(indexDeckCard != 0 || indexDeckCard != 1 || indexDeckCard != 2)//If index is not valid
+        if(indexDeckCard != 0 && indexDeckCard != 1 && indexDeckCard != 2)//If index is not valid
             throw new IllegalArgumentException("indice non valido");//Launch exception
 
-        if (indexDeckCard <= powerupCardList.size()) //If index can be used
+        if (indexDeckCard <= powerupCardList.size() - 1) //If index can be used
         {
             PowerUpCard temp = powerupCardList.get(indexDeckCard); //get power up using the index
 

@@ -28,8 +28,6 @@ public abstract class WeaponCard {
     protected boolean isLoaded;
 
 
-
-
     public WeaponCard()
     {
 
@@ -55,5 +53,10 @@ public abstract class WeaponCard {
     public String getName()
     {
         return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }
