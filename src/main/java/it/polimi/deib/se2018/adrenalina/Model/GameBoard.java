@@ -1,7 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.NegativeCounter;
+
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 
@@ -91,7 +91,7 @@ public class GameBoard {
      *It Return the first card of the weaponCard deck and remove it from the deck
      * @return
      */
-    public WeaponCard getWeaponCard() {
+    public WeaponCard drawWeaponCard() {
         if (!weaponCardStack.isEmpty()) {
             WeaponCard pop = weaponCardStack.pop();
             return pop;
@@ -100,11 +100,20 @@ public class GameBoard {
             return null;
         }
     }
+
+    public Stack<WeaponCard> getWeaponCardStack() {
+        return weaponCardStack;
+    }
+
+    public Stack<PowerUpCard> getPowerUpCardStack() {
+        return powerUpCardStack;
+    }
+
     /**
      *It Return the first card of the powerUpCard deck and remove it from the deck
      * @return
      */
-    public PowerUpCard getPowerUpCard() {
+    public PowerUpCard drawPowerUpCard() {
         if (!powerUpCardStack.isEmpty()) {
             PowerUpCard pop = powerUpCardStack.pop();
             return pop;
@@ -144,9 +153,9 @@ public class GameBoard {
      * it reduce the counter of skull when a player die
      * @param skullCounter
      */
-    public void setSkullCounter(int skullCounter) throws NegativeCounter {
+    public void setSkullCounter(int skullCounter) throws IllegalArgumentException{
         if(skullCounter<0){
-            throw new NegativeCounter();
+            throw new IllegalArgumentException("negative value of skullCounter is not accepted");
         }
         else this.skullCounter = skullCounter;
     }

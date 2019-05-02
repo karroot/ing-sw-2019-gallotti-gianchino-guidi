@@ -1,5 +1,6 @@
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\VortexCannon.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\View\PrivateView.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Grab.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\HeatSeeker.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\MarkTarget.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\Color.java
@@ -12,10 +13,12 @@ C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\i
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\MoveTarget.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\Adrenalized1.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\GranadeLauncher.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Spawn.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\TractorBeam.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\Teleporter.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Cyberblade.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Sledgehammer.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Move.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\ZX2.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\ColorId.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\View\Observable.java
@@ -34,6 +37,7 @@ C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\i
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\Room.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\MarkTarget.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\MoveTarget.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Setup.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\SpawnPoint.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\DoDamage.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\FRENZY.java
@@ -48,6 +52,7 @@ C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\i
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Railgun.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\View\Connection.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\PlasmaGun.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\EndOfRound.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\WeaponCard.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\GameBoard.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Furnace.java
@@ -59,12 +64,15 @@ C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\i
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Shotgun.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\Model.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Shockwave.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Reload.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\TagbackGranade.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\TargettingScope.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\View\PrivateConnection.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\Shoot.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\provaMetodi.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\JustAmmo.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\power_up_cards\PowerUpCard.java
+C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Controller\HandlePowerUp.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\PowerGlow.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\weapon_cards\Flamethrower.java
 C:\Users\gabri\IdeaProjects\ing-sw-2019-gallotti-gianchino-guidi\src\main\java\it\polimi\deib\se2018\adrenalina\Model\Adrenalized2.java
