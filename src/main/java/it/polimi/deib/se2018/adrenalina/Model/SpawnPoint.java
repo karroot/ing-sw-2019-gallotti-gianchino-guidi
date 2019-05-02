@@ -77,6 +77,6 @@ public class SpawnPoint extends Square
     public void addNewWeapon ()
     {
         GameBoard tempGame = getGameBoard();
-        weaponCardList.add(tempGame.getWeaponCard());
+        weaponCardList.add(tempGame.drawWeaponCard());
     }
 }

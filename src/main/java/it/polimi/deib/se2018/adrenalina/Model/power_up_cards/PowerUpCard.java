@@ -33,6 +33,10 @@ public abstract class PowerUpCard
         player = null;
     }
 
+    public PowerUpCard() {
+
+    }
+
     /**
      * this card belong now at a player
      * @param player player that noe he has the card
