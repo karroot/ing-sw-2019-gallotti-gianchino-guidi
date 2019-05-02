@@ -20,7 +20,7 @@ public class TargettingScope extends PowerUpCard implements DoDamage
      */
     public void doDamage(Player player)
     {
-        TargettingScope.super.getPlayer().doDamage(player.getColor());
+       player.doDamage(TargettingScope.super.getPlayer().getColor());
     }
 
 }
