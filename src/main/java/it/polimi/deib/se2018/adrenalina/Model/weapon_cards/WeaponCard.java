@@ -15,7 +15,7 @@ public abstract class WeaponCard {
 
     String name;
 
-    private Player player;
+    protected Player player;
 
     protected Color color;
 
@@ -28,9 +28,12 @@ public abstract class WeaponCard {
     protected boolean isLoaded;
 
 
-    public WeaponCard()
+    public WeaponCard(String name, Color color, int weaponID, boolean isLoaded)
     {
-
+        this.name = name;
+        this.color = color;
+        this.weaponID = weaponID;
+        this.isLoaded = isLoaded;
     }
 
     public int getRedAmmoCost() {
@@ -45,18 +48,29 @@ public abstract class WeaponCard {
         return blueAmmoCost;
     }
 
-    public void basicEffect()
-    {
-
-    }
-
     public String getName()
     {
         return name;
     }
 
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
+    }
+
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

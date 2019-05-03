@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author giovanni
- * This class implements a point where the player can spawn from.
+ * This class implements a point where the player can spawn from
  */
 
 public class SpawnPoint extends Square

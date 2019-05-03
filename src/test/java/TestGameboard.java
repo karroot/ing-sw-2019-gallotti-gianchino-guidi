@@ -1,6 +1,5 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.NegativeCounter;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 import java.util.Stack;
@@ -42,18 +41,6 @@ public class TestGameboard
     @Test
     public void InizializeSkull()
     {
-
-
-
-        try
-        {
-            test.setSkullCounter(-3); //Test for launching exception
-            fail();
-        }
-        catch (NegativeCounter e)
-        {
-            System.out.println("fine");
-        }
 
 
 
