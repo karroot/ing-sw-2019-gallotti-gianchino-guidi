@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public abstract class Square
 
     public List<Player> getPlayerList()
     {
-        return playerList;
+        return new ArrayList<>(playerList);
     }
 
     public GameBoard getGameBoard()

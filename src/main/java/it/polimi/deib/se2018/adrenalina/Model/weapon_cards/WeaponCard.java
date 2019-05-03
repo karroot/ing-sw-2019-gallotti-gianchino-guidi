@@ -28,23 +28,35 @@ public abstract class WeaponCard {
     protected boolean isLoaded;
 
 
-    public WeaponCard(String name, Color color, int weaponID, boolean isLoaded)
+    /**
+     *
+     * @param color
+     * @param weaponID
+     * @param isLoaded
+     * @exception NullPointerException if color is null
+     */
+    public WeaponCard(Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
-        this.name = name;
+        if (color == null)
+            throw new  NullPointerException("colore nullo");
+
         this.color = color;
         this.weaponID = weaponID;
         this.isLoaded = isLoaded;
     }
 
-    public int getRedAmmoCost() {
+    public int getRedAmmoCost()
+    {
         return redAmmoCost;
     }
 
-    public int getYellowAmmoCost() {
+    public int getYellowAmmoCost()
+    {
         return yellowAmmoCost;
     }
 
-    public int getBlueAmmoCost() {
+    public int getBlueAmmoCost()
+    {
         return blueAmmoCost;
     }
 
@@ -53,11 +65,13 @@ public abstract class WeaponCard {
         return name;
     }
 
-    public boolean isLoaded() {
+    public boolean isLoaded()
+    {
         return isLoaded;
     }
 
-    public void setLoaded(boolean loaded) {
+    public void setLoaded(boolean loaded)
+    {
         isLoaded = loaded;
     }
 
@@ -66,11 +80,13 @@ public abstract class WeaponCard {
         this.name = name;
     }
 
-    public Player getPlayer() {
+    public Player getPlayer()
+    {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(Player player)
+    {
         this.player = player;
     }
 }

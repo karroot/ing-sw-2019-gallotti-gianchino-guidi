@@ -14,9 +14,17 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
     private boolean[] avaiableMethod = new boolean[2];
 
 
-    public Shotgun(String name, Color color, int weaponID, boolean isLoaded)
+    /**
+     * Create the card shotgun
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public Shotgun(Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
-        super(name, color, weaponID, isLoaded);
+        super(color, weaponID, isLoaded);
+        this.name = "Shotgun";
         yellowAmmoCost = 2;
         blueAmmoCost = 0;
         redAmmoCost = 0;
@@ -29,9 +37,12 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
 
     }
 
-    public void doDamage()
-    {
 
+    @Override
+    public void doDamage(Player player, int quantity)
+    {
+        for (int i = 0; i < quantity; i++)
+            player.doDamage(player.getColor());
     }
 
     /**
@@ -42,15 +53,15 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
     public boolean[] checkAvaliableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false;
+        avaiableMethod[0] = false; //I suppose that the modes can't be used
         avaiableMethod[1] = false;
 
-        if (isLoaded() && player.getSquare().getPlayerList().size() > 1)
+        if (isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
             avaiableMethod[0] = true;
 
-        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)
+        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//If the second mode can be used
             avaiableMethod[1] = true;
 
 
@@ -59,15 +70,43 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
 
     }
 
+    /**
+     * Return the list of all target available for using the basic mode of this weapon
+     * @return all player that can be affected with the shotgun in basic mode
+     */
+    public List<Player> checkBasicMode()
+    {
+        List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
+
+        playerList.remove(player); //Remove from targets the player that shoot
+
+        return playerList;//Returns all targets
+    }
+
     public void basicMode(Player player, boolean move, int x,int y)
     {
 
     }
 
-    public void inLongBarrelMode(Player player)
+    /**
+     * Return the list of all target available for using the alternative mode of this weapon
+     * @return all player that can be affected with the shotgun in alternative mode
+     */
+    public List<Player> checkInLongBarrelMode()
     {
 
+            Set<Player> playerList = MethodsWeapons.playersReachable(player.getSquare(),1);//Obtain player reachable
+
+            playerList.remove(player);
+
+            return new ArrayList<>(playerList);
     }
+
+    public void inLongBarrelMode(Player player)
+    {
+        doDamage(player,2);
+    }
+
 
 
 }
