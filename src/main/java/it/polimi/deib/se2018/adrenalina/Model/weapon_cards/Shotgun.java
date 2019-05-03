@@ -2,6 +2,8 @@ package it.polimi.deib.se2018.adrenalina.Model.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
 
@@ -32,9 +34,17 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
     }
 
     @Override
-    public void moveTarget()
+    public void moveTarget(Player player,int x,int y) throws SquareNotInGameBoard
     {
+        Square square = player.getSquare().getGameBoard().getArena().getSquare(x, y);//obtain the square with coordinate x and y
 
+        player.getSquare().removePlayer(player);//Remove the player from his square
+
+        //Update Room
+
+        player.setSquare(square);//Add the new square on player
+
+        square.addPlayer(player); //Add the player on the new square
     }
 
 
@@ -83,9 +93,39 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
         return playerList;//Returns all targets
     }
 
-    public void basicMode(Player player, boolean move, int x,int y)
+    /**
+     * Calculate in which square a player can be moved using the basic mode
+     * @param player player to move
+     * @return Set of all square corrects
+     */
+    public Set<Square> checkMoveBasicMode(Player player)
     {
+        Square square = player.getSquare();
 
+        Set<Square> squares = square.getGameBoard().getArena().squareReachableNoWall(square.getX(),square.getY(),1);//Obtain all the player that they are in same square
+
+        squares.remove(square); //Remove from targets the square where the player is located
+
+        return squares;//Returns squares
+    }
+
+    /**
+     * It uses the basic mode of the shotgun
+     * @param player player affected by weapon
+     * @param move if the player decided to move the target
+     * @param x coordinate x of the square where to move the player
+     * @param y coordinate x of the square where to move the player
+     * @throws SquareNotInGameBoard if coordinate are wrong
+     */
+    public void basicMode(Player player, boolean move, int x,int y) throws SquareNotInGameBoard
+    {
+        doDamage(player,3);
+
+        if (move)//If the player with shotgun decided to move the target
+        {
+
+            moveTarget(player,x,y);//Move the target
+        }
     }
 
     /**
@@ -97,14 +137,18 @@ public class Shotgun extends WeaponCard implements DoDamage, MoveTarget
 
             Set<Player> playerList = MethodsWeapons.playersReachable(player.getSquare(),1);//Obtain player reachable
 
-            playerList.remove(player);
+            playerList.remove(player);//Remove from targets the player that shoot
 
-            return new ArrayList<>(playerList);
+            return new ArrayList<>(playerList); //Returns all targets
     }
 
+    /**
+     * It uses the alternative mode of the shotgun
+     * @param player player affected by weapon
+     */
     public void inLongBarrelMode(Player player)
     {
-        doDamage(player,2);
+        doDamage(player,2); //Do two damage at a player
     }
 
 
