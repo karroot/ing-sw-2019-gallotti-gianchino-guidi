@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Square
@@ -42,6 +43,7 @@ public abstract class Square
         this.gameBoard = gameBoard;
         this.color = color;
         this.side = side;
+        this.playerList= new LinkedList<>();
     }
 
 
