@@ -29,7 +29,8 @@ public class TestGameboard {
     private int arena = 1;
     private int skullCounter;
     private Stack<AmmoTiles> ammoTilesStack;
-    private ColorId Red;
+
+
     private Stack<PowerUpCard> powerUpCardStack = new Stack<>();
     private Teleporter teleport = new Teleporter(Color.RED,1);
     private TargettingScope scope= new TargettingScope(Color.BLUE,2);
@@ -60,44 +61,75 @@ public class TestGameboard {
 
     @Test
     public void InizializeSkull() {
-        try {
+
+
+            test.setSkullCounter(5);
+
+            assertNotEquals(test.getSkullCounter(),2);
+        assertEquals(test.getSkullCounter(),5);
+        try
+        {
             test.setSkullCounter(-3);
+            fail();
         } catch (IllegalArgumentException e) {
-            System.out.println("ok1");
+            System.out.println("SkullTestOK");
         }
+
     }
     @Test
     public void InizializeKillShotTrack() {
+
+        test.setKillShotTrack(ColorId.YELLOW, 2);
+        test.setKillShotTrack(ColorId.GREY, 1);
+        assertEquals(test.getKillShotPlayer(test.getKillShotTrack(0)),ColorId.YELLOW );
+        assertEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),2 );
+
+        assertEquals(test.getKillShotPlayer(test.getKillShotTrack(1)),ColorId.GREY );
+        assertEquals(test.getKillShotPointCounter(test.getKillShotTrack(1)),1 );
+
+        assertNotEquals(test.getKillShotPlayer(test.getKillShotTrack(1)),ColorId.PURPLE );
+        assertNotEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),1 );
+
         try {
-            test.setKillShotTrack(Red, 0);
+            test.setKillShotTrack(ColorId.GREEN, 0);
+            fail();
         } catch (IllegalArgumentException e) {
-            System.out.println("ok2");
+            System.out.println("KillShotTrackOK");
         }
+
     }
     @Test
     public void InizializePowerUpStack() {
-        try
-        {
-            for (int i=0; i < 3 ; i++)
+
+            for (int i=0; i < 1 ; i++)
             {
                 test.drawPowerUpCard();
             }
-
+        assertFalse(test.getPowerUpCardStack().isEmpty());
+            test.drawPowerUpCard();
+        assertTrue(test.getPowerUpCardStack().isEmpty());
+        try
+        {   test.drawPowerUpCard();
+            fail();
         } catch (NullPointerException e) {
-            System.out.println("ok3");
+            System.out.println("PowerUpStackOK");
         }
     }
 @Test
     public void InizializeWeaponStack() {
-        try
-        {
-            for (int i=0; i < 3 ; i++)
+
+            for (int i=0; i < 1 ; i++)
             {
                 test.drawWeaponCard();
             }
-
+            assertFalse(test.getWeaponCardStack().isEmpty());
+            test.drawWeaponCard();
+            assertTrue(test.getWeaponCardStack().isEmpty());
+            try
+            { test.drawWeaponCard();
+            fail();
         } catch (NullPointerException e) {
-            System.out.println("ok4");
+            System.out.println("WeaponStackOK");
         }
     }
 }
