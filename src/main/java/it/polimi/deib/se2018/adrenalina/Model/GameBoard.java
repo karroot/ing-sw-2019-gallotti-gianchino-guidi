@@ -91,13 +91,13 @@ public class GameBoard {
      *It Return the first card of the weaponCard deck and remove it from the deck
      * @return
      */
-    public WeaponCard drawWeaponCard() {
+    public WeaponCard drawWeaponCard() throws NullPointerException {
         if (!weaponCardStack.isEmpty()) {
             WeaponCard pop = weaponCardStack.pop();
             return pop;
         }
         else {
-            return null;
+            throw new NullPointerException("deck is empty");
         }
     }
 
@@ -113,13 +113,13 @@ public class GameBoard {
      *It Return the first card of the powerUpCard deck and remove it from the deck
      * @return
      */
-    public PowerUpCard drawPowerUpCard() {
+    public PowerUpCard drawPowerUpCard() throws NullPointerException {
         if (!powerUpCardStack.isEmpty()) {
             PowerUpCard pop = powerUpCardStack.pop();
             return pop;
         }
         else {
-            return null;
+            throw new NullPointerException("deck is empty");
         }
     }
 
@@ -153,11 +153,19 @@ public class GameBoard {
      * it reduce the counter of skull when a player die
      * @param skullCounter
      */
+
     public void setSkullCounter(int skullCounter) throws IllegalArgumentException{
         if(skullCounter<0){
             throw new IllegalArgumentException("negative value of skullCounter is not accepted");
         }
         else this.skullCounter = skullCounter;
+    }
+    /**
+     * It set the weapon card stack when it gets empty
+     * @param weaponCardStack The new deck that fill the stack
+     */
+    public void setWeaponCardStack(Stack<WeaponCard> weaponCardStack) {
+        this.weaponCardStack = weaponCardStack;
     }
 
     /**
@@ -165,8 +173,11 @@ public class GameBoard {
      * @param player define the player that had made the kill
      * @param counter define how many point you should add
      */
-    public void setKillShotTrack( ColorId player, int counter)
+    public void setKillShotTrack( ColorId player, int counter) throws  IllegalArgumentException
     {
+        if (counter < 1)
+            throw new IllegalArgumentException("less than 0 value of killshottrack is not accepted");
+
         this.killShotTrack.add(new Track(player,counter));
     }
 
