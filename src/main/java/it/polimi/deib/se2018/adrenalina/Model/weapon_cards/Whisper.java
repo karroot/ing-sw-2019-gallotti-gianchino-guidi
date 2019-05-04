@@ -41,9 +41,8 @@ public class Whisper extends WeaponCard implements DoDamage, MarkTarget
 
     }
 
-    public void markTarget()
-    {
+    @Override
+    public void MarkTarget(Player player, int quantity) {
 
     }
-
 }

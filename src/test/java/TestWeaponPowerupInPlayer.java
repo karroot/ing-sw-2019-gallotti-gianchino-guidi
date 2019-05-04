@@ -1,4 +1,4 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
+/*import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Newton;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
@@ -237,3 +237,4 @@ public class TestWeaponPowerupInPlayer
 
     }
 }
+*/

@@ -21,14 +21,13 @@ public class PowerGlow extends WeaponCard implements DoDamage, MarkTarget, MoveY
 
     }
 
-    public void markTarget()
-    {
+    @Override
+    public void MarkTarget(Player player, int quantity) {
 
     }
 
-    public void moveYourself()
-    {
+    @Override
+    public void moveYourself() {
 
     }
-
 }

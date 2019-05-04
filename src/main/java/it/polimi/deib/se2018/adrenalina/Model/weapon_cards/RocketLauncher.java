@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
 
@@ -16,8 +17,8 @@ public class RocketLauncher extends WeaponCard implements MoveTarget, DoDamage
         redAmmoCost = 2;
     }
 
-    public void moveTarget()
-    {
+    @Override
+    public void moveTarget(Player player, int x, int y) throws SquareNotInGameBoard {
 
     }
 
