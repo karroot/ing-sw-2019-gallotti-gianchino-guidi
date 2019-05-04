@@ -1,4 +1,4 @@
-/*import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Newton;
 import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
+
 import java.util.List;
 
 public class TestWeaponPowerupInPlayer
@@ -19,10 +20,10 @@ public class TestWeaponPowerupInPlayer
 
     private Square s = new AmmoPoint(1,1,null,ColorRoom.WHITE,null);
 
-    private WeaponCard w1 = new Cyberblade();
-    private WeaponCard w2 = new EletroSchyte();
-    private WeaponCard w3 = new Flamethrower();
-    private WeaponCard w4 = new Furnace();
+    private WeaponCard w1 = new Cyberblade(Color.RED,0,true);
+    private WeaponCard w2 = new EletroSchyte(Color.RED,1,true);
+    private WeaponCard w3 = new Flamethrower(Color.RED,2,true);
+    private WeaponCard w4 = new Furnace(Color.RED,4,true);
 
     private PowerUpCard p1 = new Newton(Color.YELLOW,1);
     private PowerUpCard p2 = new Teleporter(Color.YELLOW,2);
@@ -237,4 +238,3 @@ public class TestWeaponPowerupInPlayer
 
     }
 }
-*/

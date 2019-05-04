@@ -228,40 +228,37 @@ public class Player
     /**
      * Set tne number of blue ammo
      * @param ammoYellow
-     * @exception IllegalArgumentException If ammoYellow isn't 0,1,2,3
      */
     public void setAmmoYellow(int ammoYellow)
     {
-        if (ammoYellow < 0 || ammoYellow > 3)
-            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoYellow);
-
-        this.ammoYellow = ammoYellow;
+        if (this.ammoYellow + ammoYellow > 3)
+            this.ammoYellow = 3;
+        else
+            this.ammoYellow = ammoYellow;
     }
 
     /**
      * Set tne number of blue ammo
      * @param ammoRed
-     * @exception IllegalArgumentException If ammoRed isn't 0,1,2,3
      */
     public void setAmmoRed(int ammoRed)
     {
-        if (ammoRed < 0 || ammoRed > 3)
-            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoRed);
-
-        this.ammoRed = ammoRed;
+        if (this.ammoRed + ammoRed > 3)
+            this.ammoRed = 3;
+        else
+            this.ammoRed = ammoRed;
     }
 
     /**
      * Set tne number of blue ammo
      * @param ammoBlue
-     * @exception IllegalArgumentException If ammoBlue isn't 0,1,2,3
      */
-    public void setAmmoBlue(int ammoBlue) throws IllegalArgumentException
+    public void setAmmoBlue(int ammoBlue)
     {
-        if (ammoBlue < 0 || ammoBlue > 3)
-            throw new IllegalArgumentException("Numero munizioni non valido: "+ ammoBlue);
-
-        this.ammoBlue = ammoBlue;
+        if (this.ammoBlue + ammoBlue > 3)
+            this.ammoBlue = 3;
+        else
+            this.ammoBlue = ammoBlue;
     }
 
     /**

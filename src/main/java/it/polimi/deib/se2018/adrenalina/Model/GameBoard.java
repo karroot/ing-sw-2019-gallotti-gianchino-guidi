@@ -45,7 +45,7 @@ public class GameBoard {
 
     private List<Room> roomList;
 
-    private Graph arena; // remember to change in UML
+    private Graph arena;
 
     private int skullCounter;
 
