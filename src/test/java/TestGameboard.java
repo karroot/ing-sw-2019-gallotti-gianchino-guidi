@@ -78,23 +78,24 @@ public class TestGameboard {
     }
     @Test
     public void InizializeKillShotTrack() {
+
+        test.setKillShotTrack(ColorId.YELLOW, 2);
+        test.setKillShotTrack(ColorId.GREY, 1);
+        assertEquals(test.getKillShotPlayer(test.getKillShotTrack(0)),ColorId.YELLOW );
+        assertEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),2 );
+
+        assertEquals(test.getKillShotPlayer(test.getKillShotTrack(1)),ColorId.GREY );
+        assertEquals(test.getKillShotPointCounter(test.getKillShotTrack(1)),1 );
+
+        assertNotEquals(test.getKillShotPlayer(test.getKillShotTrack(1)),ColorId.PURPLE );
+        assertNotEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),1 );
+
         try {
-            test.setKillShotTrack(ColorId.YELLOW, 2);
-            test.setKillShotTrack(ColorId.YELLOW, 2);
-            test.setKillShotTrack(ColorId.GREY, 1);
             test.setKillShotTrack(ColorId.GREEN, 0);
             fail();
         } catch (IllegalArgumentException e) {
             System.out.println("KillShotTrackOK");
         }
-       //assertEquals(test.getKillShotTrack(0).getPlayer,ColorId.YELLOW );
-        //assertEquals(test.getKillShotTrack(0).getCounter,2 );
-
-        //assertEquals(test.getKillShotTrack(1).getPlayer,ColorId.GREY );
-        //assertEquals(test.getKillShotTrack(0).getCounter,1 );
-
-        //assertNotEquals(test.getKillShotTrack(1).getPlayer,ColorId.PURPLE );
-        //assertEquals(test.getKillShotTrack(0).getCounter,1 );
 
     }
     @Test

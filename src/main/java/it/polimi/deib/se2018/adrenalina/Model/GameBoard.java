@@ -137,6 +137,13 @@ public class GameBoard {
         return killShotTrack.get(index);
     }
 
+    public ColorId getKillShotPlayer(Track kill) {
+        return kill.getPlayer();
+    }
+
+    public int getKillShotPointCounter(Track kill) {
+        return kill.getPointCounter();
+    }
     //Setter
     //-----------------------------
 
