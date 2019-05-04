@@ -72,6 +72,7 @@ public class MachineGun extends WeaponCard implements DoDamage
         if (player1.equals(player2))
             throw new IllegalArgumentException("player1 must be different from player2");
         doDamage(player1,1);
+        if (player2!= null)
         doDamage(player2,1);
 
     }
