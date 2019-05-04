@@ -79,7 +79,7 @@ public class GameBoard {
     //-----------------------------
     public List<Room> getRoomList()
     {
-        return roomList;
+        return new ArrayList<>(roomList);
     }
 
     public  Graph getArena()
