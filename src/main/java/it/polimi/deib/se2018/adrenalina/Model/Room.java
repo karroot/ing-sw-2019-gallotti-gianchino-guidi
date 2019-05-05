@@ -32,14 +32,31 @@ public class Room
      *
      * @return a list of all the player in a room. Useful for certain weapons.
      */
-    public List<Player> getPlayerRoomList ()
+    public void updatePlayerRoomList ()
     {
         playerRoomList = new LinkedList<>(); //initialize the list
         for (Square square: squareList) //iterates in the square of the room to find the players
         {
             playerRoomList.addAll(square.getPlayerList());
         }
+    }
+
+    /**
+     * //todo
+     * @return
+     */
+    public List<Player> getPlayerRoomList ()
+    {
         return playerRoomList;
+    }
+
+    /**
+     * //todo
+     * @param player
+     */
+    public void removePlayerFromRoomList (Player player)
+    {
+        playerRoomList.remove(player);
     }
 
     /**

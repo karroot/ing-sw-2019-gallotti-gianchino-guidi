@@ -27,7 +27,7 @@ public class AmmoPoint extends Square
 
 
     /**
-     * This method draw the AmmoTiles card that is on the point, and it sets the ammoTiles of the point to null
+     * This method draws and uses the AmmoTiles card that is on the point, and it sets the ammoTiles of the point to null
      *
      * @param player is who will get the ammo and the powerup if present
      * @return the AmmoTiles that is used
@@ -48,6 +48,16 @@ public class AmmoPoint extends Square
     {
         GameBoard tempGame = getGameBoard();
         ammoTiles = tempGame.getAmmoTilesStack().pop();
+
+    }
+
+    /**
+     * /todo
+     * @param ammoTiles
+     */
+    public void setAmmoTiles (AmmoTiles ammoTiles)
+    {
+        this.ammoTiles=ammoTiles;
     }
 
 

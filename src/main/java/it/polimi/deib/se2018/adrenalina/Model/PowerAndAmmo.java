@@ -24,6 +24,7 @@ public class PowerAndAmmo implements AmmoTiles
     private int ammoCardID;
     private Color singleAmmo;
     private Color secondSingleAmmo;
+    private PowerUpCard powerUpCard;
     //private PowerUpCard powerUpCard; NB we do not use this but we must draw a powerup card when we draw this card
 
 
@@ -32,12 +33,14 @@ public class PowerAndAmmo implements AmmoTiles
      * @param ammoCardID is the unique int that identifies a single card. We will use the same ID that are in the file containings the images of the cards
      * @param singleAmmo indicates the first ammo drawn
      * @param secondSingleAmmo indicates the second ammo drawn
+     *                         //todo document
      */
     public PowerAndAmmo(int ammoCardID, Color singleAmmo, Color secondSingleAmmo, PowerUpCard powerUpCard)
     {
         this.ammoCardID=ammoCardID;
         this.singleAmmo=singleAmmo;
         this.secondSingleAmmo=secondSingleAmmo;
+        this.powerUpCard = powerUpCard;
 
     }
 
@@ -80,7 +83,10 @@ public class PowerAndAmmo implements AmmoTiles
             player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
-        //todo player.addPowerUp();
+        if (player.getPowerupCardList().size() < 3)
+        {
+            player.addPowerUp(powerUpCard);
+        }
     }
 
 

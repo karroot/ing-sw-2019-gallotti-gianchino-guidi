@@ -34,6 +34,14 @@ public class SpawnPoint extends Square
     }
 
     /**
+     * //todo
+     * @param weaponCardList
+     */
+    public void setWeaponCardList(List<WeaponCard> weaponCardList) {
+        this.weaponCardList = weaponCardList;
+    }
+
+    /**
      * This is the getter for the WeaponCardList
      * @return the list of weapons
      */
@@ -76,7 +84,6 @@ public class SpawnPoint extends Square
      */
     public void addNewWeapon ()
     {
-        GameBoard tempGame = getGameBoard();
-        weaponCardList.add(tempGame.drawWeaponCard());
+        weaponCardList.add(getGameBoard().drawWeaponCard());
     }
 }

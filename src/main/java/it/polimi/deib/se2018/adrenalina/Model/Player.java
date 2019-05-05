@@ -283,7 +283,7 @@ public class Player
     public void setSquare(Square square) throws NullPointerException
     {
         if (square == null)
-            throw new NullPointerException("Parametro square nullo");
+           throw new NullPointerException("Parametro square nullo");
 
         this.square = square;
     }
@@ -360,7 +360,7 @@ public class Player
         if (powerupCard == null) //Check not null
             throw new NullPointerException("Parametro powerupCard è nullo");
 
-        if (powerupCardList.size() < 3) //If player has not 3 weapons
+        if (powerupCardList.size() < 3) //If player has not 3 powerup cards
             powerupCardList.add(powerupCard);//Add power up to the list
         else
             throw new IllegalStateException("Player ha già tre carte powerup"); //Launch exceptions

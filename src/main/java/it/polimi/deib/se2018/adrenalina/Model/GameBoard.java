@@ -156,6 +156,20 @@ public class GameBoard {
         this.powerUpCardStack = powerUpCardStack;
     }
 
+
+    /**
+     * //todo
+     * @param ammoTilesStack
+     */
+    public void setAmmoTilesStack(Stack<AmmoTiles> ammoTilesStack)
+    {
+        this.ammoTilesStack = ammoTilesStack;
+    }
+
+
+
+
+
     /**
      * it reduce the counter of skull when a player die
      * @param skullCounter
