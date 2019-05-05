@@ -78,4 +78,90 @@ public class TestCalculateScore
         assertEquals(9,scores.get(ColorId.PURPLE).intValue());
         assertEquals(4,scores.get(ColorId.GREY).intValue());
     }
+
+    @Test
+    public void test5playerNoParity()
+    {
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.PURPLE);
+
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+
+        test.doDamage(ColorId.YELLOW);
+
+        test.doDamage(ColorId.GREEN);
+
+        Map<ColorId, Integer> scores = test.calculateScoreForEachPlayer();
+
+
+        assertEquals(6,scores.get(ColorId.GREY).intValue());
+        assertEquals(8,scores.get(ColorId.BLUE).intValue());
+        assertEquals(5,scores.get(ColorId.PURPLE).intValue());
+        assertEquals(2,scores.get(ColorId.YELLOW).intValue());
+        assertEquals(1,scores.get(ColorId.GREEN).intValue());
+    }
+
+    @Test
+    public void test5playerParity()
+    {
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.PURPLE);
+
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.GREY);
+
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.BLUE);
+
+        test.doDamage(ColorId.YELLOW);
+
+        test.doDamage(ColorId.GREEN);
+
+        Map<ColorId, Integer> scores = test.calculateScoreForEachPlayer();
+
+
+        assertEquals(8,scores.get(ColorId.GREY).intValue());
+        assertEquals(6,scores.get(ColorId.BLUE).intValue());
+        assertEquals(5,scores.get(ColorId.PURPLE).intValue());
+        assertEquals(2,scores.get(ColorId.YELLOW).intValue());
+        assertEquals(1,scores.get(ColorId.GREEN).intValue());
+    }
+
+    @Test
+    public void test4playerAllParity()
+    {
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.YELLOW);
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.YELLOW);
+        test.doDamage(ColorId.PURPLE);
+        test.doDamage(ColorId.GREY);
+        test.doDamage(ColorId.BLUE);
+        test.doDamage(ColorId.YELLOW);
+
+
+        Map<ColorId, Integer> scores = test.calculateScoreForEachPlayer();
+
+
+        assertEquals(6,scores.get(ColorId.GREY).intValue());
+        assertEquals(4,scores.get(ColorId.BLUE).intValue());
+        assertEquals(9,scores.get(ColorId.PURPLE).intValue());
+        assertEquals(2,scores.get(ColorId.YELLOW).intValue());
+
+    }
 }

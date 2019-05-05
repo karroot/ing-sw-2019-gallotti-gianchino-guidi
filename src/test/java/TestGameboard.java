@@ -57,7 +57,6 @@ public class TestGameboard {
 
     }
 
-    @After
 
     @Test
     public void InizializeSkull() {

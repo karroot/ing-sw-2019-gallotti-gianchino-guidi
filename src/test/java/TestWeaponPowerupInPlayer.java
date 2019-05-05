@@ -191,50 +191,34 @@ public class TestWeaponPowerupInPlayer
 
         //Test set and get ammo
 
-        test.setAmmoBlue(3);
+        test.setAmmoBlue(2);
 
+        assertEquals(2,test.getAmmoBlue());
+
+
+        test.setAmmoBlue(100);
         assertEquals(3,test.getAmmoBlue());
 
-        try
-        {
-            test.setAmmoBlue(100);
-            fail();
-        }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals(3,test.getAmmoBlue());
 
-        }
+        test.setAmmoRed(2);
 
-        test.setAmmoRed(3);
+        assertEquals(2,test.getAmmoRed());
+
+        test.setAmmoRed(100);
+
 
         assertEquals(3,test.getAmmoRed());
 
-        try
-        {
-            test.setAmmoRed(100);
-            fail();
-        }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals(3,test.getAmmoRed());
+        test.setAmmoYellow(2);
 
-        }
+        assertEquals(2,test.getAmmoYellow());
 
-        test.setAmmoYellow(3);
 
+
+        test.setAmmoYellow(100);
         assertEquals(3,test.getAmmoYellow());
 
-        try
-        {
-            test.setAmmoYellow(100);
-            fail();
-        }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals(3,test.getAmmoYellow());
 
-        }
 
     }
 }

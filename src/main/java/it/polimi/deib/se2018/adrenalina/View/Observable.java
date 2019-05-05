@@ -3,7 +3,8 @@ package it.polimi.deib.se2018.adrenalina.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Observable<T> {
+public class Observable<T>
+{
 	
 	private List<Observer<T>> observers = new ArrayList<Observer<T>>();
 	

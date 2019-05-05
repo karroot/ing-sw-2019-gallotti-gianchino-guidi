@@ -1,13 +1,19 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class NetworkHandler extends Thread
 {
+    //Socket attributes
     private Socket clientSocket;
-    ObjectOutputStream out = null;
+    private ObjectOutputStream out = null;
+    private ObjectInputStream in = null;
+
+    //RMI attributes
 
 
 
@@ -17,24 +23,30 @@ public class NetworkHandler extends Thread
 
     }
 
-    public void startConnectionSocket(String ip, int port)  throws UnknownHostException
+    public void startConnectionSocket(String ip, int port)  throws UnknownHostException, IOException
     {
-
-
-          //  clientSocket = new Socket(ip, port);
-
-
+        clientSocket = new Socket(ip, port);
+        out = new ObjectOutputStream(clientSocket.getOutputStream());
+        in = new ObjectInputStream(clientSocket.getInputStream());
 
     }
 
-    public String sendMessageSocket(String msg)
+    public void sendMessageSocket(MessageSocket msg) throws IOException
     {
-
-        return msg;
+        out.writeObject(msg);
+        out.flush();
     }
 
-    public void stopConnectionSocket() {
+    public MessageSocket receiveMessageSocket() throws IOException, ClassNotFoundException
+    {
+        Object msg = in.readObject();
+        out.flush();
 
-       // clientSocket.close();
+        return (MessageSocket) msg;
+    }
+
+    public void stopConnectionSocket() throws IOException
+    {
+        clientSocket.close();
     }
 }
