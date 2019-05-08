@@ -1,8 +1,8 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.Cyberblade;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.Flamethrower;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.Furnace;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Cyberblade;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Flamethrower;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Furnace;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import org.junit.Before;
 import org.junit.Test;
 

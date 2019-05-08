@@ -1,12 +1,10 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
 import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 import static org.junit.Assert.assertEquals;

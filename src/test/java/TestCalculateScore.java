@@ -1,15 +1,7 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Newton;
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.TagbackGranade;
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.Teleporter;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.*;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
 import java.util.Map;
 

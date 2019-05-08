@@ -1,6 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 
 /**
  * This class implements the AmmoTile card that provides 2 ammo and a powerUP card.

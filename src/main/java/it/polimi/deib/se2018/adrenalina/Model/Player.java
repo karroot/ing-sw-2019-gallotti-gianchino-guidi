@@ -1,7 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -584,7 +584,8 @@ public class Player
 
 
     /**
-     * It returns all the players that this player can see also trough a door in other room
+     * It returns all the players that this player can see also trough a door in other rooms
+     * In the list there is also the player that can see the others
      * @param board Game board where there is the Room list of the arena
      * @return Players that He can see
      * @exception NullPointerException if board is null

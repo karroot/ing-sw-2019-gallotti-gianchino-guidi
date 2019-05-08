@@ -2,8 +2,8 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
 
-import it.polimi.deib.se2018.adrenalina.Model.power_up_cards.PowerUpCard;
-import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.*;
 

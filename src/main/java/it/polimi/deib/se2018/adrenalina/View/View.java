@@ -1,7 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.*;
+
+import java.rmi.Naming;
+import java.rmi.Remote;
 
 
 public class View
@@ -9,16 +11,38 @@ public class View
 
     /*
     Questa è la virtual view.
-
-    NB gestisce i turni
      */
+    private PrivateViewInterface c;
+
+    public View()
+    {
+        try
+        {
+            c = (PrivateViewInterface) Naming.lookup("rmi://localhost/myabc");
+            System.out.println("ok1");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     private ColorId playerOfRound;
 
 
     public void showMenu()
     {
+        try
+        {
+            c.showMenu();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
+        System.out.println("ok2");
     }
 
     public void newGame()
@@ -88,6 +112,14 @@ public class View
 
     public void showPlayerBoard()
     {
+
+    }
+
+    public static void main(String[] args)
+    {
+        View v = new View();
+
+        v.showMenu();
 
     }
 

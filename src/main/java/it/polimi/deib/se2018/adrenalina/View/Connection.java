@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import it.polimi.deib.se2018.adrenalina.View.*;
 
 public class Connection extends Observable<String> implements Runnable
 {
