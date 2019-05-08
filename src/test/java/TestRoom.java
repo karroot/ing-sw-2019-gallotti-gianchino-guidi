@@ -41,6 +41,10 @@ import java.util.List;
              }
          }
 
+         player1 = new Player(ColorId.GREY, null, null, true);
+         player1 = new Player(ColorId.PURPLE, null, null, false);
+         player1 = new Player(ColorId.BLUE, null, null, false);
+
      }
 
 
@@ -58,33 +62,27 @@ import java.util.List;
 
          assertTrue(roomTest.getPlayerRoomList().isEmpty());
 
-//todo errore
-         /*for (Square squareIterate: roomTest.getSquareList())
-         {
-             if (squareIterate.getX() == x1 && squareIterate.getY() == y1)
-             {
-                 player1.setSquare(squareIterate);
-             }
-             if (squareIterate.getX() == x2 && squareIterate.getY() == y2)
-             {
-                 player2.setSquare(squareIterate);
-             }
-             if (squareIterate.getX() == x3 && squareIterate.getY() == y3)
-             {
-                 player3.setSquare(squareIterate);
-             }
-         }
+//todo errore in pratica bisognerebbe aggiornare la lista dei player a mano! Si può fare in automatico?
+         player1.setSquare(roomTest.getSquareList().get(0));
+         roomTest.getSquareList().get(0).addPlayer(player1);
 
-
+         roomTest.updatePlayerRoomList();
 
          assertEquals(1, roomTest.getPlayerRoomList().size());
          assertTrue(roomTest.getPlayerRoomList().contains(player1));
 
-         player2.setSquare(square2);
-         player3.setSquare(square3);
+         player2.setSquare(roomTest.getSquareList().get(1));
+         player3.setSquare(roomTest.getSquareList().get(2));
+
+         roomTest.getSquareList().get(1).addPlayer(player2);
+         roomTest.getSquareList().get(2).addPlayer(player3);
+
          assertEquals(3, roomTest.getPlayerRoomList().size());
 
-*/
+         //getter di lista player?
+         //assertTrue(roomTest.getPlayerRoomList().containsAll(roomTest.getSquareList().));
+
+
 
      }
 

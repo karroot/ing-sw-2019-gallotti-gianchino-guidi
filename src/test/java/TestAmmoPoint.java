@@ -23,8 +23,8 @@ import static org.junit.Assert.assertEquals;
 public class TestAmmoPoint {
 
     AmmoPoint ammoPointTest;
-    GameBoard gameboard = new GameBoard(null,null,1,0,null);
-    Stack<AmmoTiles> ammoTilesStack = new Stack<>();
+    GameBoard gameboard;
+    Stack<AmmoTiles> ammoTilesStack;
     AmmoTiles ammoTiles1;
     AmmoTiles ammoTiles2;
     AmmoTiles ammoTiles3;
@@ -38,6 +38,8 @@ public class TestAmmoPoint {
     @Before
     public void setup()
     {
+        gameboard = new GameBoard(null,null,1,0,null);
+        ammoTilesStack = new Stack<>();
         ammoTiles1 = new JustAmmo(1, RED, BLUE);
         ammoTiles1 = new JustAmmo(2, YELLOW, BLUE);
         ammoTiles1 = new JustAmmo(3, RED, YELLOW);
@@ -65,7 +67,7 @@ public class TestAmmoPoint {
         int x = 1;
         int y = 1;
 
-        for (Room roomIterate:gameboard.getRoomList())
+        for (Room roomIterate:gameboard.getRoomList()) //i will search for the square of the graph with x and y fixed
         {
             for (Square squareIterate: roomIterate.getSquareList())
             {
