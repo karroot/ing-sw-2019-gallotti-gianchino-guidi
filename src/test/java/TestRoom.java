@@ -42,8 +42,8 @@ import java.util.List;
          }
 
          player1 = new Player(ColorId.GREY, null, null, true);
-         player1 = new Player(ColorId.PURPLE, null, null, false);
-         player1 = new Player(ColorId.BLUE, null, null, false);
+         player2 = new Player(ColorId.PURPLE, null, null, false);
+         player3 = new Player(ColorId.BLUE, null, null, false);
 
      }
 
@@ -76,6 +76,8 @@ import java.util.List;
 
          roomTest.getSquareList().get(1).addPlayer(player2);
          roomTest.getSquareList().get(2).addPlayer(player3);
+
+         roomTest.updatePlayerRoomList();
 
          assertEquals(3, roomTest.getPlayerRoomList().size());
 

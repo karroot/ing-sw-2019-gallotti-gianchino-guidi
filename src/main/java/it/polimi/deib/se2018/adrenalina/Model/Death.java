@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.weapon_cards.WeaponCard;
 import java.util.List;
 import java.util.Set;
 
-public class Death implements StatePlayer {
+public class Death extends StatePlayer {
 
 
     public void calculateScore() {
