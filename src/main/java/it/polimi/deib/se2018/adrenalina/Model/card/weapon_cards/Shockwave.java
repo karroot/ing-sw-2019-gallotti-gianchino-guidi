@@ -12,6 +12,13 @@ public class Shockwave extends WeaponCard
 
     private boolean[] avaiableMethod = new boolean[2];
 
+    /**
+     * Create the card shotgun
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
     public Shockwave( Color color, int weaponID, boolean isLoaded)
     {
         super( color, weaponID, isLoaded);
@@ -38,7 +45,7 @@ public class Shockwave extends WeaponCard
         if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 3 && MethodsWeapons.thereIsAPlayerInEachSquare(player))// the first mode can be used
             avaiableMethod[0] = true;
 
-        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//If the second mode can be used
+        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1 && player.getAmmoYellow() >=1)//If the second mode can be used
             avaiableMethod[1] = true;
 
 
@@ -98,6 +105,8 @@ public class Shockwave extends WeaponCard
         {
             doDamage(x,1);//Do one damage
         }
+
+        this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
 
         isLoaded = false;
     }
