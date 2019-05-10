@@ -4,9 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Cyberblade extends WeaponCard
@@ -46,39 +44,59 @@ public class Cyberblade extends WeaponCard
         avaiableMethod[1] = false;
         avaiableMethod[2] = false;
 
-        //If there are at least 3 players and one in each square
-        if (isLoaded() && player.getSquare().getPlayerList().size() > 1)// the first mode can be used
+
+        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//if the first mode can be used
              avaiableMethod[0] = true;
         else
             return avaiableMethod;
 
         avaiableMethod[1] = true;
 
-        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),2).size() > 2 && player.getAmmoYellow() >= 1)//If the second mode can be used
+        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 2 && player.getAmmoYellow() >= 1)//If the second mode can be used
             avaiableMethod[2] = true;
 
         return avaiableMethod;
     }
 
     /**
-     * Return the list of all target available for using the basic mode of this weapon
-     * @return all player that can be affected with the shotgun in basic mode
+     * Return a hash map with key the square and value a list of all player in that square
+     * There aren't squares without player
+     * It can become useful about the mode basic of cyberblade in some specially case of utilization
+     * In general this hash map contains all possible target for cyberblade
+     * @return all player that can be affected with the Cyberblade in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public Map<Integer[],List<Player>> checkBasicModeAllTargetPossible() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> target = player.getSquare().getPlayerList(); //Obtain all players that are in the same square where the player that has this weapon is located
+        Map<Integer[],List<Player>> result = new HashMap<>();
 
-        target.remove(player);//Remove the player that has this card
+        //Obtain all squares reachable at distance 1
+        Set<Square> squares = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
 
-        return new ArrayList<>(target);//Returns all targets
+
+        for (Square t:squares) //For each squares
+        {
+            if (!t.getPlayerList().isEmpty()) //If the square has some player
+            {
+                Integer[] coordinates = new Integer[2];//Save the coordinates
+                coordinates[0] = t.getX();
+                coordinates[1] = t.getY();
+
+                result.putIfAbsent(coordinates,t.getPlayerList()); //Add the square with the player at hash map
+            }
+
+        }
+
+        return result;
+
     }
 
     /**
      * Return the list of all squares available for using the effect "with shadowstep" of this weapon
+     * Only if this mode being used after the basic effect
      * @return all the square where the player can move
      * @exception IllegalStateException if the effect can't be used
      */
@@ -96,23 +114,7 @@ public class Cyberblade extends WeaponCard
         return new ArrayList<>(squares); //Returns all targets
     }
 
-    /**
-     * Return the list of all target available for using the "with slice and dice" effect of this weapon
-     * @return all player that can be affected with the Cyberblade  and the effect "with slice and dice"
-     * Return all possible players that can be targets also if the player will move in other square
-     * @exception IllegalStateException if the effect can't be used
-     */
-    public List<Player> checkWithSliceAndDice() throws IllegalStateException
-    {
-        if (!checkAvaliableMode()[2]) //check mode
-            throw  new IllegalStateException("Modalità sminuzzare dell'arma: "+name+" non eseguibile");
 
-        Set<Player> target = MethodsWeapons.playersReachable(player.getSquare(),2); //Obtain all players that can be targets
-
-        target.remove(player);//Remove the player that has this card
-
-        return new ArrayList<>(target);//Returns all targets
-    }
 
     /**
      * It uses the basic mode of the Cyberblade with additivity effects or not
@@ -132,9 +134,9 @@ public class Cyberblade extends WeaponCard
 
         boolean[] booleans = checkAvaliableMode();
 
-        while (i < orderEffect.length)
+        while (i < orderEffect.length)//Do the effects in order indicated by player in view
         {
-            if (orderEffect[i].equals("basic"))
+            if (orderEffect[i].equals("basic") && booleans[0])
                 doDamage(player,2);
             if (orderEffect[i].equals("with shadowstep") && booleans[1])
                 moveTarget(this.player,x,y);
@@ -144,8 +146,10 @@ public class Cyberblade extends WeaponCard
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
 
+            i++;
+
         }
 
-        isLoaded = false;
+        isLoaded = false; //Weapon now is out ammo
     }
 }

@@ -54,7 +54,7 @@ public class Newton extends PowerUpCard
 
         for (Square temp : squares) //For each square in all square reachable
         {
-            if (checkSquare(temp,x,y)) //Check if the square is valid for to use the newton card
+            if (checkSquareOneDirectionTwoMoves(temp,x,y)) //Check if the square is valid for to use the newton card
                 squaresCorrect.add(temp);//Add to the set to return
         }
 
@@ -64,7 +64,7 @@ public class Newton extends PowerUpCard
 
 
     //Check if the square "e" is located to North or East or South or West of the square with coordinates x and y
-    private boolean checkSquare(Square e, int x,int y)
+    private boolean checkSquareOneDirectionTwoMoves(Square e, int x,int y)
     {
         if ((x == e.getX() + 1 && y == e.getY() ) || (x == e.getX() + 2 && y == e.getY()))//If the square (x,y) is at north
             return true;
