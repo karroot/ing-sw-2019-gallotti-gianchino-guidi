@@ -9,7 +9,10 @@ import java.util.*;
 public class THOR extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[3];
-
+    private List<Player> listcChain;
+    private List<Player> listHighVoltage;
+    private int reach1=0; // number of the player that the enemy player see
+    private int reach2=0;
     public THOR( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
         yellowAmmoCost = 0;
@@ -24,12 +27,22 @@ public class THOR extends WeaponCard
         avaiableMethod[0] = false;
         avaiableMethod[1] = false;
         avaiableMethod[2] = false;
-
-        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>0)
+        for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+            reach1+=i.playerThatSee(i.getSquare().getGameBoard()).size();
+        }
+        for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+           for (Player j : i.playerThatSee(i.getSquare().getGameBoard()))
+           {
+               reach2+=j.playerThatSee(j.getSquare().getGameBoard()).size();
+           }
+        }
+        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[0] = true;
-        if (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>0)
+        if (isLoaded()&& player.getAmmoBlue()>0 && reach1 > 1 )
             avaiableMethod[1] = true;
-        if  (isLoaded()&& player.getAmmoBlue()>1 && player.playerThatSee(player.getSquare().getGameBoard()).size()>0)
+        if  (isLoaded()&& player.getAmmoBlue()>1 && reach2 >1)
             avaiableMethod[2] = true;
 
 
@@ -45,9 +58,12 @@ public class THOR extends WeaponCard
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkBasicMode()
+    public List<Player> checkBasicMode() throws  IllegalStateException
     {
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());//Obtain all the player that they are in same square
+        if (!checkAvaliableMode()[0])
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());
 
 
         return playerList;//Returns all targets
@@ -57,53 +73,79 @@ public class THOR extends WeaponCard
 
     /**
      * It uses the basic mode of the lock rifle
-     * @param player player affected by weapon
-     */
-    public void basicMode(Player player)
-    {
-        doDamage(player,2);
-    }
-    public List<Player> checkChainReaction()
-    {
-        return checkBasicMode();
-    }
-
-    /**
-     * It uses the basic mode of the lock rifle
      * @param player1 player affected by weapon
      * @param  player2 second player affected by weapon
      */
-    public void ChainReaction(Player player1 , Player player2) throws IllegalArgumentException
+    public void basicMode(Player player1 , Player player2 , Player player3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
     {
-        if (player1.equals(player2))
-            throw new IllegalArgumentException("player1 must be different from player2");
-        basicMode(player);
-        doDamage(player2,1);
+        doDamage(player1,2);
+        if(highVoltage==true && ChainReaction==false)
+            throw new IllegalArgumentException("you can't use highvoltage alone");
+        if(ChainReaction)
+        {
+            if (!checkAvaliableMode()[1])
+                throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-    }
-    public List<Player> checkHighVoltage()
+            if (player1.equals(player2))
+                throw new IllegalArgumentException("player1 must be different from player2");
+
+            doDamage(player2,1);
+            this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+            if(highVoltage)
+            {
+                if (!checkAvaliableMode()[2])
+                    throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
+                if (player1.equals(player2))
+                    throw new IllegalArgumentException("player1 must be different from player2");
+                if (player2.equals(player3))
+                    throw new IllegalArgumentException("player2 must be different from player3");
+                if (player1.equals(player3))
+                    throw new IllegalArgumentException("player1 must be different from player3");
+
+
+                doDamage(player3,2);
+                this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+            }
+
+        }
+        this.isLoaded = false;
+        }
+    public List<Player> checkChainReaction() throws  IllegalStateException
     {
-        return checkBasicMode();
+        if (!checkAvaliableMode()[1])
+            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
+        for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+          if(i.playerThatSee(i.getSquare().getGameBoard()).size() >0)
+          {
+              listcChain.add(i);
+          }
+        }
+        return listcChain;
     }
 
-    /**
-     * It uses the basic mode of the lock rifle
-     * @param player1 player affected by weapon
-     * @param  player2 second player affected by weapon
-     * @param  player3 third player affected by weapon
-     */
-    public void highVoltage(Player player1 , Player player2, Player player3) throws IllegalArgumentException
+
+
+    public List<Player> checkHighVoltage() throws  IllegalStateException
     {
-        if (player1.equals(player2))
-            throw new IllegalArgumentException("player1 must be different from player2");
-        if (player2.equals(player3))
-            throw new IllegalArgumentException("player2 must be different from player3");
-        if (player1.equals(player3))
-            throw new IllegalArgumentException("player1 must be different from player3");
-        ChainReaction(player1,player2);
+        if (!checkAvaliableMode()[2])
+            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        doDamage(player3,1);
-
+        for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+            for (Player j : i.playerThatSee(i.getSquare().getGameBoard()))
+            {
+                if(j.playerThatSee(j.getSquare().getGameBoard()).size()>0)
+                {
+                    listHighVoltage.add(j);
+                }
+            }
+        }
+        return listHighVoltage;
     }
+
+
 
 }

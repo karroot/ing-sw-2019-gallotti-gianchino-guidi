@@ -32,10 +32,10 @@ public class LockRifle extends WeaponCard
         avaiableMethod[0] = false;
         avaiableMethod[1] = false;
 
-        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>0)
+        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[0] = true;
 
-        if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>0)
+        if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[1] = true;
 
 
@@ -48,9 +48,12 @@ public class LockRifle extends WeaponCard
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkBasicMode()
+    public List<Player> checkBasicMode() throws  IllegalStateException
     {
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());//Obtain all the player that they are in same square
+        if (!checkAvaliableMode()[0])
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());
 
 
         return playerList;//Returns all targets
@@ -62,30 +65,36 @@ public class LockRifle extends WeaponCard
      * It uses the basic mode of the lock rifle
      * @param player player affected by weapon
      */
-    public void basicMode(Player player)
+    public void basicMode(Player player, boolean SecondLockMode) throws IllegalStateException
     {
+        if (!checkAvaliableMode()[0])
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        if(SecondLockMode)
+        {
+            if (!checkAvaliableMode()[1])
+                throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
+            markTarget(player,1);
+            this.player.setAmmoRed(this.player.getAmmoRed() - 1);
+        }
         doDamage(player,2);
         markTarget(player,1);
+        this.isLoaded = false;
     }
 
     /**
      * Return the list of all target available for using the alternative mode of this weapon
      * @return all player that can be affected with the lock rifle in alternative mode
      */
-    public List<Player> checkSecondLock()
+    public List<Player> checkSecondLock() throws  IllegalStateException
     {
+        if (!checkAvaliableMode()[1])
+            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
         return checkBasicMode();
     }
 
-    /**
-     * It uses the basic mode of the lock rifle
-     * @param player player affected by weapon
-     */
-    public void SecondLockMode(Player player)
-    {
-        basicMode(player);
-        markTarget(player,1);
-    }
 
 
 }

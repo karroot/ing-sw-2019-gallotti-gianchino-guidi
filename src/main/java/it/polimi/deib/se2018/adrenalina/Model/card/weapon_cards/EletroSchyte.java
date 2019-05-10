@@ -42,8 +42,11 @@ public class EletroSchyte extends WeaponCard
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the electroScythe in basic mode
      */
-    public List<Player> checkBasicMode()
+    public List<Player> checkBasicMode() throws IllegalStateException
     {
+        if (!checkAvaliableMode()[0])
+            throw  new IllegalStateException(" Modalità basic dell'arma: "+name+" non eseguibile");
+
         List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
 
         playerList.remove(player); //Remove from targets the player that shoot
@@ -54,19 +57,29 @@ public class EletroSchyte extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param playerList  list of player affected by weapon
+     * @param reaper boolean that indicates if second mode is active
      */
-    public void basicMode(List<Player> playerList)
+    public void basicMode(List<Player> playerList, boolean reaper)
     {
-        for(Player p:playerList) {
-            doDamage(p, 1);
+
+            for (Player p : playerList) {
+                doDamage(p, 1);
+            }
+        isLoaded = false;
         }
-    }
+
+
+
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the electroScythe in basic mode
      */
-    public List<Player> checkReaper()
+    public List<Player> checkReaper() throws IllegalStateException
     {
+
+        if (!checkAvaliableMode()[1])
+            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
         List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
 
         playerList.remove(player); //Remove from targets the player that shoot
@@ -78,11 +91,18 @@ public class EletroSchyte extends WeaponCard
      * It uses the basic mode of the lock rifle
      * @param playerList  list of player affected by weapon
      */
-    public void reaper(List<Player> playerList)
+    public void reaper(List<Player> playerList) throws  IllegalStateException
     {
+
+        if (!checkAvaliableMode()[1])
+            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+
         for(Player p:playerList) {
             doDamage(p, 2);
         }
+        isLoaded = false;
+        this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+        this.player.setAmmoRed(this.player.getAmmoRed() - 1);
     }
 
 }
