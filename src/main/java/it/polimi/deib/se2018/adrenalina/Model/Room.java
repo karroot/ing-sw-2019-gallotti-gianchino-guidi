@@ -41,6 +41,7 @@ public class Room
         }
     }
 
+
     /**
      * //todo
      * @return
@@ -79,6 +80,7 @@ public class Room
 
     /**
      * Create a room with its parameters
+     * All the square that are in squareList belong at this room now
      * @param gameBoard reference to the gameBoard
      * @param squareList is a list with all the square in the room. Useful to keep track because some weapons are room based
      * @param color is the color of the room
@@ -88,6 +90,7 @@ public class Room
         this.gameBoard = gameBoard;
         this.squareList = new ArrayList<>();
         this.squareList.addAll(squareList);
+        this.squareList.stream().forEach(square -> square.setRoom(this));
         this.color = color;
         this.playerRoomList = new ArrayList<>();
     }

@@ -56,19 +56,48 @@ public class MethodsWeapons
         return true; //Else return false
     }
 
-    //Check if the square "e" is located to North or East or South or West of the square with coordinates x and y
+    /**
+     * Check if the square "e" is located to North or East or South or West of the square with coordinates x and y
+     * Check max 2 moves
+     * @param e starting square
+     * @param x coordinate x of the square to check
+     * @param y coordinate y of the square to check
+     */
+
     public static boolean checkSquareOneDirectionTwoMoves(Square e, int x,int y)
     {
-        if ((x == e.getX() + 1 && y == e.getY() ) || (x == e.getX() + 2 && y == e.getY()))//If the square (x,y) is at north
+        if ((x == e.getX() + 1 && y == e.getY() ) || (x == e.getX() + 2 && y == e.getY()))//If the square (x,y) is at east
             return true;
-        else if ((x == e.getX() - 1 && y == e.getY() ) || (x == e.getX() - 2 && y == e.getY()))//If the square (x,y) is at south
-            return true;
-        else  if ((x == e.getX() && y == e.getY() + 1 ) || (x == e.getX() && y == e.getY() + 2))//If the square (x,y) is at East
-            return true;
-        else  if ((x == e.getX() && y == e.getY() - 1 ) || (x == e.getX() && y == e.getY() - 2))//If the square (x,y) is at West
+        else if ((x == e.getX() - 1 && y == e.getY() ) || (x == e.getX() - 2 && y == e.getY()))//If the square (x,y) is at west
             return true;
         else
-            return false;
+            if ((x == e.getX() && y == e.getY() + 1 ) || (x == e.getX() && y == e.getY() + 2))//If the square (x,y) is at north
+            return true;
+        else return (x == e.getX() && y == e.getY() - 1) || (x == e.getX() && y == e.getY() - 2);//If the square (x,y) is at south
+    }
+
+    //If the square (x,y) is at north of the square e (max 2 moves)
+    public static boolean checkSquareNorth(Square e, int x,int y)
+    {
+        return (x == e.getX() && y == e.getY() + 1) || (x == e.getX() && y == e.getY() + 2);
+    }
+
+    //If the square (x,y) is at south of the square e (max 2 moves)
+    public static boolean checkSquareSouth(Square e, int x,int y)
+    {
+        return (x == e.getX() && y == e.getY() - 1) || (x == e.getX() && y == e.getY() - 2);
+    }
+
+    //If the square (x,y) is at east of the square e (max 2 moves)
+    public static boolean checkSquareEast(Square e, int x,int y)
+    {
+        return (x == e.getX() + 1 && y == e.getY()) || (x == e.getX() + 2 && y == e.getY());
+    }
+
+    //If the square (x,y) is at west of the square e (max 2 moves)
+    public static boolean checkSquareWest(Square e, int x,int y)
+    {
+        return (x == e.getX() - 1 && y == e.getY()) || (x == e.getX() - 2 && y == e.getY());
     }
 
     public static List<Room> roomsThatIsee(Player player)

@@ -88,7 +88,7 @@ public class FactoryArena
 
                 rooms.add(temp);
 
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s1);
                 squares.add(s2);
@@ -97,7 +97,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.WHITE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s4);
                 squares.add(s8);
@@ -105,7 +105,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.YELLOW);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s6);
                 squares.add(s7);
@@ -113,7 +113,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.PURPLE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s10);
                 squares.add(s11);
@@ -121,7 +121,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.BLUE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 done = false;
 
@@ -136,7 +136,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.WHITE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s4);
                 squares.add(s8);
@@ -144,7 +144,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.YELLOW);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s5);
                 squares.add(s6);
@@ -153,7 +153,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.RED);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s9);
                 squares.add(s10);
@@ -162,7 +162,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.BLUE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 done = false;
 
@@ -175,7 +175,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.WHITE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s3);
                 squares.add(s4);
@@ -184,7 +184,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.YELLOW);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s5);
                 squares.add(s6);
@@ -192,7 +192,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.RED);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s9);
                 squares.add(s10);
@@ -201,14 +201,14 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.BLUE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s12);
 
                 temp = new Room(board,squares,ColorRoom.GREEN);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 done = false;
 
@@ -221,8 +221,9 @@ public class FactoryArena
 
                 temp = new Room(board,squares,ColorRoom.WHITE);
 
+
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s3);
                 squares.add(s4);
@@ -232,7 +233,7 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.YELLOW);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s5);
                 squares.add(s9);
@@ -240,14 +241,14 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.RED);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s6);
 
                 temp = new Room(board,squares,ColorRoom.PURPLE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s10);
                 squares.add(s11);
@@ -255,14 +256,14 @@ public class FactoryArena
                 temp = new Room(board,squares,ColorRoom.BLUE);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 squares.add(s12);
 
                 temp = new Room(board,squares,ColorRoom.GREEN);
 
                 rooms.add(temp);
-                squares.clear();
+                squares = new LinkedList<>();
 
                 done = false;
 
@@ -572,6 +573,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n2 = new AmmoPoint(2,1,board, ColorRoom.WHITE,temp.clone());
+        s2 = n2;
 
         temp[0] = SideType.OPEN;
         temp[1] = SideType.OPEN;
@@ -579,6 +581,7 @@ public class FactoryArena
         temp[3] = SideType.DOOR;
 
         n3 = new AmmoPoint(3,1,board, ColorRoom.YELLOW,temp.clone());
+        s3 = n3;
 
         temp[0] = SideType.OPEN;
         temp[1] = SideType.LIMIT;
@@ -586,6 +589,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n4 = new SpawnPoint(4,1,board, ColorRoom.YELLOW,temp.clone());
+        s4 = n4;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.OPEN;
@@ -593,6 +597,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n5 = new SpawnPoint(1,2,board, ColorRoom.RED,temp.clone());
+        s5 = n5;
 
         temp[0] = SideType.WALL;
         temp[1] = SideType.WALL;
@@ -600,6 +605,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n6 = new AmmoPoint(2,2,board, ColorRoom.RED,temp.clone());
+        s6 = n6;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.OPEN;
@@ -607,6 +613,7 @@ public class FactoryArena
         temp[3] = SideType.WALL;
 
         n7 = new AmmoPoint(3,2,board, ColorRoom.YELLOW,temp.clone());
+        s7 = n7;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.LIMIT;
@@ -614,6 +621,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n8 = new AmmoPoint(4,2,board, ColorRoom.YELLOW,temp.clone());
+        s8 = n8;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.OPEN;
@@ -621,6 +629,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n9 = new AmmoPoint(1,3,board, ColorRoom.BLUE,temp.clone());
+        s9 = n9;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.OPEN;
@@ -628,6 +637,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n10 = new AmmoPoint(2,3,board, ColorRoom.BLUE,temp.clone());
+        s10 = n10;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.DOOR;
@@ -635,6 +645,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n11 = new SpawnPoint(3,3,board, ColorRoom.BLUE,temp.clone());
+        s11 = n11;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.LIMIT;
@@ -642,6 +653,7 @@ public class FactoryArena
         temp[3] = SideType.DOOR;
 
         n12 = new AmmoPoint(4,3, board, ColorRoom.GREEN ,temp.clone());
+        s12 = n12;
 
         //Construction graph with all nodes just now created and all edges
 
@@ -707,6 +719,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n1 = new AmmoPoint(1,1,board, ColorRoom.WHITE,temp.clone());
+        s1 = n1;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.DOOR;
@@ -714,6 +727,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n2 = new AmmoPoint(2,1,board, ColorRoom.WHITE,temp.clone());
+        s2 = n2;
 
         temp[0] = SideType.OPEN;
         temp[1] = SideType.OPEN;
@@ -721,6 +735,7 @@ public class FactoryArena
         temp[3] = SideType.DOOR;
 
         n3 = new AmmoPoint(3,1,board, ColorRoom.YELLOW,temp.clone());
+        s3 = n3;
 
         temp[0] = SideType.OPEN;
         temp[1] = SideType.LIMIT;
@@ -728,6 +743,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n4 = new SpawnPoint(4,1,board, ColorRoom.YELLOW,temp.clone());
+        s4 = n4;
 
         temp[0] = SideType.OPEN;
         temp[1] = SideType.WALL;
@@ -735,6 +751,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n5 = new SpawnPoint(1,2,board, ColorRoom.RED,temp.clone());
+        s5 = n5;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.WALL;
@@ -742,6 +759,7 @@ public class FactoryArena
         temp[3] = SideType.WALL;
 
         n6 = new AmmoPoint(2,2,board, ColorRoom.PURPLE,temp.clone());
+        s6 = n6;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.OPEN;
@@ -749,6 +767,7 @@ public class FactoryArena
         temp[3] = SideType.WALL;
 
         n7 = new AmmoPoint(3,2,board, ColorRoom.YELLOW,temp.clone());
+        s7 = n7;
 
         temp[0] = SideType.DOOR;
         temp[1] = SideType.LIMIT;
@@ -756,6 +775,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n8 = new AmmoPoint(4,2,board, ColorRoom.YELLOW,temp.clone());
+        s8 = n8;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.DOOR;
@@ -763,6 +783,7 @@ public class FactoryArena
         temp[3] = SideType.LIMIT;
 
         n9 = new AmmoPoint(1,3,board, ColorRoom.RED,temp.clone());
+        s9 = n9;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.OPEN;
@@ -770,6 +791,7 @@ public class FactoryArena
         temp[3] = SideType.DOOR;
 
         n10 = new AmmoPoint(2,3,board, ColorRoom.BLUE,temp.clone());
+        s10 = n10;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.DOOR;
@@ -777,6 +799,7 @@ public class FactoryArena
         temp[3] = SideType.OPEN;
 
         n11 = new SpawnPoint(3,3,board, ColorRoom.BLUE,temp.clone());
+        s11 = n11;
 
         temp[0] = SideType.LIMIT;
         temp[1] = SideType.LIMIT;
@@ -784,6 +807,7 @@ public class FactoryArena
         temp[3] = SideType.DOOR;
 
         n12 = new AmmoPoint(4,3, board, ColorRoom.GREEN ,temp.clone());
+        s12 = n12;
 
         //Construction graph with all nodes just now created and all edges
 

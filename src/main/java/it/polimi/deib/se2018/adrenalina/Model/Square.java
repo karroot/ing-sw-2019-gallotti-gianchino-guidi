@@ -111,6 +111,14 @@ public abstract class Square
             playerList.remove(player);//Remove player in players' list
     }
 
+    /**
+     * Insert this square in a room passed like parameter
+     * @param room room where will insert the square
+     */
+    public void setRoom(Room room)
+    {
+        this.room = room;
+    }
 
     //AF
 

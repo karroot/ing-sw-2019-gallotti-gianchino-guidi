@@ -78,13 +78,15 @@ public abstract class Card
             throw new IllegalArgumentException("Cordinate non valide");//Launch exceptions
         }
 
-        player.getSquare().removePlayer(player);//Remove the player from his square
+        player.getSquare().getRoom().removePlayerFromRoomList(player); //Remove player from room
 
-        //Update Room
+        player.getSquare().removePlayer(player);//Remove the player from his square
 
         player.setSquare(square);//Add the new square on player
 
         square.addPlayer(player); //Add the player on the new square
+
+        player.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     }
 
     /**

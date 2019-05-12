@@ -89,7 +89,7 @@ public class Sledgehammer extends WeaponCard
 
     /**
      * Return the list of all square available for moving the player that will affect by Sledgehammer
-     * in "in pulverize mode" mode
+     * in "in pulverize" mode
      * @return square available
      * @exception IllegalStateException if the alternative mode can't be used
      */
@@ -104,7 +104,7 @@ public class Sledgehammer extends WeaponCard
 
          return squares
                 .stream()
-                .filter(square -> MethodsWeapons.checkSquareOneDirectionTwoMoves(square, player.getSquare().getX(), player.getSquare().getY()))
+                .filter(square -> MethodsWeapons.checkSquareOneDirectionTwoMoves(player.getSquare(), square.getX(), square.getY()))
                 .collect(Collectors.toList());
     }
 

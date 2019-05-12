@@ -93,11 +93,15 @@ public class Graph
      * @param x coordinate x  of starting square
      * @param y coordinate y of starting square
      * @param distance limit distance
+     * @exception IllegalArgumentException if distance is greater of 5
      * @return Set of square that can be reached
      */
-    public Set<Square> squareReachableNoWall(int x, int y, int distance)
+    public Set<Square> squareReachableNoWall(int x, int y, int distance)throws IllegalArgumentException
     {
         //N.B this algorithm works because each square has at least a link of type free or port
+
+        if(distance > 5)
+            throw new IllegalArgumentException("Distanza non ammisibile per le dimensioni del'arena");
 
         Square start = null;
 
@@ -144,6 +148,145 @@ public class Graph
         }
 
         return squares;
+
+    }
+
+    /**
+     * Return all squares that are at north of a square in the arena passed like variable
+     * @param square starting square
+     * @return Set of all squares that are at north before of the limit arena
+     */
+    public Set<Square> getAllSquareAtNorth(Square square)
+    {
+        int x = square.getX(); //obtain coordinates of starting square
+        int y = square.getY();
+        Square squareTemp = square;
+        Set<Square> result = new HashSet<>(); //Create an empty set of squares
+
+        int i = 1;
+
+        result.add(square);
+
+        //while you don't encounter the limit of the arena
+        while (!squareTemp.getSide()[0].equals(SideType.LIMIT))
+        {
+            try
+            {
+                squareTemp = getSquare(x ,y + i); //Take a square at north
+            }
+            catch (SquareNotInGameBoard e) //if the square doesn't exist return the set of square founded
+            {
+                return result;
+            }
+            result.add(squareTemp);//If the square exists add to the set of square researched
+            i++;//Go more at north
+        }
+
+        return result;//At the end it returns all square founded
+
+    }
+
+    /**
+     * Return all squares that are at East of a square in the arena passed like variable
+     * @param square starting square
+     * @return Set of all squares that are at East before the limit arena
+     */
+    public Set<Square> getAllSquareAtEast(Square square)
+    {
+        int x = square.getX(); //obtain coordinates of starting square
+        int y = square.getY();
+        Square squareTemp = square;
+        Set<Square> result = new HashSet<>(); //Create an empty set of squares
+
+        int i = 1;
+
+
+        //while you don't encounter the limit of the arena
+        while (!squareTemp.getSide()[1].equals(SideType.LIMIT))
+        {
+            try
+            {
+                squareTemp = getSquare(x + i ,y); //Take a square at east
+            }
+            catch (SquareNotInGameBoard e) //if the square doesn't exist return the set of square founded
+            {
+                return result;
+            }
+            result.add(squareTemp);//If the square exists add to the set of square researched
+            i++;//Go more at East
+        }
+
+        return result;//At the end it returns all square founded
+
+    }
+
+    /**
+     * Return all squares that are at south of a square in the arena passed like variable
+     * @param square starting square
+     * @return Set of all squares that are at south before the limit arena
+     */
+    public Set<Square> getAllSquareAtSouth(Square square)
+    {
+        int x = square.getX(); //obtain coordinates of starting square
+        int y = square.getY();
+        Square squareTemp = square;
+        Set<Square> result = new HashSet<>(); //Create an empty set of squares
+
+        int i = 1;
+
+        result.add(square);
+
+        //while you don't encounter the limit of the arena
+        while (!squareTemp.getSide()[2].equals(SideType.LIMIT))
+        {
+            try
+            {
+                squareTemp = getSquare(x ,y - i); //Take a square at south
+            }
+            catch (SquareNotInGameBoard e) //if the square doesn't exist return the set of square founded
+            {
+                return result;
+            }
+            result.add(squareTemp);//If the square exists add to the set of square researched
+            i++;//Go more at south
+        }
+
+        return result;//At the end it returns all square founded
+
+    }
+
+    /**
+     * Return all squares that are at west of a square in the arena passed like variable
+     * @param square starting square
+     * @return Set of all squares that are at west before the limit arena
+     */
+    public Set<Square> getAllSquareAtWest(Square square)
+    {
+        int x = square.getX(); //obtain coordinates of starting square
+        int y = square.getY();
+        Square squareTemp = square;
+        Set<Square> result = new HashSet<>(); //Create an empty set of squares
+
+        int i = 1;
+
+        result.add(square);
+
+        //while you don't encounter the limit of the arena
+        while (!squareTemp.getSide()[3].equals(SideType.LIMIT))
+        {
+            try
+            {
+                squareTemp = getSquare(x - i ,y); //Take a square at west
+            }
+            catch (SquareNotInGameBoard e) //if the square doesn't exist return the set of square founded
+            {
+                return result;
+            }
+            result.add(squareTemp);//If the square exists add to the set of square researched
+            i++;//Go more at west
+        }
+
+        return result;//At the end it returns all square founded
 
     }
 

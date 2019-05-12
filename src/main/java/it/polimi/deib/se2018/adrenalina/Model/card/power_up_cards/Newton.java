@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
@@ -54,7 +55,7 @@ public class Newton extends PowerUpCard
 
         for (Square temp : squares) //For each square in all square reachable
         {
-            if (checkSquareOneDirectionTwoMoves(temp,x,y)) //Check if the square is valid for to use the newton card
+            if (MethodsWeapons.checkSquareOneDirectionTwoMoves(temp,x,y)) //Check if the square is valid for to use the newton card
                 squaresCorrect.add(temp);//Add to the set to return
         }
 
@@ -63,18 +64,5 @@ public class Newton extends PowerUpCard
 
 
 
-    //Check if the square "e" is located to North or East or South or West of the square with coordinates x and y
-    private boolean checkSquareOneDirectionTwoMoves(Square e, int x,int y)
-    {
-        if ((x == e.getX() + 1 && y == e.getY() ) || (x == e.getX() + 2 && y == e.getY()))//If the square (x,y) is at north
-            return true;
-        else if ((x == e.getX() - 1 && y == e.getY() ) || (x == e.getX() - 2 && y == e.getY()))//If the square (x,y) is at south
-            return true;
-        else  if ((x == e.getX() && y == e.getY() + 1 ) || (x == e.getX() && y == e.getY() + 2))//If the square (x,y) is at East
-            return true;
-        else  if ((x == e.getX() && y == e.getY() - 1 ) || (x == e.getX() && y == e.getY() - 2))//If the square (x,y) is at West
-            return true;
-        else
-            return false;
-    }
+
 }
