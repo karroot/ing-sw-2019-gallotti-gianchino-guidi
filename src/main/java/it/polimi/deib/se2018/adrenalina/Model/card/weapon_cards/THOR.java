@@ -63,7 +63,8 @@ public class THOR extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());
+        List<Player> playerList = new LinkedList<>();
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
 
         return playerList;//Returns all targets
@@ -96,8 +97,7 @@ public class THOR extends WeaponCard
                 if (!checkAvaliableMode()[2])
                     throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-                if (player1.equals(player2))
-                    throw new IllegalArgumentException("player1 must be different from player2");
+
                 if (player2.equals(player3))
                     throw new IllegalArgumentException("player2 must be different from player3");
                 if (player1.equals(player3))

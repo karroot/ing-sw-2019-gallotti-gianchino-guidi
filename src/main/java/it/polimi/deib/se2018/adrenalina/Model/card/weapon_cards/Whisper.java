@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,12 +26,13 @@ public class Whisper extends WeaponCard
        Set<Player> playerdistance2and1= new HashSet<>();
        Set<Player> playerdistance1= new HashSet<>();
        Set<Player> playerdistance2= new HashSet<>();
+        if (player == null)
+            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
         playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
         playerdistance2and1.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
         playerdistance2and1.removeAll(playerdistance1);
-        if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+
 
         avaiableMethod[0] = false;
 
@@ -54,7 +56,8 @@ public class Whisper extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());
+        List<Player> playerList = new LinkedList<>();
+                 playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
 
         return playerList;//Returns all targets

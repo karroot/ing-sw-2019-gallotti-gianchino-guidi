@@ -13,9 +13,10 @@ public class PlasmaGun extends WeaponCard
     private Player dummie = new Player(ColorId.BLUE,"a","a",false);
     public PlasmaGun(Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
+        redAmmoCost = 0;
         yellowAmmoCost = 1;
         blueAmmoCost = 1;
-        redAmmoCost = 0;
+
     }
 
     /**
@@ -29,8 +30,11 @@ public class PlasmaGun extends WeaponCard
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
         avaiableMethod[2] = false;
+
+        avaiableMethod[1] = false;
+
         avaiableMethod[0] = false;
-         avaiableMethod[1] = false;
+
         avaiableMethod[3] = false;
 
 
@@ -61,7 +65,8 @@ public class PlasmaGun extends WeaponCard
         Set<Player> target = MethodsWeapons.playersReachable(player.getSquare(),3); //Obtain all players that can be targets
 
         target.remove(player);//Remove the player that has this card
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());//Obtain all the player that they are in same square
+        List<Player> playerList = new LinkedList<>();
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
         for(Player i : target)
         {

@@ -2,9 +2,11 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.Room;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -54,18 +56,28 @@ public class TractorBeam extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Set<Square> checkMoveBasicMode(Player player) throws IllegalStateException
+    public List<Player> checkMoveBasicMode(Player player) throws IllegalStateException
     {
+
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+        List<Player> listPlayerThatYouCanMove = new LinkedList<>();
+        List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
+        for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+        {
+         for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(),player.getSquare().getY(),2) )
+         { for (Room reachRoom : roomReachablePlayer)
+            {
 
-        Square square = player.getSquare();
 
-        Set<Square> squares = square.getGameBoard().getArena().squareReachableNoWall(square.getX(),square.getY(),2);//Obtain all the player that they are in same square
+                 if (reachRoom.getSquareList().contains(sq)) {
+                     listPlayerThatYouCanMove.add(p);
+                 }
+            }
+         }
+        }
 
-        squares.remove(square); //Remove from targets the square where the player is located
-
-        return squares;//Returns squares
+        return listPlayerThatYouCanMove;//Returns squares
     }
     /**
      * Calculate in which square a player can be moved using the advanced mode
@@ -73,12 +85,16 @@ public class TractorBeam extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Set<Square> checkMoveAdvancedMode(Player player) throws IllegalStateException
+    public List<Player> checkMoveAdvancedMode(Player player) throws IllegalStateException
     {
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+        List<Player> listPlayerToMove = new LinkedList<>();
+        listPlayerToMove.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
 
-        return checkMoveBasicMode(player);//Returns squares
+
+
+        return listPlayerToMove;//Returns squares
     }
     /**
      * Return the list of all target available for using the basic mode of this weapon
@@ -89,7 +105,9 @@ public class TractorBeam extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) playersReachable( player.getSquare(),3);
+        List<Player> playerList = new LinkedList<>();
+
+                playerList.addAll(playersReachable( player.getSquare(),3));
 
         return playerList;//Returns all targets
     }
