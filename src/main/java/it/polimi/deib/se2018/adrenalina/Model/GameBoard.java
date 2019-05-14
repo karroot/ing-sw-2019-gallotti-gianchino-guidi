@@ -36,7 +36,7 @@ class Track
 public class GameBoard {
 
 
-
+    private List<Player> AllPlayer= new LinkedList<>(); //list of all player
     private Stack<WeaponCard> weaponCardStack;
 
     private Stack<AmmoTiles> ammoTilesStack;
@@ -61,7 +61,7 @@ public class GameBoard {
      * @param skullCounter counter of the skull on board
      * @param ammoTilesStack Stack of ammo Cards
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack) {
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack ) {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
         this.arena = FactoryArena.getArena(codeArena,this);
@@ -85,6 +85,10 @@ public class GameBoard {
     public  Graph getArena()
     {
         return arena;
+    }
+
+    public List<Player> getAllPlayer() {
+        return AllPlayer;
     }
 
     /**
@@ -166,9 +170,9 @@ public class GameBoard {
         this.ammoTilesStack = ammoTilesStack;
     }
 
-
-
-
+    public void setAllPlayer(Player playerToAdd) {
+        AllPlayer.add(playerToAdd);
+    }
 
     /**
      * it reduce the counter of skull when a player die

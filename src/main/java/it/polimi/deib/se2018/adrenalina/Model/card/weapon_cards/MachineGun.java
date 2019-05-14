@@ -11,8 +11,10 @@ public class MachineGun extends WeaponCard
 
     public MachineGun( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
-        yellowAmmoCost = 0;
         blueAmmoCost = 1;
+
+        yellowAmmoCost = 0;
+
         redAmmoCost = 1;
     }
 
@@ -36,10 +38,12 @@ public class MachineGun extends WeaponCard
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[0] = true;
 
-        if (isLoaded()&& player.getAmmoYellow()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[1] = true;
+
         if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>2)
             avaiableMethod[2] = true;
+
+        if (isLoaded()&& player.getAmmoYellow()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
+            avaiableMethod[1] = true;
 
         return avaiableMethod;
 
@@ -53,7 +57,8 @@ public class MachineGun extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());
+        List<Player> playerList = new LinkedList<>();
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
 
         return playerList;//Returns all targets
@@ -83,9 +88,8 @@ public class MachineGun extends WeaponCard
         if (FocusShotcMode)
         {
             if (!checkAvaliableMode()[1])
-            {
                 throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
-            }
+
             doDamage(player1, 1);
             this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
         }
@@ -97,7 +101,7 @@ public class MachineGun extends WeaponCard
             if (player3==null && !addDamage)
                 throw new IllegalArgumentException("Mode: "+ name + " select at least one between damage player1 or damage player 3");//If this card doesn't belong at a player launch exception
 
-            if (!(player3==null))
+            if (player3!=null)
             {
                 if (player3.equals(player2) || player3.equals(player1))
                 {
@@ -105,7 +109,7 @@ public class MachineGun extends WeaponCard
                 }
                 doDamage(player3, 1);
             }
-            if (addDamage==true)
+            if (addDamage)
             {
                 if (!(playerdamaged.equals(player1)) || !(playerdamaged.equals(player2)))
                     throw new IllegalArgumentException("Mode: "+ name + " playeradddamage must be player1 or player2");
@@ -130,7 +134,8 @@ public class MachineGun extends WeaponCard
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());//Obtain all the player that they are in same square
+        List<Player> playerList = new LinkedList<>();
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
 
         return playerList;//Returns all targets
@@ -148,7 +153,8 @@ public class MachineGun extends WeaponCard
         if (!checkAvaliableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = (List<Player>) player.playerThatSee(player.getSquare().getGameBoard());//Obtain all the player that they are in same square
+        List<Player> playerList = new LinkedList<>();
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
 
 
