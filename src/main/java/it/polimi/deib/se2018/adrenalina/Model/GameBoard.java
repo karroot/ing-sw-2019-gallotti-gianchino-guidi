@@ -36,7 +36,7 @@ class Track
 public class GameBoard {
 
 
-    private List<Player> AllPlayer= new LinkedList<>();
+    private List<Player> AllPlayer= new LinkedList<>(); //list of all player
     private Stack<WeaponCard> weaponCardStack;
 
     private Stack<AmmoTiles> ammoTilesStack;
