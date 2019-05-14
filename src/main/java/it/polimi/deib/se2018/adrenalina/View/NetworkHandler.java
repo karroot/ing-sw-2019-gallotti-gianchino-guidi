@@ -1,5 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
+import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -31,18 +34,18 @@ public class NetworkHandler extends Thread
 
     }
 
-    public void sendMessageSocket(MessageSocket msg) throws IOException
+    public void sendMessageNet(MessageNet msg) throws IOException
     {
         out.writeObject(msg);
         out.flush();
     }
 
-    public MessageSocket receiveMessageSocket() throws IOException, ClassNotFoundException
+    public MessageNet receiveMessageNet() throws IOException, ClassNotFoundException
     {
         Object msg = in.readObject();
         out.flush();
 
-        return (MessageSocket) msg;
+        return (MessageNet) msg;
     }
 
     public void stopConnectionSocket() throws IOException

@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
  * @author Cysko7927
  * It represents the player and performs the aviable actions an methods that modify his state
  */
-public class Player
+public class Player implements Serializable
 {
 
 
