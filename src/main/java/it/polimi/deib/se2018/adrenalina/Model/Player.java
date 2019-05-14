@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author Cysko7927
  * It represents the player and performs the aviable actions an methods that modify his state
  */
-public class Player implements Serializable
+public class Player
 {
 
 
