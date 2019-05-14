@@ -51,17 +51,4 @@ public class Normal extends StatePlayer
 
 
 
-    @Override
-    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
-    {
-        return super.lookForShootPeople(player, gameBoard);
-    }
-
-
-    @Override
-    public List<WeaponCard> checkReload(Player player)
-    {
-       return super.checkReload(player);
-    }
-
 }

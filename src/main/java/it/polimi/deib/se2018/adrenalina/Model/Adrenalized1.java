@@ -20,7 +20,7 @@ public class Adrenalized1 extends StatePlayer
     }
 
     /**
-     * When the player is in the normal status he can reach Square to a max distance of 3. This method make the player see all the possible reachable squares.
+     * When the player is in the adrenalized1 status he can reach Square to a max distance of 3. This method make the player see all the possible reachable squares.
      *
      * @param player is the player that is looking where to move
      * @param gameBoard is needed to call the squareReachableNoWall function
@@ -35,7 +35,7 @@ public class Adrenalized1 extends StatePlayer
     }
 
     /**
-     * When the player is in the normal status he can reach Square to grab stuffs with a max distance of 1. This method make the player see all the possible reachable squares.
+     * When the player is in the adrenalized1 status he can reach Square to grab stuffs with a max distance of 1. This method make the player see all the possible reachable squares.
      *
      * @param player is the player that is looking where to move to grab the stuff
      * @param gameBoard is needed to call the squareReachableNoWall function
@@ -51,18 +51,8 @@ public class Adrenalized1 extends StatePlayer
 
 
 
-    @Override
-    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
-    {
-        return super.lookForShootPeople(player, gameBoard);
-    }
 
 
-    @Override
-    public List<WeaponCard> checkReload(Player player)
-    {
-        return super.checkReload(player);
-    }
 
 
 }
