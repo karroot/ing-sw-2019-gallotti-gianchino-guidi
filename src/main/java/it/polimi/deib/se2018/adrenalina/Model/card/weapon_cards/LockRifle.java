@@ -69,7 +69,7 @@ public class LockRifle extends WeaponCard
      * It uses the basic mode of the lock rifle
      * @param player player affected by weapon
      */
-    public void basicMode(Player player, boolean SecondLockMode) throws IllegalStateException
+    public void basicMode(Player player,Player player2 ,boolean SecondLockMode) throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -79,7 +79,7 @@ public class LockRifle extends WeaponCard
             if (!checkAvaliableMode()[1])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-            markTarget(player,1);
+            markTarget(player2,1);
             this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         }
         doDamage(player,2);

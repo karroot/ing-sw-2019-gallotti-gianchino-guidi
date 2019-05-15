@@ -27,10 +27,10 @@ public class EletroSchyte extends WeaponCard
         avaiableMethod[1] = false; //I suppose that the modes can't be used
         avaiableMethod[0] = false;
 
-        if (isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
+        if (this.isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
             avaiableMethod[0] = true;
 
-        if (isLoaded() && player.getAmmoBlue()>1 &&  player.getSquare().getPlayerList().size() > 1)//If the second mode can be used
+        if (this.isLoaded() && player.getAmmoBlue()>1 &&  player.getSquare().getPlayerList().size() > 1)//If the second mode can be used
             avaiableMethod[1] = true;
 
 
@@ -57,9 +57,8 @@ public class EletroSchyte extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param playerList  list of player affected by weapon
-     * @param reaper boolean that indicates if second mode is active
      */
-    public void basicMode(List<Player> playerList, boolean reaper)
+    public void basicMode(List<Player> playerList)
     {
 
             for (Player p : playerList) {
