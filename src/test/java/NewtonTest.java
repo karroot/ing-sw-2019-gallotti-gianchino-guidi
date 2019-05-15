@@ -1,6 +1,6 @@
-package it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards;
-
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Newton;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import org.junit.Before;
 import org.junit.Test;

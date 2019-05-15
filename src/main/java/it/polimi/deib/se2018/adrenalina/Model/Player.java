@@ -598,7 +598,9 @@ public class Player
 
         Set<Player> players = new HashSet<>(); //Create a set of players empty
 
+
         Set<Square> temp = board.getArena().squareReachableNoWall(getSquare().getX(),getSquare().getY(),1); //Obtain the square to distance 1
+
 
         Set<ColorRoom> colors = new HashSet<>(); //Create a set of colorRoom empty
 

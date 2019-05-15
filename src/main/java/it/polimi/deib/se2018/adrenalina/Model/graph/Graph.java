@@ -29,7 +29,7 @@ public class Graph
      */
     public Graph()
     {
-        this.adjacencyList = new HashMap<>();
+        this.adjacencyList = new Hashtable<>();
 
     }
 
@@ -103,6 +103,7 @@ public class Graph
         if(distance > 5)
             throw new IllegalArgumentException("Distanza non ammisibile per le dimensioni del'arena");
 
+
         Square start = null;
 
         try
@@ -125,7 +126,8 @@ public class Graph
         int k = 1;
         squares.add(start); //Add starting square to the set
 
-        List<Edge> edgeList = this.adjacencyList.get(start); //obtain all edge that start from starting square
+        List<Edge> edgeList = new LinkedList<>(this.adjacencyList.get(start)); //obtain all edge that start from starting square
+
 
         while(k <= distance) //while you don't arrive to distance indicated
         {
@@ -142,6 +144,7 @@ public class Graph
             edgeList.clear();//Remove old set of edge
             edgeList.addAll(queue);//Add the new edge for the next level
             queue.clear();//Remove edge from list of support
+
 
 
             k++; //go to see the square to distance k + 1
@@ -294,7 +297,7 @@ public class Graph
     @Override
     public String toString() {
         return "Graph{" +
-                "adjacencyList=" + adjacencyList +
+                "adjacencyList=" + adjacencyList.keySet() +
                 '}';
     }
 }
