@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class implements a room.
@@ -48,8 +49,18 @@ public class Room
      */
     public List<Player> getPlayerRoomList ()
     {
-        return playerRoomList;
+        return new ArrayList<>(playerRoomList);
     }
+
+    /**
+     * //todo
+     * @return
+     */
+    public List<ColorId> getPlayerRoomListColor ()
+    {
+        return new ArrayList<>(playerRoomList.stream().map(Player::getColor).collect(Collectors.toList()));
+    }
+
 
     /**
      * //todo

@@ -1,10 +1,13 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.*;
+
+import java.util.Stack;
 
 //Note
 //Bisognerebbe testare anche il metodo playerthatsee quando avrò metodi per aggiungere player alle room e allo square
@@ -287,4 +290,5 @@ public class TestPlayer
         for (int i =0;i<6;i++)
             assertTrue(effOut[i]== expOut[i]);
     }
+
 }

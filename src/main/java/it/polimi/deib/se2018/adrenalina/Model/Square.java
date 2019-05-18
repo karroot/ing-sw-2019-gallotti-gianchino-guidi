@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Square
 {
@@ -75,6 +76,11 @@ public abstract class Square
         return new ArrayList<>(playerList);
     }
 
+    public List<ColorId> getPlayerListColor ()
+    {
+        return new ArrayList<>(playerList.stream().map(Player::getColor).collect(Collectors.toList()));
+    }
+
     public GameBoard getGameBoard()
     {
         return gameBoard;
@@ -87,7 +93,7 @@ public abstract class Square
 
     public SideType[] getSide()
     {
-        return side;
+        return side.clone();
     }
 
 

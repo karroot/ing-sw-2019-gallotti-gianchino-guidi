@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
@@ -95,11 +96,11 @@ public class PowerGlow extends WeaponCard
      * The player with the PowerGlow will have to choice a player for each list to use in the mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public Map<String,List<List<Player>>> checkInRocketFistMode() throws IllegalStateException
+    public Map<String,List<List<ColorId>>> checkInRocketFistMode() throws IllegalStateException
     {
 
         List<Player> playerList; //list of support to make the value of hash map
-        Map<String,List<List<Player>>> result = new HashMap<>(); //Map to return
+        Map<String,List<List<ColorId>>> result = new HashMap<>(); //Map to return
 
         //Checking in rocket fist mode
         //Obtain all square to distance 2
@@ -108,10 +109,11 @@ public class PowerGlow extends WeaponCard
         //Filter the square that are at north with all possible targets
 
 
-        List<List<Player>> squaresN = squareList
+        List<List<ColorId>> squaresN = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareNorth(player.getSquare(), square.getX(), square.getY()))
-                .map(Square::getPlayerList)
+                .sorted((o1, o2) -> o2.getY() - o1.getY())
+                .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
 
@@ -119,10 +121,11 @@ public class PowerGlow extends WeaponCard
             result.putIfAbsent("Nord",squaresN);//Add at map
 
         //Filter the square that are at South with all possible targets
-        List<List<Player>> squaresS = squareList
+        List<List<ColorId>> squaresS = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareSouth(player.getSquare(), square.getX(), square.getY()))
-                .map(Square::getPlayerList)
+                .sorted((o1, o2) -> o1.getY() - o2.getY())
+                .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
 
@@ -130,10 +133,11 @@ public class PowerGlow extends WeaponCard
             result.putIfAbsent("Sud",squaresS);//Add at map
 
         //Filter the square that are at East with all possible targets
-        List<List<Player>> squaresE = squareList
+        List<List<ColorId>> squaresE = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareEast(player.getSquare(), square.getX(), square.getY()))
-                .map(Square::getPlayerList)
+                .sorted((o1, o2) -> o2.getX() - o1.getX())
+                .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
 
@@ -141,10 +145,11 @@ public class PowerGlow extends WeaponCard
             result.putIfAbsent("Est",squaresE);//Add at map
 
         //Filter the square that are at West with all possible targets
-        List<List<Player>> squaresW = squareList
+        List<List<ColorId>> squaresW = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareWest(player.getSquare(), square.getX(), square.getY()))
-                .map(Square::getPlayerList)
+                .sorted((o1, o2) -> o1.getX() - o2.getX())
+                .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
 

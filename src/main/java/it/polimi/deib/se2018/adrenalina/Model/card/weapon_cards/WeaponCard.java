@@ -12,7 +12,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 
 public abstract class WeaponCard extends Card {
 
-    String name;
+    protected String name;
 
     protected Color color;
 

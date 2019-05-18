@@ -720,4 +720,10 @@ public class Player
         checkState();//check the state of the player
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "color=" + color +
+                '}';
+    }
 }

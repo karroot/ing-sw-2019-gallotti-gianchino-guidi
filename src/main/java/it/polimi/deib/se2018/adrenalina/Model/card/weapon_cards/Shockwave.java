@@ -1,11 +1,12 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.Square;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Shockwave extends WeaponCard
 {
@@ -13,7 +14,7 @@ public class Shockwave extends WeaponCard
     private boolean[] avaiableMethod = new boolean[2];
 
     /**
-     * Create the card shotgun
+     * Create the card Shock wave
      * @param color color of weapon
      * @param weaponID Id of the card
      * @param isLoaded Indicates if the weapon is loaded or not
@@ -56,19 +57,28 @@ public class Shockwave extends WeaponCard
 
     /**
      * Return the list of all target available for using the basic mode of this weapon
-     * @return all player that can be affected with the shotgun in basic mode
+     * @return all player that can be affected with the Shockwave in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public Map<String,List<ColorId>> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        Map<String,List<ColorId>> result = new HashMap<>();
 
         Set<Player> target = MethodsWeapons.playersReachable(player.getSquare(),1); //Obtain all players that can be seen
 
         target.remove(player);//Remove the player that has this card
 
-        return new ArrayList<>(target);//Returns all targets
+        Set<Square> squares = target.stream().map(Player::getSquare).collect(Collectors.toSet());
+
+        for (Square t:squares)
+        {
+            result.putIfAbsent("x = "+t.getX()+": y = "+t.getY(),t.getPlayerListColor());
+        }
+
+        return result;//Returns all targets
     }
 
     /**
@@ -93,15 +103,14 @@ public class Shockwave extends WeaponCard
     /**
      * It uses the alternative mode of the Shockwave
      * It does one damage at all players at distance 1
-     * @param players players affected by weapon
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public void inTsunamirMode(List<Player> players) throws IllegalStateException
+    public void inTsunamirMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[1])//Check mode
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        for (Player x:players) //For each player
+        for (Player x:MethodsWeapons.playersReachable(player.getSquare(),1)) //For each player
         {
             doDamage(x,1);//Do one damage
         }

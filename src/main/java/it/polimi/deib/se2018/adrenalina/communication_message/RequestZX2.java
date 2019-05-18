@@ -1,13 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+
 import java.util.LinkedList;
 import java.util.List;
 

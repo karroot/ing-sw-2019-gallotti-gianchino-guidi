@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Room;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -115,5 +116,35 @@ public class MethodsWeapons
                 .stream()
                 .filter(room -> colors.contains(room.getColor()))
                 .collect(Collectors.toList());
+    }
+
+    public static void moveTarget(Player player,int x,int y) throws IllegalArgumentException,NullPointerException
+    {
+
+        if (player == null)
+            throw new NullPointerException("Parametro player o arena nullo");
+
+        Square square;
+
+        try //Obtain the square with coordinates x and y
+        {
+            square = player.getSquare().getGameBoard().getArena().getSquare(x, y); //obtain the square with coordinate x and y
+        }
+        catch (SquareNotInGameBoard e) //If coordinate are not valid
+        {
+            System.out.println(e);
+
+            throw new IllegalArgumentException("Cordinate non valide");//Launch exceptions
+        }
+
+        player.getSquare().getRoom().removePlayerFromRoomList(player); //Remove player from room
+
+        player.getSquare().removePlayer(player);//Remove the player from his square
+
+        player.setSquare(square);//Add the new square on player
+
+        square.addPlayer(player); //Add the player on the new square
+
+        player.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     }
 }

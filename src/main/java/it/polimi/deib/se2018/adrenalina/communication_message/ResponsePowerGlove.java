@@ -1,43 +1,37 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
 
-import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author Cysko7927
- */
-public class ResponseZX2 extends ResponseInput
+public class ResponsePowerGlove extends ResponseInput
 {
-
     private ColorId targetBasicMode;//Target for basic mode
     private List<ColorId> targetsAlternativeMode;//targets for the alternative mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**
-     * Create the response message for ZX2 in basic mode
-     * @param targetBasicMode target for ZX2
+     * Create the response message for Powerglove in basic mode
+     * @param targetBasicMode target for PowerGlove
      */
-    public ResponseZX2(ColorId targetBasicMode)
+    public ResponsePowerGlove(ColorId targetBasicMode)
     {
         this.targetBasicMode = targetBasicMode;
-        mode = false;
+        this.mode = false;
     }
 
     /**
-     * Create the response message for ZX2 in alternative mode
-     * @param targetsAlternativeMode targets for ZX2
+     * Create the response message for Powerglove in alternative mode
+     * @param targetsAlternativeMode targets for Powerglove
      */
-    public ResponseZX2(List<ColorId> targetsAlternativeMode)
+    public ResponsePowerGlove(List<ColorId> targetsAlternativeMode)
     {
         this.targetsAlternativeMode = targetsAlternativeMode;
-        mode = true;
+        this.mode = true;
     }
 
     /**
-     * @return get the target for ZX2 in basic mode
+     * @return get the target for Powerglove in basic mode
      */
     public ColorId getTargetBasicMode()
     {
@@ -45,7 +39,7 @@ public class ResponseZX2 extends ResponseInput
     }
 
     /**
-     * @return get the targets for ZX2 in alternative mode
+     * @return get the targets for Powerglove in alternative mode
      */
     public List<ColorId> getTargetsAlternativeMode()
     {
