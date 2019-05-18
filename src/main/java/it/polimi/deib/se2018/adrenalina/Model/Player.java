@@ -276,6 +276,14 @@ public class Player
     }
 
     /**
+     * set number of the damage point to a defined value
+     * @param last
+     */
+    public void setNumberOfDamagePoint(int last) {
+        this.last = last;
+    }
+
+    /**
      *Change the position of the player in arena
      * (Requires):The square is must be valid
      * @param square square where to put the player
@@ -476,6 +484,7 @@ public class Player
         damageCounter = new ColorId[12];//The board is free now
         incrementDeathsCount(); //Increments counter of deaths and check the state of player
     }
+
 
     /**
      * Set the player in frenzy mode or not
@@ -720,10 +729,5 @@ public class Player
         checkState();//check the state of the player
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "color=" + color +
-                '}';
-    }
+
 }

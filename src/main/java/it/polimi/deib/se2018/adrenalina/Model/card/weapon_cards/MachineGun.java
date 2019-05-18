@@ -68,7 +68,7 @@ public class MachineGun extends WeaponCard
 
     /**
      * It uses the basic mode of the lock rifle
-     * @param player1 player affected by weapon
+     * @param player1 player affected by weapon, is also the player of the focushotmode
      * @param player2 player affected by weapon
      * @param  player3 player affected by turret tripod , it can be null
      * @param  FocusShotcMode if true indicate to use focus shot
@@ -77,22 +77,15 @@ public class MachineGun extends WeaponCard
      */
     public void basicMode(Player player1, Player player2, Player player3,Player playerdamaged, boolean FocusShotcMode, boolean TurretTripode,boolean addDamage) throws IllegalArgumentException,IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        if (player1.equals(player2))
-            throw new IllegalArgumentException("player1 must be different from player2");
-        doDamage(player1,1);
-        if (player2!= null)
-        doDamage(player2,1);
         if (FocusShotcMode)
-        {
-            if (!checkAvaliableMode()[1])
-                throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
+            {
+                if (!checkAvaliableMode()[1])
+                    throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
-            doDamage(player1, 1);
-            this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
-        }
+                doDamage(player1, 1);
+                this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
+            }
         if (TurretTripode)
         {
             if (!checkAvaliableMode()[2])
@@ -111,7 +104,7 @@ public class MachineGun extends WeaponCard
             }
             if (addDamage)
             {
-                if (!(playerdamaged.equals(player1)) || !(playerdamaged.equals(player2)))
+                if ( (!(playerdamaged.equals(player1)) || (playerdamaged.equals(player2) ) )&& ((playerdamaged.equals(player1)) || !(playerdamaged.equals(player2))))
                     throw new IllegalArgumentException("Mode: "+ name + " playeradddamage must be player1 or player2");
 
                 if (playerdamaged.equals(player1))
@@ -120,8 +113,17 @@ public class MachineGun extends WeaponCard
                     doDamage(player2,1);
 
             }
+
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
+        if (!checkAvaliableMode()[0])
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        if (player1.equals(player2))
+            throw new IllegalArgumentException("player1 must be different from player2");
+        doDamage(player1,1);
+        if (player2!= null)
+            doDamage(player2,1);
         this.isLoaded = false;
     }
 

@@ -25,7 +25,7 @@ public class Whisper extends WeaponCard
     {
        Set<Player> playerdistance2and1= new HashSet<>();
        Set<Player> playerdistance1= new HashSet<>();
-       Set<Player> playerdistance2= new HashSet<>();
+
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
@@ -53,14 +53,18 @@ public class Whisper extends WeaponCard
      */
     public List<Player> checkBasicMode() throws IllegalStateException
     {
+        Set<Player> playerdistance2and1= new HashSet<>();
+        Set<Player> playerdistance1= new HashSet<>();
+        List<Player> pl = new LinkedList<>();
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
-                 playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
+        playerdistance2and1.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
+        playerdistance2and1.removeAll(playerdistance1);
+        pl.addAll(playerdistance2and1);
 
-
-        return playerList;//Returns all targets
+        return  pl;//Returns all targets
     }
 
 

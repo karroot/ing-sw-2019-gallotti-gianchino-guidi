@@ -13,7 +13,6 @@ public class LockRifle extends WeaponCard
         super( color, weaponID, isLoaded);
         blueAmmoCost = 2;
         yellowAmmoCost = 0;
-
         redAmmoCost = 0;
     }
 
@@ -34,13 +33,13 @@ public class LockRifle extends WeaponCard
         avaiableMethod[0] = false;
 
 
-
+        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
+            avaiableMethod[0] = true;
 
         if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[1] = true;
 
-        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[0] = true;
+
 
 
         return avaiableMethod;

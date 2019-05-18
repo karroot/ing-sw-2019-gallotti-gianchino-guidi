@@ -7,6 +7,10 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.EletroSchyte;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.LockRifle;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+<<<<<<< Updated upstream
+=======
+import org.junit.After;
+>>>>>>> Stashed changes
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,14 +22,36 @@ import static org.junit.Assert.*;
 public class TestBlueWeapons {
     private Player test;
     private Player enemy;
+<<<<<<< Updated upstream
+=======
+    private Player enemy3;
+>>>>>>> Stashed changes
     private Player enemy2;
     private  Square s;
     private  Square s1;
     private  Square s2;
     private  Square s3;
     private  Square s4;
+<<<<<<< Updated upstream
     private GameBoard g1= new GameBoard(null,null,1,10,null);
 
+=======
+    private  Square s5;
+
+    private GameBoard g1= new GameBoard(null,null,1,10,null);
+    private Player getPl(List<Player> pl,Player pg) throws  IllegalArgumentException
+    {
+        for(Player i : pl)
+        {
+            if (i.equals(pg))
+            {
+                return pg;
+            }
+
+        }
+        throw new IllegalArgumentException("player not in list");
+    }
+>>>>>>> Stashed changes
 
 
 
@@ -88,10 +114,23 @@ public class TestBlueWeapons {
             squareNotInGameBoard.printStackTrace();
         }
 
+<<<<<<< Updated upstream
+=======
+        try {
+            s5 = g1.getArena().getSquare(2,3);
+        } catch (SquareNotInGameBoard squareNotInGameBoard) {
+            squareNotInGameBoard.printStackTrace();
+        }
+
+>>>>>>> Stashed changes
 
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
         enemy2 = new Player(ColorId.BLUE,"Marco","Stringa di prova",false);
+<<<<<<< Updated upstream
+=======
+        enemy3 = new Player(ColorId.GREEN,"Alice","Stringa di prova",false);
+>>>>>>> Stashed changes
         w0.setName("EletroSchyte");
         w1.setName("LockRifle");
         w2.setName("TractorBeam");
@@ -101,6 +140,17 @@ public class TestBlueWeapons {
         w6.setName("MachineGun");
 
     }
+<<<<<<< Updated upstream
+=======
+    @After
+    public void reset()
+    {
+        test.setNumberOfDamagePoint(0);
+        enemy.setNumberOfDamagePoint(0);
+        enemy2.setNumberOfDamagePoint(0);
+        enemy3.setNumberOfDamagePoint(0);
+    }
+>>>>>>> Stashed changes
 
     @Test
     public void testInsertWeapon()
@@ -232,12 +282,23 @@ public class TestBlueWeapons {
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
         test.setSquare(s);
+<<<<<<< Updated upstream
         enemy.setSquare(s4);
         enemy2.setSquare(s4);
 
         s.addPlayer(test);
         s4.addPlayer(enemy);
         s4.addPlayer(enemy2);
+=======
+        s.addPlayer(test);
+        s.getRoom().updatePlayerRoomList();
+        enemy.setSquare(s4);
+        s4.addPlayer(enemy);
+        s4.getRoom().updatePlayerRoomList();
+        s4.addPlayer(enemy2);
+        enemy2.setSquare(s4);
+        s4.getRoom().updatePlayerRoomList();
+>>>>>>> Stashed changes
         test.addWeapon(w1);//Add a weapon
         try
         {
@@ -251,6 +312,12 @@ public class TestBlueWeapons {
 
         w1.setPlayer(test);
         w1.setLoaded(true);
+<<<<<<< Updated upstream
+=======
+        assertTrue(s.getPlayerList().contains(test));
+        assertTrue(s4.getPlayerList().contains(enemy));
+        assertTrue(s4.getPlayerList().contains(enemy2));
+>>>>>>> Stashed changes
         boolean[] avaiableMethod = w1.checkAvaliableMode();
         assertFalse(avaiableMethod[0]);
         assertFalse(avaiableMethod[1]);
@@ -276,6 +343,7 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
+<<<<<<< Updated upstream
         enemy.setSquare(s4);
         enemy2.setSquare(s4);
 
@@ -283,22 +351,47 @@ public class TestBlueWeapons {
         s2.addPlayer(enemy);
         s3.addPlayer(enemy2);
         test.setAmmoRed(2);
+=======
+        s.addPlayer(test);
+        s.getRoom().updatePlayerRoomList();
+        enemy.setSquare(s2);
+        s2.addPlayer(enemy);
+        s2.getRoom().updatePlayerRoomList();
+        s3.addPlayer(enemy2);
+        enemy2.setSquare(s3);
+        s3.getRoom().updatePlayerRoomList();
+        w1.setLoaded(true);
+        test.setAmmoRed(2);
+        test.setAmmoBlue(2);
+>>>>>>> Stashed changes
         boolean[] avaiableMethod1 = w1.checkAvaliableMode();
         assertEquals(avaiableMethod1[0],true);
         assertEquals(avaiableMethod1[1],true);
 
         List<Player> list1 = w1.checkBasicMode();
         List<Player> list2 = w1.checkSecondLock();
+<<<<<<< Updated upstream
         assertTrue(list1.contains(enemy));
         assertTrue(list2.contains(enemy));
         assertTrue(list1.contains(enemy2));
         assertTrue(list2.contains(enemy2));
         w1.basicMode(list1.get(0),list2.get(0),true);
+=======
+
+
+        w1.basicMode(getPl(list1,enemy),getPl(list2,enemy2),true);
+>>>>>>> Stashed changes
         assertEquals(enemy.getNumberOfDamagePoint(),2);
         assertEquals(enemy.checkMarker(test.getColor()),1);
         assertEquals(enemy2.checkMarker(test.getColor()),1);
         assertFalse(w1.isLoaded());
         //solo basic disponibile
+<<<<<<< Updated upstream
+=======
+        test.setAmmoBlue(0);
+        test.setAmmoRed(0);
+        test.setAmmoYellow(0);
+>>>>>>> Stashed changes
 
         w1.setLoaded(true);
         boolean[] avaiableMethod2 = w1.checkAvaliableMode();
@@ -308,6 +401,7 @@ public class TestBlueWeapons {
         List<Player> list3 = w1.checkBasicMode();
 
         assertTrue(list3.contains(enemy));
+<<<<<<< Updated upstream
         w1.basicMode(list3.get(2),null,true);
         assertEquals(enemy.getNumberOfDamagePoint(),4);
         assertFalse(w1.isLoaded());
@@ -315,15 +409,421 @@ public class TestBlueWeapons {
         try
         {
             w1.basicMode(list3.get(0),null,true);
+=======
+
+        try
+        {
+            w1.basicMode(list3.get(0),null,true);
+            fail();
+>>>>>>> Stashed changes
         }
         catch (IllegalStateException e)
         {
             System.out.println("modalità avanzata non utilizzabile");
         }
 
+<<<<<<< Updated upstream
         w1.basicMode(list3.get(0),null,false);
         assertFalse(w1.isLoaded());
         assertEquals(enemy2.getNumberOfDamagePoint(),2);
         assertEquals(enemy2.checkMarker(test.getColor()),2);
+=======
+        w1.basicMode(getPl(list3,enemy2),null,false);
+        assertFalse(w1.isLoaded());
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
+        assertEquals(enemy2.checkMarker(test.getColor()),1);
+    }
+
+    @Test
+    public void testWhisper()
+    {
+        g1.setAllPlayer(enemy2);
+        g1.setAllPlayer(enemy);
+        g1.setAllPlayer(test);
+
+        test.setSquare(s);
+        enemy.setSquare(s4);
+        enemy2.setSquare(s4);
+        s.addPlayer(test);
+        s4.addPlayer(enemy);
+        s4.addPlayer(enemy2);
+
+        s.getRoom().updatePlayerRoomList();
+        s4.getRoom().updatePlayerRoomList();
+        test.addWeapon(w4);//Add a weapon
+
+        try
+        {
+            w4.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        try
+        {
+            w4.basicMode(enemy2);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+
+        w4.setPlayer(test);
+        try
+        {
+            w4.basicMode(enemy2);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        w4.setLoaded(true);
+        boolean[] avaiableMethod = w4.checkAvaliableMode();
+        assertFalse(avaiableMethod[0]);
+        try
+        {
+            w4.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        //tutto disponibile
+
+        enemy.setSquare(s2);
+        enemy2.setSquare(s3);
+
+        s.addPlayer(test);
+        s2.addPlayer(enemy);
+        s3.addPlayer(enemy2);
+
+        s.getRoom().updatePlayerRoomList();
+        s2.getRoom().updatePlayerRoomList();
+        s3.getRoom().updatePlayerRoomList();
+        assertTrue(w4.isLoaded());
+        boolean[] avaiableMethod1 = w4.checkAvaliableMode();
+        assertEquals(avaiableMethod1[0],true);
+
+
+        List<Player> list1 = w4.checkBasicMode();
+
+        assertTrue(list1.contains(enemy2));
+
+        w4.basicMode(getPl(list1,enemy2));
+        assertEquals(enemy.getNumberOfDamagePoint(),0);
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
+        assertEquals(enemy2.checkMarker(test.getColor()),1);
+        assertFalse(w4.isLoaded());
+
+    }
+
+
+    @Test
+    public void testThor()
+    {
+        g1.setAllPlayer(enemy2);
+        g1.setAllPlayer(enemy);
+        g1.setAllPlayer(test);
+        g1.setAllPlayer(enemy3);
+
+
+        test.setSquare(s);
+        enemy.setSquare(s4);
+        enemy2.setSquare(s4);
+        enemy3.setSquare(s4);
+
+        MethodsWeapons.
+        s.addPlayer(test);
+        s4.addPlayer(enemy);
+        s4.addPlayer(enemy2);
+        s4.addPlayer(enemy3);
+
+        s.getRoom().updatePlayerRoomList();
+        s4.getRoom().updatePlayerRoomList();
+        test.addWeapon(w3);//Add a weapon
+
+        try
+        {
+            w3.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        try
+        {
+            w3.basicMode(enemy2,null,null,false,false);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+
+        w3.setPlayer(test);
+        try
+        {
+            w3.basicMode(enemy2,null,null,false,false);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        w3.setLoaded(true);
+        boolean[] avaiableMethod = w3.checkAvaliableMode();
+        assertFalse(avaiableMethod[0]);
+        try
+        {
+            w3.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+        //tutto disponibile
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(s3);
+        enemy2.setSquare(s5);
+        enemy3.setSquare(s4);
+
+        s.addPlayer(test);
+        s3.addPlayer(enemy);
+        s5.addPlayer(enemy2);
+        s4.addPlayer(enemy3);
+
+        s.getRoom().updatePlayerRoomList();
+        s2.getRoom().updatePlayerRoomList();
+        s3.getRoom().updatePlayerRoomList();
+        test.setAmmoBlue(2);
+        test.setAmmoYellow(2);
+        test.setAmmoRed(2);
+        assertTrue(w3.isLoaded());
+        boolean[] avaiableMethod1 = w3.checkAvaliableMode();
+        assertEquals(avaiableMethod1[0],true);
+
+
+        List<Player> list1 = w3.checkBasicMode();
+        List<Player> list2 = w3.checkChainReaction();
+        List<Player> list3 = w3.checkHighVoltage();
+        assertTrue(list1.contains(enemy));
+        assertTrue(list2.contains(enemy2));
+        assertTrue(list3.contains(enemy3));
+
+        w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),getPl(list3,enemy3),true,true);
+        assertEquals(enemy.getNumberOfDamagePoint(),2);
+        assertEquals(enemy2.getNumberOfDamagePoint(),1);
+        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        assertFalse(w3.isLoaded());
+
+    }
+
+    @Test
+    public void testMachineGun()
+    {
+        g1.setAllPlayer(enemy3);
+        g1.setAllPlayer(enemy2);
+        g1.setAllPlayer(enemy);
+        g1.setAllPlayer(test);
+
+        test.setSquare(s);
+        enemy.setSquare(s4);
+        enemy2.setSquare(s4);
+        enemy3.setSquare(s4);
+        s.addPlayer(test);
+        s4.addPlayer(enemy);
+        s4.addPlayer(enemy2);
+        s4.addPlayer(enemy3);
+        s.getRoom().updatePlayerRoomList();
+        s4.getRoom().updatePlayerRoomList();
+        test.addWeapon(w6);//Add a weapon
+        try
+        {
+            w6.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println("player is null");
+        }
+
+        w6.setPlayer(test);
+        w6.setLoaded(true);
+        boolean[] avaiableMethod = w6.checkAvaliableMode();
+        assertFalse(avaiableMethod[0]);
+        assertFalse(avaiableMethod[1]);
+        assertFalse(avaiableMethod[2]);
+        try
+        {
+            w6.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+        try
+        {
+            w6.checkFocusShotcMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        try
+        {
+            w6.checkTurretTripodeMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+
+        //tutto disponibile
+
+        enemy.setSquare(s2);
+        enemy2.setSquare(s3);
+        enemy3.setSquare(s2);
+        s.addPlayer(test);
+        s2.addPlayer(enemy);
+        s3.addPlayer(enemy2);
+        s2.addPlayer(enemy3);
+        s.getRoom().updatePlayerRoomList();
+        s2.getRoom().updatePlayerRoomList();
+        s3.getRoom().updatePlayerRoomList();
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        boolean[] avaiableMethod1 = w6.checkAvaliableMode();
+        assertEquals(avaiableMethod1[0],true);
+        assertEquals(avaiableMethod1[1],true);
+        assertEquals(avaiableMethod1[2],true);
+
+        List<Player> list1 = w6.checkBasicMode();
+        List<Player> list2 = w6.checkFocusShotcMode();
+        List<Player> list3 = w6.checkTurretTripodeMode();
+        assertTrue(list1.contains(enemy));
+        assertTrue(list2.contains(enemy));
+        assertTrue(list3.contains(enemy));
+        assertTrue(list1.contains(enemy2));
+        assertTrue(list2.contains(enemy2));
+        assertTrue(list3.contains(enemy2));
+        assertTrue(list1.contains(enemy3));
+        assertTrue(list2.contains(enemy3));
+        assertTrue(list3.contains(enemy3));
+
+
+
+
+
+        w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list3,enemy3),getPl(list1,enemy2),true,true,true);
+
+
+        assertEquals(enemy.getNumberOfDamagePoint(),2);
+        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        assertEquals(enemy3.getNumberOfDamagePoint(),1);
+        assertFalse(w6.isLoaded());
+
+        //solo basic disponibile
+        test.setAmmoYellow(0);
+        test.setAmmoBlue(0);
+        w6.setLoaded(true);
+        boolean[] avaiableMethod2 = w6.checkAvaliableMode();
+        assertEquals(avaiableMethod2[0],true);
+        assertEquals(avaiableMethod2[1],false);
+        assertEquals(avaiableMethod2[2],false);
+       list3 = w6.checkBasicMode();
+
+        assertTrue(list3.contains(enemy));
+        assertTrue(list3.contains(enemy2));
+        assertTrue(list3.contains(enemy3));
+
+
+        try
+        {
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,true,true,true);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        w6.setLoaded(true);
+
+        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,false,false,false);
+
+        assertFalse(w6.isLoaded());
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
+        assertEquals(enemy.getNumberOfDamagePoint(),3);
+
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w6.setLoaded(true);
+        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy2),false,true,true);
+
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w6.setLoaded(true);
+        try
+        {
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list1,enemy),null,true,true,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w6.setLoaded(true);
+        try
+        {
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy),null,null,true,false,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w6.setLoaded(true);
+        try
+        {
+            w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy3),true,true,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w6.setLoaded(true);
+        try
+        {
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,true,true,false);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+>>>>>>> Stashed changes
     }
 }
