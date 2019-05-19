@@ -60,6 +60,25 @@ public class AmmoPoint extends Square
         this.ammoTiles=ammoTiles;
     }
 
+    /**
+     *
+     * @param x
+     */
+    public void setX (int x)
+    {
+        this.x = x;
+    }
+
+    /**
+     *
+     * @param Y
+     */
+    public void setY (int Y)
+    {
+        this.y = y;
+    }
+
+
 
 
 
