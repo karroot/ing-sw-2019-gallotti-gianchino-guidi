@@ -56,12 +56,13 @@ public class TractorBeam extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkMoveBasicMode(Player player) throws IllegalStateException
+    public List<Square> checkMoveBasicMode(Player player) throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-        List<Player> listPlayerThatYouCanMove = new LinkedList<>();
+        List<Square> listSquare = new LinkedList<>();
+
         List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
         for(Player p : player.getSquare().getGameBoard().getAllPlayer())
         {
@@ -71,30 +72,40 @@ public class TractorBeam extends WeaponCard
 
 
                  if (reachRoom.getSquareList().contains(sq)) {
-                     listPlayerThatYouCanMove.add(p);
+                     listSquare.add(sq);
                  }
             }
          }
         }
 
-        return listPlayerThatYouCanMove;//Returns squares
+        return listSquare;//Returns squares
     }
     /**
-     * Calculate in which square a player can be moved using the advanced mode
-     * @param player player to move
-     * @return Set of all square corrects
-     * @exception IllegalStateException if the basic mode can't be used
+     * Return the list of all target available for using the punisher mode of this weapon
+     * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkMoveAdvancedMode(Player player) throws IllegalStateException
+    public List<Player> checkPunisherMode () throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1])
+        if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-        List<Player> listPlayerToMove = new LinkedList<>();
-        listPlayerToMove.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
+        List<Player> listPlayer = new LinkedList<>();
+
+
+        for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+        {
+            for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(),player.getSquare().getY(),2) )
+            {
 
 
 
-        return listPlayerToMove;//Returns squares
+                if (this.player.getSquare().equals(sq)) {
+                    listPlayer.add(p);
+                }
+
+            }
+        }
+
+        return listPlayer;//Returns squares
     }
     /**
      * Return the list of all target available for using the basic mode of this weapon
@@ -120,34 +131,23 @@ public class TractorBeam extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        doDamage(player,2);
+        doDamage(player,1);
         moveTarget(player,x,y);//Move the target
         this.isLoaded = false;
     }
-    /**
-     * Return the list of all target available for using the punisher mode of this weapon
-     * @return all player that can be affected with the lock rifle in basic mode
-     */
-    public List<Player> checkPunisherMode() throws IllegalStateException
-    {
 
-        if (!checkAvaliableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
-
-        return checkBasicMode();
-    }
     /**
      * It uses the punisher mode of the lock rifle
      * @param player player affected by weapon
      */
-    public void punisherMode(Player player, int x ,int y) throws  IllegalStateException
+    public void punisherMode(Player player) throws  IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         doDamage(player,3);
-        moveTarget(player,x,y);//Move the target
+        moveTarget(player,player.getSquare().getX(),player.getSquare().getY());//Move the target
         this.isLoaded = false;
         this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);

@@ -7,38 +7,36 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.EletroSchyte;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.LockRifle;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-<<<<<<< Updated upstream
-=======
+
+
 import org.junit.After;
->>>>>>> Stashed changes
+
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.invoke.MethodHandle;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class TestBlueWeapons {
     private Player test;
     private Player enemy;
-<<<<<<< Updated upstream
-=======
+
+
     private Player enemy3;
->>>>>>> Stashed changes
+
     private Player enemy2;
-    private  Square s;
-    private  Square s1;
-    private  Square s2;
-    private  Square s3;
-    private  Square s4;
-<<<<<<< Updated upstream
-    private GameBoard g1= new GameBoard(null,null,1,10,null);
-
-=======
-    private  Square s5;
 
     private GameBoard g1= new GameBoard(null,null,1,10,null);
+
+
+
+
+
     private Player getPl(List<Player> pl,Player pg) throws  IllegalArgumentException
     {
         for(Player i : pl)
@@ -51,7 +49,7 @@ public class TestBlueWeapons {
         }
         throw new IllegalArgumentException("player not in list");
     }
->>>>>>> Stashed changes
+
 
 
 
@@ -68,69 +66,17 @@ public class TestBlueWeapons {
     public void setup()
     {
 
-        try {
-            s = g1.getArena().getSquare(1,1);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
 
 
 
-
-
-        try {
-            s1 = g1.getArena().getSquare(2,1);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-
-
-
-
-        try {
-            s2 = g1.getArena().getSquare(1,2);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-
-
-
-
-        try {
-            s3 = g1.getArena().getSquare(1,3);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-
-
-
-
-        try {
-            s4 = g1.getArena().getSquare(2,2);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-<<<<<<< Updated upstream
-=======
-        try {
-            s5 = g1.getArena().getSquare(2,3);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
->>>>>>> Stashed changes
 
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
         enemy2 = new Player(ColorId.BLUE,"Marco","Stringa di prova",false);
-<<<<<<< Updated upstream
-=======
+
+
         enemy3 = new Player(ColorId.GREEN,"Alice","Stringa di prova",false);
->>>>>>> Stashed changes
+
         w0.setName("EletroSchyte");
         w1.setName("LockRifle");
         w2.setName("TractorBeam");
@@ -140,8 +86,8 @@ public class TestBlueWeapons {
         w6.setName("MachineGun");
 
     }
-<<<<<<< Updated upstream
-=======
+
+
     @After
     public void reset()
     {
@@ -150,7 +96,7 @@ public class TestBlueWeapons {
         enemy2.setNumberOfDamagePoint(0);
         enemy3.setNumberOfDamagePoint(0);
     }
->>>>>>> Stashed changes
+
 
     @Test
     public void testInsertWeapon()
@@ -176,18 +122,17 @@ public class TestBlueWeapons {
     }
 
     @Test
-    public void testDeathSchytle()
-    {
+    public void testDeathSchytle() throws SquareNotInGameBoard {
 
 
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
 
-        test.setSquare(s);
-        enemy.setSquare(s1);
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,1));
 
-        s.addPlayer(test);
-        s1.addPlayer(enemy);
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,1);
         test.addWeapon(w0);//Add a weapon
         try
         {
@@ -226,10 +171,8 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
-        test.setSquare(s);
-        enemy.setSquare(s);
-        s.addPlayer(test);
-        s.addPlayer(enemy);
+       enemy.setSquare(g1.getArena().getSquare(1,1));
+        MethodsWeapons.moveTarget(enemy,1,1);
         test.setAmmoBlue(2);
         boolean[] avaiableMethod1 = w0.checkAvaliableMode();
         assertEquals(avaiableMethod1[0],true);
@@ -276,180 +219,147 @@ public class TestBlueWeapons {
 
 
     @Test
-    public void testLockRifle()
-    {
+    public void testLockRifle() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
-        test.setSquare(s);
-<<<<<<< Updated upstream
-        enemy.setSquare(s4);
-        enemy2.setSquare(s4);
+        test.setSquare(g1.getArena().getSquare(1,1));
 
-        s.addPlayer(test);
-        s4.addPlayer(enemy);
-        s4.addPlayer(enemy2);
-=======
-        s.addPlayer(test);
-        s.getRoom().updatePlayerRoomList();
-        enemy.setSquare(s4);
-        s4.addPlayer(enemy);
-        s4.getRoom().updatePlayerRoomList();
-        s4.addPlayer(enemy2);
-        enemy2.setSquare(s4);
-        s4.getRoom().updatePlayerRoomList();
->>>>>>> Stashed changes
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
         test.addWeapon(w1);//Add a weapon
-        try
-        {
+        try {
             w1.checkBasicMode();
             fail();
-        }
-        catch (IllegalStateException e)
-        {
+        } catch (IllegalStateException e) {
             System.out.println("player is null");
         }
 
         w1.setPlayer(test);
         w1.setLoaded(true);
-<<<<<<< Updated upstream
-=======
-        assertTrue(s.getPlayerList().contains(test));
-        assertTrue(s4.getPlayerList().contains(enemy));
-        assertTrue(s4.getPlayerList().contains(enemy2));
->>>>>>> Stashed changes
+
+
+
         boolean[] avaiableMethod = w1.checkAvaliableMode();
         assertFalse(avaiableMethod[0]);
         assertFalse(avaiableMethod[1]);
-        try
-        {
+        try {
             w1.checkBasicMode();
             fail();
-        }
-        catch (IllegalStateException e)
-        {
+        } catch (IllegalStateException e) {
             System.out.println("modalità base non utilizzabile");
         }
 
-        try
-        {
+        try {
             w1.checkSecondLock();
             fail();
-        }
-        catch (IllegalStateException e)
-        {
+        } catch (IllegalStateException e) {
             System.out.println("modalità avanzata non utilizzabile");
         }
 
         //tutto disponibile
 
-<<<<<<< Updated upstream
-        enemy.setSquare(s4);
-        enemy2.setSquare(s4);
 
-        s.addPlayer(test);
-        s2.addPlayer(enemy);
-        s3.addPlayer(enemy2);
+
+        w1.setLoaded(true);
         test.setAmmoRed(2);
-=======
-        s.addPlayer(test);
-        s.getRoom().updatePlayerRoomList();
-        enemy.setSquare(s2);
-        s2.addPlayer(enemy);
-        s2.getRoom().updatePlayerRoomList();
-        s3.addPlayer(enemy2);
-        enemy2.setSquare(s3);
-        s3.getRoom().updatePlayerRoomList();
+
+
+        enemy.setSquare(g1.getArena().getSquare(1,2));
+        enemy2.setSquare(g1.getArena().getSquare(1,3));
+        MethodsWeapons.moveTarget(enemy,1,2);
+        MethodsWeapons.moveTarget(enemy2,1,3);
+
         w1.setLoaded(true);
         test.setAmmoRed(2);
         test.setAmmoBlue(2);
->>>>>>> Stashed changes
+
         boolean[] avaiableMethod1 = w1.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
-        assertEquals(avaiableMethod1[1],true);
+        assertEquals(avaiableMethod1[0], true);
+        assertEquals(avaiableMethod1[1], true);
 
         List<Player> list1 = w1.checkBasicMode();
         List<Player> list2 = w1.checkSecondLock();
-<<<<<<< Updated upstream
+
         assertTrue(list1.contains(enemy));
         assertTrue(list2.contains(enemy));
         assertTrue(list1.contains(enemy2));
         assertTrue(list2.contains(enemy2));
-        w1.basicMode(list1.get(0),list2.get(0),true);
-=======
 
 
-        w1.basicMode(getPl(list1,enemy),getPl(list2,enemy2),true);
->>>>>>> Stashed changes
-        assertEquals(enemy.getNumberOfDamagePoint(),2);
-        assertEquals(enemy.checkMarker(test.getColor()),1);
-        assertEquals(enemy2.checkMarker(test.getColor()),1);
+
+        w1.basicMode(getPl(list1, enemy), getPl(list2, enemy2), true);
+
+        assertEquals(enemy.getNumberOfDamagePoint(), 2);
+        assertEquals(enemy.checkMarker(test.getColor()), 1);
+        assertEquals(enemy2.checkMarker(test.getColor()), 1);
         assertFalse(w1.isLoaded());
+
         //solo basic disponibile
-<<<<<<< Updated upstream
-=======
+
+
         test.setAmmoBlue(0);
         test.setAmmoRed(0);
         test.setAmmoYellow(0);
->>>>>>> Stashed changes
+
 
         w1.setLoaded(true);
         boolean[] avaiableMethod2 = w1.checkAvaliableMode();
-        assertEquals(avaiableMethod2[0],true);
-        assertEquals(avaiableMethod2[1],false);
+        assertEquals(avaiableMethod2[0], true);
+        assertEquals(avaiableMethod2[1], false);
 
         List<Player> list3 = w1.checkBasicMode();
 
         assertTrue(list3.contains(enemy));
-<<<<<<< Updated upstream
-        w1.basicMode(list3.get(2),null,true);
-        assertEquals(enemy.getNumberOfDamagePoint(),4);
+
+        w1.basicMode(getPl(list3, enemy), null, false);
+        assertEquals(enemy.getNumberOfDamagePoint(), 5);
         assertFalse(w1.isLoaded());
         w1.setLoaded(true);
-        try
-        {
-            w1.basicMode(list3.get(0),null,true);
-=======
-
-        try
-        {
-            w1.basicMode(list3.get(0),null,true);
-            fail();
->>>>>>> Stashed changes
-        }
-        catch (IllegalStateException e)
-        {
+        try {
+            w1.basicMode(list3.get(0), null, true);
+        } catch (IllegalStateException e) {
             System.out.println("modalità avanzata non utilizzabile");
         }
 
-<<<<<<< Updated upstream
-        w1.basicMode(list3.get(0),null,false);
-        assertFalse(w1.isLoaded());
-        assertEquals(enemy2.getNumberOfDamagePoint(),2);
-        assertEquals(enemy2.checkMarker(test.getColor()),2);
-=======
-        w1.basicMode(getPl(list3,enemy2),null,false);
-        assertFalse(w1.isLoaded());
-        assertEquals(enemy2.getNumberOfDamagePoint(),3);
-        assertEquals(enemy2.checkMarker(test.getColor()),1);
-    }
+            try {
+                w1.basicMode(list3.get(0), null, true);
+                fail();
+
+            } catch (IllegalStateException e) {
+                System.out.println("modalità avanzata non utilizzabile");
+            }
+
+
+            w1.basicMode(getPl(list1, enemy2), null, false);
+            assertFalse(w1.isLoaded());
+            assertEquals(enemy2.getNumberOfDamagePoint(), 3);
+            assertEquals(enemy2.checkMarker(test.getColor()), 1);
+        w1.setLoaded(true);
+            w1.basicMode(getPl(list3, enemy2), null, false);
+            assertFalse(w1.isLoaded());
+            assertEquals(enemy2.getNumberOfDamagePoint(), 6);
+            assertEquals(enemy2.checkMarker(test.getColor()), 1);
+        }
+
 
     @Test
-    public void testWhisper()
-    {
+    public void testWhisper() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
 
-        test.setSquare(s);
-        enemy.setSquare(s4);
-        enemy2.setSquare(s4);
-        s.addPlayer(test);
-        s4.addPlayer(enemy);
-        s4.addPlayer(enemy2);
-
-        s.getRoom().updatePlayerRoomList();
-        s4.getRoom().updatePlayerRoomList();
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
         test.addWeapon(w4);//Add a weapon
 
         try
@@ -496,16 +406,11 @@ public class TestBlueWeapons {
         }
         //tutto disponibile
 
-        enemy.setSquare(s2);
-        enemy2.setSquare(s3);
+        enemy.setSquare(g1.getArena().getSquare(1,3));
+        enemy2.setSquare(g1.getArena().getSquare(1,3));
 
-        s.addPlayer(test);
-        s2.addPlayer(enemy);
-        s3.addPlayer(enemy2);
-
-        s.getRoom().updatePlayerRoomList();
-        s2.getRoom().updatePlayerRoomList();
-        s3.getRoom().updatePlayerRoomList();
+        MethodsWeapons.moveTarget(enemy,1,3);
+        MethodsWeapons.moveTarget(enemy2,1,3);
         assertTrue(w4.isLoaded());
         boolean[] avaiableMethod1 = w4.checkAvaliableMode();
         assertEquals(avaiableMethod1[0],true);
@@ -525,27 +430,23 @@ public class TestBlueWeapons {
 
 
     @Test
-    public void testThor()
-    {
+    public void testThor() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
         g1.setAllPlayer(enemy3);
 
 
-        test.setSquare(s);
-        enemy.setSquare(s4);
-        enemy2.setSquare(s4);
-        enemy3.setSquare(s4);
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-        MethodsWeapons.
-        s.addPlayer(test);
-        s4.addPlayer(enemy);
-        s4.addPlayer(enemy2);
-        s4.addPlayer(enemy3);
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
+        MethodsWeapons.moveTarget(enemy3,2,2);
 
-        s.getRoom().updatePlayerRoomList();
-        s4.getRoom().updatePlayerRoomList();
         test.addWeapon(w3);//Add a weapon
 
         try
@@ -592,20 +493,15 @@ public class TestBlueWeapons {
         }
 
         //tutto disponibile
-        test.setSquare(g1.getArena().getSquare(1,1));
-        enemy.setSquare(s3);
-        enemy2.setSquare(s5);
-        enemy3.setSquare(s4);
 
-        s.addPlayer(test);
-        s3.addPlayer(enemy);
-        s5.addPlayer(enemy2);
-        s4.addPlayer(enemy3);
+        enemy.setSquare(g1.getArena().getSquare(1,3));
+        enemy2.setSquare(g1.getArena().getSquare(2,3));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-        s.getRoom().updatePlayerRoomList();
-        s2.getRoom().updatePlayerRoomList();
-        s3.getRoom().updatePlayerRoomList();
-        test.setAmmoBlue(2);
+        MethodsWeapons.moveTarget(enemy,1,3);
+        MethodsWeapons.moveTarget(enemy2,2,3);
+        MethodsWeapons.moveTarget(enemy3,2,2);
+        test.setAmmoBlue(3);
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w3.isLoaded());
@@ -623,29 +519,28 @@ public class TestBlueWeapons {
         w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),getPl(list3,enemy3),true,true);
         assertEquals(enemy.getNumberOfDamagePoint(),2);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
-        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        assertEquals(enemy3.getNumberOfDamagePoint(),2);
         assertFalse(w3.isLoaded());
 
     }
 
     @Test
-    public void testMachineGun()
-    {
-        g1.setAllPlayer(enemy3);
+    public void testMachineGun() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
+        g1.setAllPlayer(enemy3);
 
-        test.setSquare(s);
-        enemy.setSquare(s4);
-        enemy2.setSquare(s4);
-        enemy3.setSquare(s4);
-        s.addPlayer(test);
-        s4.addPlayer(enemy);
-        s4.addPlayer(enemy2);
-        s4.addPlayer(enemy3);
-        s.getRoom().updatePlayerRoomList();
-        s4.getRoom().updatePlayerRoomList();
+
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
+        MethodsWeapons.moveTarget(enemy3,2,2);
         test.addWeapon(w6);//Add a weapon
         try
         {
@@ -695,16 +590,12 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
-        enemy.setSquare(s2);
-        enemy2.setSquare(s3);
-        enemy3.setSquare(s2);
-        s.addPlayer(test);
-        s2.addPlayer(enemy);
-        s3.addPlayer(enemy2);
-        s2.addPlayer(enemy3);
-        s.getRoom().updatePlayerRoomList();
-        s2.getRoom().updatePlayerRoomList();
-        s3.getRoom().updatePlayerRoomList();
+        enemy.setSquare(g1.getArena().getSquare(1,2));
+        enemy2.setSquare(g1.getArena().getSquare(1,3));
+        enemy3.setSquare(g1.getArena().getSquare(1,2));
+        MethodsWeapons.moveTarget(enemy,1,2);
+        MethodsWeapons.moveTarget(enemy2,1,3);
+        MethodsWeapons.moveTarget(enemy3,1,2);
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
         boolean[] avaiableMethod1 = w6.checkAvaliableMode();
@@ -824,6 +715,274 @@ public class TestBlueWeapons {
         {
             System.out.println(e);
         }
->>>>>>> Stashed changes
+
+    }
+
+    @Test
+    public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
+        String[] orderEffect = new String[3];
+        g1.setAllPlayer(enemy2);
+        g1.setAllPlayer(enemy);
+        g1.setAllPlayer(test);
+        g1.setAllPlayer(enemy3);
+
+
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
+        MethodsWeapons.moveTarget(enemy3,2,2);
+
+        test.addWeapon(w5);//Add a weapon
+
+        try
+        {
+            w5.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        // spara, muoviti ,aggiungi danno
+        orderEffect[0] = "basic";
+        orderEffect[1] = "with phase glide";
+        orderEffect[2] = "with charged shot";
+
+        try
+        {
+            w5.basicMode(enemy,orderEffect,1,1);
+            fail();
+        }
+        catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+
+        w5.setPlayer(test);
+        try
+        {
+            w5.basicMode(enemy,orderEffect,1,1);
+            fail();
+        }
+        catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+
+        w5.setLoaded(true);
+
+
+
+
+        MethodsWeapons.moveTarget(test,1,3);
+        MethodsWeapons.moveTarget(enemy,4,1);
+
+
+        List<Square> reachableSquare = new LinkedList<>();
+        List<Player> reachableBasicPlayer = new LinkedList<>();
+        List<Player> reachableBeforeMovePlayer = new LinkedList<>();
+
+      try
+      {
+          reachableBasicPlayer=  w5.checkBasicMode();
+          fail();
+      }
+      catch (IllegalStateException e)
+      {
+          System.out.println(e);
+      }
+
+        reachableSquare= w5.checkPhaseGlide();
+        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+
+        try {
+            w5.basicMode(enemy,orderEffect,1,2);
+            fail();
+        } catch (IllegalStateException | IllegalAccessException e) {
+            System.out.println(e);
+
+        }
+//prima ti muovi , raggiungi il player e gli spari
+
+
+
+
+        MethodsWeapons.moveTarget(enemy,1,3);
+        MethodsWeapons.moveTarget(test,1,1);
+
+
+        test.setAmmoBlue(3);
+        reachableBasicPlayer = w5.checkBasicMode();
+
+        reachableSquare= w5.checkPhaseGlide();
+        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+
+        assertFalse(reachableBasicPlayer.contains(enemy3));
+        w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
+
+        assertFalse(w5.isLoaded());
+        assertEquals(enemy.getNumberOfDamagePoint(),3);
+
+
+
+
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,3);
+
+
+
+        // muoviti, spara ,aggiungi danno
+        orderEffect[1] = "basic";
+        orderEffect[0] = "with phase glide";
+        orderEffect[2] = "with charged shot";
+        test.setAmmoBlue(3);
+        w5.setLoaded(true);
+
+        reachableSquare= w5.checkPhaseGlide();
+        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3)));
+        assertTrue(reachableBeforeMovePlayer.contains(enemy));
+
+
+        w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
+        assertEquals(enemy.getNumberOfDamagePoint(),6);
+
+     // prova a muoverti e a sparare a un nemico che non  puoi raggiungere da quella posizione ( ma che comunque potevi raggiungere)
+
+
+
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,1,3);
+
+        // muoviti, spara ,aggiungi danno
+        orderEffect[1] = "basic";
+        orderEffect[0] = "with phase glide";
+        orderEffect[2] = "with charged shot";
+        test.setAmmoBlue(3);
+        w5.setLoaded(true);
+        assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
+
+        reachableBasicPlayer = w5.checkBasicMode();
+        reachableSquare= w5.checkSquareBeforeMove();
+        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        assertFalse(reachableBasicPlayer.contains(enemy));
+        assertTrue(reachableSquare.contains(g1.getArena().getSquare(2,2)));
+        assertTrue(reachableBeforeMovePlayer.contains(enemy));
+
+
+        w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,1); // metto dei valori sbagliati in x e y
+        assertEquals(enemy.getNumberOfDamagePoint(),6);
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
+
+    }
+
+    @Test
+    public void testTractatorBeam() throws SquareNotInGameBoard {
+        g1.setAllPlayer(enemy2);
+        g1.setAllPlayer(enemy);
+        g1.setAllPlayer(test);
+        g1.setAllPlayer(enemy3);
+
+
+        test.setSquare(g1.getArena().getSquare(1,1));
+        enemy.setSquare(g1.getArena().getSquare(2,2));
+        enemy2.setSquare(g1.getArena().getSquare(2,2));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
+        MethodsWeapons.moveTarget(test,1,1);
+        MethodsWeapons.moveTarget(enemy,2,2);
+        MethodsWeapons.moveTarget(enemy2,2,2);
+        MethodsWeapons.moveTarget(enemy3,2,2);
+        test.addWeapon(w2);//Add a weapon
+        try
+        {
+            w2.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println("player is null");
+        }
+
+        w2.setPlayer(test);
+        w2.setLoaded(true);
+        boolean[] avaiableMethod = w2.checkAvaliableMode();
+        assertFalse(avaiableMethod[0]);
+        assertFalse(avaiableMethod[1]);
+
+        try
+        {
+            w2.checkBasicMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+        try
+        {
+            w2.checkPunisherMode();
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        assertEquals(enemy2.getNumberOfDamagePoint(),0);
+        //tutto disponibile
+
+        enemy.setSquare(g1.getArena().getSquare(1,3));
+        enemy2.setSquare(g1.getArena().getSquare(2,3));
+        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
+        MethodsWeapons.moveTarget(enemy,1,3);
+        MethodsWeapons.moveTarget(enemy2,2,3);
+        MethodsWeapons.moveTarget(enemy3,2,2);
+        test.setAmmoBlue(3);
+        test.setAmmoYellow(2);
+        test.setAmmoRed(2);
+        assertTrue(w2.isLoaded());
+        boolean[] avaiableMethod1 = w2.checkAvaliableMode();
+        assertEquals(avaiableMethod1[0],true);
+
+
+        List<Player> list1 = w2.checkBasicMode();
+        List<Player> list2 = w2.checkPunisherMode();
+        List<Square> list3 = w2.checkMoveBasicMode(enemy2);
+
+        assertTrue(list1.contains(enemy2));
+        assertTrue(list2.contains(enemy3));
+        assertTrue(list3.contains(g1.getArena().getSquare(1,3)));
+
+        w2.basicMode(getPl(list1,enemy2),1,3);
+        assertEquals(enemy2.getNumberOfDamagePoint(),1);
+
+        w2.setLoaded(true);
+
+        w2.punisherMode(getPl(list2,enemy3));
+        assertEquals(enemy3.getNumberOfDamagePoint(),3);
+
+        w2.setLoaded(true);
+        test.setAmmoBlue(0);
+        test.setAmmoYellow(0);
+        test.setAmmoRed(0);
+      try{  w2.punisherMode(getPl(list2,enemy3));}
+      catch (IllegalStateException e)
+      {
+          System.out.println(e);
+      }
+
+
     }
 }

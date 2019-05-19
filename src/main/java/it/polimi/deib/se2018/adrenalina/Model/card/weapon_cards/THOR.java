@@ -88,7 +88,7 @@ public class THOR extends WeaponCard
         if(ChainReaction)
         {
             if (!checkAvaliableMode()[1])
-                throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+                throw  new IllegalStateException("Modalità chain dell'arma: "+name+" non eseguibile");
 
             if (player1.equals(player2))
                 throw new IllegalArgumentException("player1 must be different from player2");
@@ -123,11 +123,17 @@ public class THOR extends WeaponCard
 
         for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
         {
-          if(i.playerThatSee(i.getSquare().getGameBoard()).size() >0 && !i.equals(player))
+          if(i.playerThatSee(i.getSquare().getGameBoard()).size() >1 && !(i.equals(player))  )
           {
+            for(Player k : i.playerThatSee(i.getSquare().getGameBoard()))
+            {
+                if(!(k.equals(i)))
+                {
+                    listChain.add(k);
+                }
+            }
 
-              listChain.addAll(i.playerThatSee(i.getSquare().getGameBoard()));
-              list.addAll(listChain);
+
           }
         }
         list.addAll(listChain);
@@ -138,7 +144,8 @@ public class THOR extends WeaponCard
 
     public List<Player> checkHighVoltage() throws  IllegalStateException
     {
-        List<Player> listHighVoltage= new LinkedList<>();
+        List<Player> list= new LinkedList<>();
+        Set<Player> listHighVoltage= new HashSet<>();
         if (!checkAvaliableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
@@ -146,13 +153,20 @@ public class THOR extends WeaponCard
         {
             for (Player j : i.playerThatSee(i.getSquare().getGameBoard()))
             {
-                if(j.playerThatSee(j.getSquare().getGameBoard()).size()>0)
+                if(j.playerThatSee(j.getSquare().getGameBoard()).size()>0 && !(i.equals(player)) && !(i.equals(j)))
                 {
-                    listHighVoltage.addAll(j.playerThatSee(j.getSquare().getGameBoard()));
+                    for(Player k : j.playerThatSee(j.getSquare().getGameBoard()))
+                    {
+                        if(!(k.equals(i)) && !(k.equals(j)))
+                        {
+                            listHighVoltage.add(k);
+                        }
+                    }
                 }
             }
         }
-        return listHighVoltage;
+        list.addAll(listHighVoltage);
+        return list;
     }
 
 
