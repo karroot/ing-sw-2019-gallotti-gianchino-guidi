@@ -58,6 +58,10 @@ public abstract class Square
         return y;
     }
 
+    public String toStringCoordinates()
+    {
+        return "x = "+ x +", y = " + y;
+    }
 
     public boolean isAmmoPoint() {
         return isAmmoPoint;

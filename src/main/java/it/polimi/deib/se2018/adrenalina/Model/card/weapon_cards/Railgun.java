@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
@@ -47,8 +48,6 @@ public class Railgun extends WeaponCard
         if (isLoaded() && !checkBasicModeOrPiercingMode().keySet().isEmpty() && thereAreTwoPlayerInAdirection())//If the second mode can be used
             avaiableMethod[1] = true;
 
-
-
         return avaiableMethod;
 
     }
@@ -59,9 +58,9 @@ public class Railgun extends WeaponCard
      * @return hash map
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Map<String,List<Player>> checkBasicModeOrPiercingMode() throws IllegalStateException
+    public Map<String,List<ColorId>> checkBasicModeOrPiercingMode() throws IllegalStateException
     {
-        Map<String,List<Player>> result = new HashMap<>();
+        Map<String,List<ColorId>> result = new HashMap<>();
 
         //For each cardinal direction
         //1 obtain all square in that direction
@@ -77,7 +76,7 @@ public class Railgun extends WeaponCard
         N.stream().map(square -> square.getPlayerList()).forEach(play -> {play.remove(player); playersN.addAll(play);} );
 
         if(!playersN.isEmpty())
-            result.putIfAbsent("Nord",playersN);
+            result.putIfAbsent("Nord",playersN.stream().map(Player::getColor).collect(Collectors.toList()));
 
         //Check the cardinal direction East
         List<Player> playersE = new LinkedList<>();
@@ -87,7 +86,7 @@ public class Railgun extends WeaponCard
         E.stream().map(square -> square.getPlayerList()).forEach(play -> {play.remove(player); playersE.addAll(play);} );
 
         if(!playersE.isEmpty())
-            result.putIfAbsent("Est",playersE);
+            result.putIfAbsent("Est",playersE.stream().map(Player::getColor).collect(Collectors.toList()));
 
         //Check the cardinal direction South
         List<Player> playersS = new LinkedList<>();
@@ -97,7 +96,7 @@ public class Railgun extends WeaponCard
         S.stream().map(square -> square.getPlayerList()).forEach(play ->{ play.remove(player); playersS.addAll(play);} );
 
         if(!playersS.isEmpty())
-            result.putIfAbsent("Sud",playersS);
+            result.putIfAbsent("Sud",playersS.stream().map(Player::getColor).collect(Collectors.toList()));
 
         //Check the cardinal direction South
         List<Player> playersW = new LinkedList<>();
@@ -107,7 +106,7 @@ public class Railgun extends WeaponCard
         W.stream().map(square -> square.getPlayerList()).forEach(play -> { play.remove(player); playersW.addAll(play);} );
 
         if(!playersW.isEmpty())
-            result.putIfAbsent("Ovest",playersW);
+            result.putIfAbsent("Ovest",playersW.stream().map(Player::getColor).collect(Collectors.toList()));
 
 
         return result;//Returns the map with all cardinal direction where there are the targets possible
@@ -149,9 +148,9 @@ public class Railgun extends WeaponCard
     //Says if the alternative mode can be used
     private boolean thereAreTwoPlayerInAdirection()
     {
-        Map<String,List<Player>> temp = checkBasicModeOrPiercingMode();
+        Map<String,List<ColorId>> temp = checkBasicModeOrPiercingMode();
 
-        List<List<Player>> c = temp.values()
+        List<List<ColorId>> c = temp.values()
                                     .stream()
                                     .filter(players -> players.size() > 1)
                                     .collect(Collectors.toList());

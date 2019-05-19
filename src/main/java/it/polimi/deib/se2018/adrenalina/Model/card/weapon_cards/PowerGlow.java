@@ -112,19 +112,21 @@ public class PowerGlow extends WeaponCard
         List<List<ColorId>> squaresN = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareNorth(player.getSquare(), square.getX(), square.getY()))
-                .sorted((o1, o2) -> o2.getY() - o1.getY())
+                .sorted((o1, o2) -> o1.getY() - o2.getY())
                 .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
 
+
         if (squaresN.size()==2)//If there are two target
             result.putIfAbsent("Nord",squaresN);//Add at map
+
 
         //Filter the square that are at South with all possible targets
         List<List<ColorId>> squaresS = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareSouth(player.getSquare(), square.getX(), square.getY()))
-                .sorted((o1, o2) -> o1.getY() - o2.getY())
+                .sorted((o1, o2) -> o2.getY() - o1.getY())
                 .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
@@ -136,7 +138,7 @@ public class PowerGlow extends WeaponCard
         List<List<ColorId>> squaresE = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareEast(player.getSquare(), square.getX(), square.getY()))
-                .sorted((o1, o2) -> o2.getX() - o1.getX())
+                .sorted((o1, o2) -> o1.getX() - o2.getX())
                 .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
@@ -148,7 +150,7 @@ public class PowerGlow extends WeaponCard
         List<List<ColorId>> squaresW = squareList
                 .stream()
                 .filter(square -> MethodsWeapons.checkSquareWest(player.getSquare(), square.getX(), square.getY()))
-                .sorted((o1, o2) -> o1.getX() - o2.getX())
+                .sorted((o1, o2) -> o2.getX() - o1.getX())
                 .map(Square::getPlayerListColor)
                 .filter(players -> !players.isEmpty())
                 .collect(Collectors.toList());
