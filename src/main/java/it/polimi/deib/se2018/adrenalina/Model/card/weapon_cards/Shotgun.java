@@ -49,7 +49,11 @@ public class Shotgun extends WeaponCard
         if (isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
             avaiableMethod[0] = true;
 
-        if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//If the second mode can be used
+        //Calculate the player that are exactly to distance 1
+        Set<Player> players = MethodsWeapons.playersReachable(player.getSquare(),1);
+        players.removeAll(player.getSquare().getPlayerList());
+
+        if (isLoaded() && !players.isEmpty())//If the second mode can be used
             avaiableMethod[1] = true;
 
 
@@ -77,11 +81,10 @@ public class Shotgun extends WeaponCard
 
     /**
      * Calculate in which square a player can be moved using the basic mode
-     * @param player player to move
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Set<Square> checkMoveBasicMode(Player player) throws IllegalStateException
+    public Set<Square> checkMoveBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
