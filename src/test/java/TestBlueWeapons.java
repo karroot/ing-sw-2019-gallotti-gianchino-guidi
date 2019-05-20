@@ -171,7 +171,7 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
-       enemy.setSquare(g1.getArena().getSquare(1,1));
+
         MethodsWeapons.moveTarget(enemy,1,1);
         test.setAmmoBlue(2);
         boolean[] avaiableMethod1 = w0.checkAvaliableMode();
@@ -270,8 +270,6 @@ public class TestBlueWeapons {
         test.setAmmoRed(2);
 
 
-        enemy.setSquare(g1.getArena().getSquare(1,2));
-        enemy2.setSquare(g1.getArena().getSquare(1,3));
         MethodsWeapons.moveTarget(enemy,1,2);
         MethodsWeapons.moveTarget(enemy2,1,3);
 
@@ -406,8 +404,7 @@ public class TestBlueWeapons {
         }
         //tutto disponibile
 
-        enemy.setSquare(g1.getArena().getSquare(1,3));
-        enemy2.setSquare(g1.getArena().getSquare(1,3));
+
 
         MethodsWeapons.moveTarget(enemy,1,3);
         MethodsWeapons.moveTarget(enemy2,1,3);
@@ -494,14 +491,12 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
-        enemy.setSquare(g1.getArena().getSquare(1,3));
-        enemy2.setSquare(g1.getArena().getSquare(2,3));
-        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
 
         MethodsWeapons.moveTarget(enemy,1,3);
         MethodsWeapons.moveTarget(enemy2,2,3);
         MethodsWeapons.moveTarget(enemy3,2,2);
-        test.setAmmoBlue(3);
+        test.setAmmoBlue(2);
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w3.isLoaded());
@@ -516,11 +511,71 @@ public class TestBlueWeapons {
         assertTrue(list2.contains(enemy2));
         assertTrue(list3.contains(enemy3));
 
+
+
+        try
+        {
+            w3.basicMode(getPl(list1,enemy),enemy,getPl(list3,enemy3),true,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+        try
+        {
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy,true,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
+        try
+        {
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy2,true,true);
+            fail();
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e);
+        }
+
         w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),getPl(list3,enemy3),true,true);
         assertEquals(enemy.getNumberOfDamagePoint(),2);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
         assertEquals(enemy3.getNumberOfDamagePoint(),2);
         assertFalse(w3.isLoaded());
+        w3.setLoaded(true);
+
+        test.setAmmoBlue(1);
+        test.setAmmoYellow(1);
+        test.setAmmoRed(1);
+
+        try
+        {
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),getPl(list3,enemy3),true,true);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        assertEquals(enemy.getNumberOfDamagePoint(),2);
+        assertEquals(enemy2.getNumberOfDamagePoint(),1);
+        assertEquals(enemy3.getNumberOfDamagePoint(),2);
+        test.setAmmoBlue(0);
+        try
+        {
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),getPl(list3,enemy3),true,true);
+            fail();
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+        }
 
     }
 
@@ -590,9 +645,7 @@ public class TestBlueWeapons {
 
         //tutto disponibile
 
-        enemy.setSquare(g1.getArena().getSquare(1,2));
-        enemy2.setSquare(g1.getArena().getSquare(1,3));
-        enemy3.setSquare(g1.getArena().getSquare(1,2));
+
         MethodsWeapons.moveTarget(enemy,1,2);
         MethodsWeapons.moveTarget(enemy2,1,3);
         MethodsWeapons.moveTarget(enemy3,1,2);
@@ -865,9 +918,10 @@ public class TestBlueWeapons {
         MethodsWeapons.moveTarget(enemy2,1,3);
 
         // muoviti, spara ,aggiungi danno
-        orderEffect[1] = "basic";
         orderEffect[0] = "with phase glide";
+        orderEffect[1] = "basic";
         orderEffect[2] = "with charged shot";
+
         test.setAmmoBlue(3);
         w5.setLoaded(true);
         assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
@@ -880,10 +934,52 @@ public class TestBlueWeapons {
         assertTrue(reachableBeforeMovePlayer.contains(enemy));
 
 
-        w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,1); // metto dei valori sbagliati in x e y
+        w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
         assertEquals(enemy.getNumberOfDamagePoint(),6);
         assertEquals(enemy2.getNumberOfDamagePoint(),3);
+assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
+        test.setAmmoBlue(3);
+        try
+        {
+            reachableSquare= w5.checkSquareBeforeMove();
+        }
+        catch(IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+
+        try
+        {
+            reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        }
+        catch(IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        try
+        {
+            reachableSquare= w5.checkPhaseGlide();
+        }
+        catch(IllegalStateException e)
+        {
+            System.out.println(e);
+        }
+        w5.setLoaded(true);
+        reachableBasicPlayer = w5.checkBasicMode();
+
+        reachableSquare= w5.checkSquareBeforeMove();
+        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        test.setAmmoBlue(0);
+        try
+        {
+            w5.basicMode(getPl(reachableBeforeMovePlayer,enemy),orderEffect,2,1);
+
+        }
+        catch(IllegalStateException e)
+        {
+            System.out.println(e);
+        }
     }
 
     @Test
@@ -942,9 +1038,7 @@ public class TestBlueWeapons {
         assertEquals(enemy2.getNumberOfDamagePoint(),0);
         //tutto disponibile
 
-        enemy.setSquare(g1.getArena().getSquare(1,3));
-        enemy2.setSquare(g1.getArena().getSquare(2,3));
-        enemy3.setSquare(g1.getArena().getSquare(2,2));
+
 
         MethodsWeapons.moveTarget(enemy,1,3);
         MethodsWeapons.moveTarget(enemy2,2,3);

@@ -82,7 +82,7 @@ public class THOR extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità base dell'arma: "+name+" non eseguibile");
 
-        doDamage(player1,2);
+
         if(highVoltage==true && ChainReaction==false)
             throw new IllegalArgumentException("you can't use highvoltage alone");
         if(ChainReaction)
@@ -93,8 +93,7 @@ public class THOR extends WeaponCard
             if (player1.equals(player2))
                 throw new IllegalArgumentException("player1 must be different from player2");
 
-            doDamage(player2,1);
-            this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+
             if(highVoltage)
             {
                 if (!checkAvaliableMode()[2])
@@ -107,11 +106,14 @@ public class THOR extends WeaponCard
                     throw new IllegalArgumentException("player1 must be different from player3");
 
 
-                doDamage(player3,2);
-                this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
-            }
 
+                this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+                doDamage(player3,2);
+            }
+            doDamage(player2,1);
+            this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
+        doDamage(player1,2);
         this.isLoaded = false;
         }
     public List<Player> checkChainReaction() throws  IllegalStateException

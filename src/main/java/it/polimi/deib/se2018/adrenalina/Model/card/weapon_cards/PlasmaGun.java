@@ -195,8 +195,6 @@ public class PlasmaGun extends WeaponCard
         Player dummie2 = new Player(ColorId.BLUE,"a","a",false);
         List<Player> ListPlayerReach = new LinkedList();
         Set<Player> playerReachable = new HashSet<>();
-        if (!isLoaded()) //check mode
-            throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
         try {
             dummie2.setSquare(this.getPlayer().getSquare().getGameBoard().getArena().getSquare(x,y));
         } catch (SquareNotInGameBoard squareNotInGameBoard) {
