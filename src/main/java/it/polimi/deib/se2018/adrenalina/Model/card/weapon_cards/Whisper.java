@@ -13,14 +13,25 @@ public class Whisper extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[1];
 
-
-    public Whisper( Color color, int weaponID, boolean isLoaded) {
+    /**
+     * Create the card Whisper
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public Whisper( Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super( color, weaponID, isLoaded);
+        this.name = "Whisper";
         yellowAmmoCost = 1;
         blueAmmoCost = 2;
         redAmmoCost = 0;
     }
-
+    /**
+     * Check which modes of the weapon can be used by player that has this weapon
+     * @return array of booleans of size 1 the first represent the basic mode
+     * @exception IllegalStateException if this card doesn't belong at a player
+     */
     public boolean[] checkAvaliableMode() throws IllegalStateException
     {
        Set<Player> playerdistance2and1= new HashSet<>();
@@ -67,7 +78,11 @@ public class Whisper extends WeaponCard
         return  pl;//Returns all targets
     }
 
-
+    /**
+     * It uses the basic mode of the Whisper
+     * @param player player affected by weapon
+     * @exception IllegalStateException if the basic mode can't be used
+     */
     public void basicMode(Player player)  throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])

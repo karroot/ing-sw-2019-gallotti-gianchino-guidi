@@ -1,5 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,11 @@ import java.util.List;
 public abstract class RequestInput extends MessageNet
 {
     protected boolean responseIsReady;
+    //Attribute for the request
+    protected List<ColorId> playersBasicMode;//Targets for the basic mode
+
+    //Attribute for the response
+    protected ColorId targetBasicMode;//Target chosen for the basic mode
 
     //Method to handle the inputs
     abstract public void printActionsAndReceiveInput();
@@ -72,5 +79,22 @@ public abstract class RequestInput extends MessageNet
         }
 
         return  choice;
+    }
+    protected void inputBasicMode()
+    {
+        int i = 1;
+
+        System.out.println("Scegli un bersaglio:");
+
+        for (ColorId t:playersBasicMode)
+        {
+            System.out.println(i + ":" + t);
+            i++;
+        }
+
+        int anInt = inputInt(1, i - 1);
+
+        targetBasicMode = playersBasicMode.get(anInt -1);
+
     }
 }

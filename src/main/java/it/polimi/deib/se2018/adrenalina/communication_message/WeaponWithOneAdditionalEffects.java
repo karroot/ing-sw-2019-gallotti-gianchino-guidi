@@ -7,22 +7,52 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 {
 
     boolean[] avaiableMethod = new boolean[2];
-    List<String> nameModes;
+    protected String nameAdditionalmode; //Name of the alternative mode
+
+    //Attribute for the response
+    protected boolean mode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
 
     @Override
     public void printActionsAndReceiveInput()
     {
-        int choice1 = 0; //Da completare
+        int choice = 0; //Da completare
         List<Integer> acceptedInt = new LinkedList<>();
 
         System.out.println("Scegli modalità Arma:");
 
         if (avaiableMethod[0])//Print the possible effects
         {
-            System.out.println("1:modalità base");
+            System.out.println("1:modalità base da sola");
+            acceptedInt.add(1);
+        }
+        if (avaiableMethod[1])//Print the possible effects
+        {
+            System.out.println("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
 
+        int j = 0;
+
+        //Handle the possible choice of the users asking the correct inputs
+        if (avaiableMethod[0] && avaiableMethod[1])
+            choice = inputInt(1, 2);
+
+        if (avaiableMethod[0] && !avaiableMethod[1])
+            choice = inputInt(1, 1);
+
+        inputBasicMode();//Ask all the information necessary to use the basic mode
+        mode = false; //Set the attribute mode
+
+        if (choice == 2) //If the user choices the basic mode
+        {
+            inputAdditionalMode();//Ask all the information necessary to use the alternative mode
+            mode = true;//Set the attribute mode
+        }
+
+
+        responseIsReady = true;
 
     }
+    protected abstract void inputAdditionalMode();
+    protected abstract void inputBasicMode();
 }

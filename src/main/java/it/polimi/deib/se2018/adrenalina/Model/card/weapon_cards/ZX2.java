@@ -14,7 +14,7 @@ public class ZX2 extends WeaponCard
     private boolean[] avaiableMethod = new boolean[2];
 
     /**
-     * Create the card shotgun
+     * Create the card ZX2
      * @param color color of weapon
      * @param weaponID Id of the card
      * @param isLoaded Indicates if the weapon is loaded or not
@@ -56,7 +56,7 @@ public class ZX2 extends WeaponCard
 
     /**
      * Return the list of all target available for using the basic mode of this weapon
-     * @return all player that can be affected with the shotgun in basic mode
+     * @return all player that can be affected with the ZX2 in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
     public List<Player> checkBasicMode() throws IllegalStateException
@@ -89,7 +89,7 @@ public class ZX2 extends WeaponCard
 
     /**
      * Return the list of all target available for using the alternative mode of this weapon
-     * @return all player that can be affected with the shotgun in alternative mode
+     * @return all player that can be affected with the ZX2 in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
     public List<Player> checkInScannerMode() throws IllegalStateException

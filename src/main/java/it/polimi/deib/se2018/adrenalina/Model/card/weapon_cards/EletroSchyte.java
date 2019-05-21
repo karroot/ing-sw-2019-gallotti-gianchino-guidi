@@ -11,14 +11,28 @@ public class EletroSchyte extends WeaponCard
 
     private boolean[] avaiableMethod = new boolean[2];
 
-    public EletroSchyte( Color color, int weaponID, boolean isLoaded) {
+
+    /**
+     * Create the card ElectroSchyte
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public EletroSchyte( Color color, int weaponID, boolean isLoaded) throws NullPointerException
+    {
         super( color, weaponID, isLoaded);
+        this.name = "ElectroSchyte";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 0;
     }
 
-
+    /**
+     * Check which modes of the weapon can be used by player that has this weapon
+     * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
+     * @exception IllegalStateException if this card doesn't belong at a player
+     */
     public boolean[] checkAvaliableMode() throws IllegalStateException
     {
         if (player == null)
@@ -41,6 +55,7 @@ public class EletroSchyte extends WeaponCard
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the electroScythe in basic mode
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public List<Player> checkBasicMode() throws IllegalStateException
     {
@@ -55,8 +70,9 @@ public class EletroSchyte extends WeaponCard
     }
 
     /**
-     * It uses the basic mode of the lock rifle
+     * It uses the basic mode of the ElectroSchyte
      * @param playerList  list of player affected by weapon
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public void basicMode(List<Player> playerList)
     {
@@ -72,6 +88,7 @@ public class EletroSchyte extends WeaponCard
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the electroScythe in basic mode
+     * @exception IllegalStateException if the alternative mode can't be used
      */
     public List<Player> checkReaper() throws IllegalStateException
     {
@@ -87,8 +104,9 @@ public class EletroSchyte extends WeaponCard
     }
 
     /**
-     * It uses the basic mode of the lock rifle
+     * It uses the basic mode of the weapon
      * @param playerList  list of player affected by weapon
+     * @exception IllegalStateException if the alternative mode can't be used
      */
     public void reaper(List<Player> playerList) throws  IllegalStateException
     {

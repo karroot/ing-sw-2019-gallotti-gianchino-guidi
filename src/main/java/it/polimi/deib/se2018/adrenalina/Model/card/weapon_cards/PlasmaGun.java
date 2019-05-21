@@ -11,10 +11,16 @@ import java.util.*;
 public class PlasmaGun extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[4];
-
-
-    public PlasmaGun(Color color, int weaponID, boolean isLoaded) {
+    /**
+     * Create the card PlasmaGun
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public PlasmaGun(Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super( color, weaponID, isLoaded);
+        this.name = "PlasmaGun";
         redAmmoCost = 0;
         yellowAmmoCost = 1;
         blueAmmoCost = 1;
@@ -80,7 +86,7 @@ public class PlasmaGun extends WeaponCard
     }
 
     /**
-     *
+     * It uses the basic mode of the PlasmaGun
      * @param player player affected by weapon
      * @throws IllegalStateException
      * @throws IllegalArgumentException
@@ -166,6 +172,11 @@ public class PlasmaGun extends WeaponCard
         return ListPlayerReach;
     }
 
+    /**
+     * It say if a player can reach another player from starting to move from his position
+     * @return List of reachable player
+     * @throws IllegalStateException if the alternative mode can't be used
+     */
     public List<Square> checkSquareBeforeMove () throws IllegalStateException
     {
         Player dummie = new Player(ColorId.BLUE,"a","a",false);
@@ -190,6 +201,12 @@ public class PlasmaGun extends WeaponCard
         return  ListSquareReach;
     }
 
+    /**
+     * It say if a player can reach another player from a defined position decide by the phase glide
+     * @param x player choice of movement x
+     * @param y player choice of movement y
+     * @return List of reachable player
+     */
     public List<Player> checkTargetAfterMove(int x,int y)
     {
         Player dummie2 = new Player(ColorId.BLUE,"a","a",false);

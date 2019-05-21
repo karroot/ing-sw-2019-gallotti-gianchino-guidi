@@ -9,8 +9,17 @@ public class LockRifle extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[2];
 
-    public LockRifle(Color color, int weaponID, boolean isLoaded) {
+    /**
+     * Create the card LockRifle
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public LockRifle(Color color, int weaponID, boolean isLoaded) throws NullPointerException
+    {
         super( color, weaponID, isLoaded);
+        this.name = "LockRifle";
         blueAmmoCost = 2;
         yellowAmmoCost = 0;
         redAmmoCost = 0;
@@ -49,6 +58,7 @@ public class LockRifle extends WeaponCard
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public List<Player> checkBasicMode() throws  IllegalStateException
     {
@@ -67,6 +77,9 @@ public class LockRifle extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param player player affected by weapon
+     * @param player2 player affected by the additional mode
+     * @param  SecondLockMode is true if additional mode is active
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public void basicMode(Player player,Player player2 ,boolean SecondLockMode) throws IllegalStateException
     {
@@ -89,6 +102,7 @@ public class LockRifle extends WeaponCard
     /**
      * Return the list of all target available for using the alternative mode of this weapon
      * @return all player that can be affected with the lock rifle in alternative mode
+     * @exception IllegalStateException if the alternative mode can't be used
      */
     public List<Player> checkSecondLock() throws  IllegalStateException
     {

@@ -13,12 +13,26 @@ public class THOR extends WeaponCard
 
     private int reach1=0; // number of the player that the enemy player see
     private int reach2=0;
-    public THOR( Color color, int weaponID, boolean isLoaded) {
+
+    /**
+     * Create the card ZX2
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public THOR( Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super(color, weaponID, isLoaded);
+        this.name = "THOR";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;
     }
+    /**
+     * Check which modes of the weapon can be used by player that has this weapon
+     * @return array of booleans of size 3 the first represent the basic mode the second the alternative mode the third the final alternative mode
+     * @exception IllegalStateException if this card doesn't belong at a player
+     */
     public boolean[] checkAvaliableMode() throws IllegalStateException
     {
         if (player == null)
@@ -57,6 +71,7 @@ public class THOR extends WeaponCard
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public List<Player> checkBasicMode() throws  IllegalStateException
     {
@@ -76,6 +91,7 @@ public class THOR extends WeaponCard
      * It uses the basic mode of the lock rifle
      * @param player1 player affected by weapon
      * @param  player2 second player affected by weapon
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public void basicMode(Player player1 , Player player2 , Player player3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
     {
@@ -116,6 +132,12 @@ public class THOR extends WeaponCard
         doDamage(player1,2);
         this.isLoaded = false;
         }
+
+    /**
+     * Return the list of all target available for using the alternative mode of this weapon
+     * @return all player that can be affected with the Whisper in alternative mode
+     * @exception IllegalStateException if the alternative mode can't be used
+     */
     public List<Player> checkChainReaction() throws  IllegalStateException
     {
        Set<Player> listChain= new HashSet<>();
@@ -143,7 +165,11 @@ public class THOR extends WeaponCard
     }
 
 
-
+    /**
+     * Return the list of all target available for using the final alternative mode of this weapon
+     * @return all player that can be affected with the Whisper in alternative mode
+     * @exception IllegalStateException if the alternative mode can't be used
+     */
     public List<Player> checkHighVoltage() throws  IllegalStateException
     {
         List<Player> list= new LinkedList<>();

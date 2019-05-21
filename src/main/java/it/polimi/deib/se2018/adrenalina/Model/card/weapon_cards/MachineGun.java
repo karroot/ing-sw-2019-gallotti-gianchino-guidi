@@ -9,8 +9,17 @@ public class MachineGun extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[3];
 
-    public MachineGun( Color color, int weaponID, boolean isLoaded) {
+    /**
+     * Create the card ZX2
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public MachineGun( Color color, int weaponID, boolean isLoaded)  throws NullPointerException  {
+
         super(color, weaponID, isLoaded);
+        this.name = "MachineGun";
         blueAmmoCost = 1;
 
         yellowAmmoCost = 0;
@@ -51,6 +60,7 @@ public class MachineGun extends WeaponCard
     /**
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
+     * @exception IllegalStateException if the basic mode can't be used
      */
     public List<Player> checkBasicMode() throws IllegalStateException
     {
@@ -74,6 +84,8 @@ public class MachineGun extends WeaponCard
      * @param  FocusShotcMode if true indicate to use focus shot
      * @param  TurretTripode if true indicate to use turret tripode
      * @param addDamage if true indicate to add one damage to playerDamaged , it can be null
+     * @exception IllegalStateException if the basic mode can't be used
+     * @exception IllegalArgumentException if basicMode revice wrong player's input
      */
     public void basicMode(Player player1, Player player2, Player player3,Player playerdamaged, boolean FocusShotcMode, boolean TurretTripode,boolean addDamage) throws IllegalArgumentException,IllegalStateException
     {
@@ -130,6 +142,7 @@ public class MachineGun extends WeaponCard
     /**
      * Return the list of all target available for using the focus shoot mode of this weapon
      * @return all player that can be affected with the lock rifle in focus shoot mode
+     * @exception IllegalStateException if the alternative mode can't be used
      */
     public List<Player> checkFocusShotcMode() throws IllegalStateException
     {
@@ -149,6 +162,7 @@ public class MachineGun extends WeaponCard
     /**
      * Return the list of all target available for using the focus Turret Tripode mode of this weapon
      * @return all player that can be affected with the lock rifle in focus shoot mode
+     * @exception IllegalStateException if the alternative mode can't be used
      */
     public List<Player> checkTurretTripodeMode() throws  IllegalStateException
     {
