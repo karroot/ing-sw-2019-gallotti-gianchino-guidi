@@ -63,7 +63,7 @@ public class Sledgehammer extends WeaponCard
     public List<Player> checkTargetForModes() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità  dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         List<Player> target = player.getSquare().getPlayerList(); //Obtain all players are in same square
 

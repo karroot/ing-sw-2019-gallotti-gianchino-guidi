@@ -1,10 +1,12 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Cyberblade extends WeaponCard
@@ -66,12 +68,12 @@ public class Cyberblade extends WeaponCard
      * @return all player that can be affected with the Cyberblade in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Map<Integer[],List<Player>> checkBasicModeAllTargetPossible() throws IllegalStateException
+    public Map<String,List<ColorId>> checkBasicModeAllTargetPossible() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        Map<Integer[],List<Player>> result = new HashMap<>();
+        Map<String,List<ColorId>> result = new HashMap<>();
 
         //Obtain all squares reachable at distance 1
         Set<Square> squares = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
@@ -81,11 +83,9 @@ public class Cyberblade extends WeaponCard
         {
             if (!t.getPlayerList().isEmpty()) //If the square has some player
             {
-                Integer[] coordinates = new Integer[2];//Save the coordinates
-                coordinates[0] = t.getX();
-                coordinates[1] = t.getY();
+                String coordinates = "x = "+t.getX()+",y = "+ t.getY();//Save the coordinates
 
-                result.putIfAbsent(coordinates,t.getPlayerList()); //Add the square with the player at hash map
+                result.putIfAbsent(coordinates,t.getPlayerList().stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
             }
 
         }
@@ -100,7 +100,7 @@ public class Cyberblade extends WeaponCard
      * @return all the square where the player can move
      * @exception IllegalStateException if the effect can't be used
      */
-    public List<Square> checkWithShadowStep() throws IllegalStateException
+    public List<String> checkWithShadowStep() throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
@@ -111,7 +111,7 @@ public class Cyberblade extends WeaponCard
 
         squares.remove(player.getSquare());//Remove from the squares the square where the player that shoot is located
 
-        return new ArrayList<>(squares); //Returns all targets
+        return new ArrayList<>(squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList())); //Returns all targets
     }
 
 

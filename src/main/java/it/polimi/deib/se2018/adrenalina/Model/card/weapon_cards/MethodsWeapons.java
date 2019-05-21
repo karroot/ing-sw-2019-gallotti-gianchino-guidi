@@ -46,7 +46,7 @@ public class MethodsWeapons {
                 return false; //Return false
         }
 
-        return true; //Else return false
+        return true; //Else return true
     }
 
     /**

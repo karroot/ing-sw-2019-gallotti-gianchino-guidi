@@ -57,6 +57,8 @@ public class Shockwave extends WeaponCard
 
     /**
      * Return the list of all target available for using the basic mode of this weapon
+     * The object returned is a hash map with key a string that represent a square to distance 1 from player
+     * that uses the Shockwave and value a list of all player that are in that square
      * @return all player that can be affected with the Shockwave in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
@@ -93,7 +95,7 @@ public class Shockwave extends WeaponCard
 
         for (Player x:players)//For each player
         {
-            doDamage(player,1);//Do one damage
+            doDamage(x,1);//Do one damage
         }
 
         isLoaded = false;
@@ -110,7 +112,11 @@ public class Shockwave extends WeaponCard
         if (!checkAvaliableMode()[1])//Check mode
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        for (Player x:MethodsWeapons.playersReachable(player.getSquare(),1)) //For each player
+        Set<Player> players = MethodsWeapons.playersReachable(player.getSquare(), 1);
+
+        players.remove(player);
+
+        for (Player x:players) //For each player
         {
             doDamage(x,1);//Do one damage
         }

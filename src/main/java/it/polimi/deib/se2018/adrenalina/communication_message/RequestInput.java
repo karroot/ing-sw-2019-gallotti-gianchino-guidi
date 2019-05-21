@@ -80,6 +80,8 @@ public abstract class RequestInput extends MessageNet
 
         return  choice;
     }
+
+    //Ask at the user one target to hit with the weapon
     protected void inputBasicMode()
     {
         int i = 1;

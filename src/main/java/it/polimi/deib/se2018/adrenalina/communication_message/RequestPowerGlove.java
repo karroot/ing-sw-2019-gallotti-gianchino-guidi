@@ -66,6 +66,8 @@ public class RequestPowerGlove extends WeaponWithModeAlternative
 
         targetsAlternativeMode.add(temp.get(0).get(chose));
 
+        System.out.println("Scegli un player per il secondo spostamento");
+
         i = 1;
 
         for (ColorId t:temp.get(1))
