@@ -9,10 +9,10 @@ import java.util.List;
 public class RequestShootPeople extends RequestInput
 {
     //Attribute for the request
-    protected List<WeaponCard> playersBasicMode;//Targets for the basic mode
+    protected List<String> weaponCardsName;//Targets for the basic mode
 
     //Attribute for the response
-    protected WeaponCard targetBasicMode;//Target chosen for the basic mode
+    protected String weaponCardName;//Target chosen for the basic mode
 
     @Override
     public void printActionsAndReceiveInput() {
@@ -25,42 +25,28 @@ public class RequestShootPeople extends RequestInput
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        return new ResponseShootPeople(targetBasicMode);
+        return new ResponseShootPeople(weaponCardName);
     }
     @Override
     protected void  inputBasicMode()
     {
             int i = 1;
-            boolean atLeastOne=false;
-
-            for (WeaponCard q: playersBasicMode)
-            {
-                if(q.isLoaded()){
-                    atLeastOne=true;
-                    }
-            }
-        if(atLeastOne)
-        {
 
             System.out.println("Scegli l'arma che vuoi usare:");
 
-            for (WeaponCard w : playersBasicMode)
+            for (String w : weaponCardsName)
             {
-                if (w.isLoaded())
-                {
-                    System.out.println(i + ": " + w.getName());
+
+                    System.out.println(i + ": " + w);
                     i++;
-                }
+
             }
 
             int anInt = inputInt(1, i - 1);
 
-            targetBasicMode = playersBasicMode.get(anInt - 1);
+    weaponCardName = weaponCardsName.get(anInt - 1);
 
-        }
-        else
-        {
-            System.out.println("nessun'arma disponibile");
-        }
+
     }
 }
+
