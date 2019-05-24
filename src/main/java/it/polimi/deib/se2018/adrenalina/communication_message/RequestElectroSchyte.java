@@ -13,7 +13,7 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
     private List<ColorId> playersAlternativeMode;//Targets for the basic mode
 
     //Attribute for the response
-    private ColorId targetBasicMode;//Target chosen for the basic mode
+    private List<ColorId> targetBasicMode;//Target chosen for the basic mode
     private List<ColorId> targetsAlternativeMode = new LinkedList<>();//Targets chosen for the alternative mode
 
     /**
@@ -84,8 +84,8 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
             throw new IllegalStateException("Input non ancora presi");
 
         if (mode)
-            return new ResponseElectroSchyte(targetsAlternativeMode);
+            return new ResponseElectroSchyte(targetsAlternativeMode,mode);
 
-        return new ResponseElectroSchyte(targetBasicMode);
+        return new ResponseElectroSchyte(targetBasicMode,mode);
     }
 }

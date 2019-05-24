@@ -5,36 +5,27 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import java.util.List;
 
 public class ResponseElectroSchyte extends ResponseInput{
-    private ColorId targetBasicMode;//Target for basic mode
-    private List<ColorId> targetsAlternativeMode;//targets for the alternative mode
+    private List<ColorId> targets;//Target for basic mode
+
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**
      * Create the response message for ElectroSchyte in basic mode
-     * @param targetBasicMode target for ElectroSchyte
+     * @param targets target for ElectroSchyte
      */
-    public ResponseElectroSchyte(ColorId targetBasicMode)
+    public ResponseElectroSchyte(List<ColorId> targets, boolean mode)
     {
-        this.targetBasicMode = targetBasicMode;
-        mode = false;
+        this.targets = targets;
+        this.mode = mode;
     }
 
-    /**
-     * Create the response message for ElectroSchyte in alternative mode
-     * @param targetsAlternativeMode targets for ElectroSchyte
-     */
-    public ResponseElectroSchyte(List<ColorId> targetsAlternativeMode)
-    {
-        this.targetsAlternativeMode = targetsAlternativeMode;
-        mode = true;
-    }
 
     /**
      * @return get the target for ElectroSchyte in basic mode
      */
-    public ColorId getTargetBasicMode()
+    public List<ColorId> getTargetBasicMode()
     {
-        return targetBasicMode;
+        return targets;
     }
 
     /**
@@ -42,7 +33,7 @@ public class ResponseElectroSchyte extends ResponseInput{
      */
     public List<ColorId> getTargetsAlternativeMode()
     {
-        return targetsAlternativeMode;
+        return targets;
     }
 
     /**

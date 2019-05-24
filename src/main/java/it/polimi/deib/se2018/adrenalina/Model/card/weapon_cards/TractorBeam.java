@@ -9,6 +9,7 @@ import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBo
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
 
@@ -56,7 +57,7 @@ public class TractorBeam extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Square> checkMoveBasicMode(Player player) throws IllegalStateException
+    public List<String> checkMoveBasicMode(Player player) throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[0])
@@ -78,7 +79,7 @@ public class TractorBeam extends WeaponCard
          }
         }
 
-        return listSquare;//Returns squares
+        return listSquare.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string
     }
     /**
      * Return the list of all target available for using the punisher mode of this weapon

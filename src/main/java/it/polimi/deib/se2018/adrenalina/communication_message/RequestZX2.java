@@ -56,19 +56,6 @@ public class RequestZX2 extends WeaponWithModeAlternative
     @Override
     protected void inputBasicMode()
     {
-        int i = 1;
-
-        System.out.println("Scegli un bersaglio:");
-
-        for (ColorId t:playersBasicMode)
-        {
-            System.out.println(i + ":" + t);
-            i++;
-        }
-
-        int anInt = inputInt(1, i - 1);
-
-        targetBasicMode = playersBasicMode.get(anInt -1);
 
     }
 

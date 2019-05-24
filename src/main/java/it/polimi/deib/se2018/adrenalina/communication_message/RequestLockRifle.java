@@ -9,11 +9,12 @@ import java.util.List;
  */
 public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
     //Attribute for the request
-    private List<ColorId> playersAdditionalMode;//Targets for the basic mode
-
+    private List<ColorId> playersAdditionalMode;//Targets for the additional mode
+    private List<ColorId> playersBasicMode;//Targets for the basic mode
     //Attribute for the response
-    private List<ColorId> targetsAdditionalMode= new LinkedList<>();//Targets chosen for the alternative mode
-
+    private ColorId targetAdditionalMode;//Targets chosen for the alternative mode
+    private ColorId  targetBasicMode;
+    boolean[] avaiableMethod = new boolean[2];
     /**
      * Create a message of request for the weapon LockRifle
      * @param avaiableMethod mode available
@@ -42,38 +43,71 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
             throw new IllegalStateException("Input non ancora presi");
 
         if (mode)
-            return new ResponseLockRifle(targetsAdditionalMode);
+            return new ResponseLockRifle(targetBasicMode , targetAdditionalMode);
 
         return new ResponseLockRifle(targetBasicMode);
     }
 
 
+    @Override
+    public void printActionsAndReceiveInput() {
+
+        int choice=0;
+        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
+        if (avaiableMethod[0])//Print the possible effects
+        {
+            System.out.println("1: solo attacco base");
+        }
+        if (avaiableMethod[1])//Print the possible effects
+        {
+            System.out.println("2:attacco base e aggiunta marchio");
+        }
+        if (avaiableMethod[1])//Print the possible effects
+        {
+             choice = inputInt(1, 2);
+        }
+        else choice = inputInt(1, 1);
+
+        if (choice==2)
+        {
+            inputAdditionalMode();
+        }
+        inputBasicMode();
+        responseIsReady = true;
+    }
 
 
-    //Ask at the user to choice three target for the alternative mode if there are
     @Override
     protected void inputAdditionalMode()
     {
+        List<ColorId> players;
+        players = playersAdditionalMode;
+        int i = 1;
 
-        int i = 1; //Variable to cycle
-
-
-        List<Integer> intchoice = new LinkedList<>();
-
-        System.out.println("Scegli un bersaglio da marchiare:");
-
-        for (ColorId t:playersAdditionalMode) //Print the possible choice
+        for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i + ":" + t);
+            System.out.println(i+":"+t);
             i++;
         }
-         targetsAdditionalMode.add(playersAdditionalMode.get(0));
-
-
-        }
+        int choice = inputInt(1, i - 1);
+        targetAdditionalMode  = players.get(choice-1);
+    }
 
     @Override
     protected void inputBasicMode() {
+        List<ColorId> players;
+
+        players = playersBasicMode;
+        int i = 1;
+
+        for (ColorId t:players)//Ask to user the target
+        {
+            System.out.println(i+":"+t);
+            i++;
+        }
+        int choice = inputInt(1, i - 1);
+        targetBasicMode = players.get(choice-1);
+
 
     }
 

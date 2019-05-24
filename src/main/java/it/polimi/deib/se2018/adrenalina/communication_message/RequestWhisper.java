@@ -30,15 +30,7 @@ public class RequestWhisper extends RequestInput  {
 
     @Override
     public void printActionsAndReceiveInput() {
-        int choice;
-    int i=1;
-        for (ColorId p : playersBasicMode)
-        {
-            System.out.println(i +" : " + p);
-            i++;
-        }
-       choice = inputInt(1,i-1);
-targetBasicMode = playersBasicMode.get(choice-1);
+        choseTarget();
         responseIsReady = true;
 
     }
@@ -50,6 +42,22 @@ targetBasicMode = playersBasicMode.get(choice-1);
         return new ResponseElectroSchyte(targetBasicMode);
     }
 
+
+    protected void choseTarget()
+    {
+        List<ColorId> players;
+
+        players = playersBasicMode;
+        int i = 1;
+
+        for (ColorId t:players)//Ask to user the target
+        {
+            System.out.println(i+":"+t);
+            i++;
+        }
+        int choice = inputInt(1, i - 1);
+        targetBasicMode = players.get(choice-1);
+    }
 
 
 }

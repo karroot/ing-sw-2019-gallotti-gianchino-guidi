@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ResponseLockRifle extends ResponseInput {
     private ColorId targetBasicMode;//Target for basic mode
-    private List<ColorId> targetsAlternativeMode;//targets for the alternative mode
+    private ColorId targetsAdditionalMode;//targets for the alternative mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**
@@ -25,9 +25,9 @@ public class ResponseLockRifle extends ResponseInput {
      * Create the response message for LockRifle in alternative mode
      * @param targetsAdditionalMode targets for LockRifle
      */
-    public ResponseLockRifle(List<ColorId> targetsAdditionalMode)
+    public ResponseLockRifle(ColorId targetBasicMode,ColorId targetsAdditionalMode)
     {
-        this.targetsAlternativeMode = targetsAlternativeMode;
+        this.targetsAdditionalMode = targetsAdditionalMode;
         mode = true;
     }
 
@@ -42,9 +42,9 @@ public class ResponseLockRifle extends ResponseInput {
     /**
      * @return get the targets for LockRifle in alternative mode
      */
-    public List<ColorId> getTargetsAdditionalMode()
+    public ColorId getTargetsAdditionalMode()
     {
-        return targetsAlternativeMode;
+        return targetsAdditionalMode;
     }
 
     /**

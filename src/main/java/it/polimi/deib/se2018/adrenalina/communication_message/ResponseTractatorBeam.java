@@ -8,26 +8,32 @@ public class ResponseTractatorBeam extends ResponseInput
 {
 
     private ColorId targetBasicMode;//Target for basic mode
-    private List<ColorId> targetsAlternativeMode;//targets for the alternative mode
+    int x;
+    int y;
+    private ColorId targetAlternativeMode;//targets for the alternative mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**
      * Create the response message for TractatorBeam in basic mode
+     * @param y  coordinate y of the square
+     * @param x coordinate x of the square
      * @param targetBasicMode target for TractatorBeam
      */
-    public ResponseTractatorBeam(ColorId targetBasicMode)
+    public ResponseTractatorBeam(ColorId targetBasicMode,int x,int y)
     {
         this.targetBasicMode = targetBasicMode;
+        this.x=x;
+        this.y=y;
         mode = false;
     }
 
     /**
      * Create the response message for TractatorBeam in alternative mode
-     * @param targetsAlternativeMode targets for TractatorBeam
+     * @param targetAlternativeMode target for TractatorBeam
      */
-    public ResponseTractatorBeam(List<ColorId> targetsAlternativeMode)
+    public ResponseTractatorBeam(ColorId targetAlternativeMode)
     {
-        this.targetsAlternativeMode = targetsAlternativeMode;
+        this.targetAlternativeMode = targetAlternativeMode;
         mode = true;
     }
 
@@ -42,9 +48,9 @@ public class ResponseTractatorBeam extends ResponseInput
     /**
      * @return get the targets for TractatorBeam in alternative mode
      */
-    public List<ColorId> getTargetsAlternativeMode()
+    public ColorId getTargetAlternativeMode()
     {
-        return targetsAlternativeMode;
+        return targetAlternativeMode;
     }
 
     /**

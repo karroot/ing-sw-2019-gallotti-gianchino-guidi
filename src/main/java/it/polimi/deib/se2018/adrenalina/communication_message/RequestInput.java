@@ -5,13 +5,20 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Cysko7927
  */
 public abstract class RequestInput extends MessageNet
 {
+    protected ColorId targetBasicEffect = null;//Target chosen for the basic mode
+    protected Map<String,List<ColorId>> playersWithSquaresBasicMode;//Targets to use the PlasmaGun in all different square
+    protected List<String> squaresAfterBasicEffect;//Squares that the user can choice after that he has used the basic effect
+    protected int x =0;//Coordinates for the square chosen by user in the phase glide effect
+    protected int y = 0;
     protected boolean responseIsReady;
     //Attribute for the request
     protected List<ColorId> playersBasicMode;//Targets for the basic mode
@@ -97,6 +104,33 @@ public abstract class RequestInput extends MessageNet
         int anInt = inputInt(1, i - 1);
 
         targetBasicMode = playersBasicMode.get(anInt -1);
+
+    }
+    //Ask at the user to choice a square where to move
+    protected void choseSquare()
+    {
+        List<String> squares;
+
+        if (targetBasicEffect == null)//if the player didn't use the basic effect
+            squares = new ArrayList<>(playersWithSquaresBasicMode.keySet()); //Take the squares where there are targets
+        else //Else
+            squares = squaresAfterBasicEffect;//Take all the possible squares
+
+        System.out.println("Scegli un quadrato dove spostarti:");
+
+        int i = 1;
+
+        for (String t:squares)//Ask the square at the user
+        {
+            System.out.println(i+":"+t);
+            i++;
+        }
+
+        int choice = inputInt(1, i - 1);
+
+        //Save the coordinate
+        x = Integer.parseInt(squares.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9
+        y = Integer.parseInt(squares.get(choice -1).substring(11));
 
     }
 }

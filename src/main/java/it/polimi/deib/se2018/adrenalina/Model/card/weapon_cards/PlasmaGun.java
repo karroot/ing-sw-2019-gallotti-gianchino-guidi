@@ -7,6 +7,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlasmaGun extends WeaponCard
 {
@@ -132,7 +133,7 @@ public class PlasmaGun extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Square> checkPhaseGlide() throws IllegalStateException
+    public List<String> checkPhaseGlide() throws IllegalStateException
     {
         if (!this.isLoaded())
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
@@ -143,7 +144,7 @@ public class PlasmaGun extends WeaponCard
 
 
 
-        return new ArrayList<>(squares);
+        return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
     }
     /**
      * Return the list of all target available for using the "wmove" effect of this weapon
@@ -177,7 +178,7 @@ public class PlasmaGun extends WeaponCard
      * @return List of reachable player
      * @throws IllegalStateException if the alternative mode can't be used
      */
-    public List<Square> checkSquareBeforeMove () throws IllegalStateException
+    public List<String> checkSquareBeforeMove () throws IllegalStateException
     {
         Player dummie = new Player(ColorId.BLUE,"a","a",false);
         List<Square> ListSquareReach = new LinkedList();
@@ -198,7 +199,8 @@ public class PlasmaGun extends WeaponCard
             }
         }
         ListSquareReach.addAll(SquareReachable);//Returns all targets
-        return  ListSquareReach;
+
+        return ListSquareReach.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string
     }
 
     /**

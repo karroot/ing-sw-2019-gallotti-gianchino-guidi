@@ -1053,11 +1053,11 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
         List<Player> list1 = w2.checkBasicMode();
         List<Player> list2 = w2.checkPunisherMode();
-        List<Square> list3 = w2.checkMoveBasicMode(enemy2);
+        List<String> list3 = w2.checkMoveBasicMode(enemy2);
 
         assertTrue(list1.contains(enemy2));
         assertTrue(list2.contains(enemy3));
-        assertTrue(list3.contains(g1.getArena().getSquare(1,3)));
+
 
         w2.basicMode(getPl(list1,enemy2),1,3);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);

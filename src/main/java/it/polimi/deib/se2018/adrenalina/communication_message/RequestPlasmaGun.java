@@ -1,29 +1,25 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Cysko7927
- */
-public class RequestCyberblade extends RequestInput
+public class RequestPlasmaGun extends  RequestInput
 {
     //Attribute for the request
     private boolean[] avaiableMethod;
-    private Map<String,List<ColorId>> playersWithSquaresBasicMode;//Targets to use the Cyberblade in all different square
+    private Map<String,List<ColorId>> playersWithSquaresBasicMode;//Targets to use the PlasmaGun in all different square
     private List<String> squaresAfterBasicEffect;//Squares that the user can choice after that he has used the basic effect
     private int xStart;//Coordinates where the player is in a first moment
     private int yStart;
 
     //Attribute for the response
     private ColorId targetBasicEffect = null;//Target chosen for the basic mode
-    private ColorId targetForSliceEffect = null;//Target chosen for the slice and dice effect
-    private int x =0;//Coordinates for the square chosen by user in the shadowstep effect
+    private ColorId targetForchargedEffect = null;//Target chosen for the charged shot effect
+    private int x =0;//Coordinates for the square chosen by user in the phase glide effect
     private int y = 0;
     private String[] orderEffect;//array that represent the order of the effect chosen by user
 
@@ -34,24 +30,25 @@ public class RequestCyberblade extends RequestInput
     /**
      * Create a message of Request of input for weapon Shotgun
      * @param avaiableMethod Represent the possible mode that can be used with this weapon
-     * @param playersWithSquaresBasicMode Targets to use the Cyberblade in all different square
+     * @param playersWithSquaresBasicMode Targets to use the PlasmaGun in all different square
      * @param squaresAfterBasicEffect Squares that the user can choice after that he has used the basic effect
      * @param x Coordinate x of the square where the player is in a first moment
      * @param y Coordinate y of the square where the player is in a first moment
      */
-    public RequestCyberblade(boolean[] avaiableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
+    public RequestPlasmaGun(boolean[] avaiableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
     {
+        xStart = x;
+        yStart = y;
         this.avaiableMethod = avaiableMethod;
         this.playersWithSquaresBasicMode = playersWithSquaresBasicMode;
         this.squaresAfterBasicEffect = squaresAfterBasicEffect;
         responseIsReady = false;
-        xStart = x;
-        yStart = y;
-        orderAva.add("basic");
-        orderAva.add("with shadowstep");
 
-        if (avaiableMethod[2])//If the mode with slice and dice can be used
-            orderAva.add("with slice and dice");//Add it in the list of the possible effects
+        orderAva.add("basic");
+        orderAva.add("with phase glide");
+
+        if (avaiableMethod[2])//If the mode with charged shot can be used
+            orderAva.add("with charged shot");//Add it in the list of the possible effects
     }
 
     /**
@@ -66,7 +63,7 @@ public class RequestCyberblade extends RequestInput
     {
         System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
 
-        System.out.println("1:Colpire");
+        System.out.println("1:sparare");
         System.out.println("2:Spostarti");
 
         int choice = inputInt(1, 2);
@@ -78,25 +75,25 @@ public class RequestCyberblade extends RequestInput
         else
         {
             choseSquare();
-            orderAva.remove("with shadowstep");
-            orderTemp.add("with shadowstep");
+            orderAva.remove("with phase glide");
+            orderTemp.add("with phase glide");
         }
 
         int i = 1;
 
         for (String t:orderAva) //Ask to the user the second effect
         {
-            System.out.println(i+":"+orderAva.get(i-1));
+            System.out.println(i+" : "+orderAva.get(i-1));
             i++;
         }
 
         choice = inputInt(1, i - 1);
 
-        if (orderAva.get(choice-1).equals("with shadowstep"))//Ask the necessary dates to do the effect
+        if (orderAva.get(choice-1).equals("with phase glide"))//Ask the necessary dates to do the effect
         {
             choseSquare();
-            orderAva.remove("with shadowstep");
-            orderTemp.add("with shadowstep");
+            orderAva.remove("with phase glide");
+            orderTemp.add("with phase glide");
         }
         else
         {
@@ -105,11 +102,11 @@ public class RequestCyberblade extends RequestInput
 
         if (!orderAva.isEmpty()) //It there is a third effect possible
         {
-            if (orderAva.get(0).equals("with shadowstep"))//Ask the necessary dates to do the effect
+            if (orderAva.get(0).equals("with phase glide"))//Ask the necessary dates to do the effect
             {
                 choseSquare();
-                orderAva.remove("with shadowstep");
-                orderTemp.add("with shadowstep");
+                orderAva.remove("with phase glide");
+                orderTemp.add("with phase glide");
             }
             else
             {
@@ -119,14 +116,14 @@ public class RequestCyberblade extends RequestInput
 
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
 
-        for (int j = 0;j<orderEffect.length;j++)
+        for (int j = 0; j < orderEffect.length;j++)
             orderEffect[i] = orderTemp.get(i);
 
         responseIsReady = true;
     }
 
     /**
-     *Generate the response message for the Cyberblade with all player's choice
+     *Generate the response message for the PlasmaGun with all player's choice
      * @return response message
      * @throws IllegalStateException if the method printAction wasn't called yet
      */
@@ -145,15 +142,15 @@ public class RequestCyberblade extends RequestInput
         else//Else
             players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
 
-            System.out.println("Scegli un bersaglio:");
+        System.out.println("Scegli un bersaglio:");
 
-            int i = 1;
+        int i = 1;
 
-            for (ColorId t:players)//Ask to user the target
-            {
-                System.out.println(i+":"+t);
-                i++;
-            }
+        for (ColorId t:players)//Ask to user the target
+        {
+            System.out.println(i+":"+t);
+            i++;
+        }
 
         int choice = inputInt(1, i - 1);
 
@@ -163,14 +160,15 @@ public class RequestCyberblade extends RequestInput
             orderAva.remove("basic");
             orderTemp.add("basic");
         }
-        else//the user has used the with slice and dice effect
+        else//the user has used the with charged shot effect
         {
-            targetForSliceEffect = players.get(choice -1);
-            orderAva.remove("with slice and dice");
-            orderTemp.add("with slice and dice");
+            targetForchargedEffect = players.get(choice -1);
+            orderAva.remove("with charged shot");
+            orderTemp.add("with charged shot");
         }
 
     }
 
 
 }
+
