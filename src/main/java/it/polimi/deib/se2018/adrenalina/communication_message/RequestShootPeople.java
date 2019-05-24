@@ -1,8 +1,5 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class RequestShootPeople extends RequestInput
 
         return new ResponseShootPeople(weaponCardName);
     }
-    @Override
+
     protected void  inputBasicMode()
     {
             int i = 1;

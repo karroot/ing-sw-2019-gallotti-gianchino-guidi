@@ -20,11 +20,9 @@ public abstract class RequestInput extends MessageNet
     protected int x =0;//Coordinates for the square chosen by user in the phase glide effect
     protected int y = 0;
     protected boolean responseIsReady;
-    //Attribute for the request
-    protected List<ColorId> playersBasicMode;//Targets for the basic mode
 
-    //Attribute for the response
-    protected ColorId targetBasicMode;//Target chosen for the basic mode
+
+
 
     //Method to handle the inputs
     abstract public void printActionsAndReceiveInput();
@@ -88,24 +86,7 @@ public abstract class RequestInput extends MessageNet
         return  choice;
     }
 
-    //Ask at the user one target to hit with the weapon
-    protected void inputBasicMode()
-    {
-        int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
-
-        for (ColorId t:playersBasicMode)
-        {
-            System.out.println(i + ":" + t);
-            i++;
-        }
-
-        int anInt = inputInt(1, i - 1);
-
-        targetBasicMode = playersBasicMode.get(anInt -1);
-
-    }
     //Ask at the user to choice a square where to move
     protected void choseSquare()
     {

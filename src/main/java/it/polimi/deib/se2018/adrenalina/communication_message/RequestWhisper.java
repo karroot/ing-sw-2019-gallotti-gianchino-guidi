@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
-import java.util.LinkedList;
+
 import java.util.List;
 
 public class RequestWhisper extends RequestInput  {
@@ -35,11 +35,11 @@ public class RequestWhisper extends RequestInput  {
 
     }
 
-    @Override
+
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
-        return new ResponseElectroSchyte(targetBasicMode);
+        return new ResponseWhisper(targetBasicMode);
     }
 
 

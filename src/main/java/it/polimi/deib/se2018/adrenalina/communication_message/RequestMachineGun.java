@@ -25,6 +25,11 @@ public class RequestMachineGun extends RequestInput {
     protected boolean mode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
     protected boolean secondMode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
 
+
+    //Attribute for the response
+    protected ColorId targetBasicMode;//Target chosen for the basic mode
+
+
     /**
      * Create a message of request for the weapon MachineGun
      * @param avaiableMethod mode available
@@ -171,7 +176,7 @@ public class RequestMachineGun extends RequestInput {
 
     }
 
-    @Override
+
     protected void inputBasicMode()
     {
         List<ColorId> players;

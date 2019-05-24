@@ -1,5 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+
+import java.util.List;
+
 /**
  * @author Cysko7927
  */
@@ -12,6 +16,13 @@ public abstract class WeaponWithModeAlternative extends RequestInput
 
     //Attribute for the response
     protected boolean mode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
+    //Attribute for the request
+    protected List<ColorId> playersBasicMode;//Targets for the basic mode
+
+    //Attribute for the response
+    protected ColorId targetBasicMode;//Target chosen for the basic mode
+
+
 
     /**
      * Method that handles the inputs for the use of a weapon with two alternative mode
@@ -63,5 +74,22 @@ public abstract class WeaponWithModeAlternative extends RequestInput
 
     //Methods for to obtain all necessary information to use the two modes and built the response message
     protected abstract void inputAlternativeMode();
-    protected abstract void inputBasicMode();
+    //Ask at the user one target to hit with the weapon
+    protected void inputBasicMode()
+    {
+        int i = 1;
+
+        System.out.println("Scegli un bersaglio:");
+
+        for (ColorId t:playersBasicMode)
+        {
+            System.out.println(i + ":" + t);
+            i++;
+        }
+
+        int anInt = inputInt(1, i - 1);
+
+        targetBasicMode = playersBasicMode.get(anInt -1);
+
+    }
 }

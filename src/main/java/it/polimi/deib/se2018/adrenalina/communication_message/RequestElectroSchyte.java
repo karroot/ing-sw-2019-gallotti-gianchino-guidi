@@ -69,10 +69,6 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
 
     }
 
-    @Override
-    protected void inputBasicMode() {
-
-    }
     /**
      *Generate the response message for the Electro Schyte with all player's choice
      * @return response message

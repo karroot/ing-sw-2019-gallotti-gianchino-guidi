@@ -1,7 +1,5 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
-
 public class ResponseShootPeople extends ResponseInput
 {
     private String targetBasicMode;//Target for basic mode
@@ -22,3 +20,6 @@ public class ResponseShootPeople extends ResponseInput
         return targetBasicMode;
     }
 }
+
+
+

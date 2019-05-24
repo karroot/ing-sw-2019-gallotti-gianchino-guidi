@@ -1,10 +1,18 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 {
+    //Attribute for the request
+    protected List<ColorId> playersBasicMode;//Targets for the basic mode
+
+    //Attribute for the response
+    protected ColorId targetBasicMode;//Target chosen for the basic mode
+
 
     boolean[] avaiableMethod = new boolean[2];
     protected String nameAdditionalmode; //Name of the alternative mode
@@ -54,5 +62,24 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 
     }
     protected abstract void inputAdditionalMode();
-    protected abstract void inputBasicMode();
+    protected void inputBasicMode()
+    {
+        int i = 1;
+
+        System.out.println("Scegli un bersaglio:");
+
+        for (ColorId t:playersBasicMode)
+        {
+            System.out.println(i + ":" + t);
+            i++;
+        }
+
+        int anInt = inputInt(1, i - 1);
+
+        targetBasicMode = playersBasicMode.get(anInt -1);
+
+    }
+
+
+
 }

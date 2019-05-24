@@ -15,6 +15,9 @@ public class RequestTHOR  extends RequestInput{
     private ColorId targetAdditionalMode;//target chosen for the alternative mode
     private ColorId targetSecondAdditionalMode;//target chosen for the alternative mode
 
+    //Attribute for the response
+    protected ColorId targetBasicMode;//Target chosen for the basic mode
+
     boolean[] avaiableMethod = new boolean[3];
     protected String nameAdditionalmode; //Name of the alternative mode
     protected String nameSecondAdditionalmode; //Name of the alternative mode
@@ -151,7 +154,7 @@ public class RequestTHOR  extends RequestInput{
         targetSecondAdditionalMode  = players.get(choice-1);
     }
 
-    @Override
+
     protected void inputBasicMode()
     {
         List<ColorId> players;

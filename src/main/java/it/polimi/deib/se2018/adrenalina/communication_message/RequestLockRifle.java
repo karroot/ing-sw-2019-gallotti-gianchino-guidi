@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
-import java.util.LinkedList;
+
 import java.util.List;
 /**
  * @author gabriele
@@ -10,11 +10,11 @@ import java.util.List;
 public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
     //Attribute for the request
     private List<ColorId> playersAdditionalMode;//Targets for the additional mode
-    private List<ColorId> playersBasicMode;//Targets for the basic mode
+
     //Attribute for the response
     private ColorId targetAdditionalMode;//Targets chosen for the alternative mode
-    private ColorId  targetBasicMode;
-    boolean[] avaiableMethod = new boolean[2];
+
+
     /**
      * Create a message of request for the weapon LockRifle
      * @param avaiableMethod mode available
@@ -93,23 +93,7 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         targetAdditionalMode  = players.get(choice-1);
     }
 
-    @Override
-    protected void inputBasicMode() {
-        List<ColorId> players;
 
-        players = playersBasicMode;
-        int i = 1;
-
-        for (ColorId t:players)//Ask to user the target
-        {
-            System.out.println(i+":"+t);
-            i++;
-        }
-        int choice = inputInt(1, i - 1);
-        targetBasicMode = players.get(choice-1);
-
-
-    }
 
 }
 
