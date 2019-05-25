@@ -271,6 +271,16 @@ public class MethodsWeapons {
 
         player.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     }
+
+    public static int getXFromString (String stringOfCoordinates)
+    {
+        return Integer.parseInt(stringOfCoordinates.substring(4,5));//Works if the coordinates are between 1 and 9
+    }
+
+    public static int getYFromString (String stringOfCoordinates)
+    {
+         return Integer.parseInt(stringOfCoordinates.substring(11));
+    }
 }
 
 
