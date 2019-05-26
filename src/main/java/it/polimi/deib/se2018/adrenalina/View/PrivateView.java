@@ -1,5 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import it.polimi.deib.se2018.adrenalina.Model.Player;
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,24 +14,81 @@ public class PrivateView extends UnicastRemoteObject implements PrivateViewInter
 
     }
 
-    @Override
-    public void showMenu() throws RemoteException
+
+
+    public void showMenu()
     {
-        System.out.println("Menu");
+
     }
 
-    public static void main(String[] args) {
-        try
-        {
-            //System.setSecurityManager(new RMISecurityManager());
-            java.rmi.registry.LocateRegistry.createRegistry(1099);
+    public void newGame()
+    {
 
-            PrivateViewInterface b = new PrivateView();
-            Naming.rebind("rmi://localhost/myabc", b);
-            System.out.println("[System] Chat Server is ready.");
-        }
-        catch (Exception e) {
-            System.out.println("Chat Server failed: " + e);
-        }
     }
+
+    public void showBoard()
+    {
+
+    }
+
+    public void startRound( Player playofround)
+    {
+
+    }
+
+    public void showPowerUp()
+    {
+
+    }
+
+    public void selectPowerUp()
+    {
+
+    }
+
+    public void showWeapons()
+    {
+
+    }
+
+    public void selectWeapon()
+    {
+
+    }
+
+    public void showAction()
+    {
+
+    }
+
+    public void selectAction()
+    {
+
+    }
+
+    public void startFrenesy()
+    {
+
+    }
+
+    public void showFinalScore()
+    {
+
+    }
+
+    public void showMessage(String message)
+    {
+
+    }
+
+    public void showError(String message)
+    {
+
+    }
+
+    public void showPlayerBoard()
+    {
+
+    }
+
 }

@@ -1,59 +1,83 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
+
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import it.polimi.deib.se2018.adrenalina.View.*;
 
-public class Connection extends Observable<String> implements Runnable
+/**
+ * @author Cysko7927
+ * This class represent a connection between the client and the server and can be implemented in different ways
+ * The implementation depends by thecnology
+ */
+public abstract class Connection implements Runnable
 {
-    private Socket socket;
 
-    private Scanner in;
+    protected View view;
 
-    private PrintStream out;
+    protected ColorId player;
 
-    private Server server;
+    protected String name;
 
-    private String name;
+    protected boolean active = true;
 
-    private boolean active = true;
 
-    public Connection(Socket socket, Server server) {
-        this.socket = socket;
-        this.server = server;
+    //Ask at client the name and the color of the user that will use during the match and save them
+    protected abstract void askCredentials() throws IOException,ClassNotFoundException;
+
+    public abstract void send(MessageNet message) throws IOException,IllegalStateException;
+    public abstract MessageNet receive() throws ClassNotFoundException,IOException;
+    public abstract void closeConnection();
+    public abstract boolean pingPongTest();
+
+    /**
+     * Say which the name of player associated at this connection
+     * @return name of the player
+     */
+    public String getName()
+    {
+        return name;
     }
 
-    private synchronized boolean isActive()
+    /**
+     * Say the color of the player associated at this connection
+     * @return color of player
+     */
+    public ColorId getPlayer()
+    {
+        return player;
+    }
+
+
+    /**
+     * Say if the connection is active or not
+     * @return true if the client is connected
+     */
+    public boolean isActive()
     {
         return active;
     }
 
+    /**
+     * It is a thread that starts when the connection will insert in the list of Connections
+     * This thread sends a message to ask at client the credentials of the player (ColorId ,name)
+     * It receives the credentials and it saves them
+     * If there are problem sending message the connection will be no active
+     */
     @Override
     public void run()
     {
-
+        try
+        {
+            askCredentials();//Ask at client the name and the color of the user that will use during the match
+        }
+        catch (IOException | ClassNotFoundException e) //If there are problems
+        {
+            System.out.println(e.getMessage());//Player isn't active
+            active = false;
+            view.checkState();
+        }
     }
 
-    public void send()
-    {
 
-    }
-
-    public void asyncSend()
-    {
-
-    }
-
-    public synchronized void closeConnection()
-    {
-
-    }
-
-    private void close()
-    {
-
-    }
 }

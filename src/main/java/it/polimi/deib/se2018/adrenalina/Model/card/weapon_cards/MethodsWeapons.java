@@ -231,7 +231,7 @@ public class MethodsWeapons {
                 squareReturn = squareStart.getGameBoard().getArena().getSquare(ammoPointTemp.getX(), ammoPointTemp.getY());
                 return squareReturn;
             } catch (SquareNotInGameBoard squareNotInGameBoard) {
-                squareNotInGameBoard.printStackTrace();
+                System.out.println(squareNotInGameBoard);
             }
 
         }

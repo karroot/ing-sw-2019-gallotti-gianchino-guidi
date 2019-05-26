@@ -217,7 +217,7 @@ public class PlasmaGun extends WeaponCard
         try {
             dummie2.setSquare(this.getPlayer().getSquare().getGameBoard().getArena().getSquare(x,y));
         } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
+            System.out.println(squareNotInGameBoard);
         }
         if  (dummie2.playerThatSee(dummie2.getSquare().getGameBoard()).size() > 0)
             playerReachable.addAll(dummie2.playerThatSee(dummie2.getSquare().getGameBoard()));

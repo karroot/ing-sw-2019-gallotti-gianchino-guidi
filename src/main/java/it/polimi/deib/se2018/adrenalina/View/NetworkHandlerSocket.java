@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class NetworkHandler extends Thread
+public class NetworkHandlerSocket implements Runnable
 {
     //Socket attributes
     private Socket clientSocket;
@@ -19,7 +19,7 @@ public class NetworkHandler extends Thread
     //RMI attributes
 
 
-
+    //Thread that send or receive the message
     @Override
     public void run()
     {

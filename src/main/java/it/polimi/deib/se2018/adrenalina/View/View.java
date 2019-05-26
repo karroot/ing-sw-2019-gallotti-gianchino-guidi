@@ -1,126 +1,352 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.UpdateModel;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.channels.ClosedChannelException;
 import java.rmi.Naming;
-import java.rmi.Remote;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
+import static java.lang.Thread.sleep;
 
-public class View
+/**
+ * @author Cysko7927
+ */
+public class View extends Observable<ResponseInput> implements Observer<UpdateModel>,Runnable
 {
 
     /*
     Questa è la virtual view.
+    e fa anche da server
      */
-    private PrivateViewInterface c;
 
-    public View()
+    protected int PORT;
+    protected Thread timer;
+    protected int lenghtTimer;
+    private ExecutorService executor = Executors.newFixedThreadPool(10);
+    private List<Connection> connections = new ArrayList<>();
+    protected  boolean creationIsFinished;
+    private StateVirtualView state;
+    private UpdateModel lastModelUpdated; //This variable saves the last version of the model updated
+    private Controller controller;
+
+
+    /**
+     * Create a virtual view with inside a server that listen in a port and set a timeout that being used by server
+     * to wait before to start the match
+     * @param PORT number of port that will use the server for the socket
+     * @param timer timeout used by server to wait the user after at least three user will connect.
+     *              it being used by Network Handler also to wait the input of user
+     */
+    public View(int PORT,int timer)
+    {
+        this.PORT = PORT;
+        this.lenghtTimer = timer;
+        creationIsFinished = false;
+        state = new StartLogin(this);
+        //Create the controller (ToDO)
+    }
+
+    /**
+     *The controller use this method to send a request of input a one player
+     * The method does also a ping-pong test to verify that the connection is active
+     * @param message message to send to ask the input
+     * @param player  player that will receive the request of input
+     * @throws Exception if there were problems with the sending
+     */
+    public void requestInput(RequestInput message,ColorId player) throws Exception //Beta Version
+    {
+        
+        //The controller uses this method to ask an input to user
+        Connection correctConnection = connections
+                .stream()
+                .filter(connection -> connection.getPlayer().equals(player))
+                .collect(Collectors.toList())
+                .get(0);
+
+
+        final boolean esite = correctConnection.pingPongTest();
+
+        if (esite) //If the ping pong test has been successful
+            correctConnection.send(message);//Ask to send the message
+        else
+            throw new ClosedChannelException();//Test failed = connection isn't active
+    }
+
+    /**
+     * The controller uses this method to receive the response of a request of input sand before at a player
+     * This method suspend the controller until the message doesn't arrive and at the end it calls the method update
+     * of the controller passing the response input
+     * @param player player that send the response
+     * @return message of response with the inputs of the users
+     * @throws Exception
+     */
+    public void getResponseWithInputs(ColorId player) throws Exception //Beta Version
+    {
+        Connection correctConnection = connections //Find the correct connection
+                .stream()
+                .filter(connection -> connection.getPlayer().equals(player))
+                .collect(Collectors.toList()).get(0);
+
+        controller.update((ResponseInput) correctConnection.receive());//Wait the message that will arrive
+    }
+
+    /**
+     * If there were changes in the model the controller use this method to send the model updated at all player active
+     * The method continues to send the message until the client doesn't respond with a message of correct reception
+     * About the connections no active the message will not send
+     * @param message message to send that contain the model updated
+     */
+    @Override
+    public void update(UpdateModel message)//Beta version(Incomplete)
+    {
+        //Send a message update model in broadcast at all active player
+        for (Connection t: connections)
+        {
+            try
+            {   //If the connection is RMI use the method remote update of virtual view
+                //Else use the method "send" of the connection Socket
+                t.send(message); //Manca il controllo della ricezione del messaggio
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    }
+
+    /**
+     * Thread that creates the acceptors Socket and RMI
+     */
+    @Override
+    public void run()
     {
         try
         {
-            c = (PrivateViewInterface) Naming.lookup("rmi://localhost/myabc");
-            System.out.println("ok1");
+            executor.submit(new AcceptorSocket(this));
+        }
+        catch (IOException e)
+        {
+            System.out.println("Errore nella creazione dell' Accettatore di ConnectionSocket");
+        }
+
+        try
+        {
+            executor.submit(new AcceptorRMI(this));
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Errore Errore nella creazione dell' Accettatore di ConnectionRMI");
+        }
+
+    }
+
+    /**
+     * The behavior of this method depends by state of the Virtual View:
+     * 1)If the virtual view is in the initial state: the method insert the connection in the list
+     * ,if there are three players connected it starts the timer to wait before to start the match
+     * 2)If the match is active and there aren't player disconnected : the method doesn't insert anything
+     * 3)If the match is active and there are player disconnected : the method insert a new connection only if the player
+     * was connected before.
+     * @param connection connection to insert
+     */
+    public synchronized void insertConnection(Connection connection)
+    {
+        state.insertConnection(connection);
+        checkState();
+    }
+
+    /**
+     * Get the thread that handle the timer
+     * @return thread with timer
+     */
+    public Thread getTimer()
+    {
+        return timer;
+    }
+
+    /**
+     * Change the thread that handle the timer
+     * @param timer new thread
+     */
+    public void setTimer(Thread timer)
+    {
+        this.timer = timer;
+    }
+
+    /**
+     * Obtain the object that handle the thread
+     * @return object executor
+     */
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    /**
+     * Obtain the list of all connections
+     * @return list of all connections
+     */
+    public List<Connection> getConnections() {
+        return connections;
+    }
+
+    /**
+     * Obtain the duration of the timer in seconds
+     * @return
+     */
+    public int getLenghtTimer()
+    {
+        return lenghtTimer;
+    }
+
+    /**
+     * Say if the phase of login of the player is finished
+     * @return
+     */
+    public boolean isCreationIsFinished() {
+        return creationIsFinished;
+    }
+
+    /**
+     * Obtain the last copy immutable of the model updated
+     * @return object with all the information that represent the model
+     */
+    public UpdateModel getLastModelUpdated() {
+        return lastModelUpdated;
+    }
+
+    /**
+     * Change the copy immutable of the model inside the virtual view
+     * @param lastModelUpdated new copy of the model
+     */
+    public void setLastModelUpdated(UpdateModel lastModelUpdated) {
+        this.lastModelUpdated = lastModelUpdated;
+    }
+
+
+    //Thi method handles the state of the server in virtual view after it was created
+    protected synchronized void checkState()
+    {
+        boolean AllPlayerAreActive = connections
+                                        .stream()
+                                        .filter(connection -> !connection.isActive())
+                                        .collect(Collectors.toList()).isEmpty();
+
+        if (creationIsFinished && AllPlayerAreActive)
+            state = new AllPlayerAreActive(this);
+        else if (creationIsFinished)
+            state = new SomePlayerAreNotActive(this);
+    }
+}
+
+class AcceptorSocket implements Runnable
+{
+    private ServerSocket serverSocket;
+    private View view;
+
+    public AcceptorSocket(View view) throws IOException
+    {
+        this.serverSocket = new ServerSocket(view.PORT);
+        this.view = view;
+    }
+
+    @Override
+    public void run()//Da completare
+    {
+
+        while (true)
+        {
+            try
+            {
+                Socket newSocket = serverSocket.accept();
+                ConnectionSocket connectionSocket = new ConnectionSocket(newSocket,view);
+                view.insertConnection(connectionSocket);
+            } catch (Exception e) {
+                System.out.println("Errore di connessione!" + e.getMessage());
+            }
         }
     }
 
 
-    private ColorId playerOfRound;
 
+}
 
-    public void showMenu()
+class AcceptorRMI implements Runnable
+{
+    private ServerSocket serverSocket;
+    private View view;
+
+    public AcceptorRMI(View view) throws Exception
+    {
+        this.serverSocket = new ServerSocket(view.PORT + 1);
+        this.view = view;
+
+    }
+
+    @Override
+    public void run()
+    {
+        while (true)
+        {
+            try {
+                Socket newSocket = serverSocket.accept();
+                InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup("rmi://" +newSocket.getInetAddress() +"/networkH");
+                ConnectionRMI connection = new ConnectionRMI(view,client);
+                newSocket.close();
+                view.insertConnection(connection);
+            } catch (Exception e) {
+                System.out.println("Errore di connessione!"+ e.getMessage());
+            }
+        }
+    }
+}
+
+class Timer implements Runnable
+{
+    private long timer;//Represent the seconds of duration of the timer
+    private View view;
+
+    public Timer(int timer,View view)
+    {
+        this.timer = timer;
+        this.view = view;
+    }
+
+    @Override
+    public void run()
     {
         try
         {
-            c.showMenu();
+            sleep(timer*1000);
         }
-        catch (Exception e)
+        catch (InterruptedException e)
         {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
+            return;
         }
 
-        System.out.println("ok2");
-    }
+        view.creationIsFinished = true;
+        view.checkState();
 
-    public void newGame()
-    {
 
     }
 
-    public void showBoard()
+
+    public long getTimer()
     {
-
-    }
-
-    public void startRound( Player playofround)
-    {
-
-    }
-
-    public void showPowerUp()
-    {
-
-    }
-
-    public void selectPowerUp()
-    {
-
-    }
-
-    public void showWeapons()
-    {
-
-    }
-
-    public void selectWeapon()
-    {
-
-    }
-
-    public void showAction()
-    {
-
-    }
-
-    public void selectAction()
-    {
-
-    }
-
-    public void startFrenesy()
-    {
-
-    }
-
-    public void showFinalScore()
-    {
-
-    }
-
-    public void showMessage(String message)
-    {
-
-    }
-
-    public void showError(String message)
-    {
-
-    }
-
-    public void showPlayerBoard()
-    {
-
-    }
-
-    public static void main(String[] args)
-    {
-        View v = new View();
-
-        v.showMenu();
-
+        return timer;
     }
 
 }
+
+
