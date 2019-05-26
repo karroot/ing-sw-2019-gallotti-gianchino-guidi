@@ -7,10 +7,12 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class PlasmaGun extends WeaponCard
 {
+
     private boolean[] avaiableMethod = new boolean[4];
     /**
      * Create the card PlasmaGun
@@ -88,11 +90,15 @@ public class PlasmaGun extends WeaponCard
 
     /**
      * It uses the basic mode of the PlasmaGun
-     * @param player player affected by weapon
+     * @param colorPlayer player affected by weapon
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      */
-    public void basicMode(Player player,String[] orderEffect,int x,int y) throws IllegalStateException, IllegalArgumentException, IllegalAccessException {
+    public void basicMode(ColorId colorPlayer,String[] orderEffect,String coordinates) throws IllegalStateException, IllegalArgumentException, IllegalAccessException {
+        int x;
+        int y;
+       x =MethodsWeapons.getXFromString(coordinates);
+        y =MethodsWeapons.getYFromString(coordinates);
         int i = 0;
         boolean[] booleans = checkAvaliableMode();
         if (!checkAvaliableMode()[2])
@@ -104,7 +110,7 @@ public class PlasmaGun extends WeaponCard
                 if (!checkAvaliableMode()[0])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-                doDamage(player,2);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
             }
             if (orderEffect[i].equals("with phase glide") && checkTargetAfterMove(x,y).size()>0) {
                 if (!checkAvaliableMode()[2])
@@ -118,7 +124,8 @@ public class PlasmaGun extends WeaponCard
                 if (!checkAvaliableMode()[1])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-                doDamage(player,1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+
                 this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
             }
         i++;
@@ -152,11 +159,11 @@ public class PlasmaGun extends WeaponCard
      * Return all possible players that can be targets also if the player will move in other square
      * @exception IllegalStateException if the effect can't be used
      */
-    public List<Player> checkTargetBeforeMove () throws IllegalStateException
+    public List<ColorId> checkTargetBeforeMove () throws IllegalStateException
     {
         Player dummie = new Player(ColorId.BLUE,"a","a",false);
-        List<Player> ListPlayerReach = new LinkedList();
-        Set<Player> playerReachable = new HashSet<>();
+        List<ColorId> ListPlayerReach = new LinkedList();
+        Set<ColorId> playerReachable = new HashSet<>();
         if (!isLoaded()) //check mode
             throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
         Set<Square> target=player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
@@ -167,7 +174,14 @@ public class PlasmaGun extends WeaponCard
         {
             dummie.setSquare(i);
             if  (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 0)
-                playerReachable.addAll(dummie.playerThatSee(dummie.getSquare().getGameBoard()));
+
+                for (Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
+                {
+                    playerReachable.add(p.getColor());
+                }
+
+
+
         }
          ListPlayerReach.addAll(playerReachable);//Returns all targets
         return ListPlayerReach;
@@ -209,22 +223,26 @@ public class PlasmaGun extends WeaponCard
      * @param y player choice of movement y
      * @return List of reachable player
      */
-    public List<Player> checkTargetAfterMove(int x,int y)
+    private List<ColorId> checkTargetAfterMove(int x,int y)
     {
+
         Player dummie2 = new Player(ColorId.BLUE,"a","a",false);
-        List<Player> ListPlayerReach = new LinkedList();
-        Set<Player> playerReachable = new HashSet<>();
+        List<ColorId> ListPlayerReach = new LinkedList();
+        Set<ColorId> playerReachable = new HashSet<>();
         try {
             dummie2.setSquare(this.getPlayer().getSquare().getGameBoard().getArena().getSquare(x,y));
         } catch (SquareNotInGameBoard squareNotInGameBoard) {
             squareNotInGameBoard.printStackTrace();
         }
         if  (dummie2.playerThatSee(dummie2.getSquare().getGameBoard()).size() > 0)
-            playerReachable.addAll(dummie2.playerThatSee(dummie2.getSquare().getGameBoard()));
+            for (Player p : dummie2.playerThatSee(dummie2.getSquare().getGameBoard()) )
+            {
+                playerReachable.add(p.getColor());
+            }
         ListPlayerReach.addAll(playerReachable);//Returns all targets
 
-       if (ListPlayerReach.contains(player))
-            ListPlayerReach.remove(player);
+       if (ListPlayerReach.contains(player.getColor()))
+            ListPlayerReach.remove(player.getColor());
 
        return ListPlayerReach;
     }

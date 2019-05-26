@@ -1,9 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LockRifle extends WeaponCard
 {
@@ -60,28 +62,30 @@ public class LockRifle extends WeaponCard
      * @return all player that can be affected with the lock rifle in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws  IllegalStateException
+    public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma LockRifle non eseguibile");
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
 
-        List<Player> listOfPlayer = new LinkedList<>();
-        listOfPlayer.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
-
-        return listOfPlayer;//Returns all targets
+        return playerList;//Returns all targets
     }
 
 
 
     /**
      * It uses the basic mode of the lock rifle
-     * @param player player affected by weapon
-     * @param player2 player affected by the additional mode
+     * @param colorPlayer player affected by weapon
+     * @param colorPlayer2 player affected by the additional mode
      * @param  SecondLockMode is true if additional mode is active
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public void basicMode(Player player,Player player2 ,boolean SecondLockMode) throws IllegalStateException
+    public void basicMode(ColorId colorPlayer, ColorId colorPlayer2 , boolean SecondLockMode) throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -91,11 +95,13 @@ public class LockRifle extends WeaponCard
             if (!checkAvaliableMode()[1])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-            markTarget(player2,1);
+            markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+
             this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         }
-        doDamage(player,2);
-        markTarget(player,1);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
+        markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+
         this.isLoaded = false;
     }
 
@@ -104,7 +110,7 @@ public class LockRifle extends WeaponCard
      * @return all player that can be affected with the lock rifle in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkSecondLock() throws  IllegalStateException
+    public List<ColorId> checkSecondLock() throws  IllegalStateException
     {
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");

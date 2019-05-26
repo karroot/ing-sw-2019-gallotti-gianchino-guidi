@@ -1,9 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MachineGun extends WeaponCard
 {
@@ -62,13 +64,17 @@ public class MachineGun extends WeaponCard
      * @return all player that can be affected with the lock rifle in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
-        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
+
 
 
         return playerList;//Returns all targets
@@ -78,16 +84,17 @@ public class MachineGun extends WeaponCard
 
     /**
      * It uses the basic mode of the lock rifle
-     * @param player1 player affected by weapon, is also the player of the focushotmode
-     * @param player2 player affected by weapon
-     * @param  player3 player affected by turret tripod , it can be null
+     * @param colorPlayer1 player affected by weapon, is also the player of the focushotmode
+     * @param colorPlayerdamaged  player that get the additional damage
+     * @param colorPlayer2 player affected by weapon
+     * @param  colorPlayer3 player affected by turret tripod , it can be null
      * @param  FocusShotcMode if true indicate to use focus shot
      * @param  TurretTripode if true indicate to use turret tripode
      * @param addDamage if true indicate to add one damage to playerDamaged , it can be null
      * @exception IllegalStateException if the basic mode can't be used
      * @exception IllegalArgumentException if basicMode revice wrong player's input
      */
-    public void basicMode(Player player1, Player player2, Player player3,Player playerdamaged, boolean FocusShotcMode, boolean TurretTripode,boolean addDamage) throws IllegalArgumentException,IllegalStateException
+    public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, ColorId colorPlayerdamaged, boolean FocusShotcMode, boolean TurretTripode, boolean addDamage) throws IllegalArgumentException,IllegalStateException
     {
 
         if (FocusShotcMode)
@@ -95,7 +102,7 @@ public class MachineGun extends WeaponCard
                 if (!checkAvaliableMode()[1])
                     throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
-                doDamage(player1, 1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
         if (TurretTripode)
@@ -103,26 +110,26 @@ public class MachineGun extends WeaponCard
             if (!checkAvaliableMode()[2])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-            if (player3==null && !addDamage)
+            if (colorPlayer3==null && !addDamage)
                 throw new IllegalArgumentException("Mode: "+ name + " select at least one between damage player1 or damage player 3");//If this card doesn't belong at a player launch exception
 
-            if (player3!=null)
+            if (colorPlayer3!=null)
             {
-                if (player3.equals(player2) || player3.equals(player1))
+                if (colorPlayer3.equals(colorPlayer2) || colorPlayer3.equals(colorPlayer1))
                 {
                     throw new IllegalArgumentException("player3 must be different from player2 and player1");
                 }
-                doDamage(player3, 1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
             }
             if (addDamage)
             {
-                if ( (!(playerdamaged.equals(player1)) || (playerdamaged.equals(player2) ) )&& ((playerdamaged.equals(player1)) || !(playerdamaged.equals(player2))))
+                if ( (!(colorPlayerdamaged.equals(colorPlayer1)) || (colorPlayerdamaged.equals(colorPlayer2) ) )&& ((colorPlayerdamaged.equals(colorPlayer1)) || !(colorPlayerdamaged.equals(colorPlayer2))))
                     throw new IllegalArgumentException("Mode: "+ name + " playeradddamage must be player1 or player2");
 
-                if (playerdamaged.equals(player1))
-                    doDamage(player1,1);
-                if (playerdamaged.equals(player2))
-                    doDamage(player2,1);
+                if (colorPlayerdamaged.equals(colorPlayer1))
+                    doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
+                if (colorPlayerdamaged.equals(colorPlayer2))
+                    doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
 
             }
 
@@ -131,11 +138,11 @@ public class MachineGun extends WeaponCard
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        if (player1.equals(player2))
+        if (colorPlayer1.equals(colorPlayer2))
             throw new IllegalArgumentException("player1 must be different from player2");
-        doDamage(player1,1);
-        if (player2!= null)
-            doDamage(player2,1);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
+        if (colorPlayer2!= null)
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
         this.isLoaded = false;
     }
 
@@ -144,13 +151,17 @@ public class MachineGun extends WeaponCard
      * @return all player that can be affected with the lock rifle in focus shoot mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkFocusShotcMode() throws IllegalStateException
+    public List<ColorId> checkFocusShotcMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
-        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
+
 
 
         return playerList;//Returns all targets
@@ -164,13 +175,18 @@ public class MachineGun extends WeaponCard
      * @return all player that can be affected with the lock rifle in focus shoot mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkTurretTripodeMode() throws  IllegalStateException
+    public List<ColorId> checkTurretTripodeMode() throws  IllegalStateException
     {
         if (!checkAvaliableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
-        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
+
+
 
 
 

@@ -1,9 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.Model.Room;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.LinkedList;
@@ -53,11 +50,11 @@ public class TractorBeam extends WeaponCard
     }
     /**
      * Calculate in which square a player can be moved using the basic mode
-     * @param player player to move
+     * @param colorPlayer player to move
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<String> checkMoveBasicMode(Player player) throws IllegalStateException
+    public List<String> checkMoveBasicMode(ColorId colorPlayer) throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[0])
@@ -65,9 +62,9 @@ public class TractorBeam extends WeaponCard
         List<Square> listSquare = new LinkedList<>();
 
         List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
-        for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+        for(Player p : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getGameBoard().getAllPlayer())
         {
-         for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(),player.getSquare().getY(),2) )
+         for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getY(),2) )
          { for (Room reachRoom : roomReachablePlayer)
             {
 
@@ -85,11 +82,11 @@ public class TractorBeam extends WeaponCard
      * Return the list of all target available for using the punisher mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkPunisherMode () throws IllegalStateException
+    public List<ColorId> checkPunisherMode () throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-        List<Player> listPlayer = new LinkedList<>();
+        List<ColorId> listPlayer = new LinkedList<>();
 
 
         for(Player p : player.getSquare().getGameBoard().getAllPlayer())
@@ -100,7 +97,7 @@ public class TractorBeam extends WeaponCard
 
 
                 if (this.player.getSquare().equals(sq)) {
-                    listPlayer.add(p);
+                    listPlayer.add(p.getColor());
                 }
 
             }
@@ -112,42 +109,53 @@ public class TractorBeam extends WeaponCard
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkBasicMode() throws  IllegalStateException
+    public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
+        List<ColorId> playerList = new LinkedList<>();
 
-                playerList.addAll(playersReachable( player.getSquare(),3));
+        for (Player p : playersReachable( player.getSquare(),3) )
+        {
+            playerList.add(p.getColor());
+        }
+
+
+
 
         return playerList;//Returns all targets
     }
     /**
      * It uses the basic mode of the lock rifle
-     * @param player player affected by weapon
+     * @param colorPlayer player affected by weapon
      */
-    public void basicMode(Player player,int x,int y) throws IllegalStateException
+    public void basicMode(ColorId colorPlayer, String coordinates) throws IllegalStateException
     {
+        int x;
+        int y;
+        x =MethodsWeapons.getXFromString(coordinates);
+        y =MethodsWeapons.getYFromString(coordinates);
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        doDamage(player,1);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
         moveTarget(player,x,y);//Move the target
         this.isLoaded = false;
     }
 
     /**
      * It uses the punisher mode of the lock rifle
-     * @param player player affected by weapon
+     * @param colorPlayer player affected by weapon
      */
-    public void punisherMode(Player player) throws  IllegalStateException
+    public void punisherMode(ColorId colorPlayer) throws  IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        doDamage(player,3);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
+
         moveTarget(player,player.getSquare().getX(),player.getSquare().getY());//Move the target
         this.isLoaded = false;
         this.player.setAmmoRed(this.player.getAmmoRed() - 1);

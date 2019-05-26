@@ -1,9 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class THOR extends WeaponCard
@@ -73,13 +75,17 @@ public class THOR extends WeaponCard
      * @return all player that can be affected with the lock rifle in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws  IllegalStateException
+    public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
-        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
+
 
 
         return playerList;//Returns all targets
@@ -89,11 +95,12 @@ public class THOR extends WeaponCard
 
     /**
      * It uses the basic mode of the lock rifle
-     * @param player1 player affected by weapon
-     * @param  player2 second player affected by weapon
+     * @param colorPlayer1 player affected by weapon
+     * @param  colorPlayer2 second player affected by weapon
+     * @param colorPlayer3 third player affected by this weapon
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public void basicMode(Player player1 , Player player2 , Player player3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
+    public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità base dell'arma: "+name+" non eseguibile");
@@ -106,7 +113,7 @@ public class THOR extends WeaponCard
             if (!checkAvaliableMode()[1])
                 throw  new IllegalStateException("Modalità chain dell'arma: "+name+" non eseguibile");
 
-            if (player1.equals(player2))
+            if (colorPlayer1.equals(colorPlayer2))
                 throw new IllegalArgumentException("player1 must be different from player2");
 
 
@@ -116,20 +123,20 @@ public class THOR extends WeaponCard
                     throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
 
-                if (player2.equals(player3))
+                if (colorPlayer2.equals(colorPlayer3))
                     throw new IllegalArgumentException("player2 must be different from player3");
-                if (player1.equals(player3))
+                if (colorPlayer1.equals(colorPlayer3))
                     throw new IllegalArgumentException("player1 must be different from player3");
 
 
 
                 this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
-                doDamage(player3,2);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),2);
             }
-            doDamage(player2,1);
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
-        doDamage(player1,2);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),2);
         this.isLoaded = false;
         }
 
@@ -138,10 +145,10 @@ public class THOR extends WeaponCard
      * @return all player that can be affected with the Whisper in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkChainReaction() throws  IllegalStateException
+    public List<ColorId> checkChainReaction() throws  IllegalStateException
     {
-       Set<Player> listChain= new HashSet<>();
-        List<Player> list= new LinkedList<>();
+       Set<ColorId> listChain= new HashSet<>();
+        List<ColorId> list= new LinkedList<>();
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
@@ -153,7 +160,7 @@ public class THOR extends WeaponCard
             {
                 if(!(k.equals(i)))
                 {
-                    listChain.add(k);
+                    listChain.add(k.getColor());
                 }
             }
 
@@ -170,10 +177,10 @@ public class THOR extends WeaponCard
      * @return all player that can be affected with the Whisper in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkHighVoltage() throws  IllegalStateException
+    public List<ColorId> checkHighVoltage() throws  IllegalStateException
     {
-        List<Player> list= new LinkedList<>();
-        Set<Player> listHighVoltage= new HashSet<>();
+        List<ColorId> list= new LinkedList<>();
+        Set<ColorId> listHighVoltage= new HashSet<>();
         if (!checkAvaliableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
@@ -187,7 +194,7 @@ public class THOR extends WeaponCard
                     {
                         if(!(k.equals(i)) && !(k.equals(j)))
                         {
-                            listHighVoltage.add(k);
+                            listHighVoltage.add(k.getColor());
                         }
                     }
                 }

@@ -1,12 +1,16 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
 
 
 public class Whisper extends WeaponCard
@@ -62,16 +66,24 @@ public class Whisper extends WeaponCard
      * Return the list of all target available for using the basic mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        Set<Player> playerdistance2and1= new HashSet<>();
-        Set<Player> playerdistance1= new HashSet<>();
-        List<Player> pl = new LinkedList<>();
+        Set<ColorId> playerdistance2and1= new HashSet<>();
+        Set<ColorId> playerdistance1= new HashSet<>();
+        List<ColorId> pl = new LinkedList<>();
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
-        playerdistance2and1.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
+        for (Player p :MethodsWeapons.playersReachable(player.getSquare(),1) )
+        {
+            playerdistance1.add(p.getColor());
+        }
+        for (Player p :MethodsWeapons.playersReachable(player.getSquare(),2) )
+        {
+            playerdistance2and1.add(p.getColor());
+        }
+
+
         playerdistance2and1.removeAll(playerdistance1);
         pl.addAll(playerdistance2and1);
 
@@ -80,16 +92,16 @@ public class Whisper extends WeaponCard
 
     /**
      * It uses the basic mode of the Whisper
-     * @param player player affected by weapon
+     * @param colorPlayer player affected by weapon
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public void basicMode(Player player)  throws  IllegalStateException
+    public void basicMode(ColorId colorPlayer)  throws  IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        doDamage(player, 3);
-        markTarget(player, 1);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
+        markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
         this.isLoaded = false;
     }

@@ -1,9 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class EletroSchyte extends WeaponCard
@@ -57,28 +59,33 @@ public class EletroSchyte extends WeaponCard
      * @return all player that can be affected with the electroScythe in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException(" Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
 
-        playerList.remove(player); //Remove from targets the player that shoot
+
+        playerList.remove(player.getColor()); //Remove from targets the player that shoot
 
         return playerList;//Returns all targets
     }
 
     /**
      * It uses the basic mode of the ElectroSchyte
-     * @param playerList  list of player affected by weapon
+     * @param colorPlayerList  list of player affected by weapon
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public void basicMode(List<Player> playerList)
+    public void basicMode(List<ColorId> colorPlayerList)
     {
 
-            for (Player p : playerList) {
-                doDamage(p, 1);
+            for (ColorId p : colorPlayerList) {
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),1);
             }
         isLoaded = false;
         }
@@ -90,32 +97,35 @@ public class EletroSchyte extends WeaponCard
      * @return all player that can be affected with the electroScythe in basic mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkReaper() throws IllegalStateException
+    public List<ColorId> checkReaper() throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
-
-        playerList.remove(player); //Remove from targets the player that shoot
+        List<ColorId> playerList = new LinkedList<>();
+        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        {
+            playerList.add(p.getColor());
+        }
+        playerList.remove(player.getColor()); //Remove from targets the player that shoot
 
         return playerList;//Returns all targets
     }
 
     /**
      * It uses the basic mode of the weapon
-     * @param playerList  list of player affected by weapon
+     * @param colorPlayerList  list of player affected by weapon
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public void reaper(List<Player> playerList) throws  IllegalStateException
+    public void reaper(List<ColorId> colorPlayerList) throws  IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-        for(Player p:playerList) {
-            doDamage(p, 2);
+        for (ColorId p : colorPlayerList) {
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),2);
         }
         isLoaded = false;
         this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);

@@ -1,13 +1,14 @@
 
-import it.polimi.deib.se2018.adrenalina.Model.Player;
+/* import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.EletroSchyte;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.LockRifle;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-
-
+import it.polimi.deib.se2018.adrenalina.Model.Square;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.junit.After;
 
 import org.junit.Before;
@@ -899,7 +900,7 @@ public class TestBlueWeapons {
 
         reachableSquare= w5.checkPhaseGlide();
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
-        //assertTrue(reachableSquare.contains("1,3");
+        assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
         assertTrue(reachableBeforeMovePlayer.contains(enemy));
 
 
@@ -928,7 +929,7 @@ public class TestBlueWeapons {
         reachableSquare= w5.checkSquareBeforeMove();
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
         assertFalse(reachableBasicPlayer.contains(enemy));
-      //  assertTrue(reachableSquare.contains(g1.getArena().getSquare(2,2)));
+        assertTrue(reachableSquare.contains(g1.getArena().getSquare(2,2).toStringCoordinates()));
         assertTrue(reachableBeforeMovePlayer.contains(enemy));
 
 
@@ -1078,3 +1079,4 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
     }
 }
+*/
