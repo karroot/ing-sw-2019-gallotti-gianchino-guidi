@@ -146,7 +146,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         }
         catch (Exception e)
         {
-            System.out.println("Errore Errore nella creazione dell' Accettatore di ConnectionRMI");
+            System.out.println("Errore  nella creazione dell' Accettatore di ConnectionRMI");
         }
 
     }

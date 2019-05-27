@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
+import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 import java.util.List;
@@ -7,9 +8,10 @@ import java.util.List;
 public class RequestTargettingScope  extends RequestInput{
     //Attribute for the request
     protected List<ColorId> playersBasicMode;//Targets for the basic mode
-
+protected List<Color> playerAmmo; // all ammo of the player
     //Attribute for the response
     protected ColorId targetBasicMode;//Target chosen for the basic mode
+    protected Color targetAmmo;
     @Override
     public void printActionsAndReceiveInput() {
         inputBasicMode();
@@ -21,7 +23,7 @@ public class RequestTargettingScope  extends RequestInput{
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        return new ResponseTargettingScope(targetBasicMode);
+        return new ResponseTargettingScope(targetBasicMode,targetAmmo);
     }
     protected void inputBasicMode()
     {
@@ -39,5 +41,17 @@ public class RequestTargettingScope  extends RequestInput{
 
         targetBasicMode = playersBasicMode.get(anInt -1);
 
+
+        i=1;
+        System.out.println("Scegli una munizione:");
+
+        for (Color t:playerAmmo)
+        {
+            System.out.println(i + ":" + t);
+            i++;
+        }
+
+         anInt = inputInt(1, i - 1);
+        targetAmmo= playerAmmo.get(anInt-1);
     }
 }

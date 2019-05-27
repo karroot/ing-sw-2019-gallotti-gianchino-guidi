@@ -1,5 +1,5 @@
 
-/* import it.polimi.deib.se2018.adrenalina.Model.Player;
+ import it.polimi.deib.se2018.adrenalina.Model.Player;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.EletroSchyte;
@@ -36,13 +36,13 @@ public class TestBlueWeapons {
 
 
 
-    private Player getPl(List<Player> pl,Player pg) throws  IllegalArgumentException
+    private ColorId getPl(List<ColorId> pl,Player pg) throws  IllegalArgumentException
     {
-        for(Player i : pl)
+        for(ColorId i : pl)
         {
-            if (i.equals(pg))
+            if (i.equals(pg.getColor()))
             {
-                return pg;
+                return pg.getColor();
             }
 
         }
@@ -177,10 +177,10 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod1[0],true);
         assertEquals(avaiableMethod1[1],true);
 
-        List<Player> list1 = w0.checkBasicMode();
-        List<Player> list2 = w0.checkReaper();
-        assertTrue(list1.contains(enemy));
-        assertTrue(list2.contains(enemy));
+        List<ColorId> list1 = w0.checkBasicMode();
+        List<ColorId> list2 = w0.checkReaper();
+        assertTrue(list1.contains(enemy.getColor()));
+        assertTrue(list2.contains(enemy.getColor()));
         w0.basicMode(list1);
         assertEquals(enemy.getNumberOfDamagePoint(),1);
         assertFalse(w0.isLoaded());
@@ -195,9 +195,9 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod2[0],true);
         assertEquals(avaiableMethod2[1],false);
 
-        List<Player> list3 = w0.checkBasicMode();
+        List<ColorId> list3 = w0.checkBasicMode();
 
-        assertTrue(list3.contains(enemy));
+        assertTrue(list3.contains(enemy.getColor()));
         w0.basicMode(list3);
         assertEquals(enemy.getNumberOfDamagePoint(),4);
         assertFalse(w0.isLoaded());
@@ -280,13 +280,13 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod1[0], true);
         assertEquals(avaiableMethod1[1], true);
 
-        List<Player> list1 = w1.checkBasicMode();
-        List<Player> list2 = w1.checkSecondLock();
+        List<ColorId> list1 = w1.checkBasicMode();
+        List<ColorId> list2 = w1.checkSecondLock();
 
-        assertTrue(list1.contains(enemy));
-        assertTrue(list2.contains(enemy));
-        assertTrue(list1.contains(enemy2));
-        assertTrue(list2.contains(enemy2));
+        assertTrue(list1.contains(enemy.getColor()));
+        assertTrue(list2.contains(enemy.getColor()));
+        assertTrue(list1.contains(enemy2.getColor()));
+        assertTrue(list2.contains(enemy2.getColor()));
 
 
 
@@ -310,9 +310,9 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod2[0], true);
         assertEquals(avaiableMethod2[1], false);
 
-        List<Player> list3 = w1.checkBasicMode();
+        List<ColorId> list3 = w1.checkBasicMode();
 
-        assertTrue(list3.contains(enemy));
+        assertTrue(list3.contains(enemy.getColor()));
 
         w1.basicMode(getPl(list3, enemy), null, false);
         assertEquals(enemy.getNumberOfDamagePoint(), 5);
@@ -370,7 +370,7 @@ public class TestBlueWeapons {
         }
         try
         {
-            w4.basicMode(enemy2);
+            w4.basicMode(enemy2.getColor());
             fail();
         }
         catch (IllegalStateException e)
@@ -382,7 +382,7 @@ public class TestBlueWeapons {
         w4.setPlayer(test);
         try
         {
-            w4.basicMode(enemy2);
+            w4.basicMode(enemy2.getColor());
             fail();
         }
         catch (IllegalStateException e)
@@ -412,9 +412,9 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod1[0],true);
 
 
-        List<Player> list1 = w4.checkBasicMode();
+        List<ColorId> list1 = w4.checkBasicMode();
 
-        assertTrue(list1.contains(enemy2));
+        assertTrue(list1.contains(enemy2.getColor()));
 
         w4.basicMode(getPl(list1,enemy2));
         assertEquals(enemy.getNumberOfDamagePoint(),0);
@@ -456,7 +456,7 @@ public class TestBlueWeapons {
         }
         try
         {
-            w3.basicMode(enemy2,null,null,false,false);
+            w3.basicMode(enemy2.getColor(),null,null,false,false);
             fail();
         }
         catch (IllegalStateException e)
@@ -468,7 +468,7 @@ public class TestBlueWeapons {
         w3.setPlayer(test);
         try
         {
-            w3.basicMode(enemy2,null,null,false,false);
+            w3.basicMode(enemy2.getColor(),null,null,false,false);
             fail();
         }
         catch (IllegalStateException e)
@@ -503,18 +503,18 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod1[0],true);
 
 
-        List<Player> list1 = w3.checkBasicMode();
-        List<Player> list2 = w3.checkChainReaction();
-        List<Player> list3 = w3.checkHighVoltage();
-        assertTrue(list1.contains(enemy));
-        assertTrue(list2.contains(enemy2));
-        assertTrue(list3.contains(enemy3));
+        List<ColorId> list1 = w3.checkBasicMode();
+        List<ColorId> list2 = w3.checkChainReaction();
+        List<ColorId> list3 = w3.checkHighVoltage();
+        assertTrue(list1.contains(enemy.getColor()));
+        assertTrue(list2.contains(enemy2.getColor()));
+        assertTrue(list3.contains(enemy3.getColor()));
 
 
 
         try
         {
-            w3.basicMode(getPl(list1,enemy),enemy,getPl(list3,enemy3),true,true);
+            w3.basicMode(getPl(list1,enemy),enemy.getColor(),getPl(list3,enemy3),true,true);
             fail();
         }
         catch (IllegalArgumentException e)
@@ -524,7 +524,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy,true,true);
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy.getColor(),true,true);
             fail();
         }
         catch (IllegalArgumentException e)
@@ -534,7 +534,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy2,true,true);
+            w3.basicMode(getPl(list1,enemy),getPl(list2,enemy2),enemy2.getColor(),true,true);
             fail();
         }
         catch (IllegalArgumentException e)
@@ -655,18 +655,18 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod1[1],true);
         assertEquals(avaiableMethod1[2],true);
 
-        List<Player> list1 = w6.checkBasicMode();
-        List<Player> list2 = w6.checkFocusShotcMode();
-        List<Player> list3 = w6.checkTurretTripodeMode();
-        assertTrue(list1.contains(enemy));
-        assertTrue(list2.contains(enemy));
-        assertTrue(list3.contains(enemy));
-        assertTrue(list1.contains(enemy2));
-        assertTrue(list2.contains(enemy2));
-        assertTrue(list3.contains(enemy2));
-        assertTrue(list1.contains(enemy3));
-        assertTrue(list2.contains(enemy3));
-        assertTrue(list3.contains(enemy3));
+        List<ColorId> list1 = w6.checkBasicMode();
+        List<ColorId> list2 = w6.checkFocusShotcMode();
+        List<ColorId> list3 = w6.checkTurretTripodeMode();
+        assertTrue(list1.contains(enemy.getColor()));
+        assertTrue(list2.contains(enemy.getColor()));
+        assertTrue(list3.contains(enemy.getColor()));
+        assertTrue(list1.contains(enemy2.getColor()));
+        assertTrue(list2.contains(enemy2.getColor()));
+        assertTrue(list3.contains(enemy2.getColor()));
+        assertTrue(list1.contains(enemy3.getColor()));
+        assertTrue(list2.contains(enemy3.getColor()));
+        assertTrue(list3.contains(enemy3.getColor()));
 
 
 
@@ -690,9 +690,9 @@ public class TestBlueWeapons {
         assertEquals(avaiableMethod2[2],false);
        list3 = w6.checkBasicMode();
 
-        assertTrue(list3.contains(enemy));
-        assertTrue(list3.contains(enemy2));
-        assertTrue(list3.contains(enemy3));
+        assertTrue(list3.contains(enemy.getColor()));
+        assertTrue(list3.contains(enemy2.getColor()));
+        assertTrue(list3.contains(enemy3.getColor()));
 
 
         try
@@ -773,6 +773,7 @@ public class TestBlueWeapons {
     @Test
     public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
         String[] orderEffect = new String[3];
+
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
@@ -807,7 +808,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w5.basicMode(enemy,orderEffect,1,1);
+            w5.basicMode(enemy.getColor(),orderEffect,1,1);
             fail();
         }
         catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
@@ -819,7 +820,7 @@ public class TestBlueWeapons {
         w5.setPlayer(test);
         try
         {
-            w5.basicMode(enemy,orderEffect,1,1);
+            w5.basicMode(enemy.getColor(),orderEffect,1,1);
             fail();
         }
         catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
@@ -838,8 +839,8 @@ public class TestBlueWeapons {
 
 
         List<String> reachableSquare = new LinkedList<>();
-        List<Player> reachableBasicPlayer = new LinkedList<>();
-        List<Player> reachableBeforeMovePlayer = new LinkedList<>();
+        List<ColorId> reachableBasicPlayer = new LinkedList<>();
+        List<ColorId> reachableBeforeMovePlayer = new LinkedList<>();
 
       try
       {
@@ -855,7 +856,7 @@ public class TestBlueWeapons {
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
 
         try {
-            w5.basicMode(enemy,orderEffect,1,2);
+            w5.basicMode(enemy.getColor(),orderEffect,1,2);
             fail();
         } catch (IllegalStateException | IllegalAccessException e) {
             System.out.println(e);
@@ -876,7 +877,7 @@ public class TestBlueWeapons {
         reachableSquare= w5.checkPhaseGlide();
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
 
-        assertFalse(reachableBasicPlayer.contains(enemy3));
+        assertFalse(reachableBasicPlayer.contains(enemy3.getColor()));
         w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
 
         assertFalse(w5.isLoaded());
@@ -901,7 +902,7 @@ public class TestBlueWeapons {
         reachableSquare= w5.checkPhaseGlide();
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
         assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
-        assertTrue(reachableBeforeMovePlayer.contains(enemy));
+        assertTrue(reachableBeforeMovePlayer.contains(enemy.getColor()));
 
 
         w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
@@ -928,9 +929,9 @@ public class TestBlueWeapons {
         reachableBasicPlayer = w5.checkBasicMode();
         reachableSquare= w5.checkSquareBeforeMove();
         reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
-        assertFalse(reachableBasicPlayer.contains(enemy));
+        assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
         assertTrue(reachableSquare.contains(g1.getArena().getSquare(2,2).toStringCoordinates()));
-        assertTrue(reachableBeforeMovePlayer.contains(enemy));
+        assertTrue(reachableBeforeMovePlayer.contains(enemy.getColor()));
 
 
         w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
@@ -1050,14 +1051,14 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         assertEquals(avaiableMethod1[0],true);
 
 
-        List<Player> list1 = w2.checkBasicMode();
-        List<Player> list2 = w2.checkPunisherMode();
-        List<String> list3 = w2.checkMoveBasicMode(enemy2);
+        List<ColorId> list1 = w2.checkBasicMode();
+        List<ColorId> list2 = w2.checkPunisherMode();
+        List<String> list3 = w2.checkMoveBasicMode(enemy2.getColor());
 
-        assertTrue(list1.contains(enemy2));
-        assertTrue(list2.contains(enemy3));
+        assertTrue(list1.contains(enemy2.getColor()));
+        assertTrue(list2.contains(enemy3.getColor()));
 
-
+        assertEquals(enemy2.getNumberOfDamagePoint(),0);
         w2.basicMode(getPl(list1,enemy2),1,3);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
 
@@ -1079,4 +1080,3 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
     }
 }
-*/

@@ -130,16 +130,13 @@ public class TractorBeam extends WeaponCard
      * It uses the basic mode of the lock rifle
      * @param colorPlayer player affected by weapon
      */
-    public void basicMode(ColorId colorPlayer, String coordinates) throws IllegalStateException
+    public void basicMode(ColorId colorPlayer, int x, int y) throws IllegalStateException
     {
-        int x;
-        int y;
-        x =MethodsWeapons.getXFromString(coordinates);
-        y =MethodsWeapons.getYFromString(coordinates);
+
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
         moveTarget(player,x,y);//Move the target
         this.isLoaded = false;
     }

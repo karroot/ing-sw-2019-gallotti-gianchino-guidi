@@ -69,16 +69,16 @@ public class PlasmaGun extends WeaponCard
      * @return all player that can be affected with the lock rifle in basic mode
      * @throws IllegalStateException
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<Player> playerList = new LinkedList<>();
+        List<ColorId> playerList = new LinkedList<>();
         for ( Player p :  player.playerThatSee(player.getSquare().getGameBoard()))
         {
             if(!p.equals(player))
-                playerList.add(p);
+                playerList.add(p.getColor());
         }
 
 
@@ -94,11 +94,9 @@ public class PlasmaGun extends WeaponCard
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      */
-    public void basicMode(ColorId colorPlayer,String[] orderEffect,String coordinates) throws IllegalStateException, IllegalArgumentException, IllegalAccessException {
-        int x;
-        int y;
-       x =MethodsWeapons.getXFromString(coordinates);
-        y =MethodsWeapons.getYFromString(coordinates);
+    public void basicMode(ColorId colorPlayer,String[] orderEffect,int x,int y) throws IllegalStateException, IllegalArgumentException, IllegalAccessException {
+
+
         int i = 0;
         boolean[] booleans = checkAvaliableMode();
         if (!checkAvaliableMode()[2])
