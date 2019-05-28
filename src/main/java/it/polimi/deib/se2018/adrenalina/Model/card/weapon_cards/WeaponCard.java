@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 /**
  * This class implements a weapon.
@@ -76,5 +77,7 @@ public abstract class WeaponCard extends Card {
     {
         this.name = name;
     }
+
+    public abstract void useWeapon (ResponseInput responseMessage);
 
 }
