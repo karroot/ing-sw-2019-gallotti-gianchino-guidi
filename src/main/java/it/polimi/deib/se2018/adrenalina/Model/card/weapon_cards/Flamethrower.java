@@ -7,6 +7,14 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import java.lang.reflect.Array;
 import java.util.*;
 
+
+
+
+/**
+ * @author giovanni
+ */
+
+
 public class Flamethrower extends WeaponCard
 {
     private boolean[] avaiableMethod = new boolean[2];
@@ -60,6 +68,12 @@ public HashMap<CardinalDirection, List<Player>> checkBasicMode() throws IllegalS
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         HashMap<CardinalDirection, List<Player>> hashMapReturn = new HashMap<>();
+
+        //NB POSSO SCEGLIERE SOLO 1 PLAYER IN OGNI SQUARE!!!!!
+
+
+        //todo controllo
+
 
         List<Player> playerList;
         List<Player> playersN = new ArrayList<>();
@@ -127,6 +141,7 @@ public HashMap<CardinalDirection, List<Player>> checkBasicMode() throws IllegalS
         doDamage(playerTarget1,1);//Do one damage
         if (playerTarget2 != null)
             doDamage(playerTarget2, 1);
+
 
 
 

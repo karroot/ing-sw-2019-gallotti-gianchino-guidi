@@ -7,6 +7,13 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+
+/**
+ * @author giovanni
+ */
+
 
 public class RocketLauncher extends WeaponCard
 {
@@ -32,6 +39,7 @@ public class RocketLauncher extends WeaponCard
     //Notes: If you use the rocket jump before the basic effect, you consider only your new square when determining if a target is legal.
     // You can even move off a square so you can shoot someone on it.
     // If you use the fragmenting warhead, you deal damage to everyone on the target's square before you move the target – your target will take 3 damage total.
+
 
     public boolean[] checkAvaliableMode() throws IllegalStateException
     {
@@ -68,21 +76,31 @@ public class RocketLauncher extends WeaponCard
 
     }
 
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         Set<Player> playersTarget = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
+        List<ColorId> colorIdList = new ArrayList<>();
 
         playersTarget.remove(player);
 
-        return new ArrayList<>(playersTarget);//Returns all targets
+        for (Player playerIterate : playersTarget)
+            colorIdList.add(playerIterate.getColor());
+
+        return colorIdList;//Returns all targets
     }
 
-    public void basicMode (Player playerTarget , String[] orderEffect, int xplayer,int yplayer, int xtarget,int ytarget ) throws IllegalStateException {
+    public void basicMode (ColorId colorPlayerTarget , String[] orderEffect, String squareCoordinatesAsStringPlayertoMove, String squareCoordinatesAsStringTargetToMove) throws IllegalStateException {
         if (!checkAvaliableMode()[0]) //check mode
             throw new IllegalStateException("Modalità xxx dell'arma: " + name + " non eseguibile");
+
+        int xplayer = MethodsWeapons.getXFromString(squareCoordinatesAsStringPlayertoMove);
+        int yplayer = MethodsWeapons.getYFromString(squareCoordinatesAsStringPlayertoMove);
+        int xtarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
+        int ytarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
+
 
         int i = 0;
         boolean[] booleans = checkAvaliableMode();
@@ -92,14 +110,14 @@ public class RocketLauncher extends WeaponCard
             if (orderEffect[i].equals("basic"))
             {
                 if (!checkAvaliableMode()[0])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+                    throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
-                doDamage(playerTarget, 1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
                 rememberToMoveTarget = true;
             }
             if (orderEffect[i].equals("with rocket jump:") && booleans[1]) {
                 if (!checkAvaliableMode()[2])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+                    throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
                 moveTarget(this.player, xplayer, yplayer);
                 player.setAmmoBlue(this.player.getAmmoBlue() - 1);
@@ -108,7 +126,7 @@ public class RocketLauncher extends WeaponCard
             {
                 if (!checkAvaliableMode()[1])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-                for (Player playerIterate : playerTarget.getSquare().getPlayerList())
+                for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
                 {
                     doDamage(playerIterate,1);
                 }
@@ -117,30 +135,39 @@ public class RocketLauncher extends WeaponCard
             i++;
 
             if (rememberToMoveTarget)
-                moveTarget(playerTarget, xtarget, ytarget);
+                moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0), xtarget, ytarget);
         }
 
         this.isLoaded = false;
     }
 
 
-    public Set<Player> checkWithRocketJump ()
+    public List<ColorId> checkWithRocketJump ()
     {
-        return checkPhaseGlide();
+        Set<Player> playerSet = checkPhaseGlide();
+        List<ColorId> colorIdList = new ArrayList<>();
+        for (Player playerIterate : playerSet)
+            colorIdList.add(playerIterate.getColor());
+
+        return colorIdList;
     }
 
 
-    public List<Player> checkWithFragmentingWarhead ()
+    public List<ColorId> checkWithFragmentingWarhead ()
     {
-        List<Player> playersTargetList = new ArrayList<>();
+        List<Player> playersTargetList;
+        List<ColorId> colorIdList = new ArrayList<>();
         playersTargetList = player.getSquare().getPlayerList();
         playersTargetList.remove(player);
 
-        return playersTargetList;
+        for (Player playerIterate : playersTargetList)
+            colorIdList.add(playerIterate.getColor());
+
+        return colorIdList;
     }
 
 
-    public Set<Player> checkPhaseGlide() throws IllegalStateException
+    private Set<Player> checkPhaseGlide() throws IllegalStateException
     {
         Set<Player> playerReachable = new HashSet<>();
         if (!checkAvaliableMode()[2]) //check mode

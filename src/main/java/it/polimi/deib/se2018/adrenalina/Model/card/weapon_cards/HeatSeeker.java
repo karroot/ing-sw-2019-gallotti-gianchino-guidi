@@ -1,13 +1,19 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+
+/**
+ * @author giovanni
+ */
 
 
 public class HeatSeeker extends WeaponCard
@@ -39,18 +45,14 @@ public class HeatSeeker extends WeaponCard
      * @return array of booleans of size 2. The first boolean represents the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong to any player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
-    {
+    public boolean[] checkAvaliableMode() throws IllegalStateException {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
         avaiableMethod[0] = false; //I suppose that the modes can't be used
 
-        List<Player> playerList = player.getSquare().getGameBoard().getAllPlayer();
-        playerList.removeAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
-
-        if (isLoaded() && !playerList.isEmpty() )//If the first mode can be used
+        if (isLoaded() && !checkPlayers().isEmpty() )//If the first mode can be used
             avaiableMethod[0] = true;
 
         return avaiableMethod;
@@ -65,31 +67,45 @@ public class HeatSeeker extends WeaponCard
      * @return
      * @throws IllegalStateException
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-
-        List<Player> playerList = player.getSquare().getGameBoard().getAllPlayer();
-        playerList.removeAll(player.playerThatSee(player.getSquare().getGameBoard()));
-
-        return playerList;//Returns all targets
+        return checkPlayers();//Returns all targets
     }
 
     /**
      *
-     * @param player
+     * @param
      * @throws SquareNotInGameBoard
      * @throws IllegalStateException
      */
-    public void basicMode(Player player) throws SquareNotInGameBoard,IllegalStateException
+    public void basicMode(ColorId colorPlayer) throws SquareNotInGameBoard,IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-
-        doDamage(player,3);
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
 
         this.isLoaded = false;
+    }
+
+
+
+    private List<ColorId> checkPlayers ()
+    {
+        List<ColorId> colorIdList = new ArrayList<>();
+
+        List<Player> playerList = player.getSquare().getGameBoard().getAllPlayer();
+        playerList.remove(player);
+
+        Set<Player> playerSet = player.playerThatSee(player.getSquare().getGameBoard());
+
+        playerSet.remove(player);
+        playerList.removeAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        if (!playerList.isEmpty())
+        {
+            for (Player playerIterate : playerList)
+                colorIdList.add(playerIterate.getColor());
+        }
+
+        return colorIdList;
+
     }
 
 

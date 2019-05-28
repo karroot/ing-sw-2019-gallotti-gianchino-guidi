@@ -1,12 +1,18 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+
+/**
+ * @author giovanni
+ */
 
 
 public class Hellion extends WeaponCard
@@ -46,9 +52,8 @@ public class Hellion extends WeaponCard
             for (Player playerIterate : playerSet)
             {
                 if (playerIterate.getSquare() == player.getSquare()) //check is there is a player i
-                {
                    playerSet.remove(playerIterate);
-                }
+
             }
 
             if (!playerSet.isEmpty())
@@ -57,9 +62,8 @@ public class Hellion extends WeaponCard
         }
 
 
-        if (isLoaded() && player.getAmmoRed() > 0)
+        if (isLoaded() && player.getAmmoRed() > 0 && avaiableMethod[0])
         {
-            if (avaiableMethod[0])
                 avaiableMethod[1] = true;
         }
 
@@ -73,54 +77,101 @@ public class Hellion extends WeaponCard
      * @return all player that can be affected with the weapon in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    private HashMap<Square, ArrayList<Player>> checkBasicModeFull() throws IllegalStateException
     {
+
+
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
-        Set<Player> playersTarget = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
 
-        for (Player playerIterate : playersTarget)
+
+        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
+
+        Set<Square> squareList;
+        squareList = MethodsWeapons.squareThatSee(player);
+        squareList.remove(player.getSquare());
+
+        for (Square squareIterate : squareList)
         {
-            if (playerIterate.getSquare() == player.getSquare()) //check is there is a player i
-            {
-                playersTarget.remove(playerIterate);
-            }
+            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
         }
 
-        return new ArrayList<>(playersTarget);//Returns all targets
+        return hashSquarePlayer;
+
     }
 
-    public void basicMode(Player player) throws IllegalStateException
+    public List<String> checkBasicModeSquares () throws IllegalStateException
+    {
+        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
+
+        List<String> squareListCoordinatesAsString = new ArrayList<>();
+
+        for (Square squareIterate : squarePlayersHashMap.keySet())
+            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+
+        return squareListCoordinatesAsString;
+
+    }
+
+    public List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString) throws IllegalStateException
+    {
+        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
+        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
+
+        Square square = null;
+        List<ColorId> colorIdList = new ArrayList<>();
+
+        try {
+            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
+        } catch (SquareNotInGameBoard squareNotInGameBoard) {
+            squareNotInGameBoard.printStackTrace();
+        }
+
+        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
+
+        for (Player playerIterate : squarePlayersHashMap.get(square))
+            colorIdList.add(playerIterate.getColor());
+
+        return colorIdList;
+
+    }
+
+    public void basicMode(ColorId colorPlayer) throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])//check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        doDamage(player,1);//Do one damage
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
-        for (Player playerIterate : player.getSquare().getPlayerList())
+        for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
         {
-            markTarget(playerIterate,1);//Do two marks
+            markTarget(playerIterate,1);
         }
 
         isLoaded = false;
     }
 
-    public List<Player> checkNanoTracerMode () throws IllegalStateException
+    public List<String> checkNanoTracerModeSquare () throws IllegalStateException
     {
-        return checkBasicMode();
+        return checkBasicModeSquares();
     }
 
-    public void nanoTracerMode(Player player) throws IllegalStateException
+    public List<ColorId>  checkNanoTracerModePlayer (String squareTargetCoordinatesAsString) throws IllegalStateException
+    {
+        return checkBasicModePlayers(squareTargetCoordinatesAsString);
+    }
+
+    public void nanoTracerMode(ColorId colorPlayer) throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])//check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
-        doDamage(player,1);//Do one damage
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
-        for (Player playerIterate : player.getSquare().getPlayerList())
+        for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
         {
-            markTarget(playerIterate,2);//Do two marks
+            markTarget(playerIterate,2);
         }
 
         player.setAmmoRed(player.getAmmoRed()-1);

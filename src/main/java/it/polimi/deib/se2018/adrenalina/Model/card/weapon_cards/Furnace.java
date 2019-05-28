@@ -1,14 +1,18 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.Model.Room;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+
+/**
+ * @author giovanni
+ */
 
 public class Furnace extends WeaponCard
 {
@@ -61,25 +65,32 @@ public class Furnace extends WeaponCard
 
 
 
-    public HashMap<Room, ArrayList<Player>> checkBasicMode ()
+    public List<ColorRoom> checkBasicMode ()
     {
         HashMap<Room, ArrayList<Player>> hashRoomPlayer = new HashMap<Room, ArrayList<Player>>();
+        List<ColorRoom> colorRoomList = new ArrayList<>();
 
         List<Room> roomList = new ArrayList<>();
 
         roomList = MethodsWeapons.roomsThatIsee(player);
         roomList.remove(player.getSquare().getRoom()); //controllo che non sia la mia
         for (Room roomIterate : roomList) {
-            hashRoomPlayer.put(roomIterate, (ArrayList) roomIterate.getPlayerRoomList());
+            if (!roomIterate.getPlayerRoomList().isEmpty())
+                hashRoomPlayer.put(roomIterate, (ArrayList) roomIterate.getPlayerRoomList());
         }
 
-        return hashRoomPlayer;
+        for (Room roomIterate : hashRoomPlayer.keySet())
+            colorRoomList.add(roomIterate.getColor());
+
+        return colorRoomList;
 
     }
 
 
-    public void basicMode (Room room)
+    public void basicMode (ColorRoom roomColor)
     {
+        Room room =  player.getSquare().getGameBoard().getRoomList().stream().filter(room1 -> room1.getColor().equals(roomColor)).collect(Collectors.toList()).get(0);
+
         for (Player playerIterate : room.getPlayerRoomList())
         {
             doDamage(playerIterate, 1);
@@ -92,42 +103,57 @@ public class Furnace extends WeaponCard
 
     //stesso discorso: square o players?
 
-    public HashMap<Square, ArrayList<Player>> checkInCozyFireMode ()
-    {
-        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
+    //ritorno lista square coordinate come stringa
 
-        List<Square> squareList = new ArrayList<>();
-        squareList = (List) player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
-        squareList.remove(player.getSquare());
+    public List<String> checkInCozyFireMode () {
 
-        for (Square squareIterate : squareList)
-        {
-            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
-        }
+    HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
 
-        return hashSquarePlayer;
+    List<String> squareListCoordinatesAsString = new ArrayList<>();
+
+    Set<Square> squareList;
+    squareList = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
+    squareList.remove(player.getSquare());
+
+    for (Square squareIterate : squareList) {
+        hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
+    }
+
+    for (Square squareIterate : squareList)
+        squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+
+
+    return squareListCoordinatesAsString;
 
     }
 
 
-    public void inCozyFireMode (Square square)
+    public void inCozyFireMode (String squareTargetCoordinatesAsString)
     {
-        List<Square> squareList = new ArrayList<>();
-        squareList = (List) player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
-        squareList.remove(player.getSquare());
+        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
+        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
 
-       for (Square squareIterate : squareList)
-       {
-           for (Player playerIterate : squareIterate.getPlayerList())
+        Square square = null;
+
+        try {
+            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
+        } catch (SquareNotInGameBoard squareNotInGameBoard) {
+            squareNotInGameBoard.printStackTrace();
+        }
+
+        for (Player playerIterate : square.getPlayerList())
            {
                doDamage(playerIterate, 1);
                markTarget(playerIterate, 1);
            }
 
            isLoaded = false;
-       }
-
     }
+
+
+
+
+
 
 
 
