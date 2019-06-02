@@ -7,6 +7,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.UpdateModel;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.channels.ClosedChannelException;
@@ -17,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+import static java.lang.Thread.interrupted;
 import static java.lang.Thread.sleep;
 
 /**
@@ -98,7 +100,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
                 .filter(connection -> connection.getPlayer().equals(player))
                 .collect(Collectors.toList()).get(0);
 
-        controller.update((ResponseInput) correctConnection.receive());//Wait the message that will arrive
+        notify((ResponseInput) correctConnection.receive());//Wait the message that will arrive
     }
 
     /**
@@ -123,6 +125,8 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
             }
         }
+
+        lastModelUpdated = message;
     }
 
     /**
@@ -237,6 +241,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     //Thi method handles the state of the server in virtual view after it was created
     protected synchronized void checkState()
     {
+        //The state will change if the match is started
         boolean AllPlayerAreActive = connections
                                         .stream()
                                         .filter(connection -> !connection.isActive())
@@ -249,6 +254,9 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     }
 }
 
+/**
+ * This class implements an acceptor and a builder of connection Socket
+ */
 class AcceptorSocket implements Runnable
 {
     private ServerSocket serverSocket;
@@ -281,6 +289,9 @@ class AcceptorSocket implements Runnable
 
 }
 
+/**
+ * This class implements an acceptor and a builder of connection RMI
+ */
 class AcceptorRMI implements Runnable
 {
     private ServerSocket serverSocket;
@@ -300,7 +311,11 @@ class AcceptorRMI implements Runnable
         {
             try {
                 Socket newSocket = serverSocket.accept();
-                InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup("rmi://" +newSocket.getInetAddress() +"/networkH");
+                ObjectInputStream stream = new ObjectInputStream(newSocket.getInputStream());
+                int portNumber = Integer.parseInt((String) stream.readObject()); //The client send a string that contain the number of port of the ServerRMI
+
+                String lookupName = "//" + newSocket.getInetAddress() + ":" + portNumber + "//networkH";
+                InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup(lookupName);
                 ConnectionRMI connection = new ConnectionRMI(view,client);
                 newSocket.close();
                 view.insertConnection(connection);
@@ -311,6 +326,11 @@ class AcceptorRMI implements Runnable
     }
 }
 
+/**
+ * This class implements a timer
+ * This timer being used by virtual view like countdown before that the match starts
+ * The timer starts if there are three players connected
+ */
 class Timer implements Runnable
 {
     private long timer;//Represent the seconds of duration of the timer

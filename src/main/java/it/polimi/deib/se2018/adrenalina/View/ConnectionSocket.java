@@ -5,8 +5,7 @@ import java.net.Socket;
 import java.util.concurrent.*;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseCredentials;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 /**
  * @author Cysko7927
@@ -40,9 +39,9 @@ public class ConnectionSocket extends Connection implements Runnable
 
     //Ask at client the name and the color of the user that will use during the match and save them
     @Override
-    protected void askCredentials() throws IOException,ClassNotFoundException
+    protected void askCredentials() throws Exception
     {
-        out.writeObject("Credentials?");//Send the request
+        out.writeObject(new AskCredentials());//Send the request
         ResponseCredentials credentials = (ResponseCredentials) in.readObject();//Receive the response
 
         name = credentials.getName();//Save the information
@@ -74,11 +73,10 @@ public class ConnectionSocket extends Connection implements Runnable
     /**
      * Send a message through the socket at client
      * @param message message to send
-     * @throws IOException if there were problems with the sending
-     * @throws IllegalStateException if the socket is not active
+     * @throws Exception if the socket is not active or if there were problems of reading in the buffer TCP
      */
     @Override
-    public void send(MessageNet message) throws IOException,IllegalStateException
+    public void send(MessageNet message) throws Exception
     {
         if (!active)
             throw new IllegalStateException("Connessione non attiva impossibile inviare il messaggio");
@@ -92,12 +90,10 @@ public class ConnectionSocket extends Connection implements Runnable
      * It waits that a message arrives in the socket and after it returns it
      * This method suspend the caller until the message doesn't arrive
      * @return message that is arrived
-     * @throws ClassNotFoundException if there were problems of reading in the buffer TCP
-     * @throws IOException if there were problems of reading in the buffer TCP
-     * @throws IllegalStateException if the socket is not active
+     * @throws Exception if the socket is not active or if there were problems of reading in the buffer TCP
      */
     @Override
-    public  MessageNet receive() throws ClassNotFoundException,IOException
+    public  MessageNet receive() throws Exception
     {
         if (!active)
             throw new IllegalStateException("Connessione non attiva impossibile inviare il messaggio");
@@ -126,16 +122,14 @@ public class ConnectionSocket extends Connection implements Runnable
     /**
      * Does a test Ping-Pong between the server with this connection and the client
      * @return true if the test has been successful else false
-     * @throws Exception if there were problems with the connections or receiving message
      */
     @Override
     public boolean pingPongTest()
     {
-        String ping = "ping";
         Object response;
         try
         {
-            out.writeObject(ping);
+            out.writeObject(new Ping());
             out.flush();
             response = in.readObject(); //If receive the pong return 1
         }
@@ -148,7 +142,7 @@ public class ConnectionSocket extends Connection implements Runnable
         }
 
 
-        if (response.equals("pong"))
+        if (response instanceof Pong)
             return true;
 
         active = false;

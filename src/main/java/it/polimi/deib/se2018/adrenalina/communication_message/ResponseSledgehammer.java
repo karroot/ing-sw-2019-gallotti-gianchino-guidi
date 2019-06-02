@@ -8,8 +8,8 @@ public class ResponseSledgehammer extends ResponseInput
 {
     private ColorId target;//Target chosen for the basic mode or the alternative mode
     boolean move;//Indicates if the user has chosen to move the target
-    int x; //Coordinates of the squares where the target will move
-    int y;
+    int x = 0; //Coordinates of the squares where the target will move
+    int y = 0;
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**

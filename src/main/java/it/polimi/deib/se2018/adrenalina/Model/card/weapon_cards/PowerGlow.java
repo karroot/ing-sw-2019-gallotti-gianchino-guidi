@@ -4,6 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShotgun;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -180,6 +183,21 @@ public class PowerGlow extends WeaponCard
         player.setAmmoBlue(player.getAmmoBlue() - 1); //Use the ammo necessary
 
         isLoaded = false;//The weapon is not loaded now
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        ResponsePowerGlove msg = (ResponsePowerGlove) responseMessage;
+
+        if (msg.isMode())
+        {
+            List<Player> targets = MethodsWeapons.ColorToPlayer(msg.getTargetsAlternativeMode(),player.getSquare().getGameBoard());
+            inRocketFistMode(targets.get(0),targets.get(1));
+        }
+        else
+            basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetBasicMode(),player.getSquare().getGameBoard()));
+
     }
 }
 

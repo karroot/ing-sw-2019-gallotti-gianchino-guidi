@@ -5,9 +5,8 @@ import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBo
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -36,6 +35,10 @@ public class NewtonTest {
         playerTargetted.getSquare().addPlayer(playerTargetted);
         playerTargetted.getSquare().getRoom().updatePlayerRoomList();
 
+        board.setAllPlayer(player);
+        board.setAllPlayer(playerTargetted);
+
+        upCard.setPlayer(player);
         destinationTeleport = board.getArena().getSquare(3,3);
     }
 
@@ -51,9 +54,11 @@ public class NewtonTest {
 
         Newton c = (Newton) upCard;
 
-        Set<Square> squares = c.checkMoveTarget(playerTargetted, board);
+        Map<ColorId, List<String>> out = c.checkMoveTarget(board);
 
-        assertTrue(squares.containsAll(effout) && squares.size() == effout.size());
+        System.out.println(out);
+
+        assertTrue(out.get(ColorId.YELLOW).containsAll(effout.stream().map(Square::toStringCoordinates).collect(Collectors.toSet())) && out.get(ColorId.YELLOW).size() == effout.size());
     }
 
     @Test
@@ -72,9 +77,11 @@ public class NewtonTest {
 
         Newton c = (Newton) upCard;
 
-        Set<Square> squares = c.checkMoveTarget(playerTargetted, board);
+        Map<ColorId, List<String>> out = c.checkMoveTarget(board);
 
-        assertTrue(squares.containsAll(effout) && squares.size() == effout.size());
+        System.out.println(out);
+
+        assertTrue(out.get(ColorId.YELLOW).containsAll(effout.stream().map(Square::toStringCoordinates).collect(Collectors.toSet())) && out.get(ColorId.YELLOW).size() == effout.size());
     }
 
     @Test

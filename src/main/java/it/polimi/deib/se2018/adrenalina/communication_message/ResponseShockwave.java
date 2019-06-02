@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ResponseShockwave extends ResponseInput
 {
-    private List<ColorId> targetsBasicMode = new LinkedList<>();//Target chosen for the basic mode
+    private List<ColorId> targetsBasicMode = null;//Target chosen for the basic mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**

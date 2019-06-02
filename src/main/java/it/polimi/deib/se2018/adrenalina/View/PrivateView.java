@@ -1,12 +1,16 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.UpdateModel;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class PrivateView extends UnicastRemoteObject implements PrivateViewInterface
+public class PrivateView extends Observable<ResponseInput> implements Observer<RequestInput>
 {
 
     public PrivateView() throws RemoteException
@@ -31,7 +35,7 @@ public class PrivateView extends UnicastRemoteObject implements PrivateViewInter
 
     }
 
-    public void startRound( Player playofround)
+    public void startRound()
     {
 
     }
@@ -90,5 +94,28 @@ public class PrivateView extends UnicastRemoteObject implements PrivateViewInter
     {
 
     }
+
+    /**
+     * Thi method being called by Network Handler to ask at view to update its copy of the model to show
+     * at the user
+     * @param message message that contains the copy immutable of the model that arrives from server
+     */
+    public void updateModelCopy(UpdateModel message)
+    {
+
+    }
+
+    /**
+     * This method being used to ask some inputs to user
+     * The inputs depends by type of message of the request input that arrives from Server
+     * @param message message that will use to ask the inputs at the user
+     * @throws Exception
+     */
+    @Override
+    public void update(RequestInput message) throws Exception
+    {
+
+    }
+
 
 }

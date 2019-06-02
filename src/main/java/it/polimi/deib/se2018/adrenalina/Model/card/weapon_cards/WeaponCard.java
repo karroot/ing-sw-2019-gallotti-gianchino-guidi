@@ -11,7 +11,8 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
  * @author giovanni
  */
 
-public abstract class WeaponCard extends Card {
+public abstract class WeaponCard extends Card
+{
 
     protected String name;
 
@@ -78,6 +79,12 @@ public abstract class WeaponCard extends Card {
         this.name = name;
     }
 
+    /**
+     * This method takes a response message specified for a weapon and it reads the inputs and after
+     * it uses it to use this weapon during the match
+     * The response message travels from client to Server and the controller give it to the CardWeapon
+     * @param responseMessage response message specified for the weapon
+     */
     public abstract void useWeapon (ResponseInput responseMessage);
 
 }

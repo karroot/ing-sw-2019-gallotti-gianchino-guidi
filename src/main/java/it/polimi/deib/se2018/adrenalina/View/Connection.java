@@ -23,10 +23,10 @@ public abstract class Connection implements Runnable
 
 
     //Ask at client the name and the color of the user that will use during the match and save them
-    protected abstract void askCredentials() throws IOException,ClassNotFoundException;
+    protected abstract void askCredentials() throws Exception;
 
-    public abstract void send(MessageNet message) throws IOException,IllegalStateException;
-    public abstract MessageNet receive() throws ClassNotFoundException,IOException;
+    public abstract void send(MessageNet message) throws Exception;
+    public abstract MessageNet receive() throws Exception;
     public abstract void closeConnection();
     public abstract boolean pingPongTest();
 
@@ -71,7 +71,7 @@ public abstract class Connection implements Runnable
         {
             askCredentials();//Ask at client the name and the color of the user that will use during the match
         }
-        catch (IOException | ClassNotFoundException e) //If there are problems
+        catch (Exception e) //If there are problems
         {
             System.out.println(e.getMessage());//Player isn't active
             active = false;

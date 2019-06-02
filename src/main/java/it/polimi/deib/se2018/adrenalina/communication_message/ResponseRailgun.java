@@ -8,7 +8,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 public class ResponseRailgun extends ResponseInput
 {
     private ColorId target1;//Target chosen for the basic mode and also for the alternative mode in other cases
-    private ColorId target2;//Targets chosen for the alternative mode
+    private ColorId target2 = null;//Targets chosen for the alternative mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**

@@ -281,6 +281,48 @@ public class MethodsWeapons {
     {
          return Integer.parseInt(stringOfCoordinates.substring(11));
     }
+
+    /**
+     * This method does the conversion from ColorId to Player
+     * It searches in the list of players of the board and returns the
+     * player with that colorId
+     * @param colorId color of the player to search
+     * @param board GameBoard where is the list of all players
+     * @return reference at the player wanted
+     * @throws NullPointerException if colorId or board are null
+     */
+    public static Player ColorToPlayer(ColorId colorId,GameBoard board)
+    {
+        if (colorId == null || board == null)
+            throw new NullPointerException("Parametri con valore nullo");
+        return board
+            .getAllPlayer()
+            .stream()
+            .filter(p -> p.getColor().equals(colorId))
+            .collect(Collectors.toList())
+            .get(0);
+    }
+
+    /**
+     * This method does the conversion from a list of ColorId to list of Player
+     * It searches in the list of players of the board and returns the
+     * player with that colorId
+     * @param colorId list of color of all player to search
+     * @param board GameBoard where is the list of all players
+     * @return reference at the player wanted
+     * @throws NullPointerException if colorId or board are null
+     */
+    public static List<Player> ColorToPlayer(List<ColorId> colorId,GameBoard board)
+    {
+        if (colorId == null || board == null)
+            throw new NullPointerException("Parametri con valore nullo");
+
+        return board
+                .getAllPlayer()
+                .stream()
+                .filter(p -> colorId.contains(p.getColor()))
+                .collect(Collectors.toList());
+    }
 }
 
 

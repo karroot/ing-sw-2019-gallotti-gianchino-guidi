@@ -4,6 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseSledgehammer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,5 +132,15 @@ public class Sledgehammer extends WeaponCard
         isLoaded = false;
     }
 
+    @Override
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        ResponseSledgehammer msg = (ResponseSledgehammer) responseMessage;
 
+        if (msg.isMode())
+            inPulverizeMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()),
+                    msg.getX(),msg.getY());
+        else
+            basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()));
+    }
 }

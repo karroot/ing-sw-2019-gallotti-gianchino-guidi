@@ -25,6 +25,15 @@ public class Graph
     }
 
     /**
+     * Return all the squares that are the nodes of the graph
+     * @return Set of all squares
+     */
+    public Set<Square> getAllSquares()
+    {
+        return new HashSet<>(adjacencyList.keySet());
+    }
+
+    /**
      *It initializes an empty graph
      */
     public Graph()

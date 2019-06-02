@@ -36,7 +36,8 @@ class Track
 public class GameBoard {
 
 
-    private List<Player> AllPlayer= new LinkedList<>(); //list of all player
+    private List<Player> AllPlayer; //list of all player
+
     private Stack<WeaponCard> weaponCardStack;
 
     private Stack<AmmoTiles> ammoTilesStack;
@@ -69,6 +70,7 @@ public class GameBoard {
         this.skullCounter=skullCounter;
         this.ammoTilesStack=ammoTilesStack;
         this.killShotTrack= new LinkedList<>();
+        this.AllPlayer = new LinkedList<>();
     }
 
 
@@ -87,8 +89,9 @@ public class GameBoard {
         return arena;
     }
 
-    public List<Player> getAllPlayer() {
-        return AllPlayer;
+    public List<Player> getAllPlayer()
+    {
+        return new LinkedList<>(AllPlayer);
     }
 
     /**

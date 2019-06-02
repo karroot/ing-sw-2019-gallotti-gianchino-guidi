@@ -4,6 +4,8 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseCyberblade;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +50,7 @@ public class Cyberblade extends WeaponCard
 
 
         if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//if the first mode can be used
-             avaiableMethod[0] = true;
+             avaiableMethod[0] = true; //If there are target at distance 1 then also the second effect can be used
         else
             return avaiableMethod;
 
@@ -81,11 +83,16 @@ public class Cyberblade extends WeaponCard
 
         for (Square t:squares) //For each squares
         {
-            if (!t.getPlayerList().isEmpty()) //If the square has some player
-            {
-                String coordinates = "x = "+t.getX()+",y = "+ t.getY();//Save the coordinates
+            List<Player> temp = t.getPlayerList();
 
-                result.putIfAbsent(coordinates,t.getPlayerList().stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
+            if (t.getPlayerList().contains(player))//if the player list contain the player that has the cyberblade
+                temp.remove(player);//Remove him
+
+            if (!temp.isEmpty()) //If the square has some player
+            {
+                String coordinates = "x = "+t.getX()+", y = "+ t.getY();//Save the coordinates
+
+                result.putIfAbsent(coordinates,temp.stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
             }
 
         }
@@ -96,6 +103,7 @@ public class Cyberblade extends WeaponCard
 
     /**
      * Return the list of all squares available for using the effect "with shadowstep" of this weapon
+     * this square are selectable by player
      * Only if this mode being used after the basic effect
      * @return all the square where the player can move
      * @exception IllegalStateException if the effect can't be used
@@ -143,7 +151,7 @@ public class Cyberblade extends WeaponCard
             if (orderEffect[i].equals("with slice and dice") && booleans[2])
             {
                 doDamage(player2,2);
-                this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
+                this.player.setAmmoRed(this.player.getAmmoRed() - 1);
             }
 
             i++;
@@ -151,5 +159,23 @@ public class Cyberblade extends WeaponCard
         }
 
         isLoaded = false; //Weapon now is out ammo
+    }
+
+
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        ResponseCyberblade msg = (ResponseCyberblade) responseMessage;
+        Player player = MethodsWeapons
+                .ColorToPlayer(msg.getTargetBasicEffect(),this.player.getSquare().getGameBoard());
+        Player player2;
+
+        if (msg.getTargetForSliceEffect() == null)
+            player2 = null;
+        else
+            player2 = MethodsWeapons
+                    .ColorToPlayer(msg.getTargetForSliceEffect(),this.player.getSquare().getGameBoard());
+
+
+        basicMode(player,msg.getOrderEffect(),player2,msg.getX(),msg.getY());
     }
 }

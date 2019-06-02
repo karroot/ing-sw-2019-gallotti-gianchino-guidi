@@ -4,6 +4,8 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShotgun;
 
 import java.util.*;
 
@@ -156,6 +158,23 @@ public class Shotgun extends WeaponCard
         isLoaded = false;
     }
 
+    @Override
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        ResponseShotgun msg = (ResponseShotgun) responseMessage;
 
-
+        if (msg.isMode())
+            inLongBarrelMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()));
+        else
+        {
+            try
+            {
+                basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()),msg.isMove(),msg.getX(),msg.getY());
+            }
+            catch (Exception e)
+            {
+                System.out.println("Impossibile usare l'arma:" + name);
+            }
+        }
+    }
 }

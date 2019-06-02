@@ -47,4 +47,21 @@ public abstract class PowerUpCard extends Card
     public int getIdPU() {
         return idPU;
     }
+
+    public String powerToString()
+    {
+        String type = "";
+
+        if (this instanceof Teleporter)
+            type = "Teleporter";
+        if (this instanceof Newton)
+            type = "Newton";
+        if (this instanceof TagbackGranade)
+            type = "TagbackGranade";
+        if (this instanceof TargettingScope)
+            type = "TargettingScope";
+
+
+        return color + ":" + type;
+    }
 }

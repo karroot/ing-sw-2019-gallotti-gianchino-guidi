@@ -3,6 +3,9 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseNewton;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseZX2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,5 +124,16 @@ public class ZX2 extends WeaponCard
         }
 
         isLoaded = false;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        ResponseZX2 msg = (ResponseZX2) responseMessage;
+
+        if (msg.isMode())
+            inScannerMode(MethodsWeapons.ColorToPlayer(msg.getTargetsAlternativeMode(),player.getSquare().getGameBoard()));
+        else
+            basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetBasicMode(),player.getSquare().getGameBoard()));
     }
 }

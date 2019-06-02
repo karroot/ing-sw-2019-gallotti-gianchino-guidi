@@ -131,8 +131,11 @@ public class RequestCyberblade extends RequestInput
      * @throws IllegalStateException if the method printAction wasn't called yet
      */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
-        return null;
+    public ResponseInput generateResponseMessage() throws IllegalStateException
+    {
+        if (!responseIsReady)
+            throw new IllegalStateException("Input non ancora presi");
+        return new  ResponseCyberblade(targetBasicEffect,targetForSliceEffect, x,  y, orderEffect);
     }
 
     //Ask at the user to choice a target to hit
