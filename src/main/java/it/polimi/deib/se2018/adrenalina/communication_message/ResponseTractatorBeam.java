@@ -27,6 +27,14 @@ public class ResponseTractatorBeam extends ResponseInput
         mode = false;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     /**
      * Create the response message for TractatorBeam in alternative mode
      * @param targetAlternativeMode target for TractatorBeam

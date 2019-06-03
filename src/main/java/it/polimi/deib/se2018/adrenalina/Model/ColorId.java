@@ -6,6 +6,7 @@ public enum ColorId
 
     GREY,
     YELLOW,
+    DUMMIE, //color used by dummie
     BLUE,
     GREEN,
     PURPLE

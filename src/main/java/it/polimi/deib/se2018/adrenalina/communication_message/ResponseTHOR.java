@@ -6,8 +6,8 @@ import java.util.List;
 
 public class ResponseTHOR extends ResponseInput {
     private ColorId targetBasicMode;//Target for basic mode
-    private ColorId targetAlternativeMode;//target for the alternative mode
-    private ColorId targetSecondAlternativeMode;//target for the alternative mode
+    private ColorId targetAdditionalMode;//target for the alternative mode
+    private ColorId targetSecondAdditionalMode;//target for the alternative mode
 
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
     boolean secondMode;//false = player chose the basic mode, true = player chose the alternative mode
@@ -29,7 +29,7 @@ public class ResponseTHOR extends ResponseInput {
     public ResponseTHOR(ColorId targetBasicMode,ColorId targetAdditionalMode)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetAlternativeMode = targetAlternativeMode;
+        this.targetAdditionalMode = targetAdditionalMode;
         mode = true;
     }
     /**
@@ -39,8 +39,8 @@ public class ResponseTHOR extends ResponseInput {
     public ResponseTHOR(ColorId targetBasicMode,ColorId targetAdditionalMode,ColorId targetSecondAdditionalMode)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetAlternativeMode = targetAlternativeMode;
-        this.targetSecondAlternativeMode = targetSecondAlternativeMode;
+        this.targetAdditionalMode = targetAdditionalMode;
+        this.targetSecondAdditionalMode = targetSecondAdditionalMode;
         secondMode = true;
     }
 
@@ -55,17 +55,17 @@ public class ResponseTHOR extends ResponseInput {
     /**
      * @return get the target for THOR in additional mode
      */
-    public ColorId gettargetAdditionalMode()
+    public ColorId getTargetAdditionalMode()
     {
-        return targetAlternativeMode;
+        return  targetAdditionalMode;
     }
 
     /**
      * @return get the target for THOR in second additional mode
      */
-    public ColorId gettargetSecondAdditionalMode()
+    public ColorId getTargetSecondAdditionalMode()
     {
-        return targetSecondAlternativeMode;
+        return  targetSecondAdditionalMode;
     }
 
     /**

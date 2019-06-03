@@ -3,6 +3,9 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseLockRifle;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +30,10 @@ public class LockRifle extends WeaponCard
         redAmmoCost = 0;
     }
 
-
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+        basicMode(((ResponseLockRifle) responseMessage).getTargetBasicMode(),((ResponseLockRifle) responseMessage).getTargetsAdditionalMode(),((ResponseLockRifle) responseMessage).isMode());
+    }
 
 
     /**

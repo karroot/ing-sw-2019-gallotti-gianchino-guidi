@@ -7,28 +7,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.*;
 
-/**
- * @author Gallotti
- * It represents the structure of Track
- */
-class Track
-{
-    private ColorId player;
-    private int  pointCounter;
-    public Track(ColorId player,int pointCounter){
-        this.player=player;
-        this.pointCounter=pointCounter;
 
-    }
-
-    public ColorId getPlayer() {
-        return player;
-    }
-
-    public int getPointCounter() {
-        return pointCounter;
-    }
-};
 /**
  * @author Gallotti
  * It represents the gameboard and performs the aviable actions that he can do on the elements of gameboard

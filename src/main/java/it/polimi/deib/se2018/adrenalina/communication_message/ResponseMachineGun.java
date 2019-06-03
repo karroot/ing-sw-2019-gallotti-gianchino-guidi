@@ -8,9 +8,9 @@ public class ResponseMachineGun extends ResponseInput {
     private ColorId targetAdditionalMode;//target chosen for the first additional mode
     private ColorId targetSecondAdditionalMode;//target chosen for the second additional mode
     private ColorId targetSecondAdditionalModeSecond;//second target chosen for the second additional mode
-    boolean mode;//false = player chose the basic mode, true = player chose the first additional mode
-    boolean secondMode;//false = player chose the basic mode, true = player chose the second additional mode
-
+    private boolean mode;//false = player chose the basic mode, true = player chose the first additional mode
+   private boolean secondMode;//false = player chose the basic mode, true = player chose the second additional mode
+    private boolean addDamage;
     /**
      * Create the response message for MachineGun in basic mode
      * @param targetBasicMode target for MachineGun
@@ -19,7 +19,7 @@ public class ResponseMachineGun extends ResponseInput {
     public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetBasicModeSecond=targetBasicMode;
+        this.targetBasicModeSecond=targetBasicModeSecond;
         mode = false;
     }
 
@@ -32,7 +32,7 @@ public class ResponseMachineGun extends ResponseInput {
     public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond,ColorId targetAdditionalMode)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetBasicModeSecond=targetBasicMode;
+        this.targetBasicModeSecond=targetBasicModeSecond;
         this.targetAdditionalMode = targetAdditionalMode;
         mode = true;
     }
@@ -43,13 +43,13 @@ public class ResponseMachineGun extends ResponseInput {
      * @param targetBasicModeSecond second target for MachineGun
      * @param targetSecondAdditionalMode targets for first additional mode of MachineGun
      */
-    public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond,ColorId targetSecondAdditionalMode, ColorId targetSecondAdditionalModeSecond)
+    public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond,ColorId targetSecondAdditionalMode, Boolean addDamage)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetBasicModeSecond=targetBasicMode;
+        this.targetBasicModeSecond=targetBasicModeSecond;
         this.targetSecondAdditionalMode=targetSecondAdditionalMode;
         this.targetSecondAdditionalModeSecond=targetSecondAdditionalModeSecond;
-
+        this.addDamage=addDamage;
         secondMode = true;
     }
 
@@ -59,12 +59,12 @@ public class ResponseMachineGun extends ResponseInput {
      * @param targetBasicModeSecond second target for MachineGun
      * @param targetSecondAdditionalMode targets for first additional mode of MachineGun
      */
-    public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond,ColorId targetAdditionalMode,ColorId targetSecondAdditionalMode, ColorId targetSecondAdditionalModeSecond)
+    public ResponseMachineGun(ColorId targetBasicMode, ColorId targetBasicModeSecond,ColorId targetAdditionalMode,ColorId targetSecondAdditionalMode,Boolean addDamage)
     {
         this.targetBasicMode = targetBasicMode;
-        this.targetBasicModeSecond=targetBasicMode;
+        this.targetBasicModeSecond=targetBasicModeSecond;
         this.targetSecondAdditionalMode=targetSecondAdditionalMode;
-        this.targetSecondAdditionalModeSecond=targetSecondAdditionalModeSecond;
+        this.addDamage=addDamage;
         this.targetAdditionalMode = targetAdditionalMode;
         mode = true;
         secondMode = true;
@@ -89,12 +89,7 @@ public class ResponseMachineGun extends ResponseInput {
     public ColorId getTargetSecondAdditionalMode() {
         return targetSecondAdditionalMode;
     }
-    /**
-     * @return get the second target for MachineGun in second additional mode
-     */
-    public ColorId getTargetSecondAdditionalModeSecond() {
-        return targetSecondAdditionalModeSecond;
-    }
+
 
     /**
      * @return get the targets for MachineGun in first additional mode
@@ -118,5 +113,9 @@ public class ResponseMachineGun extends ResponseInput {
     public boolean isSecondMode()
     {
         return secondMode;
+    }
+
+    public boolean isAddDamage() {
+        return addDamage;
     }
 }

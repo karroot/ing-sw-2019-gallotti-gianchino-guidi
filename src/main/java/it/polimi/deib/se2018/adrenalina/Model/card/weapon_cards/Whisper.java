@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseWhisper;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -31,6 +33,13 @@ public class Whisper extends WeaponCard
         blueAmmoCost = 2;
         redAmmoCost = 0;
     }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+
+basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
+    }
+
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 1 the first represent the basic mode

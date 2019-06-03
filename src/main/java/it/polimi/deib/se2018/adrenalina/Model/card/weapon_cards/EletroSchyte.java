@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseElectroSchyte;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +30,14 @@ public class EletroSchyte extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 0;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+        if(((ResponseElectroSchyte) responseMessage).isMode())
+            basicMode(((ResponseElectroSchyte) responseMessage).getTargetsAlternativeMode());
+        else
+            basicMode(((ResponseElectroSchyte) responseMessage).getTargetBasicMode());
     }
 
     /**

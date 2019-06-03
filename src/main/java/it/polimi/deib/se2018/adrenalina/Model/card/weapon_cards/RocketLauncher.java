@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +29,11 @@ public class RocketLauncher extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 0;
         redAmmoCost = 2;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+
     }
 
     //mod base: Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square.

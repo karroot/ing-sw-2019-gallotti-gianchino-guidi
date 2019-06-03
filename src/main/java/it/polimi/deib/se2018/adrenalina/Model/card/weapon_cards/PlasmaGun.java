@@ -5,9 +5,12 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePlasmaGun;
+
 
 import java.util.*;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 
 public class PlasmaGun extends WeaponCard
@@ -27,6 +30,16 @@ public class PlasmaGun extends WeaponCard
         redAmmoCost = 0;
         yellowAmmoCost = 1;
         blueAmmoCost = 1;
+
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+        try {
+            basicMode(((ResponsePlasmaGun) responseMessage).getTargetBasicEffect(),((ResponsePlasmaGun) responseMessage).getOrderEffect(),((ResponsePlasmaGun) responseMessage).getX(),((ResponsePlasmaGun) responseMessage).getY());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -151,70 +164,8 @@ public class PlasmaGun extends WeaponCard
 
         return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
     }
-    /**
-     * Return the list of all target available for using the "wmove" effect of this weapon
-     * @return all player that can be affected with the Plasma gun  and the effect "with charged shot"
-     * Return all possible players that can be targets also if the player will move in other square
-     * @exception IllegalStateException if the effect can't be used
-     */
-    public List<ColorId> checkTargetBeforeMove () throws IllegalStateException
-    {
-        Player dummie = new Player(ColorId.BLUE,"a","a",false);
-        List<ColorId> ListPlayerReach = new LinkedList();
-        Set<ColorId> playerReachable = new HashSet<>();
-        if (!isLoaded()) //check mode
-            throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
-        Set<Square> target=player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
 
-
-
-        for(Square i : target)
-        {
-            dummie.setSquare(i);
-            if  (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 0)
-
-                for (Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
-                {
-                    playerReachable.add(p.getColor());
-                }
-
-
-
-        }
-         ListPlayerReach.addAll(playerReachable);//Returns all targets
-        return ListPlayerReach;
-    }
-
-    /**
-     * It say if a player can reach another player from starting to move from his position
-     * @return List of reachable player
-     * @throws IllegalStateException if the alternative mode can't be used
-     */
-    public List<String> checkSquareBeforeMove () throws IllegalStateException
-    {
-        Player dummie = new Player(ColorId.BLUE,"a","a",false);
-        List<Square> ListSquareReach = new LinkedList();
-        Set<Square> SquareReachable = new HashSet<>();
-        if (!isLoaded()) //check mode
-            throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
-        Set<Square> target=player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
-
-
-
-        for(Square i : target)
-        {
-            dummie.setSquare(i);
-            if  (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 1)
-            {
-                   for (Player k :  dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
-                        SquareReachable.add(i);
-            }
-        }
-        ListSquareReach.addAll(SquareReachable);//Returns all targets
-
-        return ListSquareReach.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string
-    }
-
+// dovrebbe essere inutile siccome il controller ti da solo opzioni sensate
     /**
      * It say if a player can reach another player from a defined position decide by the phase glide
      * @param x player choice of movement x
@@ -243,5 +194,35 @@ public class PlasmaGun extends WeaponCard
             ListPlayerReach.remove(player.getColor());
 
        return ListPlayerReach;
+    }
+
+
+    public  Map<String,List<ColorId>> checkAllTarget()
+    {
+        Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
+        if (!checkAvaliableMode()[2]) //check mode
+            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+
+        Map<String,List<ColorId>> result = new HashMap<>();
+        dummie.setSquare(player.getSquare());
+
+        //Obtain all squares reachable at distance 2
+        Set<Square> squares = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
+
+        for (Square t:squares) //For each squares
+        { moveTarget(dummie,t.getX(),t.getY());
+            if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 1) //If dummie see some player
+            {
+                String coordinates = t.toStringCoordinates();//Save the coordinates
+
+                result.putIfAbsent(coordinates,dummie.playerThatSee(dummie.getSquare().getGameBoard()).stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
+            /*    if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) )
+                    result.remove(coordinates,dummie.getColor());
+                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) )
+                    result.remove(coordinates,player.getColor()); */
+            }
+
+        }
+    return result;
     }
 }

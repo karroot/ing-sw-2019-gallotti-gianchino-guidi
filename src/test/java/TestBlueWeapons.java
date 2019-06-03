@@ -840,7 +840,7 @@ public class TestBlueWeapons {
 
         List<String> reachableSquare = new LinkedList<>();
         List<ColorId> reachableBasicPlayer = new LinkedList<>();
-        List<ColorId> reachableBeforeMovePlayer = new LinkedList<>();
+        Map<String,List<ColorId>> reachableBeforeMovePlayer = new HashMap<>();
 
       try
       {
@@ -853,15 +853,9 @@ public class TestBlueWeapons {
       }
 
         reachableSquare= w5.checkPhaseGlide();
-        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
 
-        try {
-            w5.basicMode(enemy.getColor(),orderEffect,1,2);
-            fail();
-        } catch (IllegalStateException | IllegalAccessException e) {
-            System.out.println(e);
 
-        }
+
 //prima ti muovi , raggiungi il player e gli spari
 
 
@@ -875,7 +869,7 @@ public class TestBlueWeapons {
         reachableBasicPlayer = w5.checkBasicMode();
 
         reachableSquare= w5.checkPhaseGlide();
-        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        reachableBeforeMovePlayer = w5.checkAllTarget();
 
         assertFalse(reachableBasicPlayer.contains(enemy3.getColor()));
         w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
@@ -900,9 +894,9 @@ public class TestBlueWeapons {
         w5.setLoaded(true);
 
         reachableSquare= w5.checkPhaseGlide();
-        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        reachableBeforeMovePlayer = w5.checkAllTarget();
         assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
-        assertTrue(reachableBeforeMovePlayer.contains(enemy.getColor()));
+     //   assertTrue(reachableBeforeMovePlayer.containsValue(enemy.getColor()));
 
 
         w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
@@ -927,11 +921,13 @@ public class TestBlueWeapons {
         assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
 
         reachableBasicPlayer = w5.checkBasicMode();
-        reachableSquare= w5.checkSquareBeforeMove();
-        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        reachableBeforeMovePlayer = w5.checkAllTarget();
         assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
-        assertTrue(reachableSquare.contains(g1.getArena().getSquare(2,2).toStringCoordinates()));
-        assertTrue(reachableBeforeMovePlayer.contains(enemy.getColor()));
+
+        Square squareTest= new SpawnPoint(2,2,g1,null,null);
+        String testString = squareTest.toStringCoordinates();
+      assertTrue(reachableBeforeMovePlayer.containsKey(testString));
+      assertTrue(reachableBeforeMovePlayer.get(testString).contains(enemy.getColor()));
 
 
         w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
@@ -940,18 +936,11 @@ public class TestBlueWeapons {
 assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
         test.setAmmoBlue(3);
-        try
-        {
-            reachableSquare= w5.checkSquareBeforeMove();
-        }
-        catch(IllegalStateException e)
-        {
-            System.out.println(e);
-        }
 
         try
         {
-            reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+            reachableBeforeMovePlayer = w5.checkAllTarget();
+            fail();
         }
         catch(IllegalStateException e)
         {
@@ -960,6 +949,7 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         try
         {
             reachableSquare= w5.checkPhaseGlide();
+            fail();
         }
         catch(IllegalStateException e)
         {
@@ -968,12 +958,11 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         w5.setLoaded(true);
         reachableBasicPlayer = w5.checkBasicMode();
 
-        reachableSquare= w5.checkSquareBeforeMove();
-        reachableBeforeMovePlayer = w5.checkTargetBeforeMove();
+        reachableBeforeMovePlayer = w5.checkAllTarget();
         test.setAmmoBlue(0);
         try
         {
-            w5.basicMode(getPl(reachableBeforeMovePlayer,enemy),orderEffect,2,1);
+            w5.basicMode(enemy.getColor(),orderEffect,2,1);
 
         }
         catch(IllegalStateException e)
@@ -1002,7 +991,7 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         test.addWeapon(w2);//Add a weapon
         try
         {
-            w2.checkBasicMode();
+            w2.checkMoveBasicMode();
             fail();
         }
         catch (IllegalStateException e)
@@ -1018,7 +1007,7 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
         try
         {
-            w2.checkBasicMode();
+            w2.checkMoveBasicMode();
             fail();
         }
         catch (IllegalStateException e)
@@ -1051,15 +1040,15 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         assertEquals(avaiableMethod1[0],true);
 
 
-        List<ColorId> list1 = w2.checkBasicMode();
+        Map<ColorId,List<String>> list1 = w2.checkMoveBasicMode();
         List<ColorId> list2 = w2.checkPunisherMode();
-        List<String> list3 = w2.checkMoveBasicMode(enemy2.getColor());
 
-        assertTrue(list1.contains(enemy2.getColor()));
+
+       // RIFAI assertTrue(list1.contains(enemy2.getColor()));
         assertTrue(list2.contains(enemy3.getColor()));
 
         assertEquals(enemy2.getNumberOfDamagePoint(),0);
-        w2.basicMode(getPl(list1,enemy2),1,3);
+        w2.basicMode(enemy2.getColor(),1,3);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
 
         w2.setLoaded(true);

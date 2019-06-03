@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -26,6 +27,11 @@ public class Flamethrower extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 0;
         redAmmoCost = 1;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+
     }
 
 

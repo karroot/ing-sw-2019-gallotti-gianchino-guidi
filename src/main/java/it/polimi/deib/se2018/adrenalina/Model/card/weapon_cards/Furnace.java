@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +28,11 @@ public class Furnace extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+
     }
 
 

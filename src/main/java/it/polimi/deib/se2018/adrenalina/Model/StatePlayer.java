@@ -22,6 +22,8 @@ public abstract class StatePlayer {
      *
      * @return a list of player the player called this method can see
      */
+
+    // invocare metodo useweapon su arma scelta da player ( risposta.useweapon)
     public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
     {
         List<Player> playerList = new LinkedList<>();

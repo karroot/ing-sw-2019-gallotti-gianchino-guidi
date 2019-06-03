@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,6 +31,18 @@ public class MachineGun extends WeaponCard
         redAmmoCost = 1;
     }
 
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+        basicMode(((ResponseMachineGun) responseMessage).getTargetBasicMode(),
+                ((ResponseMachineGun) responseMessage).getTargetBasicModeSecond(),
+                ((ResponseMachineGun) responseMessage).getTargetAdditionalMode(),
+                ((ResponseMachineGun) responseMessage).getTargetSecondAdditionalMode(),
+                ((ResponseMachineGun) responseMessage).isMode(),
+                ((ResponseMachineGun) responseMessage).isSecondMode(),
+                ((ResponseMachineGun) responseMessage).isAddDamage()
+                );
+
+    }
 
 
     /**

@@ -3,15 +3,17 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class RequestTractatorBeam extends WeaponWithModeAlternative {
 
     //Attribute for the request
-    private List<ColorId> playersBasicMode;//Targets for the basic mode
+    private Map<ColorId,List<String>>  playersBasicMode;//Targets for the basic mode
     private List<ColorId> playersAlternativeMode;//Targets for the basic mode
-    private List<String> squareBasicMode;
+
 
     //Attribute for the response
     private ColorId targetBasicMode;//Target chosen for the basic mode
@@ -24,13 +26,13 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
      * @param playerBasicMode targets for the basic mode
      * @param playerAlternativeMode targets for the alternative mode
      */
-    public RequestTractatorBeam(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAlternativeMode, List<String> squareBasicMode)
+    public RequestTractatorBeam(boolean[] avaiableMethod,  Map<ColorId,List<String>>  playerBasicMode, List<ColorId> playerAlternativeMode)
     {
         this.nameAlternaivemode = "modalità punitore";
         this.avaiableMethod = avaiableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAlternativeMode = playerAlternativeMode;
-        this.squareBasicMode=squareBasicMode;
+
         responseIsReady = false;
     }
 
@@ -57,32 +59,33 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
     protected void inputBasicMode()
     {
         int i = 1; //Variable to cycle
+        List<ColorId> target = new ArrayList<ColorId>(playersBasicMode.keySet());
 
         System.out.println("Scegli bersaglio:");
 
-        for (ColorId t:playersBasicMode) //Print the possible choice
+        for (ColorId t:playersBasicMode.keySet()) //Print the possible choice
         {
             System.out.println(i + ":" + t);
             i++;
         }
         int anInt = inputInt(1, i - 1);
 
-        targetBasicMode = playersBasicMode.get(anInt -1);
+        targetBasicMode = target.get(anInt -1);
 
 
 
         System.out.println("Scegli square dove spostarlo:");
 
         i=1;
-        for (String s : squareBasicMode) //Print the possible choice
+        for (String s : playersBasicMode.get(targetBasicMode)) //Print the possible choice
         {
             System.out.println(i + ":" + s);
             i++;
         }
          anInt = inputInt(1, i - 1);
 //Save the coordinate
-        y = Integer.parseInt(squareBasicMode.get(anInt -1).substring(11));
-            x = Integer.parseInt(squareBasicMode.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
+        y = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(11));
+          x = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
 
     }
     /**

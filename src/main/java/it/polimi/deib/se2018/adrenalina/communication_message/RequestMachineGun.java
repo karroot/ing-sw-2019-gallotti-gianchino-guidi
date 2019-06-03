@@ -24,7 +24,7 @@ public class RequestMachineGun extends RequestInput {
     //Attribute for the response
     protected boolean mode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
     protected boolean secondMode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
-
+    private boolean addDamage;
 
     //Attribute for the response
     protected ColorId targetBasicMode;//Target chosen for the basic mode
@@ -80,6 +80,8 @@ public class RequestMachineGun extends RequestInput {
             choice = inputInt(1, 1);
 
         mode = false; //Set the attribute mode
+        addDamage=false;
+        secondMode=false;
         if (choice == 3) //If the user choices the basic mode
         {
             inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
@@ -117,11 +119,14 @@ public class RequestMachineGun extends RequestInput {
         if (mode)
         {
             if (secondMode)
-                return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetAdditionalMode,targetSecondAdditionalMode,targetSecondAdditionalModeSecond);
-            return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetAdditionalMode);
+                {
+
+                    return new ResponseMachineGun(targetBasicMode, targetBasicModeSecond, targetAdditionalMode, targetSecondAdditionalMode,addDamage);
+                }
+                return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetAdditionalMode);
         }
         if (secondMode)
-            return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetSecondAdditionalMode,targetSecondAdditionalModeSecond);
+            return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetSecondAdditionalMode,addDamage);
         return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond);
     }
 
@@ -172,7 +177,7 @@ public class RequestMachineGun extends RequestInput {
         }
         choice = inputInt(1, i - 1);
         targetBasicMode  = players.get(choice-1);
-
+       addDamage=true;
 
     }
 

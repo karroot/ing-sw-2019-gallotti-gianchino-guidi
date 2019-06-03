@@ -27,6 +27,7 @@ public class ResponseLockRifle extends ResponseInput {
      */
     public ResponseLockRifle(ColorId targetBasicMode,ColorId targetsAdditionalMode)
     {
+        this.targetBasicMode = targetBasicMode;
         this.targetsAdditionalMode = targetsAdditionalMode;
         mode = true;
     }

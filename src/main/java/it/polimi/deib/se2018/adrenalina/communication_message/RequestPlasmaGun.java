@@ -18,8 +18,7 @@ public class RequestPlasmaGun extends  RequestInput
 
     //Attribute for the response
     private ColorId targetBasicEffect = null;//Target chosen for the basic mode
-    private ColorId targetForchargedEffect = null;//Target chosen for the charged shot effect
-    private int x =0;//Coordinates for the square chosen by user in the phase glide effect
+   private int x =0;//Coordinates for the square chosen by user in the phase glide effect
     private int y = 0;
     private String[] orderEffect;//array that represent the order of the effect chosen by user
 
@@ -100,19 +99,7 @@ public class RequestPlasmaGun extends  RequestInput
             choseTarget();
         }
 
-        if (!orderAva.isEmpty()) //It there is a third effect possible
-        {
-            if (orderAva.get(0).equals("with phase glide"))//Ask the necessary dates to do the effect
-            {
-                choseSquare();
-                orderAva.remove("with phase glide");
-                orderTemp.add("with phase glide");
-            }
-            else
-            {
-                choseTarget();
-            }
-        }
+
 
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
 
@@ -142,30 +129,35 @@ public class RequestPlasmaGun extends  RequestInput
         else//Else
             players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
 
-        System.out.println("Scegli un bersaglio:");
+        System.out.println("Scegli un bersaglio :");
 
         int i = 1;
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+" : "+t);
             i++;
         }
 
         int choice = inputInt(1, i - 1);
 
-        if (targetBasicEffect == null) //If this is the first target => the user has used the basic effect
-        {
+
             targetBasicEffect = players.get(choice-1);
             orderAva.remove("basic");
             orderTemp.add("basic");
-        }
-        else//the user has used the with charged shot effect
-        {
-            targetForchargedEffect = players.get(choice -1);
-            orderAva.remove("with charged shot");
-            orderTemp.add("with charged shot");
-        }
+
+  if (avaiableMethod[2]) {
+      System.out.println("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
+
+
+      System.out.println("1:aggiungi danno");
+      choice = inputInt(1, 1);
+
+      if (choice == 1) {
+          orderAva.remove("with charged shot");
+          orderTemp.add("with charged shot");
+      }
+  }
 
     }
     //Ask at the user to choice a square where to move
@@ -178,13 +170,13 @@ public class RequestPlasmaGun extends  RequestInput
         else //Else
             squares = squaresAfterBasicEffect;//Take all the possible squares
 
-        System.out.println("Scegli un quadrato dove spostarti:");
+        System.out.println("Scegli un quadrato dove spostarti: ");
 
         int i = 1;
 
         for (String t:squares)//Ask the square at the user
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+" : "+t);
             i++;
         }
 

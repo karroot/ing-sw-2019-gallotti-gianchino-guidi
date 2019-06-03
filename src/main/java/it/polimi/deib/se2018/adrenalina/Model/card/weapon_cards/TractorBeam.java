@@ -2,10 +2,11 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseTractatorBeam;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseWhisper;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
@@ -20,6 +21,16 @@ public class TractorBeam extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 0;
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseMessage) {
+
+        if(((ResponseTractatorBeam) responseMessage).isMode())
+
+            punisherMode(((ResponseTractatorBeam) responseMessage).getTargetAlternativeMode());
+        else
+        basicMode(((ResponseTractatorBeam) responseMessage).getTargetBasicMode(), ((ResponseTractatorBeam) responseMessage).getX() ,((ResponseTractatorBeam) responseMessage).getY());
     }
 
 
@@ -50,33 +61,40 @@ public class TractorBeam extends WeaponCard
     }
     /**
      * Calculate in which square a player can be moved using the basic mode
-     * @param colorPlayer player to move
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<String> checkMoveBasicMode(ColorId colorPlayer) throws IllegalStateException
+    public Map<ColorId,List<String>> checkMoveBasicMode() throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-        List<Square> listSquare = new LinkedList<>();
+        Map<ColorId,List<String>> result = new HashMap<>();
 
         List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
-        for(Player p : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getGameBoard().getAllPlayer())
+        for(Player t: playersReachable( player.getSquare(),3))
         {
-         for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getY(),2) )
-         { for (Room reachRoom : roomReachablePlayer)
+         for (Room reachRoom : roomReachablePlayer)
             {
 
+  for(Square sq : t.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor())).collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor())).collect(Collectors.toList()).get(0).getSquare().getY(),2) ){
 
-                 if (reachRoom.getSquareList().contains(sq)) {
-                     listSquare.add(sq);
+                    if (reachRoom.getSquareList().contains(sq)) {
+
+                        String coordinates = "x = "+sq.getX()+",y = "+ sq.getY();//Save the coordinates
+
+                        result.putIfAbsent(t.getColor(), Collections.singletonList(coordinates)); //Add the square with the player at hash map
+
+
+
+
+                    }
                  }
             }
-         }
+
         }
 
-        return listSquare.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string
+        return result;
     }
     /**
      * Return the list of all target available for using the punisher mode of this weapon
@@ -105,27 +123,7 @@ public class TractorBeam extends WeaponCard
 
         return listPlayer;//Returns squares
     }
-    /**
-     * Return the list of all target available for using the basic mode of this weapon
-     * @return all player that can be affected with the lock rifle in basic mode
-     */
-    public List<ColorId> checkBasicMode() throws  IllegalStateException
-    {
-        if (!checkAvaliableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<ColorId> playerList = new LinkedList<>();
-
-        for (Player p : playersReachable( player.getSquare(),3) )
-        {
-            playerList.add(p.getColor());
-        }
-
-
-
-
-        return playerList;//Returns all targets
-    }
     /**
      * It uses the basic mode of the lock rifle
      * @param colorPlayer player affected by weapon
