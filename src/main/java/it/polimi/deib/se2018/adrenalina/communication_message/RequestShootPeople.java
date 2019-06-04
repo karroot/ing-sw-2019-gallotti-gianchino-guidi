@@ -9,12 +9,16 @@ public class RequestShootPeople extends RequestInput
     protected List<String> weaponCardsName;//Targets for the basic mode
 
     //Attribute for the response
-    protected String weaponCardName;//Target chosen for the basic mode
+    protected int weaponCardName;//Target chosen for the basic mode
 
     @Override
     public void printActionsAndReceiveInput() {
         inputBasicMode();
         responseIsReady=true;
+    }
+
+    public RequestShootPeople(List<String> weaponCardsName) {
+        this.weaponCardsName = weaponCardsName;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class RequestShootPeople extends RequestInput
 
             int anInt = inputInt(1, i - 1);
 
-    weaponCardName = weaponCardsName.get(anInt - 1);
+    weaponCardName = anInt ;
 
 
     }

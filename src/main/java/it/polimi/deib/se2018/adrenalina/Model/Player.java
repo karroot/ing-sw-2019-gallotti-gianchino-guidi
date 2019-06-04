@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.io.Serializable;
@@ -469,6 +470,8 @@ public class Player
 
         checkState();//Check the state of player
     }
+
+
 
     //Methods to handle the respawn
 

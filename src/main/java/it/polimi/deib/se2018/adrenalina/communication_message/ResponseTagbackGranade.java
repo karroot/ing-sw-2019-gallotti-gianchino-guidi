@@ -6,8 +6,8 @@ public class ResponseTagbackGranade extends ResponseInput
 {
     private ColorId targetBasicMode;//Target for basic mode
     /**
-     * Create the response message for TagbackGranade in basic mode
-     * @param targetBasicMode target for LockRifle
+     * Create the response message for TagbackGranade
+     * @param targetBasicMode target for granade
      */
     public ResponseTagbackGranade(ColorId targetBasicMode)
     {
@@ -15,7 +15,7 @@ public class ResponseTagbackGranade extends ResponseInput
 
     }
     /**
-     * @return get the target for TagbackGranade in basic mode
+     * @return get the target for TagbackGranade
      */
     public ColorId getTargetBasicMode()
     {

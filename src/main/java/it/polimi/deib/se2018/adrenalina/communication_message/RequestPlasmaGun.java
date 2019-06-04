@@ -150,7 +150,7 @@ public class RequestPlasmaGun extends  RequestInput
       System.out.println("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 
-      System.out.println("1:aggiungi danno");
+      System.out.println("1:aggi<ungi danno");
       choice = inputInt(1, 1);
 
       if (choice == 1) {

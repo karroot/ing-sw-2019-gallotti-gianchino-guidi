@@ -18,6 +18,11 @@ protected List<Color> playerAmmo; // all ammo of the player
         responseIsReady = true;
     }
 
+    public RequestTargettingScope(List<ColorId> playersBasicMode, List<Color> playerAmmo) {
+        this.playersBasicMode = playersBasicMode;
+        this.playerAmmo = playerAmmo;
+    }
+
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

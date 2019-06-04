@@ -2,12 +2,12 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 public class ResponseShootPeople extends ResponseInput
 {
-    private String targetBasicMode;//Target for basic mode
+    private int targetBasicMode;//Target for basic mode
     /**
      * Create the response message for ShootPeople in basic mode
      * @param targetBasicMode target weapon for shooting
      */
-    public ResponseShootPeople(String targetBasicMode)
+    public ResponseShootPeople(int targetBasicMode)
     {
         this.targetBasicMode = targetBasicMode;
 
@@ -15,7 +15,7 @@ public class ResponseShootPeople extends ResponseInput
     /**
      * @return get the target for ShootPeople in basic mode
      */
-    public String getTargetBasicMode()
+    public int getTargetBasicMode()
     {
         return targetBasicMode;
     }
