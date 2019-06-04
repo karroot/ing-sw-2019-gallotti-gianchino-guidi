@@ -3,9 +3,13 @@ package it.polimi.deib.se2018.adrenalina.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Model;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
 import it.polimi.deib.se2018.adrenalina.View.Observer;
 import it.polimi.deib.se2018.adrenalina.View.View;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestTagbackGranade;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestZX2;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseTagbackGranade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -16,6 +20,7 @@ public class Controller implements Observer<ResponseInput>
 {
     private Model model;
     private View virtualView;
+    private ResponseInput msg;
     //Controller deve avere un riferimento alla virtual view
     /*
     Quando il controller deve richiedere un input prima crea un thread che
@@ -124,23 +129,41 @@ public class Controller implements Observer<ResponseInput>
 
 
     public void createNewGame (int idArena, ColorId[] players, boolean isFrenetic, boolean onTerminator, int numSkulls, ColorId firstPlayer) throws InterruptedException, ExecutionException {
-        Future<String> prova = executor.submit(new Callable<String>()
+
+
+
+        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
         {
             @Override
-            public String call() throws Exception {
+            public Boolean call() throws Exception
+            {
+                try
+                {
+                    virtualView.requestInput(new RequestTagbackGranade(),ColorId.GREY);
+                    virtualView.getResponseWithInputs(ColorId.GREY);
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
 
+                return true;
 
-
-                return "Ciao";
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        while (!executor.awaitTermination(100, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
         {
 
         }
 
-        String s = prova.get();
+        Boolean s = prova.get();
+
+
+        //////
+
+        ResponseTagbackGranade response = (ResponseTagbackGranade) msg;
+
 
     }
 
@@ -162,6 +185,6 @@ public class Controller implements Observer<ResponseInput>
     @Override
     public void update(ResponseInput message)
     {
-
+        msg = message;
     }
 }

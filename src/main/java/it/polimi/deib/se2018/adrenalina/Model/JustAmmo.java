@@ -65,8 +65,19 @@ public class JustAmmo implements AmmoTiles
         }
     }
 
+    public int getAmmoCardID() {
+        return ammoCardID;
+    }
 
-        /*
+    public Color getSingleAmmo() {
+        return singleAmmo;
+    }
+
+    public Color getDoubleAmmo() {
+        return doubleAmmo;
+    }
+
+    /*
         new JustAmmo = JustAmmo (042, YELLOW, BLUE);
         new JustAmmo = JustAmmo (043, YELLOW, RED);
         new JustAmmo = JustAmmo (044, RED, BLUE);

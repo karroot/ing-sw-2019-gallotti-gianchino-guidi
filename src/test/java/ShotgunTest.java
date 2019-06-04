@@ -3,6 +3,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.ZX2;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShotgun;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +38,12 @@ public class ShotgunTest {
         MethodsWeapons.moveTarget(pGreen,3,2);
         MethodsWeapons.moveTarget(pPurple,4,2);
         MethodsWeapons.moveTarget(pBlue,1,1);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -141,14 +148,16 @@ public class ShotgunTest {
         pYellow.addWeapon(weap);
         weap.setPlayer(pYellow);
 
-        weap.basicMode(pPurple,false,0,0);
+        weap.useWeapon(new ResponseShotgun(pPurple.getColor(),false,false,0,0));
+
 
         assertEquals(3,pPurple.getNumberOfDamagePoint());
         assertEquals(board.getArena().getSquare(4,2),pPurple.getSquare());
 
         weap.setLoaded(true);
 
-        weap.basicMode(pPurple,true,4,3);
+        weap.useWeapon(new ResponseShotgun(pPurple.getColor(),false,true,4,3));
+
 
         assertEquals(6,pPurple.getNumberOfDamagePoint());
         assertEquals(board.getArena().getSquare(4,3),pPurple.getSquare());
@@ -203,7 +212,8 @@ public class ShotgunTest {
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        weap.inLongBarrelMode(pYellow);
+        weap.useWeapon(new ResponseShotgun(pYellow.getColor(),true,false,0,0));
+
 
         assertEquals(2,pYellow.getNumberOfDamagePoint());
         assertEquals(board.getArena().getSquare(4,2),pPurple.getSquare());

@@ -13,6 +13,8 @@ public abstract class PowerUpCard extends Card
 
     protected int idPU;
 
+    protected String name;
+
     /**
      * Create a powerUp card generic
      * After the creation nobody (Player) has this card
@@ -50,18 +52,9 @@ public abstract class PowerUpCard extends Card
 
     public String powerToString()
     {
-        String type = "";
-
-        if (this instanceof Teleporter)
-            type = "Teleporter";
-        if (this instanceof Newton)
-            type = "Newton";
-        if (this instanceof TagbackGranade)
-            type = "TagbackGranade";
-        if (this instanceof TargettingScope)
-            type = "TargettingScope";
-
-
-        return color + ":" + type;
+        return name+ ":" + color;
     }
+
+
+
 }

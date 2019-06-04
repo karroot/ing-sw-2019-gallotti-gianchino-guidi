@@ -132,7 +132,7 @@ public class Sledgehammer extends WeaponCard
         isLoaded = false;
     }
 
-    @Override
+
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseSledgehammer msg = (ResponseSledgehammer) responseMessage;

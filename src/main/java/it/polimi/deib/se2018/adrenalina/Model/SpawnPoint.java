@@ -31,6 +31,8 @@ public class SpawnPoint extends Square
     public SpawnPoint(int x, int y, GameBoard gameBoard, ColorRoom color, SideType[] side)
     {
         super(x, y, gameBoard, color, side);
+        isSpawnPoint = true;
+        isAmmoPoint = false;
     }
 
     /**

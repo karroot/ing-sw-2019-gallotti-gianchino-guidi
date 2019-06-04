@@ -2,6 +2,7 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Sledgehammer;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseSledgehammer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +39,12 @@ public class SledgehammerTest {
         MethodsWeapons.moveTarget(pGreen,2,1);
         MethodsWeapons.moveTarget(pPurple,4,3);
         MethodsWeapons.moveTarget(pBlue,2,1);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -109,7 +116,7 @@ public class SledgehammerTest {
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        weap.basicMode(pBlue);
+        weap.useWeapon(new ResponseSledgehammer(ColorId.BLUE));
 
         assertEquals(2,pBlue.getNumberOfDamagePoint());
     }
@@ -164,7 +171,8 @@ public class SledgehammerTest {
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        weap.inPulverizeMode(pGreen,2,3);
+        weap.useWeapon(new ResponseSledgehammer(pGreen.getColor(),2,3,true));
+
 
         assertEquals(3,pGreen.getNumberOfDamagePoint());
         assertEquals(3,pGreen.getNumberOfDamagePoint());

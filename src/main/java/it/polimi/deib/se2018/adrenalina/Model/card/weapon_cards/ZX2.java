@@ -126,7 +126,7 @@ public class ZX2 extends WeaponCard
         isLoaded = false;
     }
 
-    @Override
+
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseZX2 msg = (ResponseZX2) responseMessage;

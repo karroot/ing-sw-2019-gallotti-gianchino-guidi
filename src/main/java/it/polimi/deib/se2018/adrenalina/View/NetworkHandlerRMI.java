@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

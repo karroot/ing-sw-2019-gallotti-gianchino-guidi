@@ -185,7 +185,7 @@ public class PowerGlow extends WeaponCard
         isLoaded = false;//The weapon is not loaded now
     }
 
-    @Override
+
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponsePowerGlove msg = (ResponsePowerGlove) responseMessage;

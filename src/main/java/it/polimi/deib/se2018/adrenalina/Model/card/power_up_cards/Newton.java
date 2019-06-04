@@ -16,6 +16,7 @@ public class Newton extends PowerUpCard
     public Newton(Color color, int idPU) throws NullPointerException
     {
         super(color, idPU);
+        name = "Newton";
     }
 
     /**

@@ -1,8 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
-import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.UpdateModel;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

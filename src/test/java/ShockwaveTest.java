@@ -2,10 +2,13 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shockwave;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRailgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShockwave;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -36,6 +39,12 @@ public class ShockwaveTest {
         MethodsWeapons.moveTarget(pGreen,4,1);
         MethodsWeapons.moveTarget(pPurple,4,3);
         MethodsWeapons.moveTarget(pBlue,4,1);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -119,7 +128,7 @@ public class ShockwaveTest {
         target.add(pBlue);
         target.add(pGrey);
 
-        weap.basicMode(target);
+        weap.useWeapon(new ResponseShockwave(target.stream().map(Player::getColor).collect(Collectors.toList())));
 
         assertEquals(1,pPurple.getNumberOfDamagePoint());
         assertEquals(1,pBlue.getNumberOfDamagePoint());
@@ -145,7 +154,7 @@ public class ShockwaveTest {
 
         MethodsWeapons.moveTarget(pGrey,3,2);
 
-        weap.inTsunamirMode();
+        weap.useWeapon(new ResponseShockwave());
 
         assertEquals(1,pYellow.getNumberOfDamagePoint());
 
@@ -153,7 +162,8 @@ public class ShockwaveTest {
         pYellow.addWeapon(weap);
         weap.setPlayer(pYellow);
 
-        weap.inTsunamirMode();
+        weap.useWeapon(new ResponseShockwave());
+
 
         assertEquals(1,pPurple.getNumberOfDamagePoint());
         assertEquals(1,pBlue.getNumberOfDamagePoint());

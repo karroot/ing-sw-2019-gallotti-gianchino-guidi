@@ -31,7 +31,7 @@ public class GameBoard {
 
     private List<Track> killShotTrack;
 
-
+    private int code;
 
     /**
      * Create the GameBoard with its parameters
@@ -50,6 +50,7 @@ public class GameBoard {
         this.ammoTilesStack=ammoTilesStack;
         this.killShotTrack= new LinkedList<>();
         this.AllPlayer = new LinkedList<>();
+        this.code = codeArena;
     }
 
 
@@ -61,6 +62,10 @@ public class GameBoard {
     public List<Room> getRoomList()
     {
         return new ArrayList<>(roomList);
+    }
+
+    public int getCode() {
+        return code;
     }
 
     public  Graph getArena()
@@ -130,6 +135,12 @@ public class GameBoard {
     public int getKillShotPointCounter(Track kill) {
         return kill.getPointCounter();
     }
+
+    public List<Track> getKillShotTrack()
+    {
+        return new ArrayList<>(killShotTrack);
+    }
+
     //Setter
     //-----------------------------
 

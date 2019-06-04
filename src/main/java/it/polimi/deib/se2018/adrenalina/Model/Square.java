@@ -23,9 +23,9 @@ public abstract class Square
 
     protected  Room room;
 
-    private boolean isAmmoPoint;
+    protected boolean isAmmoPoint;
 
-    private boolean isSpawnPoint;
+    protected boolean isSpawnPoint;
 
 
 

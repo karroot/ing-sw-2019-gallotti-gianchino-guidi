@@ -4,7 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.UpdateModel;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,7 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-import static java.lang.Thread.interrupted;
 import static java.lang.Thread.sleep;
 
 /**

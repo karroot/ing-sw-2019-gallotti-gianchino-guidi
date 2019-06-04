@@ -2,13 +2,11 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.PowerGlow;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -39,6 +37,12 @@ public class PowerGlowTest {
         MethodsWeapons.moveTarget(pGreen,3,2);
         MethodsWeapons.moveTarget(pPurple,3,3);
         MethodsWeapons.moveTarget(pBlue,3,1);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -123,7 +127,7 @@ public class PowerGlowTest {
 
 
 
-        weap.basicMode(pBlue);
+        weap.useWeapon(new ResponsePowerGlove(ColorId.BLUE));
 
         assertEquals(1,pBlue.getNumberOfDamagePoint());
         assertEquals(2,pBlue.checkMarker(pYellow.getColor()));
@@ -135,7 +139,7 @@ public class PowerGlowTest {
         weap.setPlayer(pBlue);
         weap.setLoaded(true);
 
-       weap.basicMode(pGreen);
+        weap.useWeapon(new ResponsePowerGlove(ColorId.GREEN));
 
         assertEquals(1,pGreen.getNumberOfDamagePoint());
         assertEquals(2,pGreen.checkMarker(pBlue.getColor()));
@@ -216,7 +220,11 @@ public class PowerGlowTest {
         pBlue.addWeapon(weap);
         weap.setPlayer(pBlue);
 
-        weap.inRocketFistMode(pGreen,pPurple);
+        List<ColorId> targets = new ArrayList<>();
+        targets.add(pGreen.getColor());
+        targets.add(pPurple.getColor());
+
+        weap.useWeapon(new ResponsePowerGlove(targets));
 
         assertEquals(2,pGreen.getNumberOfDamagePoint());
         assertEquals(2,pPurple.getNumberOfDamagePoint());

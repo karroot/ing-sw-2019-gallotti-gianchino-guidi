@@ -160,7 +160,7 @@ public class Railgun extends WeaponCard
         return  !c.isEmpty(); //if there are at least two player in a cardinal direction return true
     }
 
-    @Override
+
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseRailgun msg = (ResponseRailgun) responseMessage;

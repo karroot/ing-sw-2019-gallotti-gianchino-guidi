@@ -104,6 +104,11 @@ public class Player
         return color;
     }
 
+    public List<ColorId> getMarkCounter()
+    {
+        return new ArrayList<>(markCounter);
+    }
+
     public int getAmmoYellow()
     {
         return ammoYellow;
@@ -191,7 +196,7 @@ public class Player
      */
     public List<WeaponCard> getWeaponCardList()
     {
-        return new LinkedList<>(weaponCardList);
+        return new ArrayList<>(weaponCardList);
     }
 
     /**
@@ -200,7 +205,7 @@ public class Player
      */
     public List<PowerUpCard> getPowerupCardList()
     {
-        return new LinkedList<>(powerupCardList);
+        return new ArrayList<>(powerupCardList);
     }
 
     /**

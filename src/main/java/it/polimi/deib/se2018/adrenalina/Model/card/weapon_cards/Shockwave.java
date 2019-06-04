@@ -129,7 +129,6 @@ public class Shockwave extends WeaponCard
         isLoaded = false;
     }
 
-    @Override
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseShockwave msg = (ResponseShockwave) responseMessage;

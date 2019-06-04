@@ -89,6 +89,21 @@ public class PowerAndAmmo implements AmmoTiles
         }
     }
 
+    public int getAmmoCardID() {
+        return ammoCardID;
+    }
+
+    public Color getSingleAmmo() {
+        return singleAmmo;
+    }
+
+    public Color getSecondSingleAmmo() {
+        return secondSingleAmmo;
+    }
+
+    public PowerUpCard getPowerUpCard() {
+        return powerUpCard;
+    }
 
     /*
         new JustAmmo = JustAmmo (0420, YELLOW, YELLOW);

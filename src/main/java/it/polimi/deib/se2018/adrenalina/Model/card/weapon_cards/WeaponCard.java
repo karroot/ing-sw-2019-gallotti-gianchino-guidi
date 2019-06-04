@@ -85,6 +85,6 @@ public abstract class WeaponCard extends Card
      * The response message travels from client to Server and the controller give it to the CardWeapon
      * @param responseMessage response message specified for the weapon
      */
-    public abstract void useWeapon (ResponseInput responseMessage);
+    //public abstract void useWeapon (ResponseInput responseMessage);
 
 }

@@ -94,6 +94,8 @@ public class AmmoPoint extends Square
     public AmmoPoint (int x, int y, GameBoard gameBoard, ColorRoom color, SideType[] side)
     {
         super(x,y,gameBoard,color,side);
+        isAmmoPoint = true;
+        isSpawnPoint = false;
     }
 
 

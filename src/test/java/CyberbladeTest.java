@@ -2,6 +2,7 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Cyberblade;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseCyberblade;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +39,12 @@ public class CyberbladeTest
         MethodsWeapons.moveTarget(pGreen,3,3);
         MethodsWeapons.moveTarget(pPurple,4,1);
         MethodsWeapons.moveTarget(pBlue,4,1);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -188,7 +195,8 @@ public class CyberbladeTest
         ordf[1] = "basic";
         ordf[2] = "with slice and dice";
 
-        weap.basicMode(pPurple,ordf,pBlue,4,1);
+        weap.useWeapon(new ResponseCyberblade(pPurple.getColor(),pBlue.getColor(),4,1,ordf));
+
 
         assertEquals(2,pPurple.getNumberOfDamagePoint());
         assertEquals(2,pBlue.getNumberOfDamagePoint());

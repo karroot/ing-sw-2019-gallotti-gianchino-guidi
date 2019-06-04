@@ -3,6 +3,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.ZX2;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseZX2;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -42,6 +44,12 @@ public class ZX2Test
         MethodsWeapons.moveTarget(p3,1,2);
         MethodsWeapons.moveTarget(p4,2,3);
         MethodsWeapons.moveTarget(p5,4,1);
+
+        board.setAllPlayer(p1);
+        board.setAllPlayer(p2);
+        board.setAllPlayer(p3);
+        board.setAllPlayer(p4);
+        board.setAllPlayer(p5);
     }
 
     @Test
@@ -104,7 +112,7 @@ public class ZX2Test
         p1.addWeapon(zx2);
         zx2.setPlayer(p1);
 
-        zx2.basicMode(p4);
+        zx2.useWeapon(new ResponseZX2(p4.getColor()));
 
         assertEquals(1,p4.getNumberOfDamagePoint());
         assertEquals(2,p4.checkMarker(p1.getColor()));
@@ -160,7 +168,7 @@ public class ZX2Test
 
         players = zx2.checkInScannerMode();
 
-        zx2.inScannerMode(players);
+        zx2.useWeapon(new ResponseZX2(players.stream().map(Player::getColor).collect(Collectors.toList())));
 
         for (Player t:players)
         {

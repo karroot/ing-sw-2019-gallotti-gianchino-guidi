@@ -2,6 +2,8 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Railgun;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRailgun;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +41,12 @@ public class RailgunTest {
         MethodsWeapons.moveTarget(pGreen,2,2);
         MethodsWeapons.moveTarget(pPurple,4,2);
         MethodsWeapons.moveTarget(pBlue,1,2);
+
+        board.setAllPlayer(pYellow);
+        board.setAllPlayer(pGrey);
+        board.setAllPlayer(pGreen);
+        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pBlue);
     }
 
     @Test
@@ -95,7 +103,7 @@ public class RailgunTest {
         pBlue.addWeapon(weap);
         weap.setPlayer(pBlue);
 
-        weap.basicMode(pYellow);
+        weap.useWeapon(new ResponseRailgun(ColorId.YELLOW));
 
         assertEquals(3,pYellow.getNumberOfDamagePoint());
     }
@@ -119,7 +127,8 @@ public class RailgunTest {
         pBlue.addWeapon(weap);
         weap.setPlayer(pBlue);
 
-        weap.inPiercingMode(pGreen,pPurple);
+
+        weap.useWeapon(new ResponseRailgun(pGreen.getColor(),pPurple.getColor()));
 
         assertEquals(2,pGreen.getNumberOfDamagePoint());
         assertEquals(2,pPurple.getNumberOfDamagePoint());

@@ -158,7 +158,7 @@ public class Shotgun extends WeaponCard
         isLoaded = false;
     }
 
-    @Override
+
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseShotgun msg = (ResponseShotgun) responseMessage;
