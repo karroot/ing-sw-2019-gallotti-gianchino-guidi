@@ -397,6 +397,7 @@ public class Player
             PowerUpCard temp = powerupCardList.get(indexDeckCard); //get power up using the index
 
             powerupCardList.remove(indexDeckCard); //Remove power up card
+            temp.setPlayer(null);
             return temp; //Return power up card
         }
         else//If index can't be used because the size of list is smaller
@@ -632,6 +633,27 @@ public class Player
 
         return players; //Return the set of all players
 
+    }
+
+    public  Set<Square> lookForRunAround(Player player, GameBoard gameBoard)
+    {
+        return state.lookForRunAround(player,gameBoard);
+    }
+
+
+    public  Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
+    {
+        return state.lookForGrabStuff(player,gameBoard);
+    }
+
+    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
+    {
+        return state.lookForShootPeople(player,gameBoard);
+    }
+
+    public List<WeaponCard> checkReload(Player player)
+    {
+        return state.checkReload(player);
     }
 
     //#################################

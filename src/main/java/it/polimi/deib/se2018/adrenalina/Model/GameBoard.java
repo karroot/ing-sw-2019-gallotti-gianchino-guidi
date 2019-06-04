@@ -15,7 +15,7 @@ import java.util.*;
 public class GameBoard {
 
 
-    private List<Player> AllPlayer; //list of all player
+    private List<Player> allPlayerList; //list of all player
 
     private Stack<WeaponCard> weaponCardStack;
 
@@ -41,7 +41,7 @@ public class GameBoard {
      * @param skullCounter counter of the skull on board
      * @param ammoTilesStack Stack of ammo Cards
      */
-    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack ) {
+    public GameBoard(Stack<WeaponCard> weaponCardStack, Stack<PowerUpCard> powerUpCardStack, int codeArena , int skullCounter,Stack<AmmoTiles> ammoTilesStack,List<Player> AllPlayerList) {
         this.weaponCardStack = weaponCardStack;
         this.powerUpCardStack = powerUpCardStack;
         this.arena = FactoryArena.getArena(codeArena,this);
@@ -49,7 +49,7 @@ public class GameBoard {
         this.skullCounter=skullCounter;
         this.ammoTilesStack=ammoTilesStack;
         this.killShotTrack= new LinkedList<>();
-        this.AllPlayer = new LinkedList<>();
+        this.allPlayerList = AllPlayerList;
         this.code = codeArena;
     }
 
@@ -75,7 +75,7 @@ public class GameBoard {
 
     public List<Player> getAllPlayer()
     {
-        return new LinkedList<>(AllPlayer);
+        return new LinkedList<>(allPlayerList);
     }
 
     /**
@@ -164,7 +164,7 @@ public class GameBoard {
     }
 
     public void setAllPlayer(Player playerToAdd) {
-        AllPlayer.add(playerToAdd);
+        allPlayerList.add(playerToAdd);
     }
 
     /**
