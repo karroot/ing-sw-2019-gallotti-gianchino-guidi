@@ -13,10 +13,8 @@ import java.util.List;
 public class RequestHellion extends WeaponWithModeAlternative
 {
     //Attribute for the request
-    private List<String> squaresBasicMode;//Targets for the basic mode
-    private List<ColorId> playersBasicMode;
-    private List<String> squaresAlternativeMode;//Targets for the basic mode
-    private List<ColorId> playersAlterativeMode;
+    private HashMap<String, List<ColorId>> hashMapBasicMode;//Targets for the basic mode
+    private HashMap<String, List<ColorId>> hashMapNanoTracerMode;//Targets for the basic mode
 
     //Attribute for the response
     private String targetBasicModeSquare;//Target chosen for the basic mode
@@ -24,19 +22,17 @@ public class RequestHellion extends WeaponWithModeAlternative
     private String targetAlternativeModeSquare;//Target chosen for the alternative mode
     private ColorId targetAlternativeModePlayer;
 
-    private HashMap<String, ColorId> targetBasicMode = new HashMap<>();
-    private HashMap<String, ColorId> targetAlternativeMode = new HashMap<>();
+    private ColorId targetBasicMode;
+    private ColorId targetAlternativeMode;
 
 
 
-    public RequestHellion(boolean[] avaiableMethod, List<String> squaresBasicMode, List<ColorId> playersBasicMode, List<String> squaresAlternativeMode, List<ColorId> playersAlterativeMode)
+    public RequestHellion(boolean[] avaiableMethod, HashMap<String, List<ColorId>> hashMapBasicMode, HashMap<String, List<ColorId>> hashMapNanoTracerMode)
     {
         this.avaiableMethod = avaiableMethod;
         this.nameAlternaivemode = "modalità nano-traccianti";
-        this.squaresBasicMode = squaresBasicMode;
-        this.playersBasicMode = playersBasicMode;
-        this.squaresAlternativeMode = squaresAlternativeMode;
-        this.playersAlterativeMode = playersAlterativeMode;
+        this.hashMapBasicMode = hashMapBasicMode;
+        this.hashMapNanoTracerMode = hashMapNanoTracerMode;
         responseIsReady = false;
     }
 
@@ -60,7 +56,7 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<String> stringSquaresList = squaresBasicMode;
+        List<String> stringSquaresList = (List) hashMapBasicMode.keySet();
 
         System.out.println("Scegli una stanza bersaglio:");
 
@@ -79,7 +75,7 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<ColorId> colorIdList = playersBasicMode;
+        List<ColorId> colorIdList = hashMapBasicMode.get(targetBasicModeSquare);
 
         System.out.println("Scegli un player bersaglio:");
 
@@ -101,9 +97,8 @@ public class RequestHellion extends WeaponWithModeAlternative
         inputBasicModeSquare();
         inputBasicModePlayer();
 
-        targetBasicMode.put(targetBasicModeSquare, targetBasicModePlayer);
+        targetBasicMode = targetBasicModePlayer;
         responseIsReady = true;
-        //todo funziona??
     }
 
 
@@ -111,7 +106,7 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<String> stringSquaresList = squaresAlternativeMode;
+        List<String> stringSquaresList = (List) hashMapNanoTracerMode.keySet();
 
         System.out.println("Scegli una stanza bersaglio:");
 
@@ -130,7 +125,7 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<ColorId> colorIdList = playersAlterativeMode;
+        List<ColorId> colorIdList = hashMapNanoTracerMode.get(targetAlternativeModeSquare);
 
         System.out.println("Scegli un player bersaglio:");
 
@@ -151,7 +146,7 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
        inputAlternativeModeSquare();
        inputAlternativeModePlayer();
-       targetAlternativeMode.put(targetAlternativeModeSquare,targetAlternativeModePlayer);
+       targetAlternativeMode = targetAlternativeModePlayer;
 
        responseIsReady = true;
     }

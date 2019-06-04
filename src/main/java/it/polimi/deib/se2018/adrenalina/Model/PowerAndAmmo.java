@@ -35,12 +35,11 @@ public class PowerAndAmmo implements AmmoTiles
      * @param secondSingleAmmo indicates the second ammo drawn
      *                         //todo document
      */
-    public PowerAndAmmo(int ammoCardID, Color singleAmmo, Color secondSingleAmmo, PowerUpCard powerUpCard)
+    public PowerAndAmmo(int ammoCardID, Color singleAmmo, Color secondSingleAmmo)
     {
         this.ammoCardID=ammoCardID;
         this.singleAmmo=singleAmmo;
         this.secondSingleAmmo=secondSingleAmmo;
-        this.powerUpCard = powerUpCard;
 
     }
 

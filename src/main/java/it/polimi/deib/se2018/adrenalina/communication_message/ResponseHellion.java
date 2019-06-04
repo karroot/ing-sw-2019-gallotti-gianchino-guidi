@@ -11,11 +11,11 @@ import java.util.Map;
  */
 public class ResponseHellion extends ResponseInput
 {
-    private HashMap<String, ColorId> targetBasicMode = new HashMap<>();
-    private HashMap<String, ColorId> targetAlternativeMode = new HashMap<>();
+    private ColorId targetBasicMode;
+    private ColorId targetAlternativeMode;
     boolean mode;
 
-    public ResponseHellion (HashMap<String, ColorId> targetBasicMode, HashMap<String, ColorId> targetAlternativeMode)
+    public ResponseHellion (ColorId targetBasicMode, ColorId targetAlternativeMode)
     {
         if (targetBasicMode != null)
         {
@@ -31,11 +31,11 @@ public class ResponseHellion extends ResponseInput
 
     }
 
-    public HashMap<String, ColorId> getTargetBasicMode() {
+    public ColorId getTargetBasicMode() {
         return targetBasicMode;
     }
 
-    public HashMap<String, ColorId> getTargetAlternativeMode() {
+    public ColorId getTargetAlternativeMode() {
         return targetAlternativeMode;
     }
 

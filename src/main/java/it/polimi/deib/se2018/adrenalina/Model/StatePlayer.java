@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +76,18 @@ public abstract class StatePlayer {
         }
 
         return reloadableWeapons;
+    }
+
+    public List<String> runAroundString (Set<Square> squareSet)
+    {
+        List<String> stringList = new ArrayList<>();
+
+        for (Square squareIterate : squareSet)
+        {
+            stringList.add(squareIterate.toStringCoordinates());
+        }
+
+        return stringList;
     }
 
 

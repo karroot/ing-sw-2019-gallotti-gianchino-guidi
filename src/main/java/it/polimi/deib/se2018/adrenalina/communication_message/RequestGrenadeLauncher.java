@@ -115,6 +115,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         if (choice == 2)//If the user has chosen no
         {
+            targetSquareToMoveBasicModeAsString=null;
             return;
         }
 
