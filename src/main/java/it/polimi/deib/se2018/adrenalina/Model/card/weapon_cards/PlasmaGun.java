@@ -5,6 +5,8 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestPlasmaGun;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePlasmaGun;
 
@@ -42,7 +44,10 @@ public class PlasmaGun extends WeaponCard
         }
 
     }
-
+    public RequestInput getRequestMessage()
+    {
+        return new RequestPlasmaGun(checkAvaliableMode(),checkAllTarget(),checkPhaseGlide(),player.getSquare().getX(),player.getSquare().getY());
+    }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
@@ -77,29 +82,7 @@ public class PlasmaGun extends WeaponCard
         return avaiableMethod;
 
     }
-    /**
-     * Return the list of all target available for using the basic mode of this weapon
-     * @return all player that can be affected with the lock rifle in basic mode
-     * @throws IllegalStateException
-     */
-    public List<ColorId> checkBasicMode() throws IllegalStateException
-    {
-        if (!checkAvaliableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        List<ColorId> playerList = new LinkedList<>();
-        for ( Player p :  player.playerThatSee(player.getSquare().getGameBoard()))
-        {
-            if(!p.equals(player))
-                playerList.add(p.getColor());
-        }
-
-
-
-        return playerList;//Returns all targets
-
-
-    }
 
     /**
      * It uses the basic mode of the PlasmaGun

@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestMachineGun;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun;
 
@@ -37,6 +39,7 @@ public class MachineGun extends WeaponCard
                 ((ResponseMachineGun) responseMessage).getTargetBasicModeSecond(),
                 ((ResponseMachineGun) responseMessage).getTargetAdditionalMode(),
                 ((ResponseMachineGun) responseMessage).getTargetSecondAdditionalMode(),
+                ((ResponseMachineGun) responseMessage).getTargetSecondAdditionalModeSecond(),
                 ((ResponseMachineGun) responseMessage).isMode(),
                 ((ResponseMachineGun) responseMessage).isSecondMode(),
                 ((ResponseMachineGun) responseMessage).isAddDamage()
@@ -44,7 +47,10 @@ public class MachineGun extends WeaponCard
 
     }
 
-
+    public RequestInput getRequestMessage()
+    {
+        return new RequestMachineGun(checkAvaliableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
+    }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 3 the first represent the basic mode the second and third the alternative mode
@@ -64,7 +70,7 @@ public class MachineGun extends WeaponCard
             avaiableMethod[0] = true;
 
 
-        if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>2)
+        if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             avaiableMethod[2] = true;
 
         if (isLoaded()&& player.getAmmoYellow()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
@@ -99,16 +105,17 @@ public class MachineGun extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param colorPlayer1 player affected by weapon, is also the player of the focushotmode
-     * @param colorPlayerdamaged  player that get the additional damage
+     * @param colorPlayerdamaged  player that get the additional damage of turret tripode
+     * @param colorPlayerGreen alternative player chosen by turret tripode mode
      * @param colorPlayer2 player affected by weapon
-     * @param  colorPlayer3 player affected by turret tripod , it can be null
+     * @param  colorPlayer3 player affected by focus shoot,it can be null
      * @param  FocusShotcMode if true indicate to use focus shot
      * @param  TurretTripode if true indicate to use turret tripode
      * @param addDamage if true indicate to add one damage to playerDamaged , it can be null
      * @exception IllegalStateException if the basic mode can't be used
      * @exception IllegalArgumentException if basicMode revice wrong player's input
      */
-    public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, ColorId colorPlayerdamaged, boolean FocusShotcMode, boolean TurretTripode, boolean addDamage) throws IllegalArgumentException,IllegalStateException
+    public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, ColorId colorPlayerGreen, ColorId colorPlayerdamaged, boolean FocusShotcMode, boolean TurretTripode, boolean addDamage) throws IllegalArgumentException,IllegalStateException
     {
 
         if (FocusShotcMode)
@@ -116,7 +123,7 @@ public class MachineGun extends WeaponCard
                 if (!checkAvaliableMode()[1])
                     throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
         if (TurretTripode)
@@ -124,16 +131,16 @@ public class MachineGun extends WeaponCard
             if (!checkAvaliableMode()[2])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-            if (colorPlayer3==null && !addDamage)
+            if (colorPlayerGreen==null && !addDamage)
                 throw new IllegalArgumentException("Mode: "+ name + " select at least one between damage player1 or damage player 3");//If this card doesn't belong at a player launch exception
 
-            if (colorPlayer3!=null)
+            if (colorPlayerGreen!=null)
             {
-                if (colorPlayer3.equals(colorPlayer2) || colorPlayer3.equals(colorPlayer1))
+                if (colorPlayerGreen.equals(colorPlayer2) || colorPlayerGreen.equals(colorPlayer1))
                 {
                     throw new IllegalArgumentException("player3 must be different from player2 and player1");
                 }
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerGreen)).collect(Collectors.toList()).get(0),1);
             }
             if (addDamage)
             {
@@ -171,9 +178,9 @@ public class MachineGun extends WeaponCard
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
-        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        for (ColorId p : checkBasicMode() )
         {
-            playerList.add(p.getColor());
+            playerList.add(p);
         }
 
 

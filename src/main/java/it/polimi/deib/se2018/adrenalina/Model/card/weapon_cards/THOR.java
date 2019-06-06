@@ -3,9 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseTHOR;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseTractatorBeam;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +46,10 @@ public class THOR extends WeaponCard
             basicMode(((ResponseTHOR) responseMessage).getTargetBasicMode(), ((ResponseTHOR) responseMessage).getTargetAdditionalMode(),((ResponseTHOR) responseMessage).getTargetSecondAdditionalMode(),true,true);
 
     }
-
+    public RequestInput getRequestMessage()
+    {
+        return new RequestTHOR(checkAvaliableMode(),checkBasicMode(),checkChainReaction(),checkHighVoltage());
+    }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 3 the first represent the basic mode the second the alternative mode the third the final alternative mode

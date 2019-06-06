@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestElectroSchyte;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseElectroSchyte;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
@@ -39,7 +41,10 @@ public class EletroSchyte extends WeaponCard
         else
             basicMode(((ResponseElectroSchyte) responseMessage).getTargetBasicMode());
     }
-
+    public RequestInput getRequestMessage()
+    {
+        return new RequestElectroSchyte(checkAvaliableMode(),checkBasicMode(),checkReaper());
+    }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode

@@ -44,6 +44,10 @@ public abstract class WeaponCard extends Card
         this.isLoaded = isLoaded;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public int getRedAmmoCost()
     {
         return redAmmoCost;

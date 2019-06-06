@@ -3,9 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseLockRifle;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,7 +32,10 @@ public class LockRifle extends WeaponCard
     public void useWeapon(ResponseInput responseMessage) {
         basicMode(((ResponseLockRifle) responseMessage).getTargetBasicMode(),((ResponseLockRifle) responseMessage).getTargetsAdditionalMode(),((ResponseLockRifle) responseMessage).isMode());
     }
-
+    public RequestInput getRequestMessage()
+    {
+        return new RequestLockRifle(checkAvaliableMode(),checkBasicMode(),checkSecondLock());
+    }
 
     /**
      * Check which modes of the weapon can be used by player that has this weapon
