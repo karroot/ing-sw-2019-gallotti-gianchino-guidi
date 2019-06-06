@@ -644,7 +644,7 @@ public class Player
     }
 
 
-    public  Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
+    public  Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard) // solo grab null
     {
         return state.lookForGrabStuff(player,gameBoard);
     }
@@ -750,7 +750,24 @@ public class Player
 
     }
 
-
+    /**
+     * check if player can grab a weapon
+     * @param wc weapon to check if can be grab
+     * @return true if it can be grab, false if not
+     */
+    public boolean checkGrabbable( WeaponCard wc)
+    {
+        if(wc.getColor().equals(Color.BLUE))
+            if(this.getAmmoBlue()>= wc.getBlueAmmoCost()-1 && this.getAmmoYellow() >= wc.getYellowAmmoCost() && this.getAmmoRed()>=wc.getRedAmmoCost())
+                return true;
+        if(wc.getColor().equals(Color.RED))
+            if(this.getAmmoBlue()>= wc.getBlueAmmoCost() && this.getAmmoYellow() >= wc.getYellowAmmoCost() && this.getAmmoRed()>=wc.getRedAmmoCost()-1)
+                return true;
+        if(wc.getColor().equals(Color.YELLOW))
+            if(this.getAmmoBlue()>= wc.getBlueAmmoCost() && this.getAmmoYellow() >= wc.getYellowAmmoCost()-1 && this.getAmmoRed()>=wc.getRedAmmoCost())
+                return true;
+    return false;
+    }
     //  Increments of one the counter that represent the number of death of player
 
     private void incrementDeathsCount()

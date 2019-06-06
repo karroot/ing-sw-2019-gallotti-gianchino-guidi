@@ -53,38 +53,43 @@ public class PowerAndAmmo implements AmmoTiles
     public void useAmmoTilesCards(Player player) {
         // The logic behind the method is the following: I check in the order RED, YELLOW, BLUE if the color matches the attribute of the class.
         // If it matches I will ++ the same color attribute the the player ammostack.
-
         if (singleAmmo == Color.RED)
         {
-            player.setAmmoRed(player.getAmmoRed()+1);
+            if(player.getAmmoRed()<3)
+                player.setAmmoRed(player.getAmmoRed()+1);
         }
         else if (singleAmmo == Color.YELLOW)
         {
-            player.setAmmoYellow(player.getAmmoYellow()+1);
+            if(player.getAmmoYellow()<3)
+                player.setAmmoYellow(player.getAmmoYellow()+1);
         }
         else if (singleAmmo == Color.BLUE)
         {
-            player.setAmmoBlue(player.getAmmoBlue()+1);
+            if(player.getAmmoBlue()<3)
+                player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
         // I repeat the same logic for the second ammo of the class.
 
         if (secondSingleAmmo == Color.RED)
         {
-            player.setAmmoRed(player.getAmmoRed()+1);
+            if(player.getAmmoRed()<3)
+                player.setAmmoRed(player.getAmmoRed()+1);
         }
         else if (secondSingleAmmo == Color.YELLOW)
         {
-            player.setAmmoYellow(player.getAmmoYellow()+1);
+            if(player.getAmmoYellow()<3)
+                player.setAmmoYellow(player.getAmmoYellow()+1);
         }
         else if (secondSingleAmmo == Color.BLUE)
         {
-            player.setAmmoBlue(player.getAmmoBlue()+1);
+            if(player.getAmmoBlue()<3)
+                player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
         if (player.getPowerupCardList().size() < 3)
         {
-            player.addPowerUp(powerUpCard);
+            player.addPowerUp(player.getSquare().getGameBoard().drawPowerUpCard());
         }
     }
 

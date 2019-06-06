@@ -38,30 +38,36 @@ public class JustAmmo implements AmmoTiles
 
         if (singleAmmo == Color.RED)
         {
-            player.setAmmoRed(player.getAmmoRed()+1);
+            if(player.getAmmoRed()<3)
+                player.setAmmoRed(player.getAmmoRed()+1);
         }
         else if (singleAmmo == Color.YELLOW)
         {
-            player.setAmmoYellow(player.getAmmoYellow()+1);
+            if(player.getAmmoYellow()<3)
+                player.setAmmoYellow(player.getAmmoYellow()+1);
         }
         else if (singleAmmo == Color.BLUE)
         {
-            player.setAmmoBlue(player.getAmmoBlue()+1);
+            if(player.getAmmoBlue()<3)
+                player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
         // I repeat the same logic for the second pair of ammo of the class.
 
         if (doubleAmmo == Color.RED)
         {
-            player.setAmmoRed(player.getAmmoRed()+2);
+            if(player.getAmmoRed()<2)
+                player.setAmmoRed(player.getAmmoRed()+2);
         }
         else if (doubleAmmo == Color.YELLOW)
         {
-            player.setAmmoYellow(player.getAmmoYellow()+2);
+            if(player.getAmmoYellow()<2)
+                player.setAmmoYellow(player.getAmmoYellow()+2);
         }
         else if (doubleAmmo == Color.BLUE)
         {
-            player.setAmmoBlue(player.getAmmoBlue()+2);
+            if(player.getAmmoBlue()<2)
+                player.setAmmoBlue(player.getAmmoBlue()+2);
         }
     }
 
