@@ -9,10 +9,10 @@ import java.util.List;
 public class RequestRespawn extends  RequestInput
 {
     //Attribute for the request
-    protected List<Color> playerPowerUp;//Targets for the basic mode
+    protected List<Color> playerPowerUp;
 
     //Attribute for the response
-    protected int targetSpawnPoint;//Target chosen for the basic mode
+    protected int targetSpawnPoint;
 
 
 

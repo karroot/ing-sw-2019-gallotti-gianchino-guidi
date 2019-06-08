@@ -1,9 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Controller;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
@@ -22,8 +20,9 @@ public class Controller implements Observer<ResponseInput>
     private Model model;
     private View virtualView;
     private ResponseInput msg;
+
     Player roundPlayer= new Player(ColorId.BLUE,"prova",null,true);
-    Map<ColorId, List<ColorId>> roundDamageList = new HashMap<>();
+    Map<ColorId, List<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che hanno attaccato il giocatore rappresentato da ColorId
 
     boolean firstRound=true;
     //Controller deve avere un riferimento alla virtual view
@@ -41,8 +40,19 @@ public class Controller implements Observer<ResponseInput>
 
     }
 
-private boolean checkBooleanArray(boolean[] arr)
-{
+
+
+    // AUXILIARY FUNCTIONS
+
+
+
+    /**
+     * auxiliary function to check if a boolean array has at least one available mode
+     * @param arr
+     * @return
+     */
+    private boolean checkBooleanArray(boolean[] arr)
+    {
     for(boolean i : arr)
     {
         if (i)
@@ -52,39 +62,45 @@ private boolean checkBooleanArray(boolean[] arr)
 return false;
 }
 
-private List<String> changeToList (Set<Square> squareSet)
-{
-    List<String> stringList = new ArrayList<>();
-
-    for (Square squareIterate : squareSet)
+    /**
+     * auxiliary function to change a set of square into a list of square
+     * @param squareSet the set of square that wfrom wich we take the square
+     * @return a list of squares
+     */
+    private List<String> changeToList (Set<Square> squareSet)
     {
-        stringList.add(squareIterate.toStringCoordinates());
+        List<String> stringList = new ArrayList<>();
+
+        for (Square squareIterate : squareSet)
+        {
+            stringList.add(squareIterate.toStringCoordinates());
+        }
+
+        return stringList;
     }
 
-    return stringList;
-}
+
+
+    // END OF AUXILIARY FUNCTIONS
 
 
 
-
-    public void askForTeleport() throws InterruptedException, ExecutionException {
-        boolean isTp = false;
-        for (PowerUpCard pc : roundPlayer.getPowerupCardList() )
+    public void askForPowerUpTeleportOrNewton() throws InterruptedException, ExecutionException
+    {
+        boolean vuota=false;
+        List<String> powerUpList = new LinkedList<>();
+        for (PowerUpCard pc : roundPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
         {
-            if (pc.getIdPU() == 211 || pc.getIdPU() == 212 || pc.getIdPU() == 213 )
-                isTp = true;
+            if(pc.getName().equals("Raggio Cinetico") || pc.getName().equals("Teletrasporto"))
+                powerUpList.add(pc.powerToString());
         }
-        if (isTp) // se ha almeno un teleport chiedi se vuole usarlo
-        {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>()
-            {
+        if (powerUpList.isEmpty())
+            vuota = true;
+        if (!vuota) {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    List<String> powerUpList = new LinkedList<>();
-                    for (PowerUpCard pc : roundPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
-                    {
-                        powerUpList.add(pc.powerToString());
-                    }
+
                     virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
@@ -101,17 +117,701 @@ private List<String> changeToList (Set<Square> squareSet)
             if (!s) {
                 // fai saltare turno
             }
-            ResponsePowerUp choice = (ResponsePowerUp) msg;
+            //if(msg instanceof afk ) fai saltare il turno
+
+            ResponsePowerUp risp = (ResponsePowerUp) msg;
 
 
-            if (roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU() == 211 ||
-                    roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU() == 212 ||
-                    roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU() == 213) {
-                Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+            for (String pc : risp.gechosenPowerUpList()) {
+                if (pc.equals("Teletrasporto:BLUE") || pc.equals("Teletrasporto:YELLOW") || pc.equals("Teletrasporto:RED")) {
+                    askForTeleport(pc);
+                }
+
+                if (pc.equals("Raggio Cinetico:BLUE") || pc.equals("Raggio Cinetico:YELLOW") || pc.equals("Raggio Cinetico:RED")) {
+                    askForNewton(pc);
+                }
+            }
+            // invia messaggio fine ciclo
+            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    virtualView.requestInput(new End(), roundPlayer.getColor()); // invia stringa a seconda dello stato
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean end = fine.get();
+            if (!end) {
+                // fai saltare turno
+            }
+
+        }
+        else
+        {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+        }
+    }
+
+
+    public void askForTeleport(String choice) throws InterruptedException, ExecutionException
+    {
+        Teleporter tele=null;
+                    Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+
+                            virtualView.requestInput(new RequestTeleporter(roundPlayer.getSquare().getGameBoard(), roundPlayer), roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                            return true;
+                        }
+                    });
+
+                    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+                    {
+
+                    }
+
+                    Boolean ric = rich.get();
+                    if (!ric) {
+                        // fai saltare turno
+                    }
+        //if(msg instanceof afk ) fai saltare il turno
+
+        ResponseTeleporter sq = (ResponseTeleporter) msg;
+
+
+        for (PowerUpCard cardtp : roundPlayer.getPowerupCardList() )
+        {
+            int i=0;
+            if(cardtp.powerToString().equals(choice)){
+                tele = (Teleporter) roundPlayer.usePowerUp(i);
+            }
+            i++;
+        }
+
+                    tele.usePowerUp(sq.getX(), sq.getY());
+
+        }
+
+
+
+
+    public void askForNewton(String choice) throws InterruptedException, ExecutionException {
+        int index=0;
+        Newton card=null;
+        for (PowerUpCard cardtp : roundPlayer.getPowerupCardList() )
+        {
+            int i=0;
+            if(cardtp.powerToString().equals(choice)){
+                index = i;
+                card= (Newton)cardtp;
+            }
+            i++;
+        }
+        Newton finalCard = card;
+        Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+
+                virtualView.requestInput(new RequestNewton(finalCard.checkMoveTarget(roundPlayer.getSquare().getGameBoard())), roundPlayer.getColor()); // come gli passo la richiesta ?
+                virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                return true;
+            }
+        });
+
+        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        {
+
+        }
+
+        Boolean ric = rich.get();
+        if (!ric) {
+            // fai saltare turno
+        }
+        //if(msg instanceof afk ) fai saltare il turno
+
+        ResponseNewton sq = (ResponseNewton) msg;
+
+
+        Player target=null;
+        for(Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer())
+        {
+            if (p.getColor().equals(sq.getTarget()))
+                target=p;
+        }
+        roundPlayer.usePowerUp(index);
+        card.usePowerUp(target,sq.getX(),sq.getY());
+
+        //aggiungi a pila scarti
+
+    }
+
+    public void askForPowerUpTargettingScope() throws InterruptedException, ExecutionException {
+        boolean vuota=false;
+        List<String> powerUpList = new LinkedList<>();
+        for (PowerUpCard pc : roundPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
+        {
+            if(pc.getName().equals("Mirino"))
+                powerUpList.add(pc.powerToString());
+        }
+        if (powerUpList.isEmpty())
+            vuota = true;
+        if (!vuota) {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
+
+            ResponsePowerUp risp = (ResponsePowerUp) msg;
+
+
+            for (String pc : risp.gechosenPowerUpList()) {
+                if (pc.equals("Mirino:BLUE") || pc.equals("Mirino:YELLOW") || pc.equals("Mirino:RED")) {
+                    askForTeleport(pc);
+                }
+
+            }
+            // invia messaggio fine ciclo
+            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    virtualView.requestInput(new End(), roundPlayer.getColor()); // invia stringa a seconda dello stato
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean end = fine.get();
+            if (!end) {
+                // fai saltare turno
+            }
+
+        }
+        else
+        {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+        }
+    }
+
+
+    public void askForPowerUpTagBackGranade() throws InterruptedException, ExecutionException {
+        boolean vuota = false;
+        List<String> powerUpList = new LinkedList<>();
+        for (PowerUpCard pc : roundPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
+        {
+            if (pc.getName().equals("Granata  Venom"))
+                powerUpList.add(pc.powerToString());
+        }
+        if (powerUpList.isEmpty())
+            vuota = true;
+        if (!vuota) {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
+
+            ResponsePowerUp risp = (ResponsePowerUp) msg;
+
+
+            for (String pc : risp.gechosenPowerUpList()) {
+                if (pc.equals("Granata  Venom:BLUE") || pc.equals("Granata  Venom:YELLOW") || pc.equals("Granata  Venom:RED")) {
+                    askForTeleport(pc);
+                }
+
+            }
+            // invia messaggio fine ciclo
+            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    virtualView.requestInput(new End(), roundPlayer.getColor()); // invia stringa a seconda dello stato
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean end = fine.get();
+            if (!end) {
+                // fai saltare turno
+            }
+
+        } else {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+        }
+    }
+
+
+
+    public void askForTargettingScope(String choice) throws InterruptedException, ExecutionException {
+        int index=0;
+        TargettingScope card=null;
+        for (PowerUpCard cardtp : roundPlayer.getPowerupCardList() )
+        {
+            int i=0;
+            if(cardtp.powerToString().equals(choice)){
+                index = i;
+                card= (TargettingScope) cardtp;
+            }
+            i++;
+        }
+        TargettingScope finalCard = card;
+
+
+        Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+
+                virtualView.requestInput(new RequestTargettingScope(roundDamageList.get(finalCard.getPlayer()),finalCard.check()), roundPlayer.getColor());
+                virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                return true;
+            }
+        });
+
+        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        {
+
+        }
+
+        Boolean ric = rich.get();
+        if (!ric) {
+            // fai saltare turno
+        }
+        //if(msg instanceof afk ) fai saltare il turno
+
+        ResponseTargettingScope sq = (ResponseTargettingScope) msg;
+
+
+        TargettingScope scope = (TargettingScope) roundPlayer.usePowerUp();
+        scope.usePowerUp(sq.getTargetBasicMode(),sq.getTargetAmmo());
+        //aggiungi a pila scarti
+
+    }
+
+
+
+
+
+    public void drawPowerup(){
+        roundPlayer.addPowerUp(roundPlayer.getSquare().getGameBoard().getPowerUpCardStack().pop());
+    }
+
+
+
+    public void spawn(int index) throws InterruptedException, ExecutionException
+    {
+
+
+    PowerUpCard powercard = roundPlayer.usePowerUp(index);
+    Square resp= null;
+
+           if (powercard.getColor().equals(Color.BLUE)) {
+               try {
+                   resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(3,3);
+               } catch (SquareNotInGameBoard squareNotInGameBoard) {
+               }
+           }
+
+         if (powercard.getColor().equals(Color.YELLOW)) {
+             try {
+                 resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(4,1);
+             } catch (SquareNotInGameBoard squareNotInGameBoard) {
+             }
+         }
+         if (powercard.getColor().equals(Color.RED)) {
+             try {
+                 resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(1,2);
+             } catch (SquareNotInGameBoard squareNotInGameBoard) {
+             }
+         }
+
+         roundPlayer.setSquare(resp);
+         MethodsWeapons.moveTarget(roundPlayer,resp.getX(),resp.getY());
+
+
+
+        }
+
+
+
+
+
+    public void runAround() throws InterruptedException, ExecutionException
+    {
+        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception {
+            Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer,roundPlayer.getSquare().getGameBoard());
+
+                virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)),roundPlayer.getColor()); // invia stringa a seconda dello stato
+                virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                return true;
+            }
+        });
+
+        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        {
+
+        }
+
+        Boolean s = prova.get();
+        if (!s)
+        {
+            // fai saltare turno
+        }
+        //if(msg instanceof afk ) fai saltare il turno
+
+        ResponseRunAround response = (ResponseRunAround) msg;
+
+        int chosenSquareX = response.getX();
+        int chosenSquareY = response.getY();
+
+
+
+        // fai scegliere square respawn in base a carta powerup scelta
+
+    //g1.getRoomList().get()
+        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+
+
+    }
+
+
+    public void shotEnemy() throws InterruptedException, ExecutionException {
+        //FAI SCEGLIERE ARMA
+        boolean vuota = false;
+        List<WeaponCard> chargedWeapons = new LinkedList<>();
+        List<String> chargedWeaponsName = new LinkedList<>();
+        for (WeaponCard wc : roundPlayer.getWeaponCardList()) {
+            if (checkBooleanArray(wc.checkAvaliableMode()))
+                chargedWeapons.add(wc);
+        }
+
+        for (WeaponCard wc : chargedWeapons) {
+            chargedWeaponsName.add(wc.getName());
+        }
+        if (chargedWeaponsName.isEmpty())
+            vuota = true;
+        if (!vuota)
+        {
+                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+
                     @Override
                     public Boolean call() throws Exception {
 
-                        virtualView.requestInput(new RequestTeleporter(roundPlayer.getSquare().getGameBoard(), roundPlayer), roundPlayer.getColor());
+                        virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor()); // invia stringa a seconda dello stato
+
+                        virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                        return true;
+                    }
+                });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
+
+            ResponseShootPeople response = (ResponseShootPeople) msg;
+
+            WeaponCard weaponChosen = roundPlayer.getWeaponCardList().get(response.getChosenWeapon());
+
+            //USA ARMA
+
+            Future<Boolean> con = executor.submit(new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+
+                    //  virtualView.getRequestMessage(weaponChosen.getRequestMessage,roundPlayer.getColor()); // DA IMPLEMENTARE PER OGNI ARMA
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean resp = con.get();
+            if (!resp) {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
+
+            weaponChosen.useWeapon(msg);
+
+        }
+
+
+        else // invio lista vuota ma non aspetto nulla
+        {
+
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor()); // invia stringa a seconda dello stato
+
+
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s) {
+                // fai saltare turno
+            }
+
+
+        }
+    }
+
+
+    public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard
+    {
+    // A SECONDA DELLO STATO CHIEDI DI QUANTO VUOI MUOVERTI
+        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception {
+                Set<Square> squareToChange =roundPlayer.lookForGrabStuff(roundPlayer,roundPlayer.getSquare().getGameBoard());
+
+                virtualView.requestInput(new RequestGrabStuff(changeToList(squareToChange)),roundPlayer.getColor()); // invia stringa a seconda dello stato
+                virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                return true;
+            }
+        });
+
+        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        {
+
+        }
+
+        Boolean s = prova.get();
+        if (!s)
+        {
+            // fai saltare turno
+        }
+        //if(msg instanceof afk ) fai saltare il turno
+
+        ResponseGrabStuff response = (ResponseGrabStuff) msg; // mi ritorna un colore
+
+        int chosenSquareX = response.getX();
+        int chosenSquareY = response.getY();
+
+
+
+
+    // A SECONDA DEL CASO AMMO POINT O SPAWN POINT
+
+
+
+        if(roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY).isAmmoPoint())
+        {
+            // caso ammo point
+            AmmoPoint currentSquare = (AmmoPoint) roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY);
+            AmmoTiles currentAmmoTiles = currentSquare.getAmmoTiles();
+            currentAmmoTiles.useAmmoTilesCards(roundPlayer);
+        }
+
+
+        if(roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY).isSpawnPoint())
+        {
+            // caso spawn point, chiedi quale arma vuoi prendere tra quelle prendibili
+            SpawnPoint currentSquare = (SpawnPoint) roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY);
+            List<WeaponCard> currentWeaponList = currentSquare.getWeaponCardList();
+            List<String> weaponsName = new LinkedList<>();
+            for (WeaponCard wc : currentWeaponList)
+            {
+                if(roundPlayer.checkGrabbable(wc)) // controllo se l'arma è prendibili
+                    weaponsName.add(wc.getName());
+            }
+
+
+            Future<Boolean> seconda = executor.submit(new Callable<Boolean>()
+            {
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestShootPeople(weaponsName),roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean valid = seconda.get();
+            if (!valid)
+            {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
+
+            ResponseShootPeople res = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI
+
+            WeaponCard chosenWeapon = currentWeaponList.get(res.getChosenWeapon()); // arma scelta
+
+            //se hai meno di 3 armi aggiungila e basta
+            if(roundPlayer.getWeaponCardList().size()<3)
+                roundPlayer.addWeapon(chosenWeapon);
+
+
+
+            else
+            { //se ha già 3 armi chiedo con quale arma vuole sostituirla
+
+                List<WeaponCard> playerCurrentWeaponList = currentSquare.getWeaponCardList();
+                List<String> playerWeaponsName = new LinkedList<>();
+                for (WeaponCard wc : playerCurrentWeaponList)
+                {
+                    playerWeaponsName.add(wc.getName());
+                }
+
+
+                Future<Boolean> terza = executor.submit(new Callable<Boolean>()
+                {
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        virtualView.requestInput(new RequestShootPeople(playerWeaponsName),roundPlayer.getColor());
                         virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                         return true;
@@ -123,189 +823,141 @@ private List<String> changeToList (Set<Square> squareSet)
 
                 }
 
-                Boolean ric = rich.get();
-                if (!ric) {
+                Boolean corretta = terza.get();
+                if (!corretta)
+                {
                     // fai saltare turno
                 }
-                ResponseTeleporter sq = (ResponseTeleporter) msg;
+                //if(msg instanceof afk ) fai saltare il turno
+
+                ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
+
+                WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon()); // arma scelta
+
+                roundPlayer.changeWeapon(chosenWeapon,weaponToChange.getName());
+
+                currentSquare.swapWeapon(weaponToChange,chosenWeapon);
+            }
+            chosenWeapon.setPlayer(roundPlayer);
+
+        }
+        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+    }
+
+    public void reload() throws InterruptedException, ExecutionException
+    {
+
+           List<WeaponCard> chargableWeapons =  roundPlayer.checkReload(roundPlayer);
+        String chargableWeaponName=null;
+        for (WeaponCard wc : chargableWeapons)
+        {
+            if(roundPlayer.checkReload(roundPlayer).contains(wc)) // controllo se l'arma è ancora ricaricabile dopo l'azione eseguita dal player
+            {
+                chargableWeaponName = (wc.getName());
 
 
-                Teleporter tele = (Teleporter) roundPlayer.usePowerUp(choice.getTargetBasicMode());
-                tele.usePowerUp(sq.getX(), sq.getY());
+                String finalChargableWeaponName = chargableWeaponName;
+                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        virtualView.requestInput(new RequestReloadWeapon(finalChargableWeaponName), roundPlayer.getColor()); // invia stringa a seconda dello stato
+                        virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                        return true;
+                    }
+                });
+
+                while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+                {
+
+                }
+
+                Boolean s = prova.get();
+                if (!s) {
+                    // fai saltare turno
+                }
+//if(msg instanceof afk ) fai saltare il turno
+
+                ResponseReloadWeapon response = (ResponseReloadWeapon) msg;
+
+                if (response.getTargetWeaponToReload() == 1) {
+                    wc.setLoaded(true);
+                    roundPlayer.setAmmoYellow(roundPlayer.getAmmoYellow() - wc.getYellowAmmoCost());
+                    roundPlayer.setAmmoRed(roundPlayer.getAmmoRed() - wc.getRedAmmoCost());
+                    roundPlayer.setAmmoBlue(roundPlayer.getAmmoBlue() - wc.getBlueAmmoCost());
+                }
 
             }
+
         }
-
-    }
-
-
-
-
-
+        // invia messaggio fine ciclo
+        Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                virtualView.requestInput(new End(), roundPlayer.getColor()); // invia stringa a seconda dello stato
 
 
+                return true;
+            }
+        });
 
-
- public void spawna(int index) throws InterruptedException, ExecutionException {
-
-       /* // pesca carta powerup riciclale per fare metodo pesca powerup
-        roundPlayer.addPowerUp(roundPlayer.getSquare().getGameBoard().getPowerUpCardStack().pop());
-        roundPlayer.addPowerUp(roundPlayer.getSquare().getGameBoard().getPowerUpCardStack().pop());
-        List<Color> powerUpColorList = new LinkedList<>();
-        for (PowerUpCard powerc : roundPlayer.getPowerupCardList())
+        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
         {
-            powerUpColorList.add(powerc.getColor());
-        } */
 
-PowerUpCard powercard = roundPlayer.usePowerUp(index);
-Square resp= null;
-
-       if (powercard.getColor().equals(Color.BLUE)) {
-           try {
-               resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(3,3);
-           } catch (SquareNotInGameBoard squareNotInGameBoard) {
-           }
-       }
-
-     if (powercard.getColor().equals(Color.YELLOW)) {
-         try {
-             resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(4,1);
-         } catch (SquareNotInGameBoard squareNotInGameBoard) {
-         }
-     }
-     if (powercard.getColor().equals(Color.RED)) {
-         try {
-             resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(1,2);
-         } catch (SquareNotInGameBoard squareNotInGameBoard) {
-         }
-     }
-
-     roundPlayer.setSquare(resp);
-     MethodsWeapons.moveTarget(roundPlayer,resp.getX(),resp.getY());
-
-
-
-    }
-
-
-
-
-
-public void runAround() throws InterruptedException, ExecutionException {
-    Future<Boolean> prova = executor.submit(new Callable<Boolean>()
-    {
-        @Override
-        public Boolean call() throws Exception {
-        Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer,roundPlayer.getSquare().getGameBoard());
-
-            virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)),roundPlayer.getColor()); // invia stringa a seconda dello stato
-            virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-            return true;
         }
-    });
 
-    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-    {
-
-    }
-
-    Boolean s = prova.get();
-    if (!s)
-    {
-        // fai saltare turno
-    }
-    ResponseRunAround response = (ResponseRunAround) msg; // mi ritorna un colore
-
-    int chosenSquareX = response.getX();
-    int chosenSquareY = response.getY();
-
-
-
-    // fai scegliere square respawn in base a carta powerup scelta
-
-//g1.getRoomList().get()
-    MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
-
-
-}
-
-
-public void shotEnemy() throws InterruptedException, ExecutionException {
-    List<WeaponCard> chargedWeapons = new LinkedList<>();
-    List<String> chargedWeaponsName = new LinkedList<>();
-    for (WeaponCard wc : roundPlayer.getWeaponCardList())
-    {
-        if (checkBooleanArray(wc.checkAvaliableMode()))
-            chargedWeapons.add(wc);
-    }
-
-    for (WeaponCard wc : chargedWeapons)
-    {
-        chargedWeaponsName.add(wc.getName());
-    }
-
-    Future<Boolean> prova = executor.submit(new Callable<Boolean>()
-    {
-
-        @Override
-        public Boolean call() throws Exception {
-
-            virtualView.requestInput(new RequestShootPeople(chargedWeaponsName),roundPlayer.getColor()); // invia stringa a seconda dello stato
-            virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-            return true;
+        Boolean end = fine.get();
+        if (!end) {
+            // fai saltare turno
         }
-    });
-
-    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-    {
 
     }
 
-    Boolean s = prova.get();
-    if (!s)
-    {
-        // fai saltare turno
-    }
-    ResponseShootPeople response = (ResponseShootPeople) msg; // mi ritorna indice arma scelta
+    public void askForTagBackGranade(ResponsePowerUp choice) throws InterruptedException, ExecutionException {
+        if(roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 22 || // aggiungi gli altri se necessari
+                roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 23 ||
+                roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 24 )
+        {
+            Future<Boolean> rich = executor.submit(new Callable<Boolean>()
+            {
+                @Override
+                public Boolean call() throws Exception {
 
+                    virtualView.requestInput(new RequestTagbackGranade(roundDamageList.get(roundPlayer.getColor())),roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-   WeaponCard weaponChosen = roundPlayer.getWeaponCardList().get(response.getTargetBasicMode());
+                    return true;
+                }
+            });
 
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
 
+            }
 
-    Future<Boolean> con = executor.submit(new Callable<Boolean>()
-    {
+            Boolean ric = rich.get();
+            if (!ric)
+            {
+                // fai saltare turno
+            }
+            //if(msg instanceof afk ) fai saltare il turno
 
-        @Override
-        public Boolean call() throws Exception {
+            ResponseTagbackGranade  response = (ResponseTagbackGranade) msg;
 
-          //  virtualView.requestInput(weaponChosen.getRequestMessage,roundPlayer.getColor()); // invia stringa a seconda dello stato
-            virtualView.getResponseWithInputs(roundPlayer.getColor());
+            for ( Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer() )
+            {
+                if (p.getColor().equals((response.getTargetBasicMode())))
+                {
 
-            return true;
+                    TagbackGranade granade = (TagbackGranade) roundPlayer.usePowerUp(choice.getChosenPowerUpList()); //remove powerup from the player and return the powerup to granade
+                    granade.usePowerUp(p);//use the effect of the granade
+                }
+            }
+
         }
-    });
 
-    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-    {
-
+        roundDamageList.remove(roundPlayer.getColor());
     }
-
-    Boolean resp = con.get();
-    if (!resp)
-    {
-        // fai saltare turno
-    }
-weaponChosen.useWeapon(msg);
-}
-
-
-
-
-
-
 
     public void inizialization()
     {
@@ -336,7 +988,7 @@ weaponChosen.useWeapon(msg);
 
 
         //chiedere se vuole usare powerup ( tra ogni azione teleport) come loop (ovvero chiedo ogni volta)
-        askForTeleport();
+
 
 
         // chiedere se vuole saltare come loop (ovvero chiedo ogni volta) ragiona con ragazzi su come fare
@@ -400,49 +1052,7 @@ weaponChosen.useWeapon(msg);
 
 // controllo per tagbackgranade
 
-/*
-        if(roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU()== 22 || // da sistemare per condizioni presenti alla fine del turno
-                roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU()== 23 ||
-                roundPlayer.getPowerupCardList().get(choice.getTargetBasicMode()).getIdPU()== 24 )
-        {
-            Future<Boolean> rich = executor.submit(new Callable<Boolean>()
-            {
-                @Override
-                public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestTagbackGranade(roundDamageList.get(roundPlayer.getColor())),roundPlayer.getColor());
-                    virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-                    return true;
-                }
-            });
-
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-            {
-
-            }
-
-            Boolean ric = rich.get();
-            if (!ric)
-            {
-                // fai saltare turno
-            }
-            ResponseTagbackGranade  response = (ResponseTagbackGranade) msg;
-
-            for ( Player p : g1.getAllPlayer() )
-            {
-                if (p.getColor().equals((response.getTargetBasicMode())))
-                {
-
-                    TagbackGranade granade = (TagbackGranade) roundPlayer.usePowerUp(choice.getTargetBasicMode());
-                    granade.usePowerUp(p);
-                }
-            }
-
-        }
-
-        roundDamageList.remove(roundPlayer.getColor());
-*/
 
     }
 

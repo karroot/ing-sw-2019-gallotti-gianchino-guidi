@@ -69,7 +69,7 @@ public abstract class StatePlayer {
          */
         for (WeaponCard weaponCard: player.getWeaponCardList())
         {
-            if (weaponCard.getBlueAmmoCost()<=player.getAmmoBlue() && weaponCard.getRedAmmoCost()<=player.getAmmoRed() && weaponCard.getYellowAmmoCost()<=player.getAmmoYellow())
+            if (weaponCard.getBlueAmmoCost()<=player.getAmmoBlue() && weaponCard.getRedAmmoCost()<=player.getAmmoRed() && weaponCard.getYellowAmmoCost()<=player.getAmmoYellow() && !weaponCard.isLoaded())
             {
                 reloadableWeapons.add(weaponCard);
             }

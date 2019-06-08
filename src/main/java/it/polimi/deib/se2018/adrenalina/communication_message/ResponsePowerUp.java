@@ -2,18 +2,20 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
-public class ResponsePowerUp extends ResponseInput {
-    private int targetBasicMode;//Target for basic mode
+import java.util.List;
 
-    public ResponsePowerUp(int targetBasicMode) {
-        this.targetBasicMode = targetBasicMode;
+public class ResponsePowerUp extends ResponseInput {
+    private List<String> chosenPowerUpList ;//Target for basic mode
+
+    public ResponsePowerUp(List<String> chosenPowerUpList) {
+        this.chosenPowerUpList = chosenPowerUpList;
     }
 
     /**
      * @return get the index of the chosen powerup
      */
-    public int getTargetBasicMode()
+    public List<String> getChosenPowerUpList()
     {
-        return targetBasicMode;
+        return chosenPowerUpList;
     }
 }

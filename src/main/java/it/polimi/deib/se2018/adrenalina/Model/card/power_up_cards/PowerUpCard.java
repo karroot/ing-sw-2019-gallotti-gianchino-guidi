@@ -50,6 +50,10 @@ public abstract class PowerUpCard extends Card
         return idPU;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String powerToString()
     {
         return name+ ":" + color;

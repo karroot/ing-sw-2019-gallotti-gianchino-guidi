@@ -8,10 +8,10 @@ public class RequestRunAround extends RequestInput {
     private int x;
     private int y;
     //Attribute for the request
-    protected List<String> playersBasicMode;//Targets for the basic mode
+    private List<String> squareToChose;
 
-    public RequestRunAround(List<String> playersBasicMode) {
-        this.playersBasicMode = playersBasicMode;
+    public RequestRunAround(List<String> squareToChose) {
+        this.squareToChose = squareToChose;
     }
 
     @Override
@@ -34,15 +34,15 @@ public class RequestRunAround extends RequestInput {
 
         System.out.println("Scegli le coordinate:");
 
-        for (String q: playersBasicMode)
+        for (String q: squareToChose)
         {
             System.out.println(i + ":" + q );
             i++;
         }
 
         int anInt = inputInt(1, i - 1);
-        y = Integer.parseInt(playersBasicMode.get(anInt -1).substring(11));
-        x = Integer.parseInt(playersBasicMode.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
+        y = Integer.parseInt(squareToChose.get(anInt -1).substring(11));
+        x = Integer.parseInt(squareToChose.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
 
 
 

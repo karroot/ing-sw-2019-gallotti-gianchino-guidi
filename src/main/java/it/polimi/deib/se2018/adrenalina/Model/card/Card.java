@@ -1,15 +1,23 @@
 package it.polimi.deib.se2018.adrenalina.Model.card;
 
+import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Cysko7927
  */
 public abstract class Card
 {
+   protected Map<ColorId, List<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave, chiedere a fra
     protected Player player;
 
 
@@ -35,6 +43,33 @@ public abstract class Card
         return player;
     }
 
+    /**
+     * it adds the colorid of the attacker to the list of attacked player
+     * @param attacked
+     * @param attacker
+     */
+    private void addToRoundDamageList(ColorId attacked , ColorId attacker ){
+
+        if(roundDamageList.containsKey(attacker))
+        {
+            List<ColorId> tempList = new LinkedList<>();
+           tempList  = roundDamageList.get(attacker);
+           tempList.add(attacked);
+           roundDamageList.replace(attacker,roundDamageList.get(attacker),tempList);
+        }
+
+        else{
+
+            List<ColorId> tempList = new LinkedList<>();
+            tempList.add(attacked);
+            roundDamageList.put(attacker,tempList);
+
+        }
+
+
+
+    }
+
 
     /**
      * it Does n damage point at a player
@@ -48,7 +83,7 @@ public abstract class Card
 
         for (int i = player.checkMarker(this.player.getColor()); i != 0;i--) //If there are marks
             player.useMark(this.player.getColor());//Use them
-
+        addToRoundDamageList(player.getColor(),this.player.getColor());
     }
 
     /**

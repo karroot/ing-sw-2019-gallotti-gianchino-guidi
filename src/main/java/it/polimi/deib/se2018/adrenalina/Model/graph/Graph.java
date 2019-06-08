@@ -194,7 +194,7 @@ public class Graph
             i++;//Go more at north
         }
 
-        return result;//At the end it returns all square founded
+        return result;//At the End it returns all square founded
 
     }
 
@@ -228,7 +228,7 @@ public class Graph
             i++;//Go more at East
         }
 
-        return result;//At the end it returns all square founded
+        return result;//At the End it returns all square founded
 
     }
 
@@ -263,7 +263,7 @@ public class Graph
             i++;//Go more at south
         }
 
-        return result;//At the end it returns all square founded
+        return result;//At the End it returns all square founded
 
     }
 
@@ -298,7 +298,7 @@ public class Graph
             i++;//Go more at west
         }
 
-        return result;//At the end it returns all square founded
+        return result;//At the End it returns all square founded
 
     }
 

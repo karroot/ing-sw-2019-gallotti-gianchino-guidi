@@ -41,6 +41,8 @@ public class EletroSchyte extends WeaponCard
         else
             basicMode(((ResponseElectroSchyte) responseMessage).getTargetBasicMode());
     }
+
+
     public RequestInput getRequestMessage()
     {
         return new RequestElectroSchyte(checkAvaliableMode(),checkBasicMode(),checkReaper());

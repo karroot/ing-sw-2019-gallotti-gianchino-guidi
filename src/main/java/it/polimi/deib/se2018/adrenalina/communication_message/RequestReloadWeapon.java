@@ -4,15 +4,19 @@ import java.util.List;
 
 public class RequestReloadWeapon extends RequestInput {
     //Attribute for the request
-    protected List<String> weaponsAvaiableToReaload;//Targets for the basic mode
+    protected String weaponsAvaiableToReaload;//Targets for the basic mode
 
     //Attribute for the response
-    protected String weaponToReload;//Target chosen for the basic mode
+    protected int weaponToReload;//Target chosen for the basic mode
 
     @Override
     public void printActionsAndReceiveInput() {
         inputBasicMode();
         responseIsReady = true;
+    }
+
+    public RequestReloadWeapon(String weaponsAvaiableToReaload) {
+        this.weaponsAvaiableToReaload = weaponsAvaiableToReaload;
     }
 
     @Override
@@ -26,18 +30,15 @@ public class RequestReloadWeapon extends RequestInput {
     protected void inputBasicMode() {
         int i = 1;
 
-        System.out.println("Scegli l'arma che vuoi ricaricare:");
+        System.out.println("vuoi ricaricare " + weaponsAvaiableToReaload );
 
-        for (String w : weaponsAvaiableToReaload) {
 
-            System.out.println(i + ": " + w);
-            i++;
+            System.out.println( "1: si " );
+            System.out.println( "2: no " );
 
-        }
+        int anInt = inputInt(1,2);
 
-        int anInt = inputInt(1, i - 1);
-
-        weaponToReload = weaponsAvaiableToReaload.get(anInt - 1);
+        weaponToReload = anInt ;
 
 
     }

@@ -2,17 +2,21 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 public class ResponseGrabStuff extends ResponseInput
 {
-    private String targetSquareToGo;//Target for basic mode
+    private int x;
+    private int y;
 
-    public ResponseGrabStuff(String targetSquareToGo)
+    public ResponseGrabStuff(int x, int y)
     {
-        this.targetSquareToGo = targetSquareToGo;
+        this.x=x;
+        this.y=y;
 
     }
+    public int getX() {
+        return x;
+    }
 
-    public String getTargetSquareToGo()
-    {
-        return targetSquareToGo;
+    public int getY() {
+        return y;
     }
 
 }

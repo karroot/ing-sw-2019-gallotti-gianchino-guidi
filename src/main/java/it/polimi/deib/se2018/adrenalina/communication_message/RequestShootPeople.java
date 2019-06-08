@@ -9,7 +9,7 @@ public class RequestShootPeople extends RequestInput
     protected List<String> weaponCardsName;//Targets for the basic mode
 
     //Attribute for the response
-    protected int weaponCardName;//Target chosen for the basic mode
+    protected int weaponCardNameChosen;//Target chosen for the basic mode
 
     @Override
     public void printActionsAndReceiveInput() {
@@ -21,12 +21,16 @@ public class RequestShootPeople extends RequestInput
         this.weaponCardsName = weaponCardsName;
     }
 
+    public int getSizeWeaponCardsName() {
+        return weaponCardsName.size();
+    }
+
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        return new ResponseShootPeople(weaponCardName);
+        return new ResponseShootPeople(weaponCardNameChosen);
     }
 
     protected void  inputBasicMode()
@@ -45,7 +49,7 @@ public class RequestShootPeople extends RequestInput
 
             int anInt = inputInt(1, i - 1);
 
-    weaponCardName = anInt ;
+        weaponCardNameChosen = anInt ;
 
 
     }

@@ -2,15 +2,15 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 public class ResponseReloadWeapon extends ResponseInput
 {
-    private String targetWeaponToReload;//Target for basic mode
+    private int targetWeaponToReload;//Target for basic mode
 
-    public ResponseReloadWeapon(String targetWeaponToReload)
+    public ResponseReloadWeapon(int targetWeaponToReload)
     {
         this.targetWeaponToReload = targetWeaponToReload;
 
     }
 
-    public String getTargetWeaponToReload()
+    public int getTargetWeaponToReload()
     {
         return targetWeaponToReload;
     }

@@ -8,7 +8,12 @@ public class RequestGrabStuff extends RequestInput
     protected List<String> squareAviableToGrab;//Targets for the basic mode
 
     //Attribute for the response
-    protected String squareToGoForGrab;//Target chosen for the basic mode
+    private int x;
+    private int y;
+
+    public RequestGrabStuff(List<String> squareAviableToGrab) {
+        this.squareAviableToGrab = squareAviableToGrab;
+    }
 
     @Override
     public void printActionsAndReceiveInput() {
@@ -21,7 +26,7 @@ public class RequestGrabStuff extends RequestInput
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        return new ResponseGrabStuff(squareToGoForGrab);
+        return new ResponseGrabStuff(x,y);
     }
 
     protected void  inputBasicMode()
@@ -40,7 +45,8 @@ public class RequestGrabStuff extends RequestInput
 
         int anInt = inputInt(1, i - 1);
 
-        squareToGoForGrab = squareAviableToGrab.get(anInt - 1);
+        y = Integer.parseInt(squareAviableToGrab.get(anInt -1).substring(11));
+        x = Integer.parseInt(squareAviableToGrab.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
 
 
     }

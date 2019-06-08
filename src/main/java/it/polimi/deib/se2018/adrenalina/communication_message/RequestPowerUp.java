@@ -7,13 +7,13 @@ import java.util.List;
 public class RequestPowerUp extends RequestInput {
 
     //Attribute for the request
-    protected List<String> playersBasicMode;//Targets for the basic mode
+    protected List<String> powerUptoChose;//Targets for the basic mode
 
     //Attribute for the response
-    protected int targetBasicMode;//Target chosen for the basic mode
+    protected int chosenPowerUp;//Target chosen for the basic mode
 
-    public RequestPowerUp(List<String> playersBasicMode) {
-        this.playersBasicMode = playersBasicMode;
+    public RequestPowerUp(List<String> powerUptoChose) {
+        this.powerUptoChose = powerUptoChose;
     }
 
     @Override
@@ -27,25 +27,27 @@ public class RequestPowerUp extends RequestInput {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        return new ResponsePowerUp(targetBasicMode);
+        return new ResponsePowerUp(chosenPowerUp);
     }
 
 
     protected void inputBasicMode()
     {
-        int i = 1;
-
-        System.out.println("Scegli un poweup:");
-
-        for (String t:playersBasicMode)
+        int anInt=0;
+        for (String t:powerUptoChose)
         {
-            System.out.println(i + ":" + t);
-            i++;
+        System.out.println("vuoi usare il poweup: " + t + " ?");
+
+
+            System.out.println( "1 : sì");
+            System.out.println( "2 : no");
+
+             anInt = inputInt(1,2);
         }
 
-        int anInt = inputInt(1, i - 1);
 
-        targetBasicMode = anInt;
+
+        chosenPowerUp = anInt;
 
     }
 

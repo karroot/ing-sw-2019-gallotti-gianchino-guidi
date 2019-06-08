@@ -86,7 +86,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
     /**
      * The controller uses this method to receive the response of a request of input sand before at a player
-     * This method suspend the controller until the message doesn't arrive and at the end it calls the method update
+     * This method suspend the controller until the message doesn't arrive and at the End it calls the method update
      * of the controller passing the response input
      * @param player player that send the response
      * @return message of response with the inputs of the users

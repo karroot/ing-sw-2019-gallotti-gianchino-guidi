@@ -10,6 +10,7 @@ public class RequestMachineGun extends RequestInput {
     //Attribute for the request
     private List<ColorId> playersBasicMode;//target for the basic mode
     private List<ColorId> playersAdditionalMode;//target for the basic mode
+    private List<ColorId> playerSecondAdditionalMode;//target for the second additional mode
 
 
     //Attribute for the response
@@ -36,13 +37,14 @@ public class RequestMachineGun extends RequestInput {
      * @param playerBasicMode target for the basic mode
      * @param playerAdditionalMode target for the alternative mode
      */
-    public RequestMachineGun(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode)
+    public RequestMachineGun(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode,List<ColorId> playerSecondAdditionalMode)
     {
         this.nameAdditionalmode = "modalità colpo focalizzato";
         this.nameSecondAdditionalmode = "modalità tripode di supporto";
         this.avaiableMethod = avaiableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAdditionalMode = playerAdditionalMode;
+        this.playerSecondAdditionalMode = playerSecondAdditionalMode;
         responseIsReady = false;
     }
 
@@ -64,30 +66,46 @@ public class RequestMachineGun extends RequestInput {
             System.out.println("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
-        if (avaiableMethod[2])//Print the possible effects
+        if (avaiableMethod[2])
         {
-            System.out.println("3: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
+            System.out.println("3: modalità base con  " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
-        int j = 0;
+        if (avaiableMethod[2] && avaiableMethod[1])//Print the possible effects
+        {
+            System.out.println("4: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
+            acceptedInt.add(1);
+        }
 
+        int j = 0;
+List<Integer> oneAndThree = new LinkedList<>();
+oneAndThree.add(1);
+oneAndThree.add(3);
         //Handle the possible choice of the users asking the correct inputs
         if (avaiableMethod[0] && avaiableMethod[1] && avaiableMethod[2])
-            choice = inputInt(1, 3);
+            choice = inputInt(1, 4);
         if (avaiableMethod[0] && avaiableMethod[1] && !avaiableMethod[2])
             choice = inputInt(1, 2);
+        if (avaiableMethod[0] && !avaiableMethod[1] && avaiableMethod[2])
+            choice = inputInt(1, 2);
         if (avaiableMethod[0] && !avaiableMethod[1] && !avaiableMethod[2])
-            choice = inputInt(1, 1);
+            choice = inputInt(oneAndThree);
 
         mode = false; //Set the attribute mode
         addDamage=false;
         secondMode=false;
-        if (choice == 3) //If the user choices the basic mode
+        if (choice == 4) //If the user choices the basic mode
         {
+
             inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
             inputAdditionalMode();
             mode= true;//Set the attribute mode
             secondMode = true;//Set the attribute second mode
+        }
+        else if (choice == 3) //If the user choices the basic mode
+        {
+            inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
+            secondMode = true;//Set the attribute mode
         }
         else if (choice == 2) //If the user choices the basic mode
         {
@@ -121,12 +139,12 @@ public class RequestMachineGun extends RequestInput {
             if (secondMode)
                 {
 
-                    return new ResponseMachineGun(targetBasicMode, targetBasicModeSecond, targetAdditionalMode, targetSecondAdditionalMode,addDamage);
+                    return new ResponseMachineGun(targetBasicMode, targetBasicModeSecond, targetAdditionalMode, targetSecondAdditionalMode,targetSecondAdditionalModeSecond,addDamage);
                 }
                 return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetAdditionalMode);
         }
         if (secondMode)
-            return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetSecondAdditionalMode,addDamage);
+            return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond,targetSecondAdditionalMode,targetSecondAdditionalModeSecond,addDamage);
         return new ResponseMachineGun(targetBasicMode,targetBasicModeSecond);
     }
 
@@ -140,45 +158,66 @@ public class RequestMachineGun extends RequestInput {
     protected void inputAdditionalMode()
     {
         List<ColorId> players;
-        players = playersBasicMode;
+        players = playersAdditionalMode; // siccome l'arma aggiunge danno  ad uno dei primi nemici scelti
         int i = 1;
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
-            i++;
-        }
-        int choice = inputInt(1, i - 1);
-        targetBasicMode  = players.get(choice-1);
-
-
-    }
-
-    protected void inputSecondAdditionalMode()
-    {
-        List<ColorId> players;
-        players = playersAdditionalMode;
-        int i = 1;
-
-        for (ColorId t:players)//Ask to user the target
-        {
-            System.out.println(i+":"+t);
-            i++;
+            if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond))
+            {
+                System.out.println(i+" :"+t);
+                i++;
+            }
         }
         int choice = inputInt(1, i - 1);
         targetAdditionalMode  = players.get(choice-1);
 
-        players = playersBasicMode;
-        i=1;
-        for (ColorId t:players)//Ask to user the target
-        {
-            System.out.println(i+":"+t);
-            i++;
-        }
-        choice = inputInt(1, i - 1);
-        targetBasicMode  = players.get(choice-1);
-       addDamage=true;
 
+    }
+
+    protected void inputSecondAdditionalMode() {
+        List<ColorId> players;
+        int choice;
+        players = playerSecondAdditionalMode;
+        int i = 1;
+        if (players != null)
+        {
+            System.out.println( " vuoi fare danno a un altro player ? " );
+            System.out.println( " 1 : sì " );
+            System.out.println( " 2 : no " );
+            choice = inputInt(1, 2);
+
+            if(choice==1) {
+
+                System.out.println(" altro player a cui far danno");
+                for (ColorId t : players)//Ask to user the target
+                {
+                    System.out.println(i + " : " + t);
+                    i++;
+                }
+                choice = inputInt(1, i - 1);
+                targetSecondAdditionalMode = players.get(choice - 1);
+            }
+        }
+        System.out.println( " vuoi fare danno a un player gia attaccato ? " );
+        System.out.println( " 1 : sì " );
+        System.out.println( " 2 : no " );
+        choice = inputInt(1, 2);
+
+        if(choice==1) {
+            players = playersBasicMode;
+            i = 1;
+            for (ColorId t : players)//Ask to user the target
+            {
+                if (!(t.equals(targetAdditionalMode))) {
+                    System.out.println(i + ": " + t);
+                    i++;
+                }
+            }
+            choice = inputInt(1, i - 1);
+            targetSecondAdditionalModeSecond = players.get(choice - 1);
+            addDamage = true;
+        }
     }
 
 
@@ -188,20 +227,24 @@ public class RequestMachineGun extends RequestInput {
 
         players = playersBasicMode;
         int i = 1;
-
+        System.out.println("seleziona il primo player :");
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+" :"+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
 
+        System.out.println("seleziona il secondo player :");
         i = 1;
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
-            i++;
+            if (!t.equals(targetBasicMode))
+            {
+                System.out.println(i+":"+t);
+                i++;
+            }
         }
         choice = inputInt(1, i - 1);
         targetBasicModeSecond  = players.get(choice-1);

@@ -31,13 +31,14 @@ public class RequestTHOR  extends RequestInput{
      * @param playerBasicMode target for the basic mode
      * @param playerAdditionalMode target for the alternative mode
      */
-    public RequestTHOR(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode)
+    public RequestTHOR(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode,List<ColorId> playerSecondAdditionalMode)
     {
         this.nameAdditionalmode = "modalità reazione a catena";
         this.nameSecondAdditionalmode = "modalità alta tensione";
         this.avaiableMethod = avaiableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAdditionalMode = playerAdditionalMode;
+        this.playersSecondAdditionalMode = playerSecondAdditionalMode;
         responseIsReady = false;
     }
 
@@ -132,7 +133,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+" : "+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
@@ -147,7 +148,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+": "+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
@@ -164,7 +165,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            System.out.println(i+" :"+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
