@@ -3,7 +3,9 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class RequestTargettingScope  extends RequestInput{
     //Attribute for the request
@@ -18,10 +20,11 @@ protected List<Color> playerAmmo; // all ammo of the player
         responseIsReady = true;
     }
 
-    public RequestTargettingScope(List<ColorId> playersBasicMode, List<Color> playerAmmo) {
-        this.playersBasicMode = playersBasicMode;
+    public RequestTargettingScope(Set<ColorId> playersBasicMode, List<Color> playerAmmo) {
+        this.playersBasicMode = new ArrayList<>(playersBasicMode);
         this.playerAmmo = playerAmmo;
     }
+
 
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
@@ -32,6 +35,7 @@ protected List<Color> playerAmmo; // all ammo of the player
     }
     protected void inputBasicMode()
     {
+
         int i = 1;
 
         System.out.println("Scegli un bersaglio:");
@@ -43,6 +47,7 @@ protected List<Color> playerAmmo; // all ammo of the player
         }
 
         int anInt = inputInt(1, i - 1);
+
 
         targetBasicMode = playersBasicMode.get(anInt -1);
 
