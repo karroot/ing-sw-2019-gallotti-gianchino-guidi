@@ -21,9 +21,10 @@ public class RequestShockwave extends WeaponWithModeAlternative
      * Create a message of request for the weapon Shockwave
      * @param playersBasicMode targets available for the basic mode
      */
-    public RequestShockwave(Map<String,List<ColorId>> playersBasicMode)
+    public RequestShockwave(boolean[] avaiableMethod, Map<String,List<ColorId>> playersBasicMode)
     {
         this.nameAlternaivemode = "modalità tsunami";
+        this.avaiableMethod = avaiableMethod;
         this.playersBasicMode = playersBasicMode;
         responseIsReady = false;
     }
@@ -40,7 +41,7 @@ public class RequestShockwave extends WeaponWithModeAlternative
     {
         for (String t:playersBasicMode.keySet())
         {
-            System.out.println("Scegli un bersaglio che è nel quadrato con con coordinate:"+t);
+            System.out.println("Scegli un bersaglio che è nel quadrato con coordinate:"+t);
 
             int i = 1;
 

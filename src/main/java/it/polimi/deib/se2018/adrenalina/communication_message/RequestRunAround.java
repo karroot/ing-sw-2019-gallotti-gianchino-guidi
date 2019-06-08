@@ -15,7 +15,8 @@ public class RequestRunAround extends RequestInput {
     }
 
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput()
+    {
         inputBasicMode();
         responseIsReady=true;
     }

@@ -3,6 +3,8 @@ package it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 
 public abstract class PowerUpCard extends Card
@@ -59,6 +61,11 @@ public abstract class PowerUpCard extends Card
         return name+ ":" + color;
     }
 
+    /**
+     * Return a message of request for this powerUP to send at client to obtains the inputs
+     * @return message of request
+     */
+    public abstract RequestInput getRequestMessage();
 
 
 }

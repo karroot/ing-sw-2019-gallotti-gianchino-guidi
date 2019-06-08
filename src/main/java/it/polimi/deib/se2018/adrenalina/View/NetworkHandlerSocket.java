@@ -11,31 +11,84 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
+import java.util.concurrent.Callable;
 
 /**
  * @author Cysko7927
  */
 public class NetworkHandlerSocket extends Observable<RequestInput> implements Observer<ResponseInput>
 {
+    private PrivateView view;
+
     //Socket attributes
     private Socket clientSocket;
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
 
+    //Threads used
+    Runnable codeOfLogicRound = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startRound();
+        }
+    };
+    Thread logicRound;
+
     /**
      * Create a network Handler that handles the connection between the client and the server
-     * If the connection fails the handler will not create
      * @param ip IPV4 address of the server
      * @param port port TCP of the server
      * @throws UnknownHostException if the ipv4 address is wrong
-     * @throws IOException if there is no connection
      */
-    public void startConnectionSocket(String ip, int port)  throws UnknownHostException, IOException
+    public  NetworkHandlerSocket(String ip, int port,PrivateView view)  throws IOException
     {
+        logicRound = new Thread(codeOfLogicRound);
         clientSocket = new Socket(ip, port);
         out = new ObjectOutputStream(clientSocket.getOutputStream());
         in = new ObjectInputStream(clientSocket.getInputStream());
+        this.view = view;
 
+        register(view);
+
+        startConnection(ip, port);
+
+        System.out.println("Server non raggiungibile"); //Verrà stampato da un interfaccia grafica todo
+    }
+
+    /**
+     * This method create a connection TCP between the client and the server with IP address = ip and port = port
+     * This method creates also a thread that executes in loop the method "receiveMessageNet" until the connection is active
+     * @param ip Ip address of the server
+     * @param port port tcp of the process running on server
+     */
+    public void startConnection(String ip, int port)
+    {
+        Runnable codeOfTheThread = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    while (true)
+                    {
+                        receiveMessageNet(); //Continue to read the buffer until the connection is active
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
+                }
+
+
+            }
+        }; //Thread that read always the buffer of input of the socket and responds in different ways
+
+        Thread handlerOfReceivingMessage = new Thread(codeOfTheThread);
+
+        handlerOfReceivingMessage.start();//Active the thread that handle the receiving messages
     }
 
     /**
@@ -79,16 +132,15 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     public void receiveMessageNet() throws Exception //Manca il caso della richiesta delle credenziali
     {
         Object msg = in.readObject();
-        out.flush();
 
         if (msg instanceof StartTurn)
         {
-            //view.startTurn() //Fore sarà meglio farlo eseguire da un thread a parte todo
+            logicRound.start();
             return;
         }
         else if (msg instanceof UpdateModel)
         {
-            //view.updateModel(message)
+            updateModel((UpdateModel) msg);
             return;
         }
         else if (msg instanceof Ping)//If the message is a ping
@@ -116,8 +168,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
      */
     public void updateModel(UpdateModel message)throws RemoteException
     {
-        //view.updateModel(message)todo
-
+        view.updateModelCopy(message);
     }
 
     /**
@@ -129,10 +180,6 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         clientSocket.close();
     }
 
-    public void showMessage()
-    {
-
-    }
 
     //This method takes the credentials from view and return the message Response with all credential
     private ResponseCredentials getCredentials()//Todo

@@ -27,12 +27,14 @@ public class RequestTeleporter extends RequestInput
      */
     public RequestTeleporter(GameBoard board, Player playerThatHasThePowerUp)
     {
-        this.allSquaresPossible =  new ArrayList<>(board.getArena().getAllSquares()//obtain all squares of the board
+        List<Square> temp = new ArrayList<>(board.getArena().getAllSquares());
+        temp.remove(playerThatHasThePowerUp.getSquare());
+
+        this.allSquaresPossible = temp  //obtain all squares of the board
                 .stream()
                 .map(Square::toStringCoordinates)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
 
-        allSquaresPossible.remove(playerThatHasThePowerUp.getSquare());
         responseIsReady = false;
     }
 

@@ -53,5 +53,10 @@ public class RequestShootPeople extends RequestInput
 
 
     }
+
+    public List<String> getWeaponCardsName()
+    {
+        return weaponCardsName;
+    }
 }
 

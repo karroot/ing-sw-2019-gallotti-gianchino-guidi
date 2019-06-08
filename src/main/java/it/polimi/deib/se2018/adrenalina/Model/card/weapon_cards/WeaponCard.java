@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 /**
@@ -92,6 +93,20 @@ public abstract class WeaponCard extends Card
     public abstract void useWeapon (ResponseInput responseMessage);
 
 
-
+    /**
+     * Check which modes of the weapon can be used by player that has this weapon
+     * @return array of booleans , represents which modes can be used by player
+     * @exception IllegalStateException if this card doesn't belong at a player
+     */
     public  abstract boolean[]  checkAvaliableMode();
+
+    /**
+     * Get a message of request for this weapon
+     * The content of the message depends if the modes of this weapon can be used
+     * by the player that has got it
+     * @return Message of request to send at client
+     */
+    public abstract RequestInput getRequestMessage();
+
+
 }

@@ -1,12 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseSledgehammer;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,7 @@ public class Sledgehammer extends WeaponCard
      * @return all player that can be affected with the Sledgehammer in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkTargetForModes() throws IllegalStateException
+    public List<ColorId> checkTargetForModes() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -72,7 +71,7 @@ public class Sledgehammer extends WeaponCard
 
         target.remove(player);//Remove the player that has this card
 
-        return new ArrayList<>(target);//Returns all targets
+        return new ArrayList<>(target).stream().map(Player::getColor).collect(Collectors.toList());//Returns all targets
     }
 
     /**
@@ -142,5 +141,20 @@ public class Sledgehammer extends WeaponCard
                     msg.getX(),msg.getY());
         else
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()));
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+
+            return new RequestSledgehammer(checkAvaliableMode(),checkTargetForModes(), checkMoveForAlternativeMode());
+
+        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+
+            return new RequestSledgehammer(checkAvaliableMode(),checkTargetForModes(),new ArrayList<>());
+
+        else
+            return new RequestSledgehammer(checkAvaliableMode(),new ArrayList<>(),checkMoveForAlternativeMode());
     }
 }

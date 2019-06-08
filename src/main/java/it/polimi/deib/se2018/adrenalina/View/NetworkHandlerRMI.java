@@ -3,7 +3,10 @@ package it.polimi.deib.se2018.adrenalina.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,8 +20,21 @@ import java.util.List;
 public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceNetworkHandlerRMI, Observer<ResponseInput>
 {
 
+    PrivateView view;
     static int registryPortNumber = 5000; //Port
     private MessageNet messageToSend = null;
+    private final Object msg = new Object(); //Variable used to synchronize  the methods getResponseMessage and update
+
+    //Threads used
+    Runnable codeOfLogicRound = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startRound();
+        }
+    };
+    Thread logicRound;
 
     /**
      * Create a network handler tha handle the communication between the client and server
@@ -28,12 +44,21 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
      * @throws RemoteException if there were problems with RMI
      * @throws MalformedURLException if there were problems with RMI
      */
-    protected NetworkHandlerRMI() throws RemoteException, MalformedURLException
+    public NetworkHandlerRMI(PrivateView view,String ip, int port) throws IOException
     {
+        this.view = view;
+
+        logicRound = new Thread(codeOfLogicRound);
+
         // Start RMI registry
         LocateRegistry.createRegistry(registryPortNumber);
         // Effettuiamo il bind
         Naming.rebind("networkH",this);
+
+        Socket  socket = new Socket(ip,port);
+        socket.close();
+
+        register(view);
 
         System.out.println("Server RMI funzionante"); //Verrà stampato da un interfaccia grafica todo
     }
@@ -47,18 +72,18 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     @Override
     public MessageNet getResponseMessage() throws RemoteException
     {
-        synchronized (messageToSend)
+        synchronized (msg)
         {
-            if (messageToSend == null)//If the message to send there isn't
+            while (messageToSend == null)//If the message to send there isn't
             {
                 try
                 {
-                    messageToSend.wait();//Wait that it arrives
+                    msg.wait();//Wait that it arrives
                 }
                 catch (InterruptedException e)
                 {
 
-                    return new TimeoutUser();//If the view interrupts the thread because the player is FK
+                    Thread.currentThread().interrupt();//If the the player is FK
                     //A message of timeout arrives at the server and the controller suspends the player
                 }
             }
@@ -68,6 +93,9 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
             messageToSend = null; //There is no more the message to send
 
             return temp;//And return it
+
+            //If the the player is FK
+            //A message of timeout arrives at the server and the controller suspends the player
         }
     }
 
@@ -90,7 +118,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     {
         if (message instanceof StartTurn) //If the message says to start the turn of player
         {
-            //view.startTurn() //Fore sarà meglio farlo eseguire da un thread a parte todo
+            logicRound.start();
             return;
         }
         else if(message instanceof Ping) //If the message is a ping
@@ -101,11 +129,12 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         else if(message instanceof AskCredentials)//If the message is a request of credentials
         {
             ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user
-            update(credentials);
+            update(credentials);//Save the credentials
             return;
         }
         notify((RequestInput) message);
     }
+
 
     /**
      * this method can be called by server in remote to ask at private view to update
@@ -116,8 +145,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     @Override //Call the method
     public void updateModel(UpdateModel message)throws RemoteException
     {
-        //view.updateModel(message) todo
-
+        view.updateModelCopy(message);
     }
 
     /**
@@ -131,7 +159,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     @Override
     public void update(ResponseInput message) throws Exception
     {
-        synchronized (messageToSend)
+        synchronized (msg)
         {
             messageToSend = message;
             messageToSend.notifyAll();
@@ -143,14 +171,19 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     private ResponseCredentials getCredentials()
     {
         return null;
-    }
+    } //todo
 
     //This class is observable for the message of RequestInput by VirtualView
 
     //IMPLEMENTATION OF THE PATTERN OBSERVABLE
 
-    private List<Observer<RequestInput>> observers = new ArrayList<Observer<RequestInput>>();
+    private List<Observer<RequestInput>> observers = new ArrayList<Observer<RequestInput>>(); //List of all observer,in our case will contain only the
+    //private view
 
+    /**
+     * Add a new observer for message of type RequestInput
+     * @param observer observer to add
+     */
     public void register(Observer<RequestInput> observer){
         synchronized (observers) {
             observers.add(observer);
@@ -158,8 +191,8 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     }
 
     /**
-     *
-     * @param observer
+     * Remove a observer for message of type RequestInput
+     * @param observer observer to remove
      */
     public void deregister(Observer<RequestInput> observer){
         synchronized (observers) {
@@ -167,11 +200,12 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         }
     }
 
-    //Notify to all observers
+    //Notify to all observers sending a new RequestInput message
     protected void notify(RequestInput message) throws Exception
     {
         synchronized (observers) {
-            for(Observer<RequestInput> observer : observers){
+            for(Observer<RequestInput> observer : observers)
+            {
                 observer.update(message);
             }
         }

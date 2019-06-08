@@ -1,6 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestTeleporter;
 
 
 /**
@@ -36,4 +38,11 @@ public class Teleporter extends PowerUpCard
     {
         moveYourself(x,y);//Move the player that has this card in the square (x,y)
     }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        return new RequestTeleporter(player.getSquare().getGameBoard(),player);
+    }
+
 }

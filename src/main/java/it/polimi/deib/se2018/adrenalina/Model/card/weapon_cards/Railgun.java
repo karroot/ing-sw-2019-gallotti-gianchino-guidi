@@ -4,9 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRailgun;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -169,5 +167,20 @@ public class Railgun extends WeaponCard
             inPiercingMode(MethodsWeapons.ColorToPlayer(msg.getTarget1(),player.getSquare().getGameBoard()),MethodsWeapons.ColorToPlayer(msg.getTarget2(),player.getSquare().getGameBoard()));
         else
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget1(),player.getSquare().getGameBoard()));
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+
+            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
+
+        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+
+            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
+
+        else
+            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
     }
 }

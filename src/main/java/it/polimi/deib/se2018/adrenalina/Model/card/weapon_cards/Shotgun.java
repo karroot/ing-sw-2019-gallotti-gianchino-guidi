@@ -1,13 +1,17 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestShotgun;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShotgun;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Cysko7927
@@ -69,7 +73,7 @@ public class Shotgun extends WeaponCard
      * @return all player that can be affected with the shotgun in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -78,7 +82,7 @@ public class Shotgun extends WeaponCard
 
         playerList.remove(player); //Remove from targets the player that shoot
 
-        return playerList;//Returns all targets
+        return playerList.stream().map(Player::getColor).collect(Collectors.toList());//Returns all targets
     }
 
     /**
@@ -86,7 +90,7 @@ public class Shotgun extends WeaponCard
      * @return Set of all square corrects
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public Set<Square> checkMoveBasicMode() throws IllegalStateException
+    public List<Square> checkMoveBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -97,7 +101,7 @@ public class Shotgun extends WeaponCard
 
         squares.remove(square); //Remove from targets the square where the player is located
 
-        return squares;//Returns squares
+        return squares.stream().collect(Collectors.toList());//Returns squares
     }
 
     /**
@@ -130,7 +134,7 @@ public class Shotgun extends WeaponCard
      * @return all player that can be affected with the shotgun in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkInLongBarrelMode() throws IllegalStateException
+    public List<ColorId> checkInLongBarrelMode() throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
@@ -140,7 +144,7 @@ public class Shotgun extends WeaponCard
 
         playerList.remove(player);//Remove from targets the player that shoot
 
-        return new ArrayList<>(playerList); //Returns all targets
+        return new ArrayList<>(playerList).stream().map(Player::getColor).collect(Collectors.toList()); //Returns all targets
     }
 
     /**
@@ -176,5 +180,19 @@ public class Shotgun extends WeaponCard
                 System.out.println("Impossibile usare l'arma:" + name);
             }
         }
+    }
+
+    @Override
+    public RequestInput getRequestMessage() {
+        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+
+            return new RequestShotgun(checkAvaliableMode(),checkBasicMode(),checkInLongBarrelMode(),checkMoveBasicMode());
+
+        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+
+            return new RequestShotgun(checkAvaliableMode(),checkBasicMode(),new ArrayList<>(),checkMoveBasicMode());
+
+        else
+            return new RequestShotgun(checkAvaliableMode(),new ArrayList<>(),checkInLongBarrelMode(),new ArrayList<>());
     }
 }

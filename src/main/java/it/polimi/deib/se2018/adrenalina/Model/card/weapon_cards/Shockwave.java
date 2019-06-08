@@ -4,9 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShockwave;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -137,5 +135,20 @@ public class Shockwave extends WeaponCard
             inTsunamirMode();
         else
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetsBasicMode(),player.getSquare().getGameBoard()));
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+
+            return new RequestShockwave(checkAvaliableMode(),checkBasicMode());
+
+        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+
+            return new RequestShockwave(checkAvaliableMode(),checkBasicMode());
+
+        else
+            return new RequestShockwave(checkAvaliableMode(),new HashMap<>());
     }
 }

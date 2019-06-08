@@ -4,6 +4,8 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestCyberblade;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseCyberblade;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
@@ -177,5 +179,11 @@ public class Cyberblade extends WeaponCard
 
 
         basicMode(player,msg.getOrderEffect(),player2,msg.getX(),msg.getY());
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        return new RequestCyberblade(checkAvaliableMode(),checkBasicModeAllTargetPossible(), checkWithShadowStep(),player.getSquare().getX(),player.getSquare().getY());
     }
 }

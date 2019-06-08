@@ -2,14 +2,14 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseNewton;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseZX2;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ZX2 extends WeaponCard
 {
@@ -62,7 +62,7 @@ public class ZX2 extends WeaponCard
      * @return all player that can be affected with the ZX2 in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    public List<Player> checkBasicMode() throws IllegalStateException
+    public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvaliableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
@@ -71,7 +71,7 @@ public class ZX2 extends WeaponCard
 
         target.remove(player);//Remove the player that has this card
 
-        return new ArrayList<>(target);//Returns all targets
+        return new ArrayList<>(target).stream().map(Player::getColor).collect(Collectors.toList());//Returns all targets
     }
 
     /**
@@ -95,7 +95,7 @@ public class ZX2 extends WeaponCard
      * @return all player that can be affected with the ZX2 in alternative mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<Player> checkInScannerMode() throws IllegalStateException
+    public List<ColorId> checkInScannerMode() throws IllegalStateException
     {
 
         if (!checkAvaliableMode()[1])
@@ -105,7 +105,7 @@ public class ZX2 extends WeaponCard
 
         playerList.remove(player);//Remove from targets the player that shoot
 
-        return new ArrayList<>(playerList); //Returns all targets
+        return new ArrayList<>(playerList).stream().map(Player::getColor).collect(Collectors.toList()); //Returns all targets
     }
 
     /**
@@ -135,5 +135,20 @@ public class ZX2 extends WeaponCard
             inScannerMode(MethodsWeapons.ColorToPlayer(msg.getTargetsAlternativeMode(),player.getSquare().getGameBoard()));
         else
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetBasicMode(),player.getSquare().getGameBoard()));
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+
+            return new RequestZX2(checkAvaliableMode(),checkBasicMode(), checkInScannerMode());
+
+        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+
+            return new RequestZX2(checkAvaliableMode(),checkBasicMode(),new ArrayList<>());
+
+        else
+            return new RequestZX2(checkAvaliableMode(),new ArrayList<>(),checkInScannerMode());
     }
 }

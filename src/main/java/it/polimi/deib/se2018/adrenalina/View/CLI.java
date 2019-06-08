@@ -4,6 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PlayerImmutable;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,11 +15,18 @@ public class CLI implements Terminal
     ColorId playerOfThisCli;
     UpdateModel data;
 
+    /**
+     * Create a CLI for a player
+     * @param playerOfThisCli player's color of this cli
+     */
     public CLI(ColorId playerOfThisCli)
     {
         this.playerOfThisCli = playerOfThisCli;
     }
 
+    /**
+     * Print all the game board with the weapons in spawn points and the players' boards
+     */
     @Override
     public void showBoard()
     {
@@ -75,6 +85,8 @@ public class CLI implements Terminal
             if (t.equals(playerOfThisCli))
                 System.out.println("LA TUA PLANCIA:");
 
+            //todo stampare le cordinate di dove si trova il player
+
             showPlayerBoard(t);
 
             System.out.println("###############################################################################");
@@ -82,14 +94,26 @@ public class CLI implements Terminal
 
     }
 
+    /**
+     * Obtain the copy of the model
+     * @return copy of the model
+     */
     public UpdateModel getData() {
         return data;
     }
 
+    /**
+     * Change the copy of the model updated
+     * @param data new copy of the model
+     */
     public void setData(UpdateModel data) {
         this.data = data;
     }
 
+    /**
+     * Print the board of a player with all the statistics and the array of damage Points
+     * @param player player to print
+     */
     @Override
     public void showPlayerBoard(PlayerImmutable player)
     {
@@ -110,24 +134,208 @@ public class CLI implements Terminal
 
     }
 
+    /**
+     * Print to terminal the three action of a Round
+     */
+    @Override
+    public void showAction()
+    {
+        System.out.println("Scegli un azione da fare:");
+        System.out.println("1:Muovere");
+        System.out.println("2:Raccogli");
+        System.out.println("3:Spara");
+    }
+
+    /**
+     * Ask an integer between 1 and 3 to select an action(move,grab,Shoot)
+     * @return integer chosen by user
+     */
+    @Override
+    public int selectAction()
+    {
+        return inputInt(1,3);
+    }
+
+    /**
+     * Print the scores
+     * @param messageWithFinalScore message from server tha contain all the scores of the player
+     */
     @Override
     public void showFinalScore(String messageWithFinalScore)
     {
         System.out.println(messageWithFinalScore);
     }
 
+    /**
+     * Show at user a generic message
+     * @param message string to show at the user
+     */
     @Override
     public void showMessage(String message)
     {
         System.out.println(message);
     }
 
+    /**
+     * Show at user a message of error
+     * @param message string that represents an error
+     */
     @Override
     public void showError(String message)
     {
         System.out.println(message);
     }
 
+
+    /**
+     * Methods that ask at the user an int between min and max and returns the integer chosen by user
+     * @param min minus integer accepted
+     * @param max max integer accepted
+     * @return integer chosen by user
+     */
+    @Override
+    public int inputInt(int min,int max)
+    {
+        boolean done = false;
+        int choice = 0;
+
+        while (!done)//While the user doesn't insert a integer valid you continue to ask a integer
+        {
+            try
+            {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                choice = Integer.parseInt(reader.readLine());//Read an input
+
+                if (!(choice>= min && choice<=max)) //If int digits from user isn't in the range
+                    throw new IOException();//Launch exception
+
+                done = true; //If there aren't exception use: the integer is valid
+            }
+            catch (IOException|NumberFormatException e) //If there are problem
+            {
+                System.out.println("Input non valido");//Print that the input is not valid
+            }
+
+        }
+
+        return  choice;
+    }
+
+    /**
+     * Ask at the player if he wants to reload
+     * This method doesn't check if there are weapon not loaded
+     * @return true if says yes
+     */
+    @Override
+    public boolean askReloading()
+    {
+
+
+            System.out.println("Vuoi Ricaricare?");
+            System.out.println("1:Si");
+            System.out.println("2:No");
+
+            int choice = inputInt(1,2);
+
+            if (choice == 1)
+                return true;
+
+
+        return false;
+    }
+
+    /**
+     * Check if the player has some Teleporter or Newton and ask if he wants
+     * to use
+     * @return true if the player says yes
+     */
+    @Override
+    public boolean askPowerUPTeleOrNew()
+    {
+        List<String> allPowerUps = data.getDataOfAllPlayer()
+                .stream()
+                .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
+                .map(PlayerImmutable::getPowerupCardList)
+                .collect(Collectors.toList())
+                .get(0); //Obtain all powerUp of the player
+
+        boolean thereAreTeleOrNew = false;
+
+        for (String t:allPowerUps) //Check if there are teleporter or newton
+        {
+            if (t.contains("Teletrasporto") || t.contains("Raggio Cinetico"))
+            {
+                thereAreTeleOrNew = true;
+            }
+        }
+
+        if (thereAreTeleOrNew)
+        {
+            System.out.println("Vuoi usare i powerUp?");
+            System.out.println("1:Si");
+            System.out.println("2:No");
+
+            int choice = inputInt(1,2);
+
+            if (choice == 1)
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Show all the powerUp of the player on the CLI
+     */
+    @Override
+    public void showPowerUp()
+    {
+
+        List<String> allPowerUps = data.getDataOfAllPlayer()
+                .stream()
+                .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
+                .map(PlayerImmutable::getPowerupCardList)
+                .collect(Collectors.toList())
+                .get(0); //Obtain the list of all PowerUP
+
+        int i = 1;
+
+        if (allPowerUps.isEmpty()) //if the list is empty
+        {
+            System.out.println("Non hai powerUp");//Print that there aren't powerUps
+            return;
+        }
+
+
+        System.out.println("Powerup che hai:"); //Print the name of all PowerUp
+        for (String t:allPowerUps)
+        {
+            System.out.println(i+":"+t);
+            i++;
+        }
+
+    }
+
+    /**
+     * Ask at the player to select a powerUp
+     * @return integer that represent the choice of the user,if there aren't powerUps returns 0
+     */
+    @Override
+    public int selectPowerUp()
+    {
+
+        List<String> allPowerUps = data.getDataOfAllPlayer()
+                .stream()
+                .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
+                .map(PlayerImmutable::getPowerupCardList)
+                .collect(Collectors.toList())
+                .get(0);
+
+        if (allPowerUps.isEmpty())
+            return 0;
+
+        return inputInt(1,allPowerUps.size());
+    }
 
     //############ Private Methods #############
 
