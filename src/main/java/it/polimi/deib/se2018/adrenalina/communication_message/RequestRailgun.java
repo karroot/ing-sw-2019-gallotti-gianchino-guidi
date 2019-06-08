@@ -24,13 +24,13 @@ public class RequestRailgun extends WeaponWithModeAlternative
 
     /**
      * Create a message of request for the weapon playersWithCardinalDirections
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playersWithCardinalDirections Map with the cardinal directions and all players that can be targeted
      */
-    public RequestRailgun(boolean[] avaiableMethod ,Map<String, List<ColorId>> playersWithCardinalDirections)
+    public RequestRailgun(boolean[] availableMethod ,Map<String, List<ColorId>> playersWithCardinalDirections)
     {
         this.nameAlternaivemode = "modalità perforazione";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersWithCardinalDirections = playersWithCardinalDirections;
         responseIsReady = false;
     }

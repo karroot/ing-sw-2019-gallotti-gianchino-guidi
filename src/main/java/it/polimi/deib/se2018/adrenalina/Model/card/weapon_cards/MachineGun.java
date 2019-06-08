@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class MachineGun extends WeaponCard
 {
-    private boolean[] avaiableMethod = new boolean[3];
+    private boolean[] availableMethod = new boolean[3];
 
     /**
      * Create the card ZX2
@@ -49,34 +49,34 @@ public class MachineGun extends WeaponCard
 
     public RequestInput getRequestMessage()
     {
-        return new RequestMachineGun(checkAvaliableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
+        return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 3 the first represent the basic mode the second and third the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
-        avaiableMethod[1] = false;
-        avaiableMethod[0] = false;
-        avaiableMethod[2] = false;
+        availableMethod[1] = false;
+        availableMethod[0] = false;
+        availableMethod[2] = false;
 
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
 
         if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[2] = true;
+            availableMethod[2] = true;
 
         if (isLoaded()&& player.getAmmoYellow()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
     /**
@@ -86,7 +86,7 @@ public class MachineGun extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
@@ -120,7 +120,7 @@ public class MachineGun extends WeaponCard
 
         if (FocusShotcMode)
             {
-                if (!checkAvaliableMode()[1])
+                if (!checkAvailableMode()[1])
                     throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
@@ -128,7 +128,7 @@ public class MachineGun extends WeaponCard
             }
         if (TurretTripode)
         {
-            if (!checkAvaliableMode()[2])
+            if (!checkAvailableMode()[2])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
             if (colorPlayerGreen==null && !addDamage)
@@ -156,7 +156,7 @@ public class MachineGun extends WeaponCard
 
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         if (colorPlayer1.equals(colorPlayer2))
@@ -174,7 +174,7 @@ public class MachineGun extends WeaponCard
      */
     public List<ColorId> checkFocusShotcMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
@@ -198,7 +198,7 @@ public class MachineGun extends WeaponCard
      */
     public List<ColorId> checkTurretTripodeMode() throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[2])
+        if (!checkAvailableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();

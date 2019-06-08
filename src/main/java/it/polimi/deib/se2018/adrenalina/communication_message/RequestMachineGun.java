@@ -19,7 +19,7 @@ public class RequestMachineGun extends RequestInput {
     private ColorId targetSecondAdditionalMode;//target chosen for the second additional mode
     private ColorId targetSecondAdditionalModeSecond;//second target chosen for the second additional mode
     
-    boolean[] avaiableMethod = new boolean[3];
+    boolean[] availableMethod = new boolean[3];
     protected String nameAdditionalmode; //Name of the alternative mode
     protected String nameSecondAdditionalmode; //Name of the alternative mode
     //Attribute for the response
@@ -33,15 +33,15 @@ public class RequestMachineGun extends RequestInput {
 
     /**
      * Create a message of request for the weapon MachineGun
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playerBasicMode target for the basic mode
      * @param playerAdditionalMode target for the alternative mode
      */
-    public RequestMachineGun(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode,List<ColorId> playerSecondAdditionalMode)
+    public RequestMachineGun(boolean[] availableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode,List<ColorId> playerSecondAdditionalMode)
     {
         this.nameAdditionalmode = "modalità colpo focalizzato";
         this.nameSecondAdditionalmode = "modalità tripode di supporto";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAdditionalMode = playerAdditionalMode;
         this.playerSecondAdditionalMode = playerSecondAdditionalMode;
@@ -56,22 +56,22 @@ public class RequestMachineGun extends RequestInput {
 
         System.out.println("Scegli modalità Arma:");
 
-        if (avaiableMethod[0])//Print the possible effects
+        if (availableMethod[0])//Print the possible effects
         {
             System.out.println("1:modalità base da sola");
             acceptedInt.add(1);
         }
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             System.out.println("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
-        if (avaiableMethod[2])
+        if (availableMethod[2])
         {
             System.out.println("3: modalità base con  " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
-        if (avaiableMethod[2] && avaiableMethod[1])//Print the possible effects
+        if (availableMethod[2] && availableMethod[1])//Print the possible effects
         {
             System.out.println("4: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
             acceptedInt.add(1);
@@ -82,13 +82,13 @@ List<Integer> oneAndThree = new LinkedList<>();
 oneAndThree.add(1);
 oneAndThree.add(3);
         //Handle the possible choice of the users asking the correct inputs
-        if (avaiableMethod[0] && avaiableMethod[1] && avaiableMethod[2])
+        if (availableMethod[0] && availableMethod[1] && availableMethod[2])
             choice = inputInt(1, 4);
-        if (avaiableMethod[0] && avaiableMethod[1] && !avaiableMethod[2])
+        if (availableMethod[0] && availableMethod[1] && !availableMethod[2])
             choice = inputInt(1, 2);
-        if (avaiableMethod[0] && !avaiableMethod[1] && avaiableMethod[2])
+        if (availableMethod[0] && !availableMethod[1] && availableMethod[2])
             choice = inputInt(1, 2);
-        if (avaiableMethod[0] && !avaiableMethod[1] && !avaiableMethod[2])
+        if (availableMethod[0] && !availableMethod[1] && !availableMethod[2])
             choice = inputInt(oneAndThree);
 
         mode = false; //Set the attribute mode

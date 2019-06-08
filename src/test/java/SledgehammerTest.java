@@ -48,25 +48,25 @@ public class SledgehammerTest {
     }
 
     @Test
-    public void checkAvaliableMode()
+    public void checkAvailableMode()
     {
         pPurple.addWeapon(weap);
         weap.setPlayer(pPurple);
 
-        assertTrue(!weap.checkAvaliableMode()[0] && !weap.checkAvaliableMode()[1]);
+        assertTrue(!weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
 
 
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1]);
 
         pBlue.addWeapon(weap);
         weap.setPlayer(pBlue);
 
         pBlue.setAmmoRed(0);
 
-        assertTrue(weap.checkAvaliableMode()[0] && !weap.checkAvaliableMode()[1]);
+        assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
     @Test

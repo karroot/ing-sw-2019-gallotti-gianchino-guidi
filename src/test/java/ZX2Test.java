@@ -53,19 +53,19 @@ public class ZX2Test
     }
 
     @Test
-    public void checkAvaliableModeTest()
+    public void checkAvailableModeTest()
     {
         p5.addWeapon(zx2);
         zx2.setPlayer(p5);
 
-        assertTrue(!zx2.checkAvaliableMode()[0] && !zx2.checkAvaliableMode()[1]);
+        assertTrue(!zx2.checkAvailableMode()[0] && !zx2.checkAvailableMode()[1]);
 
         p1.addWeapon(zx2);
         zx2.setPlayer(p1);
-        assertTrue(zx2.checkAvaliableMode()[0] && !zx2.checkAvaliableMode()[1]);
+        assertTrue(zx2.checkAvailableMode()[0] && !zx2.checkAvailableMode()[1]);
 
         MethodsWeapons.moveTarget(p2,3,1);
-        assertTrue(zx2.checkAvaliableMode()[0] && zx2.checkAvaliableMode()[1]);
+        assertTrue(zx2.checkAvailableMode()[0] && zx2.checkAvailableMode()[1]);
     }
 
     @Test

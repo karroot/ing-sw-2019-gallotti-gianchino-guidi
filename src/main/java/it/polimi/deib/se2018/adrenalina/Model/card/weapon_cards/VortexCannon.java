@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class VortexCannon extends WeaponCard
 {
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
 
     /**
@@ -37,19 +37,20 @@ public class VortexCannon extends WeaponCard
 
     }
 
+
     /**
      * This method checks which modes of the weapon can be used by the player that owns this weapon
      *
      * @return array of booleans of size 2. The first boolean represents the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong to any player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
 
-        avaiableMethod[0] = false;//I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[1] = false;
 
 
         //scelgo uno square che posso vedere ma non è il mio. Risucchio 1 player a distanza max 1 dallo square nello square e faccio due danni
@@ -58,16 +59,16 @@ public class VortexCannon extends WeaponCard
 
         if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, (List<Square>) MethodsWeapons.squareThatSee(player)))
         {
-                avaiableMethod[0] = true;
+                availableMethod[0] = true;
         }
 
-        if (isLoaded && avaiableMethod[0] && player.getAmmoRed() >= 1)
+        if (isLoaded && availableMethod[0] && player.getAmmoRed() >= 1)
         {
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
             //todo controllo aggiuntivo player??
         }
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -80,7 +81,7 @@ public class VortexCannon extends WeaponCard
 //square o players?
     private HashMap<Square, ArrayList<Player>> checkBasicModeFull() throws IllegalStateException
     {
-            if (!checkAvaliableMode()[0]) //check mode
+            if (!checkAvailableMode()[0]) //check mode
                 throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
             HashMap<Square, ArrayList<Player>> hashMapreturn = new HashMap<Square, ArrayList<Player>>();
@@ -109,7 +110,7 @@ public class VortexCannon extends WeaponCard
 
     }
 
-    public List<String> checkBasicModeSquares ()
+    private List<String> checkBasicModeSquares ()
     {
         HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
 
@@ -123,7 +124,7 @@ public class VortexCannon extends WeaponCard
     }
 
 
-    public List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
+    private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
     {
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
@@ -144,12 +145,29 @@ public class VortexCannon extends WeaponCard
 
         return colorIdList;
 
+    }
+
+    public HashMap<String, List<ColorId>> checkBasicMode ()
+    {
+        HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
+
+        List<String> stringListKeys = checkBasicModeSquares();
+        List<ColorId> colorIdListAttributes = new ArrayList<>();
+
+        for (String stringIterate : stringListKeys)
+        {
+            colorIdListAttributes.clear();
+            colorIdListAttributes = checkBasicModePlayers(stringIterate);
+            hashMapToReturn.put(stringIterate, colorIdListAttributes);
+        }
+
+        return hashMapToReturn;
 
     }
 
     public void basicMode (ColorId colorPlayer, String squareToMoveCoordinatesAsString)
     {
-        if (!checkAvaliableMode()[0])//check mode
+        if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
@@ -165,10 +183,10 @@ public class VortexCannon extends WeaponCard
     }
 
 
-
+    //todo
     public List<ColorId> checkWithBlackHoleMode(ColorId colorPlayerAlreadySelected, String squareTargetCoordinatesAsString) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1]) //check mode
+        if (!checkAvailableMode()[1]) //check mode
             throw  new IllegalStateException("Modalità black hole dell'arma: "+name+" non eseguibile");
 
         List<ColorId> colorIdList = checkBasicModePlayers(squareTargetCoordinatesAsString);

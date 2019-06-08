@@ -18,14 +18,14 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
 
     /**
      * Create a message of request for the weapon ElectroSchyte
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playerBasicMode targets for the basic mode
      * @param playerAlternativeMode targets for the alternative mode
      */
-    public RequestElectroSchyte(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAlternativeMode)
+    public RequestElectroSchyte(boolean[] availableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAlternativeMode)
     {
         this.nameAlternaivemode = "modalità mietitore";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAlternativeMode = playerAlternativeMode;
         responseIsReady = false;

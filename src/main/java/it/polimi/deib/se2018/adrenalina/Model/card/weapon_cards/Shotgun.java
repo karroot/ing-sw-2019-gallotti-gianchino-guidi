@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class Shotgun extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
 
     /**
@@ -44,27 +44,27 @@ public class Shotgun extends WeaponCard
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false; //I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[1] = false;
 
         if (isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
         //Calculate the player that are exactly to distance 1
         Set<Player> players = MethodsWeapons.playersReachable(player.getSquare(),1);
         players.removeAll(player.getSquare().getPlayerList());
 
         if (isLoaded() && !players.isEmpty())//If the second mode can be used
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -75,7 +75,7 @@ public class Shotgun extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
@@ -92,7 +92,7 @@ public class Shotgun extends WeaponCard
      */
     public List<Square> checkMoveBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         Square square = player.getSquare();
@@ -115,7 +115,7 @@ public class Shotgun extends WeaponCard
      */
     public void basicMode(Player player, boolean move, int x,int y) throws SquareNotInGameBoard ,IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         doDamage(player,3);
@@ -137,7 +137,7 @@ public class Shotgun extends WeaponCard
     public List<ColorId> checkInLongBarrelMode() throws IllegalStateException
     {
 
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         Set<Player> playerList = MethodsWeapons.playersReachable(player.getSquare(),1);//Obtain player reachable
@@ -154,7 +154,7 @@ public class Shotgun extends WeaponCard
      */
     public void inLongBarrelMode(Player player) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         doDamage(player,2); //Do two damage at a player
@@ -184,15 +184,15 @@ public class Shotgun extends WeaponCard
 
     @Override
     public RequestInput getRequestMessage() {
-        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
 
-            return new RequestShotgun(checkAvaliableMode(),checkBasicMode(),checkInLongBarrelMode(),checkMoveBasicMode());
+            return new RequestShotgun(checkAvailableMode(),checkBasicMode(),checkInLongBarrelMode(),checkMoveBasicMode());
 
-        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
 
-            return new RequestShotgun(checkAvaliableMode(),checkBasicMode(),new ArrayList<>(),checkMoveBasicMode());
+            return new RequestShotgun(checkAvailableMode(),checkBasicMode(),new ArrayList<>(),checkMoveBasicMode());
 
         else
-            return new RequestShotgun(checkAvaliableMode(),new ArrayList<>(),checkInLongBarrelMode(),new ArrayList<>());
+            return new RequestShotgun(checkAvailableMode(),new ArrayList<>(),checkInLongBarrelMode(),new ArrayList<>());
     }
 }

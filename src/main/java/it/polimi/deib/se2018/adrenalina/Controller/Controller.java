@@ -599,7 +599,7 @@ return false;
         List<WeaponCard> chargedWeapons = new LinkedList<>();
         List<String> chargedWeaponsName = new LinkedList<>();
         for (WeaponCard wc : roundPlayer.getWeaponCardList()) {
-            if (checkBooleanArray(wc.checkAvaliableMode()))
+            if (checkBooleanArray(wc.checkAvailableMode()))
                 chargedWeapons.add(wc);
         }
 

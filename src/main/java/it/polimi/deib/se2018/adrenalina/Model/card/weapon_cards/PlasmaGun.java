@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PlasmaGun extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[4];
+    private boolean[] availableMethod = new boolean[4];
     /**
      * Create the card PlasmaGun
      * @param color color of weapon
@@ -46,40 +46,40 @@ public class PlasmaGun extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestPlasmaGun(checkAvaliableMode(),checkAllTarget(),checkPhaseGlide(),player.getSquare().getX(),player.getSquare().getY());
+        return new RequestPlasmaGun(checkAvailableMode(),checkAllTarget(),checkPhaseGlide(),player.getSquare().getX(),player.getSquare().getY());
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
-        avaiableMethod[2] = false;
+        availableMethod[2] = false;
 
-        avaiableMethod[1] = false;
+        availableMethod[1] = false;
 
-        avaiableMethod[0] = false;
+        availableMethod[0] = false;
 
-        avaiableMethod[3] = false;
+        availableMethod[3] = false;
 
 
 
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
 
         if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
         if (isLoaded())
-            avaiableMethod[2] = true;
+            availableMethod[2] = true;
         if(isLoaded() && (checkPhaseGlide().size()>1) )
-            avaiableMethod[3] = true;
-        return avaiableMethod;
+            availableMethod[3] = true;
+        return availableMethod;
 
     }
 
@@ -94,20 +94,20 @@ public class PlasmaGun extends WeaponCard
 
 
         int i = 0;
-        boolean[] booleans = checkAvaliableMode();
-        if (!checkAvaliableMode()[2])
+        boolean[] booleans = checkAvailableMode();
+        if (!checkAvailableMode()[2])
             throw  new IllegalStateException("arma scarica");
         while (i < orderEffect.length)
         {
             if (orderEffect[i].equals("basic"))
             {
-                if (!checkAvaliableMode()[0])
+                if (!checkAvailableMode()[0])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
             }
             if (orderEffect[i].equals("with phase glide") && checkTargetAfterMove(x,y).size()>0) {
-                if (!checkAvaliableMode()[2])
+                if (!checkAvailableMode()[2])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
                 moveTarget(this.player, x, y);
@@ -115,7 +115,7 @@ public class PlasmaGun extends WeaponCard
             }
             if (orderEffect[i].equals("with charged shot") && booleans[2])
             {
-                if (!checkAvaliableMode()[1])
+                if (!checkAvailableMode()[1])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
@@ -183,7 +183,7 @@ public class PlasmaGun extends WeaponCard
     public  Map<String,List<ColorId>> checkAllTarget()
     {
         Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
-        if (!checkAvaliableMode()[2]) //check mode
+        if (!checkAvailableMode()[2]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         Map<String,List<ColorId>> result = new HashMap<>();

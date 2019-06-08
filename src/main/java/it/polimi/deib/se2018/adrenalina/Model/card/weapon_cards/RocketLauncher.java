@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class RocketLauncher extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[4];
+    private boolean[] availableMethod = new boolean[4];
     private Player dummie = new Player(ColorId.BLUE,"a","a",false);
 
 
@@ -47,44 +47,44 @@ public class RocketLauncher extends WeaponCard
     // If you use the fragmenting warhead, you deal damage to everyone on the target's square before you move the target – your target will take 3 damage total.
 
 
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
 
 
-        avaiableMethod[0] = false;//I suppose that the modes can't be used
-        avaiableMethod[1] = false;
-        avaiableMethod[2] = false;
-        avaiableMethod[3] = false;
+        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[1] = false;
+        availableMethod[2] = false;
+        availableMethod[3] = false;
 
         if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, (List<Square>) MethodsWeapons.squareThatSee(player)))
         {
-                avaiableMethod[0] = true;
+                availableMethod[0] = true;
 
         }
 
 
-        if (isLoaded() && avaiableMethod[0] && player.getAmmoBlue() > 0)
+        if (isLoaded() && availableMethod[0] && player.getAmmoBlue() > 0)
         {
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
         }
 
-        if (isLoaded() && avaiableMethod[0] && player.getAmmoYellow() > 0)
+        if (isLoaded() && availableMethod[0] && player.getAmmoYellow() > 0)
         {
-            avaiableMethod[2] = true;
+            availableMethod[2] = true;
         }
 
         if(isLoaded() && (checkPhaseGlide().size()>1))
-            avaiableMethod[3] = true;
+            availableMethod[3] = true;
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0]) //check mode
+        if (!checkAvailableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         Set<Player> playersTarget = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
@@ -99,7 +99,7 @@ public class RocketLauncher extends WeaponCard
     }
 
     public void basicMode (ColorId colorPlayerTarget , String[] orderEffect, String squareCoordinatesAsStringPlayertoMove, String squareCoordinatesAsStringTargetToMove) throws IllegalStateException {
-        if (!checkAvaliableMode()[0]) //check mode
+        if (!checkAvailableMode()[0]) //check mode
             throw new IllegalStateException("Modalità xxx dell'arma: " + name + " non eseguibile");
 
         int xplayer = MethodsWeapons.getXFromString(squareCoordinatesAsStringPlayertoMove);
@@ -109,20 +109,20 @@ public class RocketLauncher extends WeaponCard
 
 
         int i = 0;
-        boolean[] booleans = checkAvaliableMode();
+        boolean[] booleans = checkAvailableMode();
         boolean rememberToMoveTarget = false;
         while (i < orderEffect.length)
         {
             if (orderEffect[i].equals("basic"))
             {
-                if (!checkAvaliableMode()[0])
+                if (!checkAvailableMode()[0])
                     throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
                 rememberToMoveTarget = true;
             }
             if (orderEffect[i].equals("with rocket jump:") && booleans[1]) {
-                if (!checkAvaliableMode()[2])
+                if (!checkAvailableMode()[2])
                     throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
                 moveTarget(this.player, xplayer, yplayer);
@@ -130,7 +130,7 @@ public class RocketLauncher extends WeaponCard
             }
             if (orderEffect[i].equals("with fragmenting warhead") && booleans[2])
             {
-                if (!checkAvaliableMode()[1])
+                if (!checkAvailableMode()[1])
                     throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
                 for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
                 {
@@ -176,7 +176,7 @@ public class RocketLauncher extends WeaponCard
     private Set<Player> checkPhaseGlide() throws IllegalStateException
     {
         Set<Player> playerReachable = new HashSet<>();
-        if (!checkAvaliableMode()[2]) //check mode
+        if (!checkAvailableMode()[2]) //check mode
             throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
         Set<Square> target=player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
 

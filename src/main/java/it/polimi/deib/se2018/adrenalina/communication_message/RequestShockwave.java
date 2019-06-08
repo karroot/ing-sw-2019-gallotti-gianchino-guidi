@@ -21,10 +21,10 @@ public class RequestShockwave extends WeaponWithModeAlternative
      * Create a message of request for the weapon Shockwave
      * @param playersBasicMode targets available for the basic mode
      */
-    public RequestShockwave(boolean[] avaiableMethod, Map<String,List<ColorId>> playersBasicMode)
+    public RequestShockwave(boolean[] availableMethod, Map<String,List<ColorId>> playersBasicMode)
     {
         this.nameAlternaivemode = "modalità tsunami";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playersBasicMode;
         responseIsReady = false;
     }

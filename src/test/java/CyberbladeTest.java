@@ -48,33 +48,33 @@ public class CyberbladeTest
     }
 
     @Test
-    public void checkAvaliableMode()
+    public void checkAvailableMode()
     {
         pGreen.addWeapon(weap);
         weap.setPlayer(pGreen);
 
-        assertTrue(!weap.checkAvaliableMode()[0] && !weap.checkAvaliableMode()[1] && !weap.checkAvaliableMode()[2]);
+        assertTrue(!weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1] && !weap.checkAvailableMode()[2]);
 
 
         pYellow.addWeapon(weap);
         weap.setPlayer(pYellow);
 
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1] && weap.checkAvaliableMode()[2]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1] && weap.checkAvailableMode()[2]);
 
         pPurple.addWeapon(weap);
         weap.setPlayer(pPurple);
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1] && weap.checkAvaliableMode()[2]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1] && weap.checkAvailableMode()[2]);
 
         MethodsWeapons.moveTarget(pGrey,2,3);
 
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1] && !weap.checkAvaliableMode()[2]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1] && !weap.checkAvailableMode()[2]);
 
         MethodsWeapons.moveTarget(pGrey,3,3);
 
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1] && !weap.checkAvaliableMode()[2]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1] && !weap.checkAvailableMode()[2]);
     }
 
     @Test

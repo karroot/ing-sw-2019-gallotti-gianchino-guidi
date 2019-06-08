@@ -145,9 +145,9 @@ public class TestBlueWeapons {
 
         w0.setPlayer(test);
         w0.setLoaded(true);
-        boolean[] avaiableMethod = w0.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
-        assertFalse(avaiableMethod[1]);
+        boolean[] availableMethod = w0.checkAvailableMode();
+        assertFalse(availableMethod[0]);
+        assertFalse(availableMethod[1]);
         try
         {
             w0.checkBasicMode();
@@ -173,9 +173,9 @@ public class TestBlueWeapons {
 
         MethodsWeapons.moveTarget(enemy,1,1);
         test.setAmmoBlue(2);
-        boolean[] avaiableMethod1 = w0.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
-        assertEquals(avaiableMethod1[1],true);
+        boolean[] availableMethod1 = w0.checkAvailableMode();
+        assertEquals(availableMethod1[0],true);
+        assertEquals(availableMethod1[1],true);
 
         List<ColorId> list1 = w0.checkBasicMode();
         List<ColorId> list2 = w0.checkReaper();
@@ -191,9 +191,9 @@ public class TestBlueWeapons {
         //solo basic disponibil
 
         w0.setLoaded(true);
-        boolean[] avaiableMethod2 = w0.checkAvaliableMode();
-        assertEquals(avaiableMethod2[0],true);
-        assertEquals(avaiableMethod2[1],false);
+        boolean[] availableMethod2 = w0.checkAvailableMode();
+        assertEquals(availableMethod2[0],true);
+        assertEquals(availableMethod2[1],false);
 
         List<ColorId> list3 = w0.checkBasicMode();
 
@@ -244,9 +244,9 @@ public class TestBlueWeapons {
 
 
 
-        boolean[] avaiableMethod = w1.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
-        assertFalse(avaiableMethod[1]);
+        boolean[] availableMethod = w1.checkAvailableMode();
+        assertFalse(availableMethod[0]);
+        assertFalse(availableMethod[1]);
         try {
             w1.checkBasicMode();
             fail();
@@ -276,9 +276,9 @@ public class TestBlueWeapons {
         test.setAmmoRed(2);
         test.setAmmoBlue(2);
 
-        boolean[] avaiableMethod1 = w1.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0], true);
-        assertEquals(avaiableMethod1[1], true);
+        boolean[] availableMethod1 = w1.checkAvailableMode();
+        assertEquals(availableMethod1[0], true);
+        assertEquals(availableMethod1[1], true);
 
         List<ColorId> list1 = w1.checkBasicMode();
         List<ColorId> list2 = w1.checkSecondLock();
@@ -306,9 +306,9 @@ public class TestBlueWeapons {
 
 
         w1.setLoaded(true);
-        boolean[] avaiableMethod2 = w1.checkAvaliableMode();
-        assertEquals(avaiableMethod2[0], true);
-        assertEquals(avaiableMethod2[1], false);
+        boolean[] availableMethod2 = w1.checkAvailableMode();
+        assertEquals(availableMethod2[0], true);
+        assertEquals(availableMethod2[1], false);
 
         List<ColorId> list3 = w1.checkBasicMode();
 
@@ -390,8 +390,8 @@ public class TestBlueWeapons {
             System.out.println(e);
         }
         w4.setLoaded(true);
-        boolean[] avaiableMethod = w4.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
+        boolean[] availableMethod = w4.checkAvailableMode();
+        assertFalse(availableMethod[0]);
         try
         {
             w4.checkBasicMode();
@@ -408,8 +408,8 @@ public class TestBlueWeapons {
         MethodsWeapons.moveTarget(enemy,1,3);
         MethodsWeapons.moveTarget(enemy2,1,3);
         assertTrue(w4.isLoaded());
-        boolean[] avaiableMethod1 = w4.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
+        boolean[] availableMethod1 = w4.checkAvailableMode();
+        assertEquals(availableMethod1[0],true);
 
 
         List<ColorId> list1 = w4.checkBasicMode();
@@ -476,8 +476,8 @@ public class TestBlueWeapons {
             System.out.println(e);
         }
         w3.setLoaded(true);
-        boolean[] avaiableMethod = w3.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
+        boolean[] availableMethod = w3.checkAvailableMode();
+        assertFalse(availableMethod[0]);
         try
         {
             w3.checkBasicMode();
@@ -499,8 +499,8 @@ public class TestBlueWeapons {
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w3.isLoaded());
-        boolean[] avaiableMethod1 = w3.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
+        boolean[] availableMethod1 = w3.checkAvailableMode();
+        assertEquals(availableMethod1[0],true);
 
 
         List<ColorId> list1 = w3.checkBasicMode();
@@ -608,10 +608,10 @@ public class TestBlueWeapons {
 
         w6.setPlayer(test);
         w6.setLoaded(true);
-        boolean[] avaiableMethod = w6.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
-        assertFalse(avaiableMethod[1]);
-        assertFalse(avaiableMethod[2]);
+        boolean[] availableMethod = w6.checkAvailableMode();
+        assertFalse(availableMethod[0]);
+        assertFalse(availableMethod[1]);
+        assertFalse(availableMethod[2]);
         try
         {
             w6.checkBasicMode();
@@ -650,10 +650,10 @@ public class TestBlueWeapons {
         MethodsWeapons.moveTarget(enemy3,1,2);
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        boolean[] avaiableMethod1 = w6.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
-        assertEquals(avaiableMethod1[1],true);
-        assertEquals(avaiableMethod1[2],true);
+        boolean[] availableMethod1 = w6.checkAvailableMode();
+        assertEquals(availableMethod1[0],true);
+        assertEquals(availableMethod1[1],true);
+        assertEquals(availableMethod1[2],true);
 
         List<ColorId> list1 = w6.checkBasicMode();
         List<ColorId> list2 = w6.checkFocusShotcMode();
@@ -684,10 +684,10 @@ public class TestBlueWeapons {
         test.setAmmoYellow(0);
         test.setAmmoBlue(0);
         w6.setLoaded(true);
-        boolean[] avaiableMethod2 = w6.checkAvaliableMode();
-        assertEquals(avaiableMethod2[0],true);
-        assertEquals(avaiableMethod2[1],false);
-        assertEquals(avaiableMethod2[2],false);
+        boolean[] availableMethod2 = w6.checkAvailableMode();
+        assertEquals(availableMethod2[0],true);
+        assertEquals(availableMethod2[1],false);
+        assertEquals(availableMethod2[2],false);
        list3 = w6.checkBasicMode();
 
         assertTrue(list3.contains(enemy.getColor()));
@@ -1001,9 +1001,9 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
 
         w2.setPlayer(test);
         w2.setLoaded(true);
-        boolean[] avaiableMethod = w2.checkAvaliableMode();
-        assertFalse(avaiableMethod[0]);
-        assertFalse(avaiableMethod[1]);
+        boolean[] availableMethod = w2.checkAvailableMode();
+        assertFalse(availableMethod[0]);
+        assertFalse(availableMethod[1]);
 
         try
         {
@@ -1036,8 +1036,8 @@ assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w2.isLoaded());
-        boolean[] avaiableMethod1 = w2.checkAvaliableMode();
-        assertEquals(avaiableMethod1[0],true);
+        boolean[] availableMethod1 = w2.checkAvailableMode();
+        assertEquals(availableMethod1[0],true);
 
 
         Map<ColorId,List<String>> list1 = w2.checkMoveBasicMode();

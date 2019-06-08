@@ -19,7 +19,7 @@ import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWe
 
 public class Whisper extends WeaponCard
 {
-    private boolean[] avaiableMethod = new boolean[1];
+    private boolean[] availableMethod = new boolean[1];
 
     /**
      * Create the card Whisper
@@ -43,14 +43,14 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestWhisper(checkAvaliableMode(),checkBasicMode());
+        return new RequestWhisper(checkAvailableMode(),checkBasicMode());
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 1 the first represent the basic mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
        Set<Player> playerdistance2and1= new HashSet<>();
        Set<Player> playerdistance1= new HashSet<>();
@@ -63,17 +63,17 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
         playerdistance2and1.removeAll(playerdistance1);
 
 
-        avaiableMethod[0] = false;
+        availableMethod[0] = false;
 
 
 
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1 &&  !playerdistance2and1.isEmpty())
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
     /**
@@ -85,7 +85,7 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
         Set<ColorId> playerdistance2and1= new HashSet<>();
         Set<ColorId> playerdistance1= new HashSet<>();
         List<ColorId> pl = new LinkedList<>();
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         for (Player p :MethodsWeapons.playersReachable(player.getSquare(),1) )
@@ -111,7 +111,7 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
      */
     public void basicMode(ColorId colorPlayer)  throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);

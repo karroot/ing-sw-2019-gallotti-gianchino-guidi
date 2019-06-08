@@ -14,7 +14,7 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
     protected ColorId targetBasicMode;//Target chosen for the basic mode
 
 
-    boolean[] avaiableMethod = new boolean[2];
+    boolean[] availableMethod = new boolean[2];
     protected String nameAdditionalmode; //Name of the alternative mode
 
     //Attribute for the response
@@ -28,12 +28,12 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 
         System.out.println("Scegli modalità Arma:");
 
-        if (avaiableMethod[0])//Print the possible effects
+        if (availableMethod[0])//Print the possible effects
         {
             System.out.println("1:modalità base da sola");
             acceptedInt.add(1);
         }
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             System.out.println("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
@@ -42,10 +42,10 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
         int j = 0;
 
         //Handle the possible choice of the users asking the correct inputs
-        if (avaiableMethod[0] && avaiableMethod[1])
+        if (availableMethod[0] && availableMethod[1])
             choice = inputInt(1, 2);
 
-        if (avaiableMethod[0] && !avaiableMethod[1])
+        if (availableMethod[0] && !availableMethod[1])
             choice = inputInt(1, 1);
 
         inputBasicMode();//Ask all the information necessary to use the basic mode

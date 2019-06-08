@@ -29,10 +29,10 @@ public class Adrenalized2 extends StatePlayer
      * @return a set of possible reachable squares with max distance 3
      */
     @Override
-    public Set<Square> lookForRunAround(Player player, GameBoard gameBoard)
+    public Set<Square> lookForRunAround(Player player)
     {
         Set<Square>  squareSet;
-        squareSet = gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
         return squareSet;
     }
 
@@ -44,11 +44,12 @@ public class Adrenalized2 extends StatePlayer
      * @return a set of possible reachable squares with max distance 1
      */
     @Override
-    public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
+    public Set<Square> lookForGrabStuff(Player player)
     {
         Set<Square> squareSet;
-        squareSet = gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
-        return squareSet;
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
+        return StateSpecialMethods.checkValidSquares(player, squareSet);
+
     }
 
 

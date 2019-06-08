@@ -21,15 +21,15 @@ public class RequestSledgehammer extends WeaponWithModeAlternative
 
     /**
      * Create a message of request for the weapon Sledgehammer
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param players targets for the basic mode
      * @param movementPossible Square where can be moved the target chosen by user
      * The square will traduce in strings that represent the coordinates
      */
-    public RequestSledgehammer(boolean[] avaiableMethod, List<ColorId> players, List<Square> movementPossible)
+    public RequestSledgehammer(boolean[] availableMethod, List<ColorId> players, List<Square> movementPossible)
     {
         this.nameAlternaivemode = "modalità polverizzare";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         //Traduce the squares into coordinates
         this.movementPossible = movementPossible.stream().map(Square::toStringCoordinates).collect(Collectors.toList());
         this.players = players;

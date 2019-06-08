@@ -47,25 +47,25 @@ public class ShotgunTest {
     }
 
     @Test
-    public void checkAvaliableMode()
+    public void checkAvailableMode()
     {
         pBlue.addWeapon(weap);
         weap.setPlayer(pBlue);
 
-        assertTrue(!weap.checkAvaliableMode()[0] && !weap.checkAvaliableMode()[1]);
+        assertTrue(!weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
 
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
-        assertTrue(!weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1]);
+        assertTrue(!weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1]);
 
         pYellow.addWeapon(weap);
         weap.setPlayer(pYellow);
-        assertTrue(weap.checkAvaliableMode()[0] && weap.checkAvaliableMode()[1]);
+        assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1]);
 
         MethodsWeapons.moveTarget(pGrey,1,1);
         MethodsWeapons.moveTarget(pGreen,1,1);
 
-        assertTrue(weap.checkAvaliableMode()[0] && !weap.checkAvaliableMode()[1]);
+        assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
     @Test

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Cyberblade extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[3];
+    private boolean[] availableMethod = new boolean[3];
 
     /**
      * Create the card shotgun
@@ -41,27 +41,27 @@ public class Cyberblade extends WeaponCard
      *  and the third the effect "with slice and dice"
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false; //I suppose that the modes can't be used
-        avaiableMethod[1] = false;
-        avaiableMethod[2] = false;
+        availableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[1] = false;
+        availableMethod[2] = false;
 
 
         if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 1)//if the first mode can be used
-             avaiableMethod[0] = true; //If there are target at distance 1 then also the second effect can be used
+             availableMethod[0] = true; //If there are target at distance 1 then also the second effect can be used
         else
-            return avaiableMethod;
+            return availableMethod;
 
-        avaiableMethod[1] = true;
+        availableMethod[1] = true;
 
         if (isLoaded() && MethodsWeapons.playersReachable(player.getSquare(),1).size() > 2 && player.getAmmoYellow() >= 1)//If the second mode can be used
-            avaiableMethod[2] = true;
+            availableMethod[2] = true;
 
-        return avaiableMethod;
+        return availableMethod;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Cyberblade extends WeaponCard
      */
     public Map<String,List<ColorId>> checkBasicModeAllTargetPossible() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0]) //check mode
+        if (!checkAvailableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         Map<String,List<ColorId>> result = new HashMap<>();
@@ -113,7 +113,7 @@ public class Cyberblade extends WeaponCard
     public List<String> checkWithShadowStep() throws IllegalStateException
     {
 
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità passo d'ombra dell'arma: "+name+" non eseguibile");
 
         //Obtain all square reachable to distance 1
@@ -137,12 +137,12 @@ public class Cyberblade extends WeaponCard
      */
     public void basicMode(Player player,String[] orderEffect,Player player2,int x,int y) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])//check mode
+        if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         int i = 0;
 
-        boolean[] booleans = checkAvaliableMode();
+        boolean[] booleans = checkAvailableMode();
 
         while (i < orderEffect.length)//Do the effects in order indicated by player in view
         {
@@ -184,6 +184,6 @@ public class Cyberblade extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        return new RequestCyberblade(checkAvaliableMode(),checkBasicModeAllTargetPossible(), checkWithShadowStep(),player.getSquare().getX(),player.getSquare().getY());
+        return new RequestCyberblade(checkAvailableMode(),checkBasicModeAllTargetPossible(), checkWithShadowStep(),player.getSquare().getX(),player.getSquare().getY());
     }
 }

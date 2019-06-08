@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseGrenadeLauncher;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class GrenadeLauncher extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
 
     /**
@@ -36,32 +37,27 @@ public class GrenadeLauncher extends WeaponCard
         redAmmoCost = 1;
     }
 
-    @Override
-    public void useWeapon(ResponseInput responseMessage) {
-
-    }
-
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
 
 
-        avaiableMethod[0] = false;//I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[1] = false;
 
         if (isLoaded() && !player.playerThatSee(player.getSquare().getGameBoard()).isEmpty())
         {
-                avaiableMethod[0] = true;
+                availableMethod[0] = true;
 
         }
 
-        if (avaiableMethod[0] && player.getAmmoRed() > 0)
+        if (availableMethod[0] && player.getAmmoRed() > 0)
         {
-                avaiableMethod[1] = true;
+                availableMethod[1] = true;
         }
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -73,7 +69,7 @@ public class GrenadeLauncher extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0]) //check mode
+        if (!checkAvailableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         List<ColorId> colorIdList = new ArrayList<>();
@@ -93,15 +89,15 @@ public class GrenadeLauncher extends WeaponCard
 
     public void basicMode(ColorId colorPlayer, String squareToMoveCoordinatesAsStringint) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])//check mode
+        if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
 
         int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsStringint);
         int y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsStringint);
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
-
-        moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
+        if (squareToMoveCoordinatesAsStringint != null)
+            moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
 
         isLoaded = false;
     }
@@ -112,7 +108,7 @@ public class GrenadeLauncher extends WeaponCard
 
         HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
 
-        if (!checkAvaliableMode()[1]) //check mode
+        if (!checkAvailableMode()[1]) //check mode
             throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
         List<String> squareListCoordinatesAsString = new ArrayList<>();
@@ -132,7 +128,7 @@ public class GrenadeLauncher extends WeaponCard
 
     public void extraGrenade (String squareTargetCoordinatesAsString)
     {
-        if (!checkAvaliableMode()[1]) //check mode
+        if (!checkAvailableMode()[1]) //check mode
             throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
 
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
@@ -156,5 +152,11 @@ public class GrenadeLauncher extends WeaponCard
 
     }
 
+    @Override
+    public void useWeapon(ResponseInput responseInput) {
+        basicMode(((ResponseGrenadeLauncher) responseInput).getTargetBasicMode(), ((ResponseGrenadeLauncher) responseInput).getTargetSquareToMoveBasicModeAsString());
+        if (((ResponseGrenadeLauncher) responseInput).isExtraEffect())
+            extraGrenade(((ResponseGrenadeLauncher) responseInput).getTargetSquareExtraGrenadeAsString());
 
+    }
 }

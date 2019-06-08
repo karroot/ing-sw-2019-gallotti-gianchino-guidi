@@ -26,15 +26,15 @@ public class RequestShotgun extends WeaponWithModeAlternative
 
     /**
      *Create a message of Request of input for weapon Shotgun
-     * @param avaiableMethod Represent the possible mode that can be used
+     * @param availableMethod Represent the possible mode that can be used
      * @param playersBasicMode All player available for basic mode
      * @param playersAlternativeMode All player available for alternative mode
      * @param movesPossible Square where can be moved the target chosen by user
      */
-    public RequestShotgun(boolean[] avaiableMethod, List<ColorId> playersBasicMode, List<ColorId> playersAlternativeMode,List<Square> movesPossible)
+    public RequestShotgun(boolean[] availableMethod, List<ColorId> playersBasicMode, List<ColorId> playersAlternativeMode,List<Square> movesPossible)
     {
         nameAlternaivemode = "modalità canna lunga";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.targetsBasicMode = playersBasicMode;
         this.targetsAlternativeMode = playersAlternativeMode;
         this.movesPossible = movesPossible.stream().map(Square::toStringCoordinates).collect(Collectors.toList());

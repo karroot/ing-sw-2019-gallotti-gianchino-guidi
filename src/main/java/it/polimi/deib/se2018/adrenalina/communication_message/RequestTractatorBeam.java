@@ -22,14 +22,14 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
     private int y;
     /**
      * Create a message of request for the weapon TractatorBeam
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playerBasicMode targets for the basic mode
      * @param playerAlternativeMode targets for the alternative mode
      */
-    public RequestTractatorBeam(boolean[] avaiableMethod,  Map<ColorId,List<String>>  playerBasicMode, List<ColorId> playerAlternativeMode)
+    public RequestTractatorBeam(boolean[] availableMethod,  Map<ColorId,List<String>>  playerBasicMode, List<ColorId> playerAlternativeMode)
     {
         this.nameAlternaivemode = "modalità punitore";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAlternativeMode = playerAlternativeMode;
 

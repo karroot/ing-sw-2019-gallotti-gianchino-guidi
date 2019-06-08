@@ -98,7 +98,7 @@ public abstract class WeaponCard extends Card
      * @return array of booleans , represents which modes can be used by player
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public  abstract boolean[]  checkAvaliableMode();
+    public  abstract boolean[]  checkAvailableMode();
 
     /**
      * Get a message of request for this weapon

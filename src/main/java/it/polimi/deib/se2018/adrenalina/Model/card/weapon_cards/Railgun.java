@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Railgun extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
     /**
      * Create the card Railgun
@@ -35,21 +35,21 @@ public class Railgun extends WeaponCard
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false; //I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[1] = false;
 
         if (isLoaded() && !checkBasicModeOrPiercingMode().keySet().isEmpty())//If the first mode can be used
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
         if (isLoaded() && !checkBasicModeOrPiercingMode().keySet().isEmpty() && thereAreTwoPlayerInAdirection())//If the second mode can be used
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -120,7 +120,7 @@ public class Railgun extends WeaponCard
      */
     public void basicMode(Player player) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])//check mode
+        if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         doDamage(player,3);//Do one damage
@@ -137,7 +137,7 @@ public class Railgun extends WeaponCard
      */
     public void inPiercingMode(Player player1, Player player2) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1])//Check mode
+        if (!checkAvailableMode()[1])//Check mode
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         doDamage(player1,2);
@@ -172,15 +172,15 @@ public class Railgun extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
 
-            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
+            return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
 
-        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
 
-            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
+            return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
 
         else
-            return new RequestRailgun(checkAvaliableMode(),checkBasicModeOrPiercingMode());
+            return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
     }
 }

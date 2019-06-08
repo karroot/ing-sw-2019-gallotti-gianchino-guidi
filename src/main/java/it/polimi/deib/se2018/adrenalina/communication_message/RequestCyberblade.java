@@ -14,7 +14,7 @@ import java.util.Map;
 public class RequestCyberblade extends RequestInput
 {
     //Attribute for the request
-    private boolean[] avaiableMethod;
+    private boolean[] availableMethod;
     private Map<String,List<ColorId>> playersWithSquaresBasicMode;//Targets to use the Cyberblade in all different square
     private List<String> squaresAfterBasicEffect;//Squares that the user can choice after that he has used the basic effect
     private int xStart;//Coordinates where the player is in a first moment
@@ -33,15 +33,15 @@ public class RequestCyberblade extends RequestInput
 
     /**
      * Create a message of Request of input for weapon Shotgun
-     * @param avaiableMethod Represent the possible mode that can be used with this weapon
+     * @param availableMethod Represent the possible mode that can be used with this weapon
      * @param playersWithSquaresBasicMode Targets to use the Cyberblade in all different square
      * @param squaresAfterBasicEffect Squares that the user can choice after that he has used the basic effect
      * @param x Coordinate x of the square where the player is in a first moment
      * @param y Coordinate y of the square where the player is in a first moment
      */
-    public RequestCyberblade(boolean[] avaiableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
+    public RequestCyberblade(boolean[] availableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
     {
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersWithSquaresBasicMode = playersWithSquaresBasicMode;
         this.squaresAfterBasicEffect = squaresAfterBasicEffect;
         responseIsReady = false;
@@ -50,7 +50,7 @@ public class RequestCyberblade extends RequestInput
         orderAva.add("basic");
         orderAva.add("with shadowstep");
 
-        if (avaiableMethod[2])//If the mode with slice and dice can be used
+        if (availableMethod[2])//If the mode with slice and dice can be used
             orderAva.add("with slice and dice");//Add it in the list of the possible effects
     }
 

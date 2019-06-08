@@ -9,10 +9,10 @@ import java.util.Set;
 
 public abstract class StatePlayer {
 
-    public abstract Set<Square> lookForRunAround(Player player, GameBoard gameBoard);
+    public abstract Set<Square> lookForRunAround(Player player);
 
 
-    public abstract Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard);
+    public abstract Set<Square> lookForGrabStuff(Player player);
 
 
     /**
@@ -25,7 +25,7 @@ public abstract class StatePlayer {
      */
 
     // invocare metodo useweapon su arma scelta da player ( risposta.useweapon)
-    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
+    public List<Player> lookForShootPeople(Player player)
     {
         List<Player> playerList = new LinkedList<>();
 
@@ -39,7 +39,7 @@ public abstract class StatePlayer {
          * 3. I will add to the list all the players in this different room
          */
 
-        for (Square square : gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1))
+        for (Square square : player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1))
         {
             if (!(player.getSquare().getColor().equals(square.getColor()))) // if the color of the reachable square is different from the color of the square
             // where the player is this means player can see in a different room
@@ -78,17 +78,7 @@ public abstract class StatePlayer {
         return reloadableWeapons;
     }
 
-    public List<String> runAroundString (Set<Square> squareSet)
-    {
-        List<String> stringList = new ArrayList<>();
 
-        for (Square squareIterate : squareSet)
-        {
-            stringList.add(squareIterate.toStringCoordinates());
-        }
-
-        return stringList;
-    }
 
 
 }

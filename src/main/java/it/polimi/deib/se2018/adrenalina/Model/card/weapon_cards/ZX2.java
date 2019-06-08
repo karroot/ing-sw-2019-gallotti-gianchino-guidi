@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class ZX2 extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
     /**
      * Create the card ZX2
@@ -37,23 +37,23 @@ public class ZX2 extends WeaponCard
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false; //I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[1] = false;
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size() > 1)//If the first mode can be used
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size() > 3 )//If the second mode can be used
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -64,7 +64,7 @@ public class ZX2 extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0]) //check mode
+        if (!checkAvailableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         Set<Player> target = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
@@ -81,7 +81,7 @@ public class ZX2 extends WeaponCard
      */
     public void basicMode(Player player) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])//check mode
+        if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         doDamage(player,1);//Do one damage
@@ -98,7 +98,7 @@ public class ZX2 extends WeaponCard
     public List<ColorId> checkInScannerMode() throws IllegalStateException
     {
 
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         Set<Player> playerList = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
@@ -115,7 +115,7 @@ public class ZX2 extends WeaponCard
      */
     public void inScannerMode(List<Player> players) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[1])//Check mode
+        if (!checkAvailableMode()[1])//Check mode
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         for (Player x:players) //For each player
@@ -140,15 +140,15 @@ public class ZX2 extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        if (checkAvaliableMode()[0] && checkAvaliableMode()[1])
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
 
-            return new RequestZX2(checkAvaliableMode(),checkBasicMode(), checkInScannerMode());
+            return new RequestZX2(checkAvailableMode(),checkBasicMode(), checkInScannerMode());
 
-        else if(checkAvaliableMode()[0] && !checkAvaliableMode()[1])
+        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
 
-            return new RequestZX2(checkAvaliableMode(),checkBasicMode(),new ArrayList<>());
+            return new RequestZX2(checkAvailableMode(),checkBasicMode(),new ArrayList<>());
 
         else
-            return new RequestZX2(checkAvaliableMode(),new ArrayList<>(),checkInScannerMode());
+            return new RequestZX2(checkAvailableMode(),new ArrayList<>(),checkInScannerMode());
     }
 }

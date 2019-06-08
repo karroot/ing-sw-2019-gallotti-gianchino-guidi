@@ -21,14 +21,14 @@ public class RequestZX2 extends WeaponWithModeAlternative
 
     /**
      * Create a message of request for the weapon ZX2
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playerBasicMode targets for the basic mode
      * @param playerAlternativeMode targets for the alternative mode
      */
-    public RequestZX2(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAlternativeMode)
+    public RequestZX2(boolean[] availableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAlternativeMode)
     {
         this.nameAlternaivemode = "modalità scanner";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.playersAlternativeMode = playerAlternativeMode;
         responseIsReady = false;

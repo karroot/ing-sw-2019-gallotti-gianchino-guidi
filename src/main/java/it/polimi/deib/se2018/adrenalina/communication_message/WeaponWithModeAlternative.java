@@ -11,7 +11,7 @@ public abstract class WeaponWithModeAlternative extends RequestInput
 {
 
     //Attribute for the request
-    protected boolean[] avaiableMethod; //Represent which mode are possible
+    protected boolean[] availableMethod; //Represent which mode are possible
     protected String nameAlternaivemode; //Name of the alternative mode
 
     //Attribute for the response
@@ -35,12 +35,12 @@ public abstract class WeaponWithModeAlternative extends RequestInput
 
         System.out.println("Scegli modalità Arma:");
 
-        if (avaiableMethod[0])
+        if (availableMethod[0])
         {
             System.out.println("1:modalità base");
         }
 
-        if (avaiableMethod[1])//If the alternative mode can be used
+        if (availableMethod[1])//If the alternative mode can be used
         {
             System.out.println("2:"+nameAlternaivemode);
         }
@@ -48,12 +48,12 @@ public abstract class WeaponWithModeAlternative extends RequestInput
         int j = 0;
 
         //Handle the possible choice of the users asking the correct inputs
-        if (avaiableMethod[0] && avaiableMethod[1])
+        if (availableMethod[0] && availableMethod[1])
             choice = inputInt(1, 2);
 
-        if (!avaiableMethod[0] && avaiableMethod[1])
+        if (!availableMethod[0] && availableMethod[1])
             choice = inputInt(2, 2);
-        if (avaiableMethod[0] && !avaiableMethod[1])
+        if (availableMethod[0] && !availableMethod[1])
             choice = inputInt(1, 1);
 
 

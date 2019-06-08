@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class LockRifle extends WeaponCard
 {
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
     /**
      * Create the card LockRifle
@@ -34,7 +34,7 @@ public class LockRifle extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestLockRifle(checkAvaliableMode(),checkBasicMode(),checkSecondLock());
+        return new RequestLockRifle(checkAvailableMode(),checkBasicMode(),checkSecondLock());
     }
 
     /**
@@ -42,25 +42,25 @@ public class LockRifle extends WeaponCard
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player==null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
-        avaiableMethod[1] = false;
-        avaiableMethod[0] = false;
+        availableMethod[1] = false;
+        availableMethod[0] = false;
 
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
         if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -71,7 +71,7 @@ public class LockRifle extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma LockRifle non eseguibile");
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
@@ -94,12 +94,12 @@ public class LockRifle extends WeaponCard
      */
     public void basicMode(ColorId colorPlayer, ColorId colorPlayer2 , boolean SecondLockMode) throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         if(SecondLockMode)
         {
-            if (!checkAvaliableMode()[1])
+            if (!checkAvailableMode()[1])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
             markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
@@ -119,7 +119,7 @@ public class LockRifle extends WeaponCard
      */
     public List<ColorId> checkSecondLock() throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         return checkBasicMode();

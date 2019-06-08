@@ -19,13 +19,13 @@ public class RequestPowerGlove extends WeaponWithModeAlternative
 
     /**
      * Create a message of request for the weapon Powerglove
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playersBasicMode targets for the basic mode
      * @param playersAlternativeMode targets for the alternative mode
      */
-    public RequestPowerGlove(boolean[] avaiableMethod, List<ColorId> playersBasicMode, Map<String, List<List<ColorId>>> playersAlternativeMode)
+    public RequestPowerGlove(boolean[] availableMethod, List<ColorId> playersBasicMode, Map<String, List<List<ColorId>>> playersAlternativeMode)
     {
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.nameAlternaivemode = "modalità cento pugni";
         this.playersBasicMode = playersBasicMode;
         this.playersAlternativeMode = playersAlternativeMode;

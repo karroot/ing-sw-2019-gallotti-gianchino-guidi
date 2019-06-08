@@ -10,7 +10,7 @@ import java.util.Map;
 public class RequestPlasmaGun extends  RequestInput
 {
     //Attribute for the request
-    private boolean[] avaiableMethod;
+    private boolean[] availableMethod;
     private Map<String,List<ColorId>> playersWithSquaresBasicMode;//Targets to use the PlasmaGun in all different square
     private List<String> squaresAfterBasicEffect;//Squares that the user can choice after that he has used the basic effect
     private int xStart;//Coordinates where the player is in a first moment
@@ -28,17 +28,17 @@ public class RequestPlasmaGun extends  RequestInput
 
     /**
      * Create a message of Request of input for weapon Shotgun
-     * @param avaiableMethod Represent the possible mode that can be used with this weapon
+     * @param availableMethod Represent the possible mode that can be used with this weapon
      * @param playersWithSquaresBasicMode Targets to use the PlasmaGun in all different square
      * @param squaresAfterBasicEffect Squares that the user can choice after that he has used the basic effect
      * @param x Coordinate x of the square where the player is in a first moment
      * @param y Coordinate y of the square where the player is in a first moment
      */
-    public RequestPlasmaGun(boolean[] avaiableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
+    public RequestPlasmaGun(boolean[] availableMethod, Map<String, List<ColorId>> playersWithSquaresBasicMode, List<String> squaresAfterBasicEffect,int x,int y)
     {
         xStart = x;
         yStart = y;
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersWithSquaresBasicMode = playersWithSquaresBasicMode;
         this.squaresAfterBasicEffect = squaresAfterBasicEffect;
         responseIsReady = false;
@@ -46,7 +46,7 @@ public class RequestPlasmaGun extends  RequestInput
         orderAva.add("basic");
         orderAva.add("with phase glide");
 
-        if (avaiableMethod[2])//If the mode with charged shot can be used
+        if (availableMethod[2])//If the mode with charged shot can be used
             orderAva.add("with charged shot");//Add it in the list of the possible effects
     }
 
@@ -146,7 +146,7 @@ public class RequestPlasmaGun extends  RequestInput
             orderAva.remove("basic");
             orderTemp.add("basic");
 
-  if (avaiableMethod[2]) {
+  if (availableMethod[2]) {
       System.out.println("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 

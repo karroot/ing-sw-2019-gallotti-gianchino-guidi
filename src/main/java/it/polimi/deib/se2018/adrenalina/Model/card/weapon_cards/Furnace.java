@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class Furnace extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
 
 
@@ -30,23 +31,18 @@ public class Furnace extends WeaponCard
         redAmmoCost = 1;
     }
 
-    @Override
-    public void useWeapon(ResponseInput responseMessage) {
-
-    }
-
 
     //mod base: stanza che posso vedere ma non la mia -> 1 danno a tutti
     //mod cozy fire: 1 quadrato a distanza 1: 1 danno e 1 marchio a tutt
 
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode () throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
 
 
-        avaiableMethod[0] = false;//I suppose that the modes can't be used
-        avaiableMethod[1] = false;
+        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[1] = false;
 
         if (isLoaded()) {
             List<Room> roomList = new ArrayList<>();
@@ -55,7 +51,7 @@ public class Furnace extends WeaponCard
             roomList.remove(player.getSquare().getRoom()); //controllo che non sia la mia
             for (Room roomIterate : roomList) {
                 if (!roomIterate.getPlayerRoomList().isEmpty()) {
-                    avaiableMethod[0] = true;
+                    availableMethod[0] = true;
                     break;
                 }
 
@@ -63,10 +59,10 @@ public class Furnace extends WeaponCard
         }
 
         if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player)) {
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
         }
 
-        return avaiableMethod;
+        return availableMethod;
     }
 
 
@@ -76,7 +72,7 @@ public class Furnace extends WeaponCard
         HashMap<Room, ArrayList<Player>> hashRoomPlayer = new HashMap<Room, ArrayList<Player>>();
         List<ColorRoom> colorRoomList = new ArrayList<>();
 
-        List<Room> roomList = new ArrayList<>();
+        List<Room> roomList;
 
         roomList = MethodsWeapons.roomsThatIsee(player);
         roomList.remove(player.getSquare().getRoom()); //controllo che non sia la mia
@@ -157,10 +153,16 @@ public class Furnace extends WeaponCard
     }
 
 
+    @Override
+    public void useWeapon(ResponseInput responseInput)
+    {
+        if (((ResponseFurnace) responseInput).isMode())
+        {
+            inCozyFireMode(((ResponseFurnace) responseInput).getTargetAlternativeMode());
+            return;
+        }
 
+        basicMode(((ResponseFurnace) responseInput).getTargetBasicMode());
 
-
-
-
-
+    }
 }

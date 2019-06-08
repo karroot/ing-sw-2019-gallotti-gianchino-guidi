@@ -27,9 +27,9 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
 
-    public RequestHellion(boolean[] avaiableMethod, HashMap<String, List<ColorId>> hashMapBasicMode, HashMap<String, List<ColorId>> hashMapNanoTracerMode)
+    public RequestHellion(boolean[] availableMethod, HashMap<String, List<ColorId>> hashMapBasicMode, HashMap<String, List<ColorId>> hashMapNanoTracerMode)
     {
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.nameAlternaivemode = "modalità nano-traccianti";
         this.hashMapBasicMode = hashMapBasicMode;
         this.hashMapNanoTracerMode = hashMapNanoTracerMode;

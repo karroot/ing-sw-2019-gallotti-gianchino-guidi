@@ -5,6 +5,8 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
+import it.polimi.deib.se2018.adrenalina.communication_message.ResponseHeatSeeker;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
 
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 public class HeatSeeker extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[1];
+    private boolean[] availableMethod = new boolean[1];
 
 
 
@@ -40,28 +42,23 @@ public class HeatSeeker extends WeaponCard
         redAmmoCost = 2;
     }
 
-    @Override
-    public void useWeapon(ResponseInput responseMessage) {
-
-    }
-
     /**
      * This method checks which modes of the weapon can be used by the player that owns this weapon
      *
      * @return array of booleans of size 2. The first boolean represents the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong to any player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException {
+    public boolean[] checkAvailableMode() throws IllegalStateException {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[0] = false; //I suppose that the modes can't be used
 
 
         if (isLoaded() && !checkPlayers().isEmpty() )//If the first mode can be used
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -111,6 +108,18 @@ public class HeatSeeker extends WeaponCard
         }
 
         return colorIdList;
+
+    }
+
+    @Override
+    public void useWeapon(ResponseInput responseInput)
+    {
+
+        try {
+            basicMode(((ResponseHeatSeeker) responseInput).getTagetBasicMode());
+        } catch (SquareNotInGameBoard squareNotInGameBoard) {
+            squareNotInGameBoard.printStackTrace();
+        }
 
     }
 

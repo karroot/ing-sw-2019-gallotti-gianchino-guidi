@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class THOR extends WeaponCard
 {
-    private boolean[] avaiableMethod = new boolean[3];
+    private boolean[] availableMethod = new boolean[3];
 
 
     private int reach1=0; // number of the player that the enemy player see
@@ -48,21 +48,21 @@ public class THOR extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestTHOR(checkAvaliableMode(),checkBasicMode(),checkChainReaction(),checkHighVoltage());
+        return new RequestTHOR(checkAvailableMode(),checkBasicMode(),checkChainReaction(),checkHighVoltage());
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 3 the first represent the basic mode the second the alternative mode the third the final alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
-        avaiableMethod[0] = false;
-        avaiableMethod[1] = false;
-        avaiableMethod[2] = false;
+        availableMethod[0] = false;
+        availableMethod[1] = false;
+        availableMethod[2] = false;
         for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
         {
             reach1+=i.playerThatSee(i.getSquare().getGameBoard()).size();
@@ -75,17 +75,17 @@ public class THOR extends WeaponCard
            }
         }
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
         if (isLoaded()&& player.getAmmoBlue()>0 && reach1 > 1 )
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
         if  (isLoaded()&& player.getAmmoBlue()>1 && reach2 >1)
-            avaiableMethod[2] = true;
+            availableMethod[2] = true;
 
 
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
 
@@ -97,7 +97,7 @@ public class THOR extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
@@ -122,7 +122,7 @@ public class THOR extends WeaponCard
      */
     public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità base dell'arma: "+name+" non eseguibile");
 
 
@@ -130,7 +130,7 @@ public class THOR extends WeaponCard
             throw new IllegalArgumentException("you can't use highvoltage alone");
         if(ChainReaction)
         {
-            if (!checkAvaliableMode()[1])
+            if (!checkAvailableMode()[1])
                 throw  new IllegalStateException("Modalità chain dell'arma: "+name+" non eseguibile");
 
             if (colorPlayer1.equals(colorPlayer2))
@@ -139,7 +139,7 @@ public class THOR extends WeaponCard
 
             if(highVoltage)
             {
-                if (!checkAvaliableMode()[2])
+                if (!checkAvailableMode()[2])
                     throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
 
@@ -169,7 +169,7 @@ public class THOR extends WeaponCard
     {
        Set<ColorId> listChain= new HashSet<>();
         List<ColorId> list= new LinkedList<>();
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
@@ -201,7 +201,7 @@ public class THOR extends WeaponCard
     {
         List<ColorId> list= new LinkedList<>();
         Set<ColorId> listHighVoltage= new HashSet<>();
-        if (!checkAvaliableMode()[2])
+        if (!checkAvailableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))

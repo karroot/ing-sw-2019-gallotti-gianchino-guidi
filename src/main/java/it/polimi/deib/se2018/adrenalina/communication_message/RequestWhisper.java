@@ -9,20 +9,20 @@ public class RequestWhisper extends RequestInput  {
 
     //Attribute for the request
     private List<ColorId> playersBasicMode;//Targets for the basic mode
-    protected boolean[] avaiableMethod; //Represent which mode are possible
+    protected boolean[] availableMethod; //Represent which mode are possible
 
     //Attribute for the response
     private ColorId targetBasicMode;//Target chosen for the basic mode
   
     /**
      * Create a message of request for the weapon Whisper
-     * @param avaiableMethod mode available
+     * @param availableMethod mode available
      * @param playerBasicMode targets for the basic mode
      */
-    public RequestWhisper(boolean[] avaiableMethod, List<ColorId> playerBasicMode)
+    public RequestWhisper(boolean[] availableMethod, List<ColorId> playerBasicMode)
     {
 
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
 
         responseIsReady = false;

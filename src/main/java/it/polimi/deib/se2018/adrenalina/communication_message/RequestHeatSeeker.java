@@ -13,14 +13,14 @@ public class RequestHeatSeeker extends RequestInput
 {
     //Attribute for the request
     private List<ColorId> colorIdListBasicMode;
-    protected boolean[] avaiableMethod;
+    protected boolean[] availableMethod;
 
     //Attribute for the response
     private ColorId targetBasicMode;
 
-    public RequestHeatSeeker (boolean[] avaiableMethod, List<ColorId> colorIdListBasicMode)
+    public RequestHeatSeeker (boolean[] availableMethod, List<ColorId> colorIdListBasicMode)
     {
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.colorIdListBasicMode = colorIdListBasicMode;
         responseIsReady = false;
     }

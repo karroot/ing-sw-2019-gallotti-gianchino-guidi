@@ -23,10 +23,10 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     private ColorId target1BlackHoleMode;
     private ColorId target2BlackHoleMode = null;
 
-    public RequestVortexCannon(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<String> squaresListBasicMode, List<ColorId> playersBlackHoleMode)
+    public RequestVortexCannon(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squaresListBasicMode, List<ColorId> playersBlackHoleMode)
     {
         this.nameAdditionalmode = "modalità buco nero";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.squaresListBasicMode = squaresListBasicMode;
         this.playersBlackHoleMode = playersBlackHoleMode;
@@ -52,16 +52,16 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         int choice=0;
 
         System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
-        if (avaiableMethod[0])//Print the possible effects
+        if (availableMethod[0])//Print the possible effects
         {
             System.out.println("1: solo attacco base");
         }
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             System.out.println("2: attacco base e buco nero");
         }
 
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             choice = inputInt(1, 2);
         }

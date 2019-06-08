@@ -24,10 +24,10 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
 
-    public RequestGrenadeLauncher(boolean[] avaiableMethod, List<ColorId> playerBasicMode, List<String> squareToMoveAsString, List<String> squaresExtraGrenadeAsString)
+    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squareToMoveAsString, List<String> squaresExtraGrenadeAsString)
     {
         this.nameAdditionalmode = "modalità granata extra";
-        this.avaiableMethod = avaiableMethod;
+        this.availableMethod = availableMethod;
         this.playersBasicMode = playerBasicMode;
         this.squareToMoveAsString = squareToMoveAsString;
         this.squaresExtraGrenadeAsString = squaresExtraGrenadeAsString;
@@ -59,16 +59,16 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         int choice=0;
 
         System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
-        if (avaiableMethod[0])//Print the possible effects
+        if (availableMethod[0])//Print the possible effects
         {
             System.out.println("1: solo attacco base");
         }
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             System.out.println("2:attacco base e granata extra");
         }
 
-        if (avaiableMethod[1])//Print the possible effects
+        if (availableMethod[1])//Print the possible effects
         {
             choice = inputInt(1, 2);
         }

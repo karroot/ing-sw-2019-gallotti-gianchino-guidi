@@ -19,10 +19,8 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     private String targetAlternativeMode;//Target chosen for the alternative mode
 
 
-
-    public RequestFurnace(boolean[] avaiableMethod, List<ColorRoom> roomsBasicMode, List<String> squaresAlternativeMode)
-    {
-        this.avaiableMethod = avaiableMethod;
+    public RequestFurnace(boolean[] availableMethod, List<ColorRoom> roomsBasicMode, List<String> squaresAlternativeMode) {
+        this.availableMethod = availableMethod;
         this.nameAlternaivemode = "modalità fuoco confortevole";
         this.roomsBasicMode = roomsBasicMode;
         this.squaresAlternativeMode = squaresAlternativeMode;
@@ -30,10 +28,8 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     }
 
 
-
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException
-    {
+    public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
@@ -44,19 +40,16 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     }
 
 
-
     //Ask at the user to choice a target for the basic mode
     @Override
-    protected void inputBasicMode()
-    {
+    protected void inputBasicMode() {
         int i = 1;
 
         List<ColorRoom> colorRoomList = roomsBasicMode;
 
         System.out.println("Scegli una stanza bersaglio:");
 
-        for (ColorRoom colorRoomIterate : colorRoomList)
-        {
+        for (ColorRoom colorRoomIterate : colorRoomList) {
             System.out.println(i + " " + colorRoomIterate);
             i++;
         }
@@ -69,16 +62,14 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
 
     @Override
-    protected void inputAlternativeMode()
-    {
+    protected void inputAlternativeMode() {
         int i = 1;
 
         List<String> stringList = squaresAlternativeMode;
 
         System.out.println("Scegli una stanza bersaglio:");
 
-        for (String squareAsStringIterate : stringList)
-        {
+        for (String squareAsStringIterate : stringList) {
             System.out.println(i + " " + squareAsStringIterate);
             i++;
         }
@@ -88,9 +79,6 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         targetAlternativeMode = stringList.get(choice - 1);
         responseIsReady = true;
     }
-
-
-
 
 
 }

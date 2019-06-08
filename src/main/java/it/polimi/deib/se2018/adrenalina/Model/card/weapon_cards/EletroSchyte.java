@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class EletroSchyte extends WeaponCard
 {
 
-    private boolean[] avaiableMethod = new boolean[2];
+    private boolean[] availableMethod = new boolean[2];
 
 
     /**
@@ -45,30 +45,30 @@ public class EletroSchyte extends WeaponCard
 
     public RequestInput getRequestMessage()
     {
-        return new RequestElectroSchyte(checkAvaliableMode(),checkBasicMode(),checkReaper());
+        return new RequestElectroSchyte(checkAvailableMode(),checkBasicMode(),checkReaper());
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode
      * @exception IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvaliableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
 
-        avaiableMethod[1] = false; //I suppose that the modes can't be used
-        avaiableMethod[0] = false;
+        availableMethod[1] = false; //I suppose that the modes can't be used
+        availableMethod[0] = false;
 
         if (this.isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
-            avaiableMethod[0] = true;
+            availableMethod[0] = true;
 
         if (this.isLoaded() && player.getAmmoBlue()>1 &&  player.getSquare().getPlayerList().size() > 1)//If the second mode can be used
-            avaiableMethod[1] = true;
+            availableMethod[1] = true;
 
 
 
-        return avaiableMethod;
+        return availableMethod;
 
     }
     /**
@@ -78,7 +78,7 @@ public class EletroSchyte extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        if (!checkAvaliableMode()[0])
+        if (!checkAvailableMode()[0])
             throw  new IllegalStateException(" Modalità basic dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
@@ -117,7 +117,7 @@ public class EletroSchyte extends WeaponCard
     public List<ColorId> checkReaper() throws IllegalStateException
     {
 
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         List<ColorId> playerList = new LinkedList<>();
@@ -138,7 +138,7 @@ public class EletroSchyte extends WeaponCard
     public void reaper(List<ColorId> colorPlayerList) throws  IllegalStateException
     {
 
-        if (!checkAvaliableMode()[1])
+        if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         for (ColorId p : colorPlayerList) {
