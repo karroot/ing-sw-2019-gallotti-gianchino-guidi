@@ -78,7 +78,9 @@ public class TractorBeam extends WeaponCard
          for (Room reachRoom : roomReachablePlayer)
             {
 
-  for(Square sq : t.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor())).collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor())).collect(Collectors.toList()).get(0).getSquare().getY(),2) ){
+                for(Square sq : t.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
+                                        .collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
+                                            .collect(Collectors.toList()).get(0).getSquare().getY(),2) ){
 
                     if (reachRoom.getSquareList().contains(sq)) {
 

@@ -36,7 +36,7 @@ public class TestAmmoPoint {
     @Before
     public void setup()
     {
-        gameboard = new GameBoard(null,null,1,0,null);
+        gameboard = new GameBoard(null,null,1,0,null, null);
         ammoTilesStack = new Stack<>();
         ammoTiles1 = new JustAmmo(1, RED, BLUE);
         ammoTiles1 = new JustAmmo(2, YELLOW, BLUE);

@@ -1,10 +1,10 @@
-//package it.polimi.deib.se2018.adrenalina.Controller;
+package it.polimi.deib.se2018.adrenalina.Controller;//package it.polimi.deib.se2018.adrenalina.Controller;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
-/*
+
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 
 public class Setup
 {
+    /*
     public void spawn (ColorId player, Color PointOfSpawn)
     {
 
@@ -207,6 +208,5 @@ public class Setup
         //shuffle
         //return
     }
-
-}
 */
+}

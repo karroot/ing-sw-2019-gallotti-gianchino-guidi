@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,10 +31,6 @@ public class RocketLauncher extends WeaponCard
         redAmmoCost = 2;
     }
 
-    @Override
-    public void useWeapon(ResponseInput responseMessage) {
-
-    }
 
     //mod base: Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square.
 
@@ -191,4 +187,39 @@ public class RocketLauncher extends WeaponCard
         return playerReachable;//Returns all targets
 
     }
+
+    /**
+     *
+     * @param responseInput
+     */
+    @Override
+    public void useWeapon(ResponseInput responseInput)
+    {
+       /* basicMode(ResponseRocketLauncher);
+            barbecueMode(((ResponseFlamethrower) responseInput).getTargetDirectionBarbecueMode(), ((ResponseFlamethrower) responseInput).getTargetBarbecueMode());
+            return;
+        }
+
+        basicMode(((ResponseFlamethrower) responseInput).getTargetBasicMode1(), ((ResponseFlamethrower) responseInput).getTargetBasicMode2());
+
+
+        */
+
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        //return new RequestRocketLaucher(checkAvailableMode(), checkBasicModeForMessage());
+        return null;
+    }
+
+
+
+
 }

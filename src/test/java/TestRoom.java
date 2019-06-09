@@ -29,7 +29,7 @@ import java.util.List;
      @Before
      public void setup ()
      {
-         GameBoard gameboard = new GameBoard(null,null,1,0,null);
+         GameBoard gameboard = new GameBoard(null,null,1,0,null, null);
 
          for (Room roomIterate:gameboard.getRoomList())
          {

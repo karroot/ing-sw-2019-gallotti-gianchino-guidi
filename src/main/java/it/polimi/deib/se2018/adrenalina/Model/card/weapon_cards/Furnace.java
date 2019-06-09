@@ -2,8 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,23 +21,30 @@ public class Furnace extends WeaponCard
     private boolean[] availableMethod = new boolean[2];
 
 
-
+    /**
+     *
+     * @param color
+     * @param weaponID
+     * @param isLoaded
+     */
     public Furnace( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
-        this.name = "Furnace";
+        this.name = "Vulcanizzatore";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;
     }
 
 
-    //mod base: stanza che posso vedere ma non la mia -> 1 danno a tutti
-    //mod cozy fire: 1 quadrato a distanza 1: 1 danno e 1 marchio a tutt
-
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     public boolean[] checkAvailableMode () throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
 
 
         availableMethod[0] = false;//I suppose that the modes can't be used
@@ -48,7 +54,7 @@ public class Furnace extends WeaponCard
             List<Room> roomList = new ArrayList<>();
 
             roomList = MethodsWeapons.roomsThatIsee(player);
-            roomList.remove(player.getSquare().getRoom()); //controllo che non sia la mia
+            roomList.remove(player.getSquare().getRoom()); //remove myself from the playerList
             for (Room roomIterate : roomList) {
                 if (!roomIterate.getPlayerRoomList().isEmpty()) {
                     availableMethod[0] = true;
@@ -66,16 +72,22 @@ public class Furnace extends WeaponCard
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     public List<ColorRoom> checkBasicMode ()
     {
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
         HashMap<Room, ArrayList<Player>> hashRoomPlayer = new HashMap<Room, ArrayList<Player>>();
         List<ColorRoom> colorRoomList = new ArrayList<>();
 
         List<Room> roomList;
 
         roomList = MethodsWeapons.roomsThatIsee(player);
-        roomList.remove(player.getSquare().getRoom()); //controllo che non sia la mia
+        roomList.remove(player.getSquare().getRoom()); //remove my room from the roomList
         for (Room roomIterate : roomList) {
             if (!roomIterate.getPlayerRoomList().isEmpty())
                 hashRoomPlayer.put(roomIterate, (ArrayList) roomIterate.getPlayerRoomList());
@@ -88,50 +100,63 @@ public class Furnace extends WeaponCard
 
     }
 
-
+    /**
+     *
+     * @param roomColor
+     */
     public void basicMode (ColorRoom roomColor)
     {
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
         Room room =  player.getSquare().getGameBoard().getRoomList().stream().filter(room1 -> room1.getColor().equals(roomColor)).collect(Collectors.toList()).get(0);
 
         for (Player playerIterate : room.getPlayerRoomList())
         {
             doDamage(playerIterate, 1);
         }
+
         isLoaded = false;
 
     }
 
 
-
-    //stesso discorso: square o players?
-
-    //ritorno lista square coordinate come stringa
-
+    /**
+     *
+     * @return
+     */
     public List<String> checkInCozyFireMode () {
 
-    HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
+        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
 
-    List<String> squareListCoordinatesAsString = new ArrayList<>();
+        List<String> squareListCoordinatesAsString = new ArrayList<>();
 
-    Set<Square> squareList;
-    squareList = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
-    squareList.remove(player.getSquare());
+        Set<Square> squareList;
+        squareList = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
+        squareList.remove(player.getSquare());
 
-    for (Square squareIterate : squareList) {
-        hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
+        for (Square squareIterate : squareList)
+        {
+            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
+        }
+
+        for (Square squareIterate : squareList)
+            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+
+
+        return squareListCoordinatesAsString;
+
     }
 
-    for (Square squareIterate : squareList)
-        squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
-
-
-    return squareListCoordinatesAsString;
-
-    }
-
-
+    /**
+     *
+     * @param squareTargetCoordinatesAsString
+     */
     public void inCozyFireMode (String squareTargetCoordinatesAsString)
     {
+        if (!checkAvailableMode()[1])//check mode
+            throw  new IllegalStateException("Modalità fuoco confortevole dell'arma "+name+" non eseguibile.");
+
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
 
@@ -143,16 +168,27 @@ public class Furnace extends WeaponCard
             squareNotInGameBoard.printStackTrace();
         }
 
-        for (Player playerIterate : square.getPlayerList())
-           {
-               doDamage(playerIterate, 1);
-               markTarget(playerIterate, 1);
-           }
+        if (square != null)
+        {
+            for (Player playerIterate : square.getPlayerList())
+               {
+                   doDamage(playerIterate, 1);
+                   markTarget(playerIterate, 1);
+               }
+        }
+        else
+        {
+            throw  new IllegalStateException();
+        }
 
-           isLoaded = false;
+        isLoaded = false;
     }
 
 
+    /**
+     *
+     * @param responseInput
+     */
     @Override
     public void useWeapon(ResponseInput responseInput)
     {
@@ -164,5 +200,16 @@ public class Furnace extends WeaponCard
 
         basicMode(((ResponseFurnace) responseInput).getTargetBasicMode());
 
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        return new RequestFurnace(checkAvailableMode(),checkBasicMode(), checkInCozyFireMode());
     }
 }

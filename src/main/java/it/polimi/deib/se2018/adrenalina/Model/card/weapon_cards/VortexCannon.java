@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,11 +30,6 @@ public class VortexCannon extends WeaponCard
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;
-    }
-
-    @Override
-    public void useWeapon(ResponseInput responseMessage) {
-
     }
 
 
@@ -213,6 +208,30 @@ public class VortexCannon extends WeaponCard
         player.setAmmoRed(player.getAmmoRed() - 1);
         isLoaded = false;
 
+    }
+
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        if (((ResponseVortexCannon) responseMessage).isMode())
+
+            blackHoleMode(((ResponseVortexCannon) responseMessage).getTarget1BlackHoleMode(), ((ResponseVortexCannon) responseMessage).getTarget2BlackHoleMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
+        else
+            basicMode(((ResponseVortexCannon) responseMessage).getTargetPlayerBasicMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
+    }
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
+
+            return new RequestShockwave(checkAvailableMode(),checkBasicMode());
+
+        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
+
+            return new RequestShockwave(checkAvailableMode(),checkBasicMode());
+
+        else
+            return new RequestShockwave(checkAvailableMode(),new HashMap<>());
     }
 }
 

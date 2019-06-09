@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -21,26 +21,35 @@ public class Flamethrower extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[2];
 
-
+    /**
+     *
+     * @param color
+     * @param weaponID
+     * @param isLoaded
+     */
     public Flamethrower( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
-        this.name = "Flamethrower";
+        this.name = "Lanciafiamme";
         yellowAmmoCost = 0;
         blueAmmoCost = 0;
         redAmmoCost = 1;
     }
 
-
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore."); //If this card doesn't belong to any player, it launches an exception
 
 
-        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[0] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
 
-        if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player)) //se non ci sono players?
+        if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player))
         {
             availableMethod[0] = true;
         }
@@ -56,26 +65,17 @@ public class Flamethrower extends WeaponCard
     }
 
 
-
-
     /**
-     * Return the list of all target available for using the basic mode of this weapon
      *
-     * @return all player that can be affected with the weapon in basic mode
-     * @exception IllegalStateException if the basic mode can't be used
+     * @return
+     * @throws IllegalStateException
      */
-private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() throws IllegalStateException
+    private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() throws IllegalStateException
     {
         if (!checkAvailableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         HashMap<CardinalDirection, ArrayList<Player>[]> hashMapReturn = new HashMap<>();
-
-        //NB POSSO SCEGLIERE SOLO 1 PLAYER IN OGNI SQUARE!!!!!
-
-
-        //todo controllo
-
 
         List<Player> playerList;
         List<Player> playersN1 = new ArrayList<>();
@@ -152,24 +152,31 @@ private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() 
 
     }
 
+    /**
+     *
+     * @return
+     */
     public HashMap<CardinalDirection, ArrayList<ColorId>[]> checkBasicModeForMessage ()
     {
+        if (!checkAvailableMode()[0]) //check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
         HashMap<CardinalDirection, ArrayList<Player>[]> hashMap = checkBasicModePrivate();
         HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapToReturn = new HashMap<>();
 
         ArrayList<ColorId> colorIdArrayList = new ArrayList<>();
         ArrayList<ColorId>[] colorIdVector = new ArrayList[2];
 
-        for (CardinalDirection cardinalDirection : hashMap.keySet()) //cicla direzioni cardinali
+        for (CardinalDirection cardinalDirection : hashMap.keySet()) //Iterate cardinalDirections
         {
             int i=0;
 
-            for (ArrayList<Player> playerArrayList : hashMap.get(cardinalDirection)) //cicla arraylost nel vettore
+            for (ArrayList<Player> playerArrayList : hashMap.get(cardinalDirection)) //Iterate ArrayList in the vector
             {
 
                 colorIdArrayList.clear();
 
-                for (Player player : playerArrayList) //cicla player
+                for (Player player : playerArrayList) //Iterate players
                 {
                     colorIdArrayList.add(player.getColor());
                 }
@@ -185,14 +192,16 @@ private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() 
     }
 
 
-
-
-    public void basicMode(Player colorPlayerTarget1, Player colorPlayerTarget2) throws IllegalStateException //cambio in colorID
+    /**
+     *
+     * @param colorPlayerTarget1
+     * @param colorPlayerTarget2
+     * @throws IllegalStateException
+     */
+    public void basicMode(ColorId colorPlayerTarget1, ColorId colorPlayerTarget2) throws IllegalStateException
     {
-        if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
-
-
+        if (!checkAvailableMode()[0]) //check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget1)).collect(Collectors.toList()).get(0),1);//Do one damage
         if (colorPlayerTarget2 != null)
@@ -201,57 +210,89 @@ private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() 
         isLoaded = false;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public  HashMap<CardinalDirection, ArrayList<Player>[]> checkBarbecueMode()
     {
         if (!checkAvailableMode()[1]) //check mode
-            throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità barbecue dell'arma "+name+" non eseguibile.");
 
         return checkBasicModePrivate();
     }
 
-    public void barbecueMode (String square1AsString, String squareBehindAsString )
+    /**
+     *
+     * @param cardinalDirection
+     * @param colorTargetPlayerInThisDirection
+     */
+    public void barbecueMode (CardinalDirection cardinalDirection, ColorId colorTargetPlayerInThisDirection)
     {
         if (!checkAvailableMode()[1]) //check mode
-            throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità barbecue dell'arma "+name+" non eseguibile.");
 
-        int x1 = MethodsWeapons.getXFromString(square1AsString);
-        int y1 = MethodsWeapons.getYFromString(square1AsString);
-        int x2 = MethodsWeapons.getXFromString(squareBehindAsString);
-        int y2 = MethodsWeapons.getYFromString(squareBehindAsString);
+        Player playerTarget = player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorTargetPlayerInThisDirection)).collect(Collectors.toList()).get(0);
+        Square square1Target = playerTarget.getSquare();
+        Square squareBehindTarget = MethodsWeapons.squareBehindThis(player.getSquare(), playerTarget.getSquare());
 
-        Square square1 = null;
-        Square squareBehind = null;
+        barbecueModePrivate(square1Target, squareBehindTarget);
+    }
 
-        try {
-            square1 = player.getSquare().getGameBoard().getArena().getSquare(x1, y1);
-            squareBehind = player.getSquare().getGameBoard().getArena().getSquare(x2, y2);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
+    /**
+     *
+     * @param square1Target
+     * @param squareBehindTarget
+     */
+    private void barbecueModePrivate (Square square1Target, Square squareBehindTarget)
+    {
+        if (!checkAvailableMode()[1]) //check mode
+            throw  new IllegalStateException("Modalità barbecue dell'arma "+name+" non eseguibile.");
 
-        for (Player playerIterate : square1.getPlayerList())
+
+        for (Player playerIterate : square1Target.getPlayerList())
         {
             doDamage(playerIterate,2);
         }
-
-        for (Player playerIterate : squareBehind.getPlayerList())
+        if (squareBehindTarget != null)
         {
-            doDamage(playerIterate,1);
+            for (Player playerIterate : squareBehindTarget.getPlayerList())
+            {
+                doDamage(playerIterate,1);
+            }
         }
 
         player.setAmmoYellow(player.getAmmoYellow() - 2);
 
         isLoaded = false;
-
-       //quadrato parametro -> 2 danni a tutti
-         //   quadrato dietro -> 1 danno a tutti
-        //tolgo munizioni
     }
 
+    /**
+     *
+     * @param responseInput
+     */
     @Override
-    public void useWeapon(ResponseInput responseMessage) {
+    public void useWeapon(ResponseInput responseInput)
+    {
+        if (((ResponseFlamethrower) responseInput).isMode())
+        {
+            barbecueMode(((ResponseFlamethrower) responseInput).getTargetDirectionBarbecueMode(), ((ResponseFlamethrower) responseInput).getTargetBarbecueMode());
+            return;
+        }
 
+        basicMode(((ResponseFlamethrower) responseInput).getTargetBasicMode1(), ((ResponseFlamethrower) responseInput).getTargetBasicMode2());
+
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        return new RequestFlamethrower(checkAvailableMode(), checkBasicModeForMessage());
     }
 
 

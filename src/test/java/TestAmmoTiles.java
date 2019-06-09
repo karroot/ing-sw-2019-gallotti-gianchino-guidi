@@ -38,9 +38,9 @@ public class TestAmmoTiles
 
         teleporter = new Teleporter(Color.BLUE, 1);
 
-        powerAndAmmo1 = new PowerAndAmmo(4, Color.RED, Color.YELLOW, teleporter);
-        powerAndAmmo2 = new PowerAndAmmo(5, Color.BLUE, Color.YELLOW, teleporter);
-        powerAndAmmo3 = new PowerAndAmmo(6, Color.RED, Color.BLUE, teleporter);
+        powerAndAmmo1 = new PowerAndAmmo(4, Color.RED, Color.YELLOW);
+        powerAndAmmo2 = new PowerAndAmmo(5, Color.BLUE, Color.YELLOW);
+        powerAndAmmo3 = new PowerAndAmmo(6, Color.RED, Color.BLUE);
 
         player = new Player(ColorId.GREY, null, null , true);
 

@@ -21,7 +21,7 @@ public class RequestRocketLauncher extends RequestInput {
     private String targetSquareCoordinatesAsStringTargetToMove;
     private String[] orderEffect;
 
-    public RequestRocketLauncher (boolean[] availableMethod, )
+    //public RequestRocketLauncher (boolean[] availableMethod, )
 
 
     @Override

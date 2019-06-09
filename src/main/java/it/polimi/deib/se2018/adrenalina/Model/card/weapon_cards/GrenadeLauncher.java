@@ -2,8 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseGrenadeLauncher;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -159,4 +158,16 @@ public class GrenadeLauncher extends WeaponCard
             extraGrenade(((ResponseGrenadeLauncher) responseInput).getTargetSquareExtraGrenadeAsString());
 
     }
+
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+           // return new RequestGrenadeLauncher(checkAvailableMode(),checkBasicMode(), );
+        return null;
+    }
+
+
+
+
 }

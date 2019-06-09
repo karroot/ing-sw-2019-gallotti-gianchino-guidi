@@ -5,9 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseHeatSeeker;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 
 import java.util.*;
@@ -121,6 +119,17 @@ public class HeatSeeker extends WeaponCard
             squareNotInGameBoard.printStackTrace();
         }
 
+    }
+
+
+
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        if (checkAvailableMode()[0])
+
+            return new RequestHeatSeeker(checkAvailableMode(),checkBasicMode());
+        else throw new IllegalStateException();
     }
 
 
