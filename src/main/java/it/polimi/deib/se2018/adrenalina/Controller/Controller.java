@@ -17,12 +17,12 @@ import java.util.concurrent.*;
 
 public class Controller implements Observer<ResponseInput>
 {
+    public static Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
     private View virtualView;
     private ResponseInput msg;
 
     Player roundPlayer= new Player(ColorId.BLUE,"prova",null,true);
-    Map<ColorId, List<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che hanno attaccato il giocatore rappresentato da ColorId
 
     boolean firstRound=true;
     //Controller deve avere un riferimento alla virtual view
@@ -34,6 +34,10 @@ public class Controller implements Observer<ResponseInput>
     */
 
     private ExecutorService executor = Executors.newFixedThreadPool(1); //numero max thread contemporanei
+
+    public Map<ColorId, Set<ColorId>> getRoundDamageList() {
+        return roundDamageList;
+    }
 
     public Controller()
     {
@@ -122,7 +126,7 @@ return false;
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
 
-            for (String pc : risp.gechosenPowerUpList()) {
+            for (String pc : risp.getChosenPowerUpList()) {
                 if (pc.equals("Teletrasporto:BLUE") || pc.equals("Teletrasporto:YELLOW") || pc.equals("Teletrasporto:RED")) {
                     askForTeleport(pc);
                 }
@@ -142,10 +146,7 @@ return false;
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-            {
 
-            }
 
             Boolean end = fine.get();
             if (!end) {
@@ -283,6 +284,7 @@ return false;
             if(pc.getName().equals("Mirino"))
                 powerUpList.add(pc.powerToString());
         }
+        // aggiungi controllo se roundplayer ha fatto danno , se no vuota=true;
         if (powerUpList.isEmpty())
             vuota = true;
         if (!vuota) {
@@ -311,9 +313,9 @@ return false;
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
 
-            for (String pc : risp.gechosenPowerUpList()) {
+            for (String pc : risp.getChosenPowerUpList()) {
                 if (pc.equals("Mirino:BLUE") || pc.equals("Mirino:YELLOW") || pc.equals("Mirino:RED")) {
-                    askForTeleport(pc);
+                    askForTargettingScope(pc);
                 }
 
             }
@@ -328,10 +330,7 @@ return false;
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-            {
 
-            }
 
             Boolean end = fine.get();
             if (!end) {
@@ -353,10 +352,7 @@ return false;
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-            {
 
-            }
 
             Boolean s = prova.get();
             if (!s) {
@@ -402,7 +398,7 @@ return false;
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
 
-            for (String pc : risp.gechosenPowerUpList()) {
+            for (String pc : risp.getChosenPowerUpList()) {
                 if (pc.equals("Granata  Venom:BLUE") || pc.equals("Granata  Venom:YELLOW") || pc.equals("Granata  Venom:RED")) {
                     askForTeleport(pc);
                 }
@@ -419,10 +415,7 @@ return false;
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-            {
 
-            }
 
             Boolean end = fine.get();
             if (!end) {
@@ -496,7 +489,7 @@ return false;
         ResponseTargettingScope sq = (ResponseTargettingScope) msg;
 
 
-        TargettingScope scope = (TargettingScope) roundPlayer.usePowerUp();
+        TargettingScope scope = (TargettingScope) roundPlayer.usePowerUp(index);
         scope.usePowerUp(sq.getTargetBasicMode(),sq.getTargetAmmo());
         //aggiungi a pila scarti
 
@@ -900,11 +893,6 @@ return false;
                 return true;
             }
         });
-
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
-        {
-
-        }
 
         Boolean end = fine.get();
         if (!end) {

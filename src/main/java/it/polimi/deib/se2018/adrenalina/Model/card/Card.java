@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model.card;
 
+import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
@@ -7,17 +8,14 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Cysko7927
  */
 public abstract class Card
 {
-   protected Map<ColorId, List<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave, chiedere a fra
+
     protected Player player;
 
 
@@ -49,20 +47,20 @@ public abstract class Card
      * @param attacker
      */
     private void addToRoundDamageList(ColorId attacked , ColorId attacker ){
-
+        Map<ColorId, Set<ColorId>> roundDamageList = Controller.roundDamageList;
         if(roundDamageList.containsKey(attacker))
         {
-            List<ColorId> tempList = new LinkedList<>();
+            Set<ColorId> tempList;
            tempList  = roundDamageList.get(attacker);
            tempList.add(attacked);
-           roundDamageList.replace(attacker,roundDamageList.get(attacker),tempList);
+
         }
 
         else{
 
-            List<ColorId> tempList = new LinkedList<>();
+            Set<ColorId> tempList = new HashSet<>();
             tempList.add(attacked);
-            roundDamageList.put(attacker,tempList);
+            roundDamageList.putIfAbsent(attacker,tempList);
 
         }
 

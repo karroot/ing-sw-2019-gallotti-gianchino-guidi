@@ -61,11 +61,7 @@ public abstract class PowerUpCard extends Card
         return name+ ":" + color;
     }
 
-    /**
-     * Return a message of request for this powerUP to send at client to obtains the inputs
-     * @return message of request
-     */
-    public abstract RequestInput getRequestMessage();
+
 
 
 }

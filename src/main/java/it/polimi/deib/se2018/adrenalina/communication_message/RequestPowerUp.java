@@ -10,7 +10,7 @@ public class RequestPowerUp extends RequestInput {
     protected List<String> powerUptoChose;//Targets for the basic mode
 
     //Attribute for the response
-    protected int chosenPowerUp;//Target chosen for the basic mode
+    protected List<String> chosenPowerUp;//Target chosen for the basic mode
 
     public RequestPowerUp(List<String> powerUptoChose) {
         this.powerUptoChose = powerUptoChose;
@@ -43,11 +43,13 @@ public class RequestPowerUp extends RequestInput {
             System.out.println( "2 : no");
 
              anInt = inputInt(1,2);
+             if(anInt==1)
+                 chosenPowerUp.add(t);
         }
 
 
 
-        chosenPowerUp = anInt;
+
 
     }
 
