@@ -94,6 +94,7 @@ public class TestWeaponPowerupInPlayer
         assertTrue(!test.getPowerupCardList().isEmpty() && test.getPowerupCardList().contains(p1));
     }
 
+    /*
     @Test
     public void testRemovePowerUp()
     {
@@ -125,7 +126,7 @@ public class TestWeaponPowerupInPlayer
         assertTrue(test.getPowerupCardList().isEmpty());
 
     }
-
+*/
     @Test
     public void testMax3PowerUp()
     {

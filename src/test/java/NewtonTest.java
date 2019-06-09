@@ -84,6 +84,7 @@ public class NewtonTest {
         assertTrue(out.get(ColorId.YELLOW).containsAll(effout.stream().map(Square::toStringCoordinates).collect(Collectors.toSet())) && out.get(ColorId.YELLOW).size() == effout.size());
     }
 
+    /*
     @Test
     public void checkMoveTarget() throws SquareNotInGameBoard
     {
@@ -104,4 +105,5 @@ public class NewtonTest {
         assertTrue(destinationTeleport.getRoom().getPlayerRoomList().contains(playerTargetted));
         assertFalse(board.getArena().getSquare(3,1).getRoom().getPlayerRoomList().contains(player));
     }
+    */
 }

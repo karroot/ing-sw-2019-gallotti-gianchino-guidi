@@ -164,6 +164,7 @@ public class GameBoard {
     }
 
     public void setAllPlayer(Player playerToAdd) {
+
         allPlayerList.add(playerToAdd);
     }
 

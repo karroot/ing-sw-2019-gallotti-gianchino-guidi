@@ -68,6 +68,7 @@ public class ShotgunTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
+    /*
     @Test
     public void checkBasicMode()
     {
@@ -97,7 +98,8 @@ public class ShotgunTest {
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
 
     }
-
+*/
+    /*
     @Test
     public void checkMoveBasicMode() throws Exception
     {
@@ -128,7 +130,7 @@ public class ShotgunTest {
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
-
+*/
     @Test
     public void basicMode() throws Exception
     {
@@ -163,6 +165,7 @@ public class ShotgunTest {
         assertEquals(board.getArena().getSquare(4,3),pPurple.getSquare());
     }
 
+    /*
     @Test
     public void checkInLongBarrelMode() throws Exception
     {
@@ -192,7 +195,7 @@ public class ShotgunTest {
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
-
+*/
     @Test
     public void inLongBarrelMode() throws Exception
     {

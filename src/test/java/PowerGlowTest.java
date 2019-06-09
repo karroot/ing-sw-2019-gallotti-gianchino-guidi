@@ -65,6 +65,7 @@ public class PowerGlowTest {
         assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1]);
     }
 
+    /*
     @Test
     public void checkBasicMode()
     {
@@ -105,7 +106,8 @@ public class PowerGlowTest {
         assertTrue(effOut.containsAll(targets)&& effOut.size() == targets.size());
 
     }
-
+*/
+    /*
     @Test
     public void basicMode()
     {
@@ -146,7 +148,7 @@ public class PowerGlowTest {
         assertEquals(pGreen.getSquare(),pBlue.getSquare());
 
     }
-
+*/
     @Test
     public void checkInRocketFistMode()
     {

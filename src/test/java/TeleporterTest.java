@@ -29,6 +29,7 @@ public class TeleporterTest {
     }
 
 
+    /*
     @Test
     public void usePowerUpTest() throws SquareNotInGameBoard
     {
@@ -58,4 +59,5 @@ public class TeleporterTest {
 
 
     }
+    */
 }

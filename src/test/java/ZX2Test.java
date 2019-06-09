@@ -68,6 +68,7 @@ public class ZX2Test
         assertTrue(zx2.checkAvailableMode()[0] && zx2.checkAvailableMode()[1]);
     }
 
+    /*
     @Test
     public void checkBasicMode()
     {
@@ -95,7 +96,7 @@ public class ZX2Test
         assertTrue(effOut.containsAll(zx2.checkBasicMode()) & effOut.size()==zx2.checkBasicMode().size());
 
     }
-
+*/
     @Test
     public void basicMode()
     {
@@ -118,6 +119,7 @@ public class ZX2Test
         assertEquals(2,p4.checkMarker(p1.getColor()));
     }
 
+    /*
     @Test
     public void checkInScannerMode()
     {
@@ -145,6 +147,7 @@ public class ZX2Test
 
         assertTrue(effOut.containsAll(players) & effOut.size()==players.size());
     }
+    */
 /*
     @Test
     public void inScannerMode()

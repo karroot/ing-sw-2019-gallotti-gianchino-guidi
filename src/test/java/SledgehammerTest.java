@@ -69,6 +69,7 @@ public class SledgehammerTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
+    /*
     @Test
     public void checkTargetForModes()
     {
@@ -96,7 +97,7 @@ public class SledgehammerTest {
 
         assertTrue(targets.containsAll(effOut) && targets.size()==effOut.size());
     }
-
+*/
     @Test
     public void basicMode()
     {
