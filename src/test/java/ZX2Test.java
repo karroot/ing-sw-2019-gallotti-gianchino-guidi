@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class ZX2Test
 {
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
     Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;

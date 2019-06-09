@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 public class TestSpawnPoint
 {
     SpawnPoint spawnPointTest;
-    GameBoard gameboard = new GameBoard(null,null,1,0,null, null);
+    GameBoard gameboard = new GameBoard(null,null,1,0,null);
     private Cyberblade cyberblade = new Cyberblade(Color.RED, 1, true);
     private Flamethrower flamethrower = new Flamethrower(Color.RED, 2, true);
     private Furnace furnace = new Furnace(Color.RED, 3, true);

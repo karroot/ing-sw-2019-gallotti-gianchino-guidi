@@ -21,7 +21,7 @@ public class NewtonTest {
     @Before
     public void setUp() throws Exception
     {
-        board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
         player = new Player(ColorId.BLUE,"marco","a",true);
         playerTargetted = new Player(ColorId.YELLOW,"alice","a",true);
         upCard = new Newton(Color.YELLOW,1);

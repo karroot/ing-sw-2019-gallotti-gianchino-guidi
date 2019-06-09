@@ -17,13 +17,13 @@ public class TestFactory
     @Test
     public void TestcreateArena()
     {
-        board = new GameBoard(new Stack<>(),new Stack<>(),1,5,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),1,5,new Stack<>());
 
-        board = new GameBoard(new Stack<>(),new Stack<>(),2,5,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),2,5,new Stack<>());
 
-        board = new GameBoard(new Stack<>(),new Stack<>(),3,5,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),3,5,new Stack<>());
 
-        board = new GameBoard(new Stack<>(),new Stack<>(),4,5,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),4,5,new Stack<>());
 
     }
 
@@ -32,7 +32,7 @@ public class TestFactory
     {
         try
         {
-            board = new GameBoard(new Stack<>(),new Stack<>(),100,5,new Stack<>(),null);
+            board = new GameBoard(new Stack<>(),new Stack<>(),100,5,new Stack<>());
             fail();
         }
         catch (IllegalStateException e)

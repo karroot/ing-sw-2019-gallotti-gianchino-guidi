@@ -16,7 +16,7 @@ public class TestTargettingScope
     private Player test;
     private Player enemy;
 
-    private GameBoard g1= new GameBoard(null,null,1,10,null,null);
+    private GameBoard g1= new GameBoard(null,null,1,10,null);
 
 
 

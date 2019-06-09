@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class PowerGlowTest {
 
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
     Player pYellow = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player pGrey = new Player(ColorId.GREY,"caso","ciao",false);;
     Player pGreen = new Player(ColorId.GREEN,"caso","ciao",false);;

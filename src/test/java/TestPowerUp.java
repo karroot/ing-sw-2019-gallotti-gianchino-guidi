@@ -16,7 +16,7 @@ public class TestPowerUp
     private Player enemy;
 
 
-    private GameBoard g1= new GameBoard(null,null,1,10,null,null);
+    private GameBoard g1= new GameBoard(null,null,1,10,null);
     private TagbackGranade p5 = new TagbackGranade(Color.BLUE,5);
     private TargettingScope p6 = new TargettingScope(Color.BLUE,6);
 

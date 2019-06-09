@@ -30,7 +30,7 @@ public class TestBlueWeapons {
 
     private Player enemy2;
 
-    private GameBoard g1= new GameBoard(null,null,1,10,null,null);
+    private GameBoard g1= new GameBoard(null,null,1,10,null);
 
 
 

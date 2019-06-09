@@ -20,7 +20,7 @@ public class TeleporterTest {
     @Before
     public void setUp() throws Exception 
     {
-        board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
+        board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
         player = new Player(ColorId.BLUE,"marco","a",true);
         upCard = new Teleporter(Color.YELLOW,1);
         player.setSquare(board.getArena().getSquare(1,1));
