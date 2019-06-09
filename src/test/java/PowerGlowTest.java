@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class PowerGlowTest {
 
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
     Player pYellow = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player pGrey = new Player(ColorId.GREY,"caso","ciao",false);;
     Player pGreen = new Player(ColorId.GREEN,"caso","ciao",false);;
@@ -88,7 +88,7 @@ public class PowerGlowTest {
 
         effOut.add(pBlue);
 
-        List<Player> targets = weap.checkBasicMode();
+        List<ColorId> targets = weap.checkBasicMode();
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() == targets.size());
 

@@ -7,13 +7,13 @@ import java.util.List;
 public class RequestTagbackGranade extends RequestInput
 {
     //Attribute for the request
-    protected List<ColorId> playersBasicMode;//Targets for the basic mode
+    protected ColorId playerBasicMode;//Targets for the basic mode
 
     //Attribute for the response
     protected ColorId targetBasicMode;//Target chosen for the basic mode
 
-    public RequestTagbackGranade(List<ColorId> playersBasicMode) {
-        this.playersBasicMode = playersBasicMode;
+    public RequestTagbackGranade(ColorId playersBasicMode) {
+        this.playerBasicMode = playersBasicMode;
     }
 
     @Override
@@ -35,18 +35,16 @@ public class RequestTagbackGranade extends RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        System.out.println("vuoi usare un powerup:");
 
-        for (ColorId t:playersBasicMode)
-        {
-            System.out.println(i + ":" + t);
-            i++;
-        }
+        System.out.println("1 : sì");
+        System.out.println("2 : no");
 
-        int anInt = inputInt(1, i - 1);
-
-        targetBasicMode = playersBasicMode.get(anInt -1);
-
+        int anInt = inputInt(1,2);
+        if (anInt==1)
+            targetBasicMode = playerBasicMode;
+        else
+            targetBasicMode=null;
     }
 
 }

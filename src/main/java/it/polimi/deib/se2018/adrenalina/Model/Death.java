@@ -18,17 +18,17 @@ public class Death extends StatePlayer {
     }
 
     @Override
-    public Set<Square> lookForRunAround(Player player, GameBoard gameBoard) {
+    public Set<Square> lookForRunAround(Player player) {
         return null;
     }
 
     @Override
-    public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard) {
+    public Set<Square> lookForGrabStuff(Player player) {
         return null;
     }
 
     @Override
-    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard) {
+    public List<Player> lookForShootPeople(Player player) {
         return null;
     }
 

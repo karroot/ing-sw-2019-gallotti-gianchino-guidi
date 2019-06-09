@@ -292,7 +292,7 @@ public class TestGraphGameboard1
     @Test
     public void extremeTestSquareReachable()
     {
-        GameBoard board = new GameBoard(null,null,1,8,null);
+        GameBoard board = new GameBoard(null,null,1,8,null,null);
 
         Set<Square> squares = board.getArena().squareReachableNoWall(1, 1, 1);
 

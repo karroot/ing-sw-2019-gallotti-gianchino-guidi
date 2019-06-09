@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class CyberbladeTest
 {
 
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
     Player pYellow = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player pGrey = new Player(ColorId.GREY,"caso","ciao",false);;
     Player pGreen = new Player(ColorId.GREEN,"caso","ciao",false);;

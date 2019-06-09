@@ -1,4 +1,4 @@
-package it.polimi.deib.se2018.adrenalina.communication_message;
+/*package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * @author giovanni
  */
+/*
 public class RequestRocketLauncher extends RequestInput {
     private List<ColorId> colorIdListBasicMode;
     private List<ColorId> colorIdListWithFragmentingWarhead;
@@ -35,3 +36,4 @@ public class RequestRocketLauncher extends RequestInput {
     }
 
 }
+*/

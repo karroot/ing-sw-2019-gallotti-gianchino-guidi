@@ -19,8 +19,6 @@ public abstract class StatePlayer {
      * This method will return a list of all the players a player can see. It's useful when you have to check who you can shoot.
      *
      * @param player is the player looking for shoot
-     * @param gameBoard is needed to call the squareReachableNoWall function
-     *
      * @return a list of player the player called this method can see
      */
 

@@ -89,7 +89,9 @@ public class PowerAndAmmo implements AmmoTiles
 
         if (player.getPowerupCardList().size() < 3)
         {
-            player.addPowerUp(player.getSquare().getGameBoard().drawPowerUpCard());
+            PowerUpCard pc= player.getSquare().getGameBoard().drawPowerUpCard();
+            player.addPowerUp(pc);
+            pc.setPlayer(player);
         }
     }
 

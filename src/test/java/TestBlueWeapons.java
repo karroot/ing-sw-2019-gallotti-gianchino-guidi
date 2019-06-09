@@ -30,7 +30,7 @@ public class TestBlueWeapons {
 
     private Player enemy2;
 
-    private GameBoard g1= new GameBoard(null,null,1,10,null);
+    private GameBoard g1= new GameBoard(null,null,1,10,null,null);
 
 
 
@@ -577,7 +577,7 @@ public class TestBlueWeapons {
         }
 
     }
-
+/*
     @Test
     public void testMachineGun() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -769,208 +769,203 @@ public class TestBlueWeapons {
         }
 
     }
-
-    @Test
-    public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
-        String[] orderEffect = new String[3];
-
-        g1.setAllPlayer(enemy2);
-        g1.setAllPlayer(enemy);
-        g1.setAllPlayer(test);
-        g1.setAllPlayer(enemy3);
+    */
 
 
-        test.setSquare(g1.getArena().getSquare(1,1));
-        enemy.setSquare(g1.getArena().getSquare(2,2));
-        enemy2.setSquare(g1.getArena().getSquare(2,2));
-        enemy3.setSquare(g1.getArena().getSquare(2,2));
+    /*
+        @Test
+        public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
+            String[] orderEffect = new String[3];
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
-        MethodsWeapons.moveTarget(enemy3,2,2);
-
-        test.addWeapon(w5);//Add a weapon
-
-        try
-        {
-            w5.checkBasicMode();
-            fail();
-        }
-        catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-        // spara, muoviti ,aggiungi danno
-        orderEffect[0] = "basic";
-        orderEffect[1] = "with phase glide";
-        orderEffect[2] = "with charged shot";
-
-        try
-        {
-            w5.basicMode(enemy.getColor(),orderEffect,1,1);
-            fail();
-        }
-        catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
-        {
-            System.out.println(e);
-        }
+            g1.setAllPlayer(enemy2);
+            g1.setAllPlayer(enemy);
+            g1.setAllPlayer(test);
+            g1.setAllPlayer(enemy3);
 
 
-        w5.setPlayer(test);
-        try
-        {
-            w5.basicMode(enemy.getColor(),orderEffect,1,1);
-            fail();
-        }
-        catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
-        {
-            System.out.println(e);
-        }
+            test.setSquare(g1.getArena().getSquare(1,1));
+            enemy.setSquare(g1.getArena().getSquare(2,2));
+            enemy2.setSquare(g1.getArena().getSquare(2,2));
+            enemy3.setSquare(g1.getArena().getSquare(2,2));
+
+            MethodsWeapons.moveTarget(test,1,1);
+            MethodsWeapons.moveTarget(enemy,2,2);
+            MethodsWeapons.moveTarget(enemy2,2,2);
+            MethodsWeapons.moveTarget(enemy3,2,2);
+
+            test.addWeapon(w5);//Add a weapon
 
 
-        w5.setLoaded(true);
+            // spara, muoviti ,aggiungi danno
+            orderEffect[0] = "basic";
+            orderEffect[1] = "with phase glide";
+            orderEffect[2] = "with charged shot";
+
+            try
+            {
+                w5.basicMode(enemy.getColor(),orderEffect,1,1);
+                fail();
+            }
+            catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
+            {
+                System.out.println(e);
+            }
+
+
+            w5.setPlayer(test);
+            try
+            {
+                w5.basicMode(enemy.getColor(),orderEffect,1,1);
+                fail();
+            }
+            catch (IllegalStateException | IllegalAccessException | IllegalArgumentException e)
+            {
+                System.out.println(e);
+            }
+
+
+            w5.setLoaded(true);
 
 
 
 
-        MethodsWeapons.moveTarget(test,1,3);
-        MethodsWeapons.moveTarget(enemy,4,1);
+            MethodsWeapons.moveTarget(test,1,3);
+            MethodsWeapons.moveTarget(enemy,4,1);
 
 
-        List<String> reachableSquare = new LinkedList<>();
-        List<ColorId> reachableBasicPlayer = new LinkedList<>();
-        Map<String,List<ColorId>> reachableBeforeMovePlayer = new HashMap<>();
+            List<String> reachableSquare = new LinkedList<>();
+            List<ColorId> reachableBasicPlayer = new LinkedList<>();
+            Map<String,List<ColorId>> reachableBeforeMovePlayer = new HashMap<>();
 
-      try
-      {
-          reachableBasicPlayer=  w5.checkBasicMode();
-          fail();
-      }
-      catch (IllegalStateException e)
-      {
-          System.out.println(e);
-      }
+          try
+          {
+              reachableBasicPlayer=  w5.checkBasicMode();
+              fail();
+          }
+          catch (IllegalStateException e)
+          {
+              System.out.println(e);
+          }
 
-        reachableSquare= w5.checkPhaseGlide();
-
-
-
-//prima ti muovi , raggiungi il player e gli spari
-
-
-
-
-        MethodsWeapons.moveTarget(enemy,1,3);
-        MethodsWeapons.moveTarget(test,1,1);
-
-
-        test.setAmmoBlue(3);
-        reachableBasicPlayer = w5.checkBasicMode();
-
-        reachableSquare= w5.checkPhaseGlide();
-        reachableBeforeMovePlayer = w5.checkAllTarget();
-
-        assertFalse(reachableBasicPlayer.contains(enemy3.getColor()));
-        w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
-
-        assertFalse(w5.isLoaded());
-        assertEquals(enemy.getNumberOfDamagePoint(),3);
-
-
-
-
-
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,3);
-
-
-
-        // muoviti, spara ,aggiungi danno
-        orderEffect[1] = "basic";
-        orderEffect[0] = "with phase glide";
-        orderEffect[2] = "with charged shot";
-        test.setAmmoBlue(3);
-        w5.setLoaded(true);
-
-        reachableSquare= w5.checkPhaseGlide();
-        reachableBeforeMovePlayer = w5.checkAllTarget();
-        assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
-     //   assertTrue(reachableBeforeMovePlayer.containsValue(enemy.getColor()));
-
-
-        w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
-        assertEquals(enemy.getNumberOfDamagePoint(),6);
-
-     // prova a muoverti e a sparare a un nemico che non  puoi raggiungere da quella posizione ( ma che comunque potevi raggiungere)
-
-
-
-
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,1,3);
-
-        // muoviti, spara ,aggiungi danno
-        orderEffect[0] = "with phase glide";
-        orderEffect[1] = "basic";
-        orderEffect[2] = "with charged shot";
-
-        test.setAmmoBlue(3);
-        w5.setLoaded(true);
-        assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
-
-        reachableBasicPlayer = w5.checkBasicMode();
-        reachableBeforeMovePlayer = w5.checkAllTarget();
-        assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
-
-        Square squareTest= new SpawnPoint(2,2,g1,null,null);
-        String testString = squareTest.toStringCoordinates();
-      assertTrue(reachableBeforeMovePlayer.containsKey(testString));
-      assertTrue(reachableBeforeMovePlayer.get(testString).contains(enemy.getColor()));
-
-
-        w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
-        assertEquals(enemy.getNumberOfDamagePoint(),6);
-        assertEquals(enemy2.getNumberOfDamagePoint(),3);
-assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
-
-        test.setAmmoBlue(3);
-
-        try
-        {
-            reachableBeforeMovePlayer = w5.checkAllTarget();
-            fail();
-        }
-        catch(IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-        try
-        {
             reachableSquare= w5.checkPhaseGlide();
-            fail();
-        }
-        catch(IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-        w5.setLoaded(true);
-        reachableBasicPlayer = w5.checkBasicMode();
 
-        reachableBeforeMovePlayer = w5.checkAllTarget();
-        test.setAmmoBlue(0);
-        try
-        {
-            w5.basicMode(enemy.getColor(),orderEffect,2,1);
 
-        }
-        catch(IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-    }
 
+    //prima ti muovi , raggiungi il player e gli spari
+
+
+
+
+            MethodsWeapons.moveTarget(enemy,1,3);
+            MethodsWeapons.moveTarget(test,1,1);
+
+
+            test.setAmmoBlue(3);
+            reachableBasicPlayer = w5.checkBasicMode();
+
+            reachableSquare= w5.checkPhaseGlide();
+            reachableBeforeMovePlayer = w5.checkAllTarget();
+
+            assertFalse(reachableBasicPlayer.contains(enemy3.getColor()));
+            w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
+
+            assertFalse(w5.isLoaded());
+            assertEquals(enemy.getNumberOfDamagePoint(),3);
+
+
+
+
+
+            MethodsWeapons.moveTarget(test,1,1);
+            MethodsWeapons.moveTarget(enemy,2,3);
+
+
+
+            // muoviti, spara ,aggiungi danno
+            orderEffect[1] = "basic";
+            orderEffect[0] = "with phase glide";
+            orderEffect[2] = "with charged shot";
+            test.setAmmoBlue(3);
+            w5.setLoaded(true);
+
+            reachableSquare= w5.checkPhaseGlide();
+            reachableBeforeMovePlayer = w5.checkAllTarget();
+            assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
+         //   assertTrue(reachableBeforeMovePlayer.containsValue(enemy.getColor()));
+
+
+            w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
+            assertEquals(enemy.getNumberOfDamagePoint(),6);
+
+         // prova a muoverti e a sparare a un nemico che non  puoi raggiungere da quella posizione ( ma che comunque potevi raggiungere)
+
+
+
+
+            MethodsWeapons.moveTarget(test,1,1);
+            MethodsWeapons.moveTarget(enemy,2,2);
+            MethodsWeapons.moveTarget(enemy2,1,3);
+
+            // muoviti, spara ,aggiungi danno
+            orderEffect[0] = "with phase glide";
+            orderEffect[1] = "basic";
+            orderEffect[2] = "with charged shot";
+
+            test.setAmmoBlue(3);
+            w5.setLoaded(true);
+            assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
+
+            reachableBasicPlayer = w5.checkBasicMode();
+            reachableBeforeMovePlayer = w5.checkAllTarget();
+            assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
+
+            Square squareTest= new SpawnPoint(2,2,g1,null,null);
+            String testString = squareTest.toStringCoordinates();
+          assertTrue(reachableBeforeMovePlayer.containsKey(testString));
+          assertTrue(reachableBeforeMovePlayer.get(testString).contains(enemy.getColor()));
+
+
+            w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
+            assertEquals(enemy.getNumberOfDamagePoint(),6);
+            assertEquals(enemy2.getNumberOfDamagePoint(),3);
+    assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
+
+            test.setAmmoBlue(3);
+
+            try
+            {
+                reachableBeforeMovePlayer = w5.checkAllTarget();
+                fail();
+            }
+            catch(IllegalStateException e)
+            {
+                System.out.println(e);
+            }
+            try
+            {
+                reachableSquare= w5.checkPhaseGlide();
+                fail();
+            }
+            catch(IllegalStateException e)
+            {
+                System.out.println(e);
+            }
+            w5.setLoaded(true);
+            reachableBasicPlayer = w5.checkBasicMode();
+
+            reachableBeforeMovePlayer = w5.checkAllTarget();
+            test.setAmmoBlue(0);
+            try
+            {
+                w5.basicMode(enemy.getColor(),orderEffect,2,1);
+
+            }
+            catch(IllegalStateException e)
+            {
+                System.out.println(e);
+            }
+        }
+     */
     @Test
     public void testTractatorBeam() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);

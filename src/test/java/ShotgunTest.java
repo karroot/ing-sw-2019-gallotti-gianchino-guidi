@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class ShotgunTest {
 
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>(),null);
     Player pYellow = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player pGrey = new Player(ColorId.GREY,"caso","ciao",false);;
     Player pGreen = new Player(ColorId.GREEN,"caso","ciao",false);;
@@ -92,7 +92,7 @@ public class ShotgunTest {
         effOut.add(pPurple);
 
 
-        List<Player> targets = weap.checkBasicMode();
+        List<ColorId> targets = weap.checkBasicMode();
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
 
@@ -123,7 +123,7 @@ public class ShotgunTest {
         effOut.add(board.getArena().getSquare(4,1));
         effOut.add(board.getArena().getSquare(4,3));
 
-        Set<Square> targets = weap.checkMoveBasicMode();
+        List<Square> targets = weap.checkMoveBasicMode();
 
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
@@ -187,7 +187,7 @@ public class ShotgunTest {
         effOut.add(pYellow);
         effOut.add(pPurple);
 
-        List<Player> targets = weap.checkInLongBarrelMode();
+        List<ColorId> targets = weap.checkInLongBarrelMode();
 
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());

@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class RequestPowerUp extends RequestInput {
@@ -12,8 +13,8 @@ public class RequestPowerUp extends RequestInput {
     //Attribute for the response
     protected List<String> chosenPowerUp;//Target chosen for the basic mode
 
-    public RequestPowerUp(List<String> powerUptoChose)
-    {
+    public RequestPowerUp(List<String> powerUptoChose) {
+        this.chosenPowerUp= new LinkedList<>();
         this.powerUptoChose = powerUptoChose;
     }
 
@@ -35,10 +36,9 @@ public class RequestPowerUp extends RequestInput {
     protected void inputBasicMode()
     {
         int anInt=0;
-
         for (String t:powerUptoChose)
         {
-            System.out.println("vuoi usare il poweup: " + t + " ?");
+        System.out.println("vuoi usare il poweup: " + t + " ?");
 
 
             System.out.println( "1 : sì");
@@ -50,12 +50,10 @@ public class RequestPowerUp extends RequestInput {
         }
 
 
-
-
-
     }
-
     public List<String> getPowerUptoChose() {
         return powerUptoChose;
     }
+
 }
+

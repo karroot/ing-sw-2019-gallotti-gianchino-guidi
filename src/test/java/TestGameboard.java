@@ -46,7 +46,7 @@ public class TestGameboard {
         weaponCardStack.add(flamethrower);
 
 
-        test = new GameBoard(weaponCardStack, powerUpCardStack, arena, skullCounter, ammoTilesStack);
+        test = new GameBoard(weaponCardStack, powerUpCardStack, arena, skullCounter, ammoTilesStack,null);
         test.setPowerUpCardStack(powerUpCardStack);
         test.setWeaponCardStack(weaponCardStack);
 

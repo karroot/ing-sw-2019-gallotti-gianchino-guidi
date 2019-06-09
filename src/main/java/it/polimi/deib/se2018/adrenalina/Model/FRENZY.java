@@ -32,12 +32,12 @@ public class FRENZY extends StatePlayer
 
 
     @Override
-    public Set<Square> lookForRunAround(Player player, GameBoard gameBoard)
+    public Set<Square> lookForRunAround(Player player)
     {
         if (!player.isFirst())
         {
             Set<Square>  squareSet;
-            squareSet = gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 4);
+            squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 4);
             return squareSet;
 
         }
@@ -48,18 +48,18 @@ public class FRENZY extends StatePlayer
     }
 
     @Override
-    public Set<Square> lookForGrabStuff(Player player, GameBoard gameBoard)
+    public Set<Square> lookForGrabStuff(Player player)
     {
         if (player.isFirst())
         {
             Set<Square> squareSet;
-            squareSet = gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
+            squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
             return squareSet;
         }
         else
         {
             Set<Square> squareSet;
-            squareSet = gameBoard.getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
+            squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
             return squareSet;
         }
 
@@ -67,9 +67,9 @@ public class FRENZY extends StatePlayer
 
 
     @Override
-    public List<Player> lookForShootPeople(Player player, GameBoard gameBoard)
+    public List<Player> lookForShootPeople(Player player)
     {
-        return super.lookForShootPeople(player, gameBoard);
+        return super.lookForShootPeople(player);
     }
 
 

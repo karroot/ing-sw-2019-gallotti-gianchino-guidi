@@ -40,11 +40,11 @@ public class StateSpecialMethods
 
     /**
      * check if player can grab a weapon
-     * @param wc weapon to check if can be grab
+     * @param player player to check
+     * @param weaponCard weapon to check if can be grab
      * @return true if it can be grab, false if not
-     * @param  aaa
      */
-    private static boolean checkGrabbable( WeaponCard weaponCard, Player player)
+    public static boolean checkGrabbable( WeaponCard weaponCard, Player player)
     {
         if(weaponCard.getColor().equals(Color.BLUE))
             if(player.getAmmoBlue()>= weaponCard.getBlueAmmoCost()-1 && player.getAmmoYellow() >= weaponCard.getYellowAmmoCost() && player.getAmmoRed()>=weaponCard.getRedAmmoCost())

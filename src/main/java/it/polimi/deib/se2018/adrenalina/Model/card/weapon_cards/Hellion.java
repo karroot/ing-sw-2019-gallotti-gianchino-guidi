@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseHellion;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
@@ -72,6 +73,11 @@ public class Hellion extends WeaponCard
 
         return availableMethod;
 
+    }
+
+    @Override
+    public RequestInput getRequestMessage() {
+        return null;
     }
 
     /**
