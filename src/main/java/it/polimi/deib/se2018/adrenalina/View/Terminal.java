@@ -20,6 +20,8 @@ public interface Terminal
     public boolean askPowerUPTeleOrNew();
     public void showPowerUp();
     public int selectPowerUp();
+    public boolean askPowerUPTarget();
+    public boolean askPowerUPForReload();
 
 
 

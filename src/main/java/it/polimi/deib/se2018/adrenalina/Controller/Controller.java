@@ -8,6 +8,7 @@ import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBo
 import it.polimi.deib.se2018.adrenalina.View.Observer;
 import it.polimi.deib.se2018.adrenalina.View.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -44,6 +45,52 @@ public class Controller implements Observer<ResponseInput>
 
     }
 
+
+    //Switch function
+    public void switcher(ColorId player) throws Exception
+    {
+        virtualView.getResponseWithInputs(player);
+
+        MessageNet messageNet = msg;
+
+        while (!(messageNet instanceof EndRound))
+        {
+            if (messageNet instanceof AskMoveAround)
+            {
+                runAround();
+            }
+            else if (messageNet instanceof AskGrab)
+            {
+                grab();
+            }
+            else if (messageNet instanceof AskShoot)
+            {
+                shotEnemy();
+            }
+            else if (messageNet instanceof AskReload)
+            {
+                reload();
+            }
+            else if (messageNet instanceof AskForAllPowerups)
+            {
+                //todo chiedere a gabriele
+            }
+            else if (messageNet instanceof AskTargetingScope)
+            {
+                askForPowerUpTargettingScope();
+            }
+            else if (messageNet instanceof AskPowerUPTeleOrNew)
+            {
+                askForPowerUpTeleportOrNewton();
+            }
+
+            virtualView.getResponseWithInputs(player);
+
+            messageNet = msg;
+        }
+
+
+    }
 
 
     // AUXILIARY FUNCTIONS
@@ -287,6 +334,7 @@ return false;
         // aggiungi controllo se roundplayer ha fatto danno , se no vuota=true;
         if (powerUpList.isEmpty())
             vuota = true;
+
         if (!vuota) {
             Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
                 @Override
@@ -313,14 +361,16 @@ return false;
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
 
-            for (String pc : risp.getChosenPowerUpList()) {
+            for (String pc : risp.getChosenPowerUpList())
+            {
                 if (pc.equals("Mirino:BLUE") || pc.equals("Mirino:YELLOW") || pc.equals("Mirino:RED")) {
                     askForTargettingScope(pc);
                 }
 
             }
             // invia messaggio fine ciclo
-            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+            Future<Boolean> fine = executor.submit(new Callable<Boolean>()
+            {
                 @Override
                 public Boolean call() throws Exception {
                     virtualView.requestInput(new End(), roundPlayer.getColor()); // invia stringa a seconda dello stato
@@ -362,20 +412,24 @@ return false;
     }
 
 
-    public void askForPowerUpTagBackGranade() throws InterruptedException, ExecutionException {
+    public void askForPowerUpTagBackGranade() throws InterruptedException, ExecutionException
+    {
         boolean vuota = false;
         List<String> powerUpList = new LinkedList<>();
         for (PowerUpCard pc : roundPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
         {
-            if (pc.getName().equals("Granata  Venom"))
+            if (pc.getName().equals("Granata Venom"))
                 powerUpList.add(pc.powerToString());
         }
         if (powerUpList.isEmpty())
             vuota = true;
-        if (!vuota) {
+
+        if (!vuota)
+        {
             Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
                 @Override
-                public Boolean call() throws Exception {
+                public Boolean call() throws Exception
+                {
 
                     virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
@@ -400,7 +454,7 @@ return false;
 
             for (String pc : risp.getChosenPowerUpList()) {
                 if (pc.equals("Granata  Venom:BLUE") || pc.equals("Granata  Venom:YELLOW") || pc.equals("Granata  Venom:RED")) {
-                    askForTeleport(pc);
+                    askForTagBackGranade(pc);
                 }
 
             }
@@ -451,7 +505,7 @@ return false;
 
     public void askForTargettingScope(String choice) throws InterruptedException, ExecutionException {
         int index=0;
-        TargettingScope card=null;
+        TargettingScope card = null;
         for (PowerUpCard cardtp : roundPlayer.getPowerupCardList() )
         {
             int i=0;
@@ -842,6 +896,7 @@ return false;
 
            List<WeaponCard> chargableWeapons =  roundPlayer.checkReload(roundPlayer);
         String chargableWeaponName=null;
+
         for (WeaponCard wc : chargableWeapons)
         {
             if(roundPlayer.checkReload(roundPlayer).contains(wc)) // controllo se l'arma è ancora ricaricabile dopo l'azione eseguita dal player
@@ -901,10 +956,7 @@ return false;
 
     }
 
-    public void askForTagBackGranade(ResponsePowerUp choice) throws InterruptedException, ExecutionException {
-        if(roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 22 || // aggiungi gli altri se necessari
-                roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 23 ||
-                roundPlayer.getPowerupCardList().get(choice.getChosenPowerUpList()).getIdPU()== 24 )
+    public void askForTagBackGranade(String choice) throws InterruptedException, ExecutionException {
         {
             Future<Boolean> rich = executor.submit(new Callable<Boolean>()
             {

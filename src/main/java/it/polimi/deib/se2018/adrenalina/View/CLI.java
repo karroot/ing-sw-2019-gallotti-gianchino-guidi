@@ -17,11 +17,10 @@ public class CLI implements Terminal
 
     /**
      * Create a CLI for a player
-     * @param playerOfThisCli player's color of this cli
      */
-    public CLI(ColorId playerOfThisCli)
+    public CLI()
     {
-        this.playerOfThisCli = playerOfThisCli;
+
     }
 
     /**
@@ -246,7 +245,7 @@ public class CLI implements Terminal
 
     /**
      * Check if the player has some Teleporter or Newton and ask if he wants
-     * to use
+     * to use them
      * @return true if the player says yes
      */
     @Override
@@ -335,6 +334,47 @@ public class CLI implements Terminal
             return 0;
 
         return inputInt(1,allPowerUps.size());
+    }
+
+    /**
+     * Ask at the user if he wants to use the Targeting Scope to do more damage
+     * @return true if the user says yes
+     */
+    @Override
+    public boolean askPowerUPTarget()
+    {
+        System.out.println("Vuoi usare i mirini?");
+
+        System.out.println("1:Si");
+        System.out.println("2:No");
+
+        int choice = inputInt(1,2);
+
+        if (choice == 1)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Ask at the user if he wants to obtain more ammo using the power ups
+     * printing the request on CLI
+     * @return true if the user said yes
+     */
+    @Override
+    public boolean askPowerUPForReload()
+    {
+        System.out.println("Vuoi usare dei powerUp per incrementare le munizioni?");
+
+        System.out.println("1:Si");
+        System.out.println("2:No");
+
+        int choice = inputInt(1,2);
+
+        if (choice == 1)
+            return true;
+
+        return false;
     }
 
     //############ Private Methods #############

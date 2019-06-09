@@ -46,6 +46,15 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
         //todo creazione  del terminale GUI o CLI
 
+        if (!gui)
+        {
+            terminal = new CLI();
+        }
+        else
+        {
+
+        }
+
     }
 
 
@@ -73,29 +82,17 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      */
     public void startRound()
     {
-        if (firstTurn)
+        if (firstTurn) //if this is the first turn (The controller before to start the round must give at player two powerUp)
         {
-         //Chiedi al controller di pescare due powerUP
-            try
-            {
-                notify(new AskGrabPowerUp());
-                notify(new AskGrabPowerUp());
-            }
-            catch (Exception e)
-            {
-                terminal.showError("Sei stato disconesso : Turno interroto");
-                terminal.showError(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
 
-         //Chiedi al giocatore quale carta PowerUp usare per il respawn
+            //Ask at the player which power up to use for the respawn
             showPowerUp();
 
             int choice = selectPowerUp();
 
             try
             {
-                notify(new AskUsePowerUpRespawn());
+                notify(new AskUsePowerUpRespawn(choice));
             }
             catch (Exception e)
             {
@@ -120,7 +117,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         {
             //Show the actions
             showAction();
-            int choice = selectAction(); //Do to selects an action to the plaer
+            int choice = selectAction(); //Do to selects an action to the player
 
             switch (choice)
             {
@@ -131,7 +128,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                     grabAction();
                     break;
                 case 3:
-                    shootAction();//If the user chose "Shoot"
+                    shootAction();//If the user chose "Shoot"(this action includes also using the powerUps to obtain more ammo)
                     break;
             }
 
@@ -140,24 +137,62 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             powerUpTeleportOrNewton();
         }
 
-        //######## Using targeting scope ######### //todo Chiedere agli altri
+        //######## Using targeting scope #########
+
+        targetingScopeAction();
+
 
 
         //########Reload weapons###########
 
         reloading();
 
+        try //notify at the controller that the round is finished
+        {
+            notify( new EndRound());
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
      * This method being called by Network Handler to ask at the user which powerUp to use for the respawn
      */
-    public void startRespawn()//todo
+    public void startRespawn()//todo chiedere a gabriele se va bene così
     {
+        //(The controller before to start the respawn must give at player a powerUp)
+        //Ask at the player which power up to use for the respawn
+        showPowerUp();
+
+        int choice = selectPowerUp();
+
+        try
+        {
+            notify(new AskUsePowerUpRespawn(choice));
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+
         //Chiedi al controller per pescare due powerUp
         //Mostra i powerUp nuovi(dialog)
         //Mostra e chiedi quale powerUp usare
         //Informa il controller su quale powerUp è stato scelto
+    }
+
+    /**
+     *
+     */
+    public void requestToUseGranade() //todo completarlo insieme a gabriele
+    {
+
     }
 
     /**
@@ -199,6 +234,24 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     }
 
     /**
+     * Ask at the user if he wants to use the Targeting Scope to do more damage
+     * @return true if the user says yes
+     */
+    public boolean askPowerUPTarget()
+    {
+        return terminal.askPowerUPTarget();
+    }
+
+    /**
+     * Ask at the user if he wants to obtain more ammo using the power ups
+     * @return true if the user said yes
+     */
+    public boolean askPowerUPForReload()
+    {
+        return terminal.askPowerUPForReload();
+    }
+
+    /**
      * Ask at the user if he wants to reload his weapons
      * @return true if the user said yes
      */
@@ -224,21 +277,33 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         return terminal.selectAction();
     }
 
-    public void startFrenesy()
+    public void startFrenesy() //todo
     {
 
     }
 
+    /**
+     * Method that show at the user the final scores
+     * @param messageWithFinalScore message sent by controller that contains all scores
+     */
     public void showFinalScore(String messageWithFinalScore)
     {
         terminal.showFinalScore(messageWithFinalScore);
     }
 
+    /**
+     * Method that show at the user a generic text message
+     * @param message text to print
+     */
     public void showMessage(String message)
     {
         terminal.showMessage(message);
     }
 
+    /**
+     * Method that show at the user a generic error message
+     * @param message text to print
+     */
     public void showError(String message)
     {
         terminal.showError(message);
@@ -246,13 +311,24 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
     /**
      * Thi method being called by Network Handler to ask at view to update its copy of the model to show
-     * at the user and after shows the game board updated
+     * at the user , after shows the game board updated and send at the controller a message to say that
+     * the model was update with success
      * @param message message that contains the copy immutable of the model that arrives from server
      */
     public void updateModelCopy(UpdateModel message)
     {
         terminal.setData(message);
         terminal.showBoard();
+
+        try  //send at the controller a message to say that the model was update with success
+        {
+            notify(new EndUpdateModel());
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+        }
     }
 
     /**
@@ -337,13 +413,13 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
             ResponseGrabStuff temp = (ResponseGrabStuff) responseForController;
 
-            temp.getTargetSquareToGo(); //Save the response message with the square chose
+            //Save the response message with the square chose
 
             notify(responseForController);//Send the message at controller
 
 
-            int x = MethodsWeapons.getYFromString(temp.getTargetSquareToGo()); //Obtain the coordinates of the square chosen by the user to grab
-            int y = MethodsWeapons.getXFromString(temp.getTargetSquareToGo());
+            int x = temp.getX(); //Obtain the coordinates of the square chosen by the user to grab
+            int y = temp.getY();
 
 
             SquareImmutable square = terminal.getData()
@@ -353,12 +429,14 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
             //Non c'è bisogno di controllare se la lista delle armi è vuota
             //Il player non può scegliere uno spawn Point dove non può raccogliere
+
             if(square.isSpawnPoint())//if the square chosen by the user to grab is a spawn Point
             {
                 messageRequest = getMessageFromNetwHandl(); //Obtain the request message with the weapons //message (RequestShootPeople)
                 //that the player can grab
                 messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
                 responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
+
                 notify(responseForController);//Send the message at controller with the weapon chosen by player
 
 
@@ -382,8 +460,29 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     {
         try
         {
+            //Ask if the player wants to use his power ups to increase his ammo
+            if (askPowerUPForReload())
+            {
+                notify(new AskForAllPowerups());
 
-            //todo Chiedere se si vogliono usare i powerUp per aumentare le munizioni
+                RequestInput messageRequest = getMessageFromNetwHandl();
+
+                RequestPowerUp temp = (RequestPowerUp) messageRequest;
+
+                if (temp.getPowerUptoChose().isEmpty()) //If the controller says that player hasn't power ups
+                {
+                    showMessage("Non hai powerUp da usare"); //Skip to shoot action
+                }
+                else
+                {
+                    messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
+                    ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with the weapon chosen
+                    //with all power ups that the player chose to increase his ammo
+
+                    notify(responseForController);//Send the message at controller
+                }
+            }
+
 
             notify(new AskShoot());//Notify at controller that the player wants to shoot
 
@@ -393,7 +492,11 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             RequestShootPeople temp = (RequestShootPeople) messageRequest;
 
             if (temp.getWeaponCardsName().isEmpty()) //If the player has not weapons , interrupts the action
+            {
+                showMessage("Non hai armi da usare,scegli un'altra azione.");
                 return;
+            }
+
 
             messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
             ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with the weapon chosen
@@ -437,7 +540,10 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
                 RequestInput messageRequest = getMessageFromNetwHandl(); //Obtain the request message
 
-                while (! (messageRequest instanceof /*End*/)) //If the message contains a
+                if (messageRequest instanceof End)
+                    showMessage("Non ci sono armi da ricaricare");
+
+                while (! (messageRequest instanceof End)) //If the message contains a
                 // weapons that it can be reloaded
                 {
                     messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
@@ -461,7 +567,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     private void powerUpTeleportOrNewton()
     {
 
-        //Ask to use the powerUp (Teleporter or Newton) //todo Discutere con gabriele su l'uso dei powerUP
+        //Ask to use the powerUp (Teleporter or Newton)
 
         if (askPowerUPTeleOrNew()) //If the player has some powerUPs (Teleporter or Newton) and says that he wants to use them
         {
@@ -471,11 +577,29 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 //Se il player ha powerUP(Teleporter or Newton)
 
                 RequestInput messageRequest = getMessageFromNetwHandl();//Obtain the request message
+                //to ask which powerUps to use
+                messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
 
-                while (! (messageRequest instanceof /*End*/)) //if the message contains a request to use the powerUp //todo vedere se gabriele l'ha fatto
+
+                RequestPowerUp temp = (RequestPowerUp) messageRequest;
+
+                if (temp.getPowerUptoChose().isEmpty())//Check if there are powerUps
+                {
+                    terminal.showMessage("Non hai Powerup da usare");
+                    return;
+                }
+
+                ResponseInput responseForController = messageRequest.generateResponseMessage();
+
+                notify(responseForController);
+
+
+                messageRequest = getMessageFromNetwHandl();//Obtain the request message
+
+                while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
                 {
                     messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
-                    ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
+                    responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
                     //with the response (yes or no) and the inputs needed
                     notify(responseForController);//Send the message of response at controller
                     messageRequest = getMessageFromNetwHandl();//Obtain the request message
@@ -501,5 +625,55 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         //Ciclo per l'uso dei power Up
         //Ciclo finisce quando si riceve il messaggio End dal controller
 
+    }
+
+    //Code that handles using of power ups targeting scope
+    private void targetingScopeAction()
+    {
+        if (askPowerUPTarget()) //Ask at the player if he wants to use a targeting scope
+        {
+            try //if he said yes
+            {
+                notify(new AskTargetingScope());//Ask at the controller to use the targeting Scope
+
+                RequestInput messageRequest = getMessageFromNetwHandl(); //Obtain the request message
+
+                RequestPowerUp temp = (RequestPowerUp) messageRequest;
+
+                if (temp.getPowerUptoChose().isEmpty()) //If the controller says that the player hasn't any targeting scope
+                {
+                    showMessage("Non hai mirini da usare");
+                    return; //Interrupt the method
+                }
+
+
+                messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
+                //with the targeting scope that the player chose to use
+
+                notify(responseForController);//Send the message at controller
+
+                messageRequest = getMessageFromNetwHandl();//Obtain the request message
+
+                while (! (messageRequest instanceof End)) //if the message contains a request to use the targeting scope
+                {
+                    messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                    responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
+                    //with the response and the inputs needed
+                    notify(responseForController);//Send the message of response at controller
+                    messageRequest = getMessageFromNetwHandl();//Obtain the request message
+                }
+                //If the message is an "End" then there aren't more targeting scope to use
+
+
+
+            }
+            catch (Exception e)
+            {
+                terminal.showError("Sei stato disconesso : Turno interroto");
+                terminal.showError(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }

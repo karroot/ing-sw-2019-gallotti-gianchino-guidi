@@ -7,7 +7,8 @@ import java.util.List;
 public class ResponsePowerUp extends ResponseInput {
     private List<String> chosenPowerUpList ;//Target for basic mode
 
-    public ResponsePowerUp(List<String> chosenPowerUpList) {
+    public ResponsePowerUp(List<String> chosenPowerUpList)
+    {
         this.chosenPowerUpList = chosenPowerUpList;
     }
 

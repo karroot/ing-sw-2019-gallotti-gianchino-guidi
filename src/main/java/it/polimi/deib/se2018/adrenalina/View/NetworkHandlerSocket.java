@@ -2,6 +2,8 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 
@@ -25,7 +27,8 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
 
-    //Threads used
+    //####### Threads used #######
+
     Runnable codeOfLogicRound = new Runnable()
     {
         @Override
@@ -34,7 +37,28 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
             view.startRound();
         }
     };
+
     Thread logicRound;
+
+    Runnable codeOfLogicGrenade = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.requestToUseGranade();
+        }
+    };
+    Thread logicGrenade;
+
+    Runnable codeOfLogicRespawn = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startRespawn();
+        }
+    };
+    Thread logicRespawn;
 
     /**
      * Create a network Handler that handles the connection between the client and the server
@@ -45,6 +69,9 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     public  NetworkHandlerSocket(String ip, int port,PrivateView view)  throws IOException
     {
         logicRound = new Thread(codeOfLogicRound);
+        logicGrenade = new Thread(codeOfLogicGrenade);
+        logicRespawn = new Thread(codeOfLogicRespawn);
+
         clientSocket = new Socket(ip, port);
         out = new ObjectOutputStream(clientSocket.getOutputStream());
         in = new ObjectInputStream(clientSocket.getInputStream());
@@ -54,7 +81,8 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
 
         startConnection(ip, port);
 
-        System.out.println("Server non raggiungibile"); //Verrà stampato da un interfaccia grafica todo
+        view.showError("Server non raggiungibile controllare le informazioni inserite");
+        //todo bisogna richiedere le informazioni sul server
     }
 
     /**
@@ -152,6 +180,16 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         {
             ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user
             sendMessageNet(credentials);
+            return;
+        }
+        else if (msg instanceof RequestToUseGrenade) //If the message is a request using a grenade
+        {
+            logicGrenade.start(); //Start the thread that handles the request
+            return;
+        }
+        else if (msg instanceof RequestToRespawn)//If the message is a request of respawn
+        {
+            logicRespawn.start(); //Start the thread that handles the respawn
             return;
         }
 

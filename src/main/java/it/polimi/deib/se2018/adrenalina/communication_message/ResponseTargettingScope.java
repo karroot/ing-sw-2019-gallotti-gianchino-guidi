@@ -9,7 +9,7 @@ public class ResponseTargettingScope extends ResponseInput
 {
     private ColorId targetBasicMode;//Target for basic mode
     //Attribute for the request
-private Color targetAmmo;
+    private Color targetAmmo;
 
     /**
      * Create the response message for TargettingScope in basic mode

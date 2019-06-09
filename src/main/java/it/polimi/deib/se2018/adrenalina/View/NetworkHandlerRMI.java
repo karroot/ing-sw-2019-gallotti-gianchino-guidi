@@ -1,12 +1,13 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -20,12 +21,13 @@ import java.util.List;
 public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceNetworkHandlerRMI, Observer<ResponseInput>
 {
 
-    PrivateView view;
-    static int registryPortNumber = 5000; //Port
+    private PrivateView view;
+    private static int registryPortNumber = 5000; //Port
     private MessageNet messageToSend = null;
     private final Object msg = new Object(); //Variable used to synchronize  the methods getResponseMessage and update
 
-    //Threads used
+    //####### Threads used #######
+
     Runnable codeOfLogicRound = new Runnable()
     {
         @Override
@@ -34,7 +36,29 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
             view.startRound();
         }
     };
+
     Thread logicRound;
+
+    Runnable codeOfLogicGrenade = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.requestToUseGranade();
+        }
+    };
+    Thread logicGrenade;
+
+    Runnable codeOfLogicRespawn = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startRespawn();
+        }
+    };
+    Thread logicRespawn;
+
 
     /**
      * Create a network handler tha handle the communication between the client and server
@@ -49,10 +73,12 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         this.view = view;
 
         logicRound = new Thread(codeOfLogicRound);
+        logicGrenade = new Thread(codeOfLogicGrenade);
+        logicRespawn = new Thread(codeOfLogicRespawn);
 
         // Start RMI registry
         LocateRegistry.createRegistry(registryPortNumber);
-        // Effettuiamo il bind
+        //binding
         Naming.rebind("networkH",this);
 
         Socket  socket = new Socket(ip,port);
@@ -60,7 +86,8 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
         register(view);
 
-        System.out.println("Server RMI funzionante"); //Verrà stampato da un interfaccia grafica todo
+        view.showError("Server RMI non funzionante");
+        //todo bisogna richiedere le informazioni sul server
     }
 
     /**
@@ -84,7 +111,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
                 {
 
                     Thread.currentThread().interrupt();//If the the player is FK
-                    //A message of timeout arrives at the server and the controller suspends the player
+                    //A message of timeout arrives at the server and the controller suspends the player //todo
                 }
             }
 
@@ -132,6 +159,17 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
             update(credentials);//Save the credentials
             return;
         }
+        else if (message instanceof RequestToUseGrenade) //If the message is a request using a grenade
+        {
+            logicGrenade.start(); //Start the thread that handles the request
+            return;
+        }
+        else if (message instanceof RequestToRespawn)//If the message is a request of respawn
+        {
+            logicRespawn.start(); //Start the thread that handles the respawn
+            return;
+        }
+
         notify((RequestInput) message);
     }
 
@@ -171,7 +209,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     private ResponseCredentials getCredentials()
     {
         return null;
-    } //todo
+    } //todo implementare il metodo
 
     //This class is observable for the message of RequestInput by VirtualView
 

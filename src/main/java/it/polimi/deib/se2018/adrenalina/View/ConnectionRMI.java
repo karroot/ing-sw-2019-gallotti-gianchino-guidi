@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 public class ConnectionRMI extends Connection implements Runnable
 {
@@ -35,6 +36,13 @@ public class ConnectionRMI extends Connection implements Runnable
     {
         if (!active)
             throw new IllegalStateException("Connessione non attiva impossibile inviare il messaggio");
+
+        if (message instanceof UpdateModel)
+        {
+            client.updateModel((UpdateModel) message);
+            return;
+        }
+
 
         client.receiveMessageRequest(message);
     }

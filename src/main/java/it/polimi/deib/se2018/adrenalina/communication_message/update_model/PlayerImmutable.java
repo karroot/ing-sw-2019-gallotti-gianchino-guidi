@@ -18,6 +18,11 @@ public class PlayerImmutable implements Serializable
 
     private int ammoYellow;
 
+    //###Location of the player(if x= 0 and y = 0 then the player isn't in a square)
+    private int x;
+
+    private int y;
+
     private  int ammoRed;
 
     private  int ammoBlue;
@@ -57,6 +62,17 @@ public class PlayerImmutable implements Serializable
                 .stream().map(PowerUpCard::powerToString).collect(Collectors.toList());
         this.weaponCardList = player.getWeaponCardList()
                 .stream().map(WeaponCard::getName).collect(Collectors.toList());
+
+        if (player.getSquare() == null) //If the player ins't square
+        {
+            x = 0;//Coordinates are zero
+            y = 0;
+        }
+        else //Saves the coordinates of the square
+        {
+            x = player.getSquare().getX();
+            y = player.getSquare().getY();
+        }
     }
 
     public ColorId getColor() {
@@ -111,19 +127,39 @@ public class PlayerImmutable implements Serializable
         return weaponCardList;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     @Override
-    public String toString() {
-        return "color=" + color +
-                "\n ammoYellow=" + ammoYellow +
-                "\n ammoRed=" + ammoRed +
-                "\n ammoBlue=" + ammoBlue +
-                "\n name='" + name + '\'' +
-                "\n Danni=" + last +
-                "\n markCounter=" + markCounter +
-                "\n deathsCounter=" + deathsCounter +
-                "\n score=" + score +
-                "\n powerupCardList=" + powerupCardList +
-                "\n weaponCardList=" + weaponCardList
+    public String toString()
+    {
+        String location;
+
+        if (x == 0 && y == 0)
+            location = "Il PLAYER: " +name + "\nNon è in alcuno square";
+        else
+            location = "Il PLAYER: " +name +
+                    "\n è nel quadrato con cordinate\n" +
+                    "x = " + x +
+                    "\ny = " + y + "\n";
+
+        return "colore=" + color +
+                "\n munizioni Gialle=" + ammoYellow +
+                "\n munizioni Rosse =" + ammoRed +
+                "\n munizioni Blu=" + ammoBlue +
+                "\n nome ='" + name + '\'' +
+                "\n Danni =" + last +
+                "\n lista marchi =" + markCounter +
+                "\n morti =" + deathsCounter +
+                "\n punteggio =" + score +
+                "\n PowerUp che hai=" + powerupCardList +
+                "\n Armi che hai=" + weaponCardList +
+                location
                 ;
     }
 }

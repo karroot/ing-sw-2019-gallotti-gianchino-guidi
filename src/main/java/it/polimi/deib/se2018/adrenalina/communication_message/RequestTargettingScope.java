@@ -10,12 +10,15 @@ import java.util.Set;
 public class RequestTargettingScope  extends RequestInput{
     //Attribute for the request
     protected List<ColorId> playersBasicMode;//Targets for the basic mode
-protected List<Color> playerAmmo; // all ammo of the player
+    protected List<Color> playerAmmo; // all ammo of the player
     //Attribute for the response
     protected ColorId targetBasicMode;//Target chosen for the basic mode
     protected Color targetAmmo;
+
+
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput()
+    {
         inputBasicMode();
         responseIsReady = true;
     }
@@ -64,4 +67,6 @@ protected List<Color> playerAmmo; // all ammo of the player
          anInt = inputInt(1, i - 1);
         targetAmmo= playerAmmo.get(anInt-1);
     }
+
+
 }

@@ -39,7 +39,6 @@ public class Teleporter extends PowerUpCard
         moveYourself(x,y);//Move the player that has this card in the square (x,y)
     }
 
-    @Override
     public RequestInput getRequestMessage()
     {
         return new RequestTeleporter(player.getSquare().getGameBoard(),player);

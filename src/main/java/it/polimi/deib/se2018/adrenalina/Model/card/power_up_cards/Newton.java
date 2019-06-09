@@ -77,7 +77,6 @@ public class Newton extends PowerUpCard
     }
 
 
-    @Override
     public RequestInput getRequestMessage() {
         return new RequestNewton(checkMoveTarget(player.getSquare().getGameBoard()));
     }
