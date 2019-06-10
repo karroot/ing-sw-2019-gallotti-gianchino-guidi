@@ -23,12 +23,13 @@ public class Controller implements Observer<ResponseInput>
     // per ogni giocatore chiama il metodo starRound che non fa altro che mandare un messaggio che avvisa che inizia il turno del giocatore
     //e nel metodo start round ci sarà la chiamata allo switch
     //switch da aggiungere quel che manca
-    public static Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
+    protected static Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
     private View virtualView;
     private ResponseInput msg;
 
-    Player roundPlayer= new Player(ColorId.BLUE,"prova",null,true);
+    private GameBoard g1;
+   private Player roundPlayer=null;
 
     boolean firstRound=true;
     //Controller deve avere un riferimento alla virtual view
@@ -109,13 +110,77 @@ return false;
         return ret;
     }
 
-
+    private void drawPowerup(boolean respawn){
+        PowerUpCard pc= roundPlayer.getSquare().getGameBoard().drawPowerUpCard();
+        //chiedi a gio se va bene usare un flag per indicare che può pescare la prima carta siccome siamo in
+        if(respawn)
+            roundPlayer.addPowerUpRespawn(pc);
+        else
+            roundPlayer.addPowerUp(pc);
+        pc.setPlayer(roundPlayer);
+    }
 
 
     // END OF AUXILIARY FUNCTIONS
+
+
+    public void startRound() throws InterruptedException, ExecutionException {
+        for(Player rp : g1.getAllPlayer() )
+        {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+            {
+                @Override
+                public Boolean call() throws Exception {
+
+
+                    virtualView.requestInput(new RequestStartRound(),rp.getColor()); // invia stringa a seconda dello stato
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+            {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s)
+            {
+                // fai saltare turno
+            }
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
+
+
+
+
+
+            // fai scegliere square respawn in base a carta powerup scelta
+
+            try {
+                switcher(rp.getColor());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
 //Switch function
+
     public void switcher(ColorId player) throws Exception
     {
+        for(Player p : g1.getAllPlayer()){
+
+            if (p.getColor().equals(player))
+                roundPlayer=p;
+        }
+
+
         virtualView.getResponseWithInputs(player);
 
         MessageNet messageNet = msg;
@@ -140,7 +205,7 @@ return false;
             }
             else if (messageNet instanceof AskForAllPowerups)
             {
-                //todo chiedere a gabriele
+               askForAllPowerUp();
             }
             else if (messageNet instanceof AskTargetingScope)
             {
@@ -149,6 +214,14 @@ return false;
             else if (messageNet instanceof AskPowerUPTeleOrNew)
             {
                 askForPowerUpTeleportOrNewton();
+            }
+            else if (messageNet instanceof AskTagBackGranade)
+            {
+                askForPowerUpTagBackGranade();
+            }
+            else if (messageNet instanceof AskFirstRespawn)
+            {
+                askForFirstSpawn();
             }
 
             virtualView.getResponseWithInputs(player);
@@ -191,7 +264,9 @@ return false;
             if (!s) {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -294,7 +369,9 @@ return false;
                 if (!s) {
                     // fai saltare turno
                 }
-                //if(msg instanceof afk ) fai saltare il turno
+                    if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
                 ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -381,7 +458,9 @@ return false;
             if (!s) {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -457,7 +536,9 @@ return false;
                     if (!ric) {
                         // fai saltare turno
                     }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseTeleporter sq = (ResponseTeleporter) msg;
 
@@ -508,7 +589,9 @@ return false;
         if (!ric) {
             // fai saltare turno
         }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseNewton sq = (ResponseNewton) msg;
 
@@ -561,7 +644,9 @@ return false;
         if (!ric) {
             // fai saltare turno
         }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseTargettingScope sq = (ResponseTargettingScope) msg;
 
@@ -602,7 +687,9 @@ return false;
         if (!ric) {
             // fai saltare turno
         }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseTagbackGranade response = (ResponseTagbackGranade) msg;
 
@@ -656,7 +743,9 @@ return false;
             if (!s) {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -733,11 +822,7 @@ return false;
 
 
 
-    public void drawPowerup(){
-        PowerUpCard pc= roundPlayer.getSquare().getGameBoard().drawPowerUpCard();
-        roundPlayer.addPowerUp(pc);
-        pc.setPlayer(roundPlayer);
-    }
+
 
 
 
@@ -775,9 +860,50 @@ return false;
 
         }
 
+public void askForRespawn(Player p) throws InterruptedException, ExecutionException {
+    drawPowerup(true);
+    List<Color> powerList= new LinkedList<>();
+    for(PowerUpCard pc : roundPlayer.getPowerupCardList())
+    {
+        powerList.add(pc.getColor());
+    }
+    Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+    {
+        @Override
+        public Boolean call() throws Exception {
+            Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
 
+            virtualView.requestInput(new RequestRespawn(powerList),p.getColor()); // invia stringa a seconda dello stato
+            virtualView.getResponseWithInputs(p.getColor());
 
+            return true;
+        }
+    });
 
+    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+    {
+
+    }
+
+    Boolean s = prova.get();
+    if (!s)
+    {
+        // fai saltare turno
+    }
+        if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
+
+    ResponseRespawn response = (ResponseRespawn) msg;
+    roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
+    spawn(response.getTargetSpawnPoint());
+}
+
+public void askForFirstSpawn() throws InterruptedException, ExecutionException {
+    drawPowerup(false);
+   askForRespawn(roundPlayer);
+
+}
 
     public void runAround() throws InterruptedException, ExecutionException
     {
@@ -804,7 +930,9 @@ return false;
         {
             // fai saltare turno
         }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseRunAround response = (ResponseRunAround) msg;
 
@@ -861,7 +989,9 @@ return false;
             if (!s) {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             ResponseShootPeople response = (ResponseShootPeople) msg;
 
@@ -890,7 +1020,9 @@ return false;
             if (!resp) {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             weaponChosen.useWeapon(msg);
 
@@ -954,7 +1086,9 @@ return false;
         {
             // fai saltare turno
         }
-        //if(msg instanceof afk ) fai saltare il turno
+            if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
         ResponseGrabStuff response = (ResponseGrabStuff) msg; // mi ritorna un colore
 
@@ -1012,7 +1146,9 @@ return false;
             {
                 // fai saltare turno
             }
-            //if(msg instanceof afk ) fai saltare il turno
+                if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
             ResponseShootPeople res = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI
 
@@ -1059,7 +1195,9 @@ return false;
                 {
                     // fai saltare turno
                 }
-                //if(msg instanceof afk ) fai saltare il turno
+                    if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
                 ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
 
@@ -1107,7 +1245,9 @@ return false;
                 if (!s) {
                     // fai saltare turno
                 }
-//if(msg instanceof afk ) fai saltare il turno
+    if(msg instanceof Afk ) {
+        // fai saltare turno
+    }
 
                 ResponseReloadWeapon response = (ResponseReloadWeapon) msg;
 
@@ -1243,7 +1383,17 @@ return false;
 
     }
 
-
+public void getPointAndRespawn() throws ExecutionException, InterruptedException {
+      
+      //chiedi come fare calcolo punteggi
+        for(Player p : g1.getAllPlayer())
+        {
+            if(p.isDead())
+                askForRespawn(p);
+        }
+        
+        
+}
 
 
 

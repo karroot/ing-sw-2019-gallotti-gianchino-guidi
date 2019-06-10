@@ -185,7 +185,7 @@ public class PlasmaGun extends WeaponCard
         Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
         if (!checkAvailableMode()[2]) //check mode
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-
+List<ColorId> tempList ;
         Map<String,List<ColorId>> result = new HashMap<>();
         dummie.setSquare(player.getSquare());
 
@@ -199,10 +199,14 @@ public class PlasmaGun extends WeaponCard
                 String coordinates = t.toStringCoordinates();//Save the coordinates
 
                 result.putIfAbsent(coordinates,dummie.playerThatSee(dummie.getSquare().getGameBoard()).stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
-            /*    if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) )
-                    result.remove(coordinates,dummie.getColor());
-                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) )
-                    result.remove(coordinates,player.getColor()); */
+                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(dummie) ){
+                    tempList= result.get(coordinates);
+                    tempList.remove(dummie.getColor());
+                    }
+                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) ){
+                    tempList= result.get(coordinates);
+                    tempList.remove(player.getColor());
+                }
             }
 
         }

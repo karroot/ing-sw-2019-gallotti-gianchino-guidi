@@ -381,7 +381,23 @@ public class Player
             throw new IllegalStateException("Player ha già tre carte powerup"); //Launch exceptions
 
     }
+    /**
+     * Add a power up card in player's deck if the player hasn't already 3 power up
+     * @param powerupCard power up card to add
+     * @exception NullPointerException if powerupCard is null
+     * @exception IllegalStateException if player has already three power up cards
+     */
+    public void addPowerUpRespawn(PowerUpCard powerupCard) throws NullPointerException,IllegalStateException
+    {
+        if (powerupCard == null) //Check not null
+            throw new NullPointerException("Parametro powerupCard è nullo");
 
+        if (powerupCardList.size() < 4) //If player has not 3 powerup cards
+            powerupCardList.add(powerupCard);//Add power up to the list
+        else
+            throw new IllegalStateException("Player ha già tre carte powerup"); //Launch exceptions
+
+    }
     /**
      * Remove card power up from player's deck that has been used
      * @param indexDeckCard index of card power up that has been used

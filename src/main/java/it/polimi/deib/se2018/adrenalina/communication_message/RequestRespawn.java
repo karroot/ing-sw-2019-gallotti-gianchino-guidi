@@ -37,7 +37,7 @@ public class RequestRespawn extends  RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        System.out.println("Scegli il colore dello square dove spawnare:");
 
         for (Color t:playerPowerUp)
         {

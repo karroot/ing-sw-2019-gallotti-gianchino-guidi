@@ -577,7 +577,7 @@ public class TestBlueWeapons {
         }
 
     }
-/*
+
     @Test
     public void testMachineGun() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -672,11 +672,11 @@ public class TestBlueWeapons {
 
 
 
-        w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list3,enemy3),getPl(list1,enemy2),true,true,true);
+        w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list3,enemy2),getPl(list3,enemy3),getPl(list1,enemy2),true,true,true);
 
 
-        assertEquals(enemy.getNumberOfDamagePoint(),2);
-        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        assertEquals(enemy.getNumberOfDamagePoint(),1);
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
         assertEquals(enemy3.getNumberOfDamagePoint(),1);
         assertFalse(w6.isLoaded());
 
@@ -697,7 +697,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,true,true,true);
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,null,true,true,true);
             fail();
         }
         catch (IllegalStateException e)
@@ -706,23 +706,23 @@ public class TestBlueWeapons {
         }
         w6.setLoaded(true);
 
-        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,false,false,false);
+        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,null,false,false,false);
 
         assertFalse(w6.isLoaded());
-        assertEquals(enemy2.getNumberOfDamagePoint(),3);
-        assertEquals(enemy.getNumberOfDamagePoint(),3);
+        assertEquals(enemy2.getNumberOfDamagePoint(),4);
+        assertEquals(enemy.getNumberOfDamagePoint(),2);
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
         w6.setLoaded(true);
-        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy2),false,true,true);
+        w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy3),getPl(list1,enemy2),false,true,true);
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
         w6.setLoaded(true);
         try
         {
-            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list1,enemy),null,true,true,true);
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list1,enemy2),getPl(list1,enemy),null,true,true,true);
             fail();
         }
         catch (IllegalArgumentException e)
@@ -735,10 +735,10 @@ public class TestBlueWeapons {
         w6.setLoaded(true);
         try
         {
-            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy),null,null,true,false,true);
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy),null,null,null,true,false,true);
             fail();
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
             System.out.println(e);
         }
@@ -748,10 +748,10 @@ public class TestBlueWeapons {
         w6.setLoaded(true);
         try
         {
-            w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy3),true,true,true);
+            w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,getPl(list1,enemy3),true,true,true);
             fail();
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
             System.out.println(e);
         }
@@ -760,19 +760,19 @@ public class TestBlueWeapons {
         w6.setLoaded(true);
         try
         {
-            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,true,true,false);
+            w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,null,true,true,false);
             fail();
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
             System.out.println(e);
         }
 
     }
-    */
 
 
-    /*
+
+
         @Test
         public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
             String[] orderEffect = new String[3];
@@ -834,18 +834,10 @@ public class TestBlueWeapons {
 
 
             List<String> reachableSquare = new LinkedList<>();
-            List<ColorId> reachableBasicPlayer = new LinkedList<>();
+            Map<String,List<ColorId>> reachableBasicPlayer = new HashMap<>();
             Map<String,List<ColorId>> reachableBeforeMovePlayer = new HashMap<>();
 
-          try
-          {
-              reachableBasicPlayer=  w5.checkBasicMode();
-              fail();
-          }
-          catch (IllegalStateException e)
-          {
-              System.out.println(e);
-          }
+
 
             reachableSquare= w5.checkPhaseGlide();
 
@@ -861,13 +853,13 @@ public class TestBlueWeapons {
 
 
             test.setAmmoBlue(3);
-            reachableBasicPlayer = w5.checkBasicMode();
+            reachableBasicPlayer = w5.checkAllTarget();
 
             reachableSquare= w5.checkPhaseGlide();
             reachableBeforeMovePlayer = w5.checkAllTarget();
 
-            assertFalse(reachableBasicPlayer.contains(enemy3.getColor()));
-            w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,2);
+            assertFalse(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,2).toStringCoordinates()).contains(enemy3.getColor()));
+            w5.basicMode(getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,2).toStringCoordinates()),enemy),orderEffect,1,2);
 
             assertFalse(w5.isLoaded());
             assertEquals(enemy.getNumberOfDamagePoint(),3);
@@ -894,7 +886,8 @@ public class TestBlueWeapons {
          //   assertTrue(reachableBeforeMovePlayer.containsValue(enemy.getColor()));
 
 
-            w5.basicMode(getPl(reachableBasicPlayer,enemy),orderEffect,1,3);
+            w5.basicMode(getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,3).toStringCoordinates()),enemy),orderEffect,1,3);
+
             assertEquals(enemy.getNumberOfDamagePoint(),6);
 
          // prova a muoverti e a sparare a un nemico che non  puoi raggiungere da quella posizione ( ma che comunque potevi raggiungere)
@@ -915,9 +908,9 @@ public class TestBlueWeapons {
             w5.setLoaded(true);
             assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
 
-            reachableBasicPlayer = w5.checkBasicMode();
+            reachableBasicPlayer = w5.checkAllTarget();
             reachableBeforeMovePlayer = w5.checkAllTarget();
-            assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
+            //assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
 
             Square squareTest= new SpawnPoint(2,2,g1,null,null);
             String testString = squareTest.toStringCoordinates();
@@ -925,7 +918,7 @@ public class TestBlueWeapons {
           assertTrue(reachableBeforeMovePlayer.get(testString).contains(enemy.getColor()));
 
 
-            w5.basicMode(getPl(reachableBasicPlayer,enemy2),orderEffect,1,2);
+            w5.basicMode(getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,2).toStringCoordinates()),enemy2),orderEffect,1,2);
             assertEquals(enemy.getNumberOfDamagePoint(),6);
             assertEquals(enemy2.getNumberOfDamagePoint(),3);
     assertTrue(test.getSquare().equals(g1.getArena().getSquare(1,2)));
@@ -951,7 +944,7 @@ public class TestBlueWeapons {
                 System.out.println(e);
             }
             w5.setLoaded(true);
-            reachableBasicPlayer = w5.checkBasicMode();
+            reachableBasicPlayer = w5.checkAllTarget();
 
             reachableBeforeMovePlayer = w5.checkAllTarget();
             test.setAmmoBlue(0);
@@ -965,7 +958,7 @@ public class TestBlueWeapons {
                 System.out.println(e);
             }
         }
-     */
+
     @Test
     public void testTractatorBeam() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
