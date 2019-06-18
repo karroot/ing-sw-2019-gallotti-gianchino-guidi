@@ -23,7 +23,7 @@ public class Controller implements Observer<ResponseInput>
     // per ogni giocatore chiama il metodo starRound che non fa altro che mandare un messaggio che avvisa che inizia il turno del giocatore
     //e nel metodo start round ci sarà la chiamata allo switch
     //switch da aggiungere quel che manca
-    protected static Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
+    public static Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
     private View virtualView;
     private ResponseInput msg;
@@ -100,11 +100,13 @@ return false;
             if(pla.getColor().equals(pg))
                 currentPlayer=pla;
         }
-        pcList=currentPlayer.getPowerupCardList();
-        for(PowerUpCard cp : pcList)
+        if(currentPlayer!=null)
         {
-            if (cp.equals("Granata Venom:BLUE") || cp.equals("Granata Venom:YELLOW") || cp.equals("Granata Venom:RED")) {
-                ret=true;
+            pcList = currentPlayer.getPowerupCardList();
+            for (PowerUpCard cp : pcList) {
+                if (cp.powerToString().equals("Granata Venom:BLUE") || cp.powerToString().equals("Granata Venom:YELLOW") || cp.powerToString().equals("Granata Venom:RED")) {
+                    ret = true;
+                }
             }
         }
         return ret;
@@ -123,6 +125,19 @@ return false;
 
     // END OF AUXILIARY FUNCTIONS
 
+    private void checkForError (Boolean s){
+        if (!s)
+        {
+            // fai saltare turno ma disattiva prossimi turni
+        }
+        
+    }
+    private void checkForAfk(){
+        if(msg instanceof Afk )
+        {
+            // fai saltare turno ma rimani attivo
+        }
+    }
 
     public void startRound() throws InterruptedException, ExecutionException {
         for(Player rp : g1.getAllPlayer() )
@@ -146,13 +161,8 @@ return false;
             }
 
             Boolean s = prova.get();
-            if (!s)
-            {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(s);
+           checkForAfk();
 
 
 
@@ -170,6 +180,7 @@ return false;
 
     }
 
+    
 //Switch function
 
     public void switcher(ColorId player) throws Exception
@@ -228,7 +239,9 @@ return false;
 
             messageNet = msg;
         }
-
+    // at the end of round 
+        getPointAndRespawn();
+        //refill board
 
     }
 
@@ -261,12 +274,9 @@ return false;
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(s);
+
+               checkForAfk();
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -294,9 +304,7 @@ return false;
 
 
             Boolean end = fine.get();
-            if (!end) {
-                // fai saltare turno
-            }
+            checkForError(end);
 
         }
         else
@@ -319,9 +327,8 @@ return false;
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
+            checkForError(s);
+
         }
     }
 
@@ -334,17 +341,18 @@ return false;
         for (ColorId granadeAttacked : filteredPlayer) {
             boolean vuota = false;
             List<String> powerUpList = new LinkedList<>();
-            Player granadeAttackedPlayer =null;
-            for(Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer())
-            {
+            Player granadeAttackedPlayer = null;
+            for (Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer()) {
                 if (p.getColor().equals(granadeAttacked))
-                    granadeAttackedPlayer=p;
+                    granadeAttackedPlayer = p;
             }
-
-            for (PowerUpCard pc : granadeAttackedPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
+            if(granadeAttackedPlayer!= null)
             {
-                if (pc.getName().equals("Granata Venom"))
-                    powerUpList.add(pc.powerToString());
+                for (PowerUpCard pc : granadeAttackedPlayer.getPowerupCardList()) // in questo modo salvo in powerUpList tutti i powerup del player
+                {
+                    if (pc.getName().equals("Granata Venom"))
+                        powerUpList.add(pc.powerToString());
+                }
             }
             if (powerUpList.isEmpty())
                 vuota = true;
@@ -366,12 +374,9 @@ return false;
                 }
 
                 Boolean s = prova.get();
-                if (!s) {
-                    // fai saltare turno
-                }
-                    if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+                checkForError(s);
+
+                   checkForAfk();
 
                 ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -395,9 +400,7 @@ return false;
 
 
                 Boolean end = fine.get();
-                if (!end) {
-                    // fai saltare turno
-                }
+          checkForError(end);
 
             } else {
                 Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
@@ -418,9 +421,7 @@ return false;
                 }
 
                 Boolean s = prova.get();
-                if (!s) {
-                    // fai saltare turno
-                }
+checkForError(s);
             }
         }
     }
@@ -455,12 +456,9 @@ return false;
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(s);
+
+               checkForAfk();
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -485,9 +483,7 @@ return false;
 
 
             Boolean end = fine.get();
-            if (!end) {
-                // fai saltare turno
-            }
+      checkForError(end);
 
         }
         else
@@ -507,9 +503,8 @@ return false;
 
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
+            checkForError(s);
+
         }
     }
 
@@ -533,12 +528,8 @@ return false;
                     }
 
                     Boolean ric = rich.get();
-                    if (!ric) {
-                        // fai saltare turno
-                    }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+                    checkForError(ric);
+                    checkForAfk();
 
         ResponseTeleporter sq = (ResponseTeleporter) msg;
 
@@ -551,8 +542,8 @@ return false;
             }
             i++;
         }
-
-                    tele.usePowerUp(sq.getX(), sq.getY());
+        if(tele != null)
+            tele.usePowerUp(sq.getX(), sq.getY());
 
         }
 
@@ -586,12 +577,8 @@ return false;
         }
 
         Boolean ric = rich.get();
-        if (!ric) {
-            // fai saltare turno
-        }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+        checkForError(ric);
+        checkForAfk();
 
         ResponseNewton sq = (ResponseNewton) msg;
 
@@ -603,6 +590,7 @@ return false;
                 target=p;
         }
         roundPlayer.usePowerUp(index);
+        if(card!=null)
         card.usePowerUp(target,sq.getX(),sq.getY());
 
         //aggiungi a pila scarti
@@ -641,12 +629,8 @@ return false;
         }
 
         Boolean ric = rich.get();
-        if (!ric) {
-            // fai saltare turno
-        }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+        checkForError(ric);
+           checkForAfk();
 
         ResponseTargettingScope sq = (ResponseTargettingScope) msg;
 
@@ -684,18 +668,15 @@ return false;
         }
 
         Boolean ric = rich.get();
-        if (!ric) {
-            // fai saltare turno
-        }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+        checkForError(ric);
+        checkForAfk();
 
         ResponseTagbackGranade response = (ResponseTagbackGranade) msg;
 
-        if(!(response.getTargetBasicMode()==null))
+        if(response.getTargetBasicMode()!=null)
         {
-            cardpower.usePowerUp(roundPlayer);
+            if (cardpower!=null)
+                cardpower.usePowerUp(roundPlayer);
             //aggiungi a pila scarti
 
         }
@@ -740,12 +721,9 @@ return false;
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(s);
+
+               checkForAfk();
 
             ResponsePowerUp risp = (ResponsePowerUp) msg;
 
@@ -792,10 +770,7 @@ return false;
 
 
             Boolean end = fine.get();
-            if (!end) {
-                // fai saltare turno
-            }
-
+            checkForError(end);
         }
         else
         {
@@ -814,9 +789,8 @@ return false;
 
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
+            checkForError(s);
+
         }
     }
 
@@ -831,7 +805,7 @@ return false;
 
 
     PowerUpCard powercard = roundPlayer.usePowerUp(index);
-    Square resp= null;
+    Square resp = null;
 
            if (powercard.getColor().equals(Color.BLUE)) {
                try {
@@ -854,7 +828,8 @@ return false;
          }
 
          roundPlayer.setSquare(resp);
-         MethodsWeapons.moveTarget(roundPlayer,resp.getX(),resp.getY());
+        if(resp!=null)
+             MethodsWeapons.moveTarget(roundPlayer, resp.getX(), resp.getY());
 
 
 
@@ -886,13 +861,8 @@ public void askForRespawn(Player p) throws InterruptedException, ExecutionExcept
     }
 
     Boolean s = prova.get();
-    if (!s)
-    {
-        // fai saltare turno
-    }
-        if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+    checkForError(s);
+    checkForAfk();
 
     ResponseRespawn response = (ResponseRespawn) msg;
     roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
@@ -926,13 +896,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
         }
 
         Boolean s = prova.get();
-        if (!s)
-        {
-            // fai saltare turno
-        }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+        checkForError(s);
+        checkForAfk();
 
         ResponseRunAround response = (ResponseRunAround) msg;
 
@@ -986,12 +951,9 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(s);
+
+               checkForAfk();
 
             ResponseShootPeople response = (ResponseShootPeople) msg;
 
@@ -1017,12 +979,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
             }
 
             Boolean resp = con.get();
-            if (!resp) {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(resp);
+            checkForAfk();
 
             weaponChosen.useWeapon(msg);
 
@@ -1051,9 +1009,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
             }
 
             Boolean s = prova.get();
-            if (!s) {
-                // fai saltare turno
-            }
+            checkForError(s);
+
 
 
         }
@@ -1082,13 +1039,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
         }
 
         Boolean s = prova.get();
-        if (!s)
-        {
-            // fai saltare turno
-        }
-            if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+        checkForError(s);
+           checkForAfk();
 
         ResponseGrabStuff response = (ResponseGrabStuff) msg; // mi ritorna un colore
 
@@ -1142,13 +1094,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
             }
 
             Boolean valid = seconda.get();
-            if (!valid)
-            {
-                // fai saltare turno
-            }
-                if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+            checkForError(valid);
+            checkForAfk();
 
             ResponseShootPeople res = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI
 
@@ -1191,13 +1138,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
                 }
 
                 Boolean corretta = terza.get();
-                if (!corretta)
-                {
-                    // fai saltare turno
-                }
-                    if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+                checkForError(corretta);
+                   checkForAfk();
 
                 ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
 
@@ -1242,12 +1184,8 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
                 }
 
                 Boolean s = prova.get();
-                if (!s) {
-                    // fai saltare turno
-                }
-    if(msg instanceof Afk ) {
-        // fai saltare turno
-    }
+checkForError(s);
+   checkForAfk();
 
                 ResponseReloadWeapon response = (ResponseReloadWeapon) msg;
 
@@ -1273,9 +1211,7 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
         });
 
         Boolean end = fine.get();
-        if (!end) {
-            // fai saltare turno
-        }
+checkForError(end);
 
     }
 
@@ -1383,13 +1319,25 @@ public void askForFirstSpawn() throws InterruptedException, ExecutionException {
 
     }
 
-public void getPointAndRespawn() throws ExecutionException, InterruptedException {
-      
+    /**
+     * this method will set the point of all player when another player is death
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public void getPointAndRespawn() throws ExecutionException, InterruptedException {
+    Map<ColorId,Integer> temppoint;
       //chiedi come fare calcolo punteggi
         for(Player p : g1.getAllPlayer())
         {
-            if(p.isDead())
+            if(p.isDead()) 
+            {
+                temppoint = p.calculateScoreForEachPlayer();
+                for(Player c : g1.getAllPlayer())
+                {
+                    c.setScore(temppoint.get(c.getColor()));
+                }
                 askForRespawn(p);
+            }
         }
         
         
