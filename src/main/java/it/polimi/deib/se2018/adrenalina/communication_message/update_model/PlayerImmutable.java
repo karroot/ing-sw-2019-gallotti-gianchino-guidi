@@ -41,9 +41,9 @@ public class PlayerImmutable implements Serializable
 
     private int score; //Score of the player
 
-    private List<String> powerupCardList; //Array of the powerUps
+    private List<PowerUpCardImmutable> powerupCardList; //Array of the powerUps
 
-    private List<String> weaponCardList; //Array of weapons
+    private List<WeaponCardImmutable> weaponCardList; //Array of weapons
 
     public PlayerImmutable(Player player)
     {
@@ -59,9 +59,9 @@ public class PlayerImmutable implements Serializable
         this.deathsCounter = player.getDeathsCounter();
         this.score = player.getScore();
         this.powerupCardList = player.getPowerupCardList()
-                .stream().map(PowerUpCard::powerToString).collect(Collectors.toList());
+                .stream().map(PowerUpCard::getCopyImm).collect(Collectors.toList());
         this.weaponCardList = player.getWeaponCardList()
-                .stream().map(WeaponCard::getName).collect(Collectors.toList());
+                .stream().map(WeaponCard::getCopyImm).collect(Collectors.toList());
 
         if (player.getSquare() == null) //If the player ins't square
         {
@@ -119,11 +119,11 @@ public class PlayerImmutable implements Serializable
         return score;
     }
 
-    public List<String> getPowerupCardList() {
+    public List<PowerUpCardImmutable> getPowerupCardList() {
         return powerupCardList;
     }
 
-    public List<String> getWeaponCardList() {
+    public List<WeaponCardImmutable> getWeaponCardList() {
         return weaponCardList;
     }
 

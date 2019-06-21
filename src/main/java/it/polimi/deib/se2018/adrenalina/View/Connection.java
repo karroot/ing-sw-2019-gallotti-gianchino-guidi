@@ -18,6 +18,7 @@ public abstract class Connection implements Runnable
     protected ColorId player;
 
     protected String name;
+    protected String action_hero_comment;
 
     protected boolean active = true;
 
@@ -31,7 +32,15 @@ public abstract class Connection implements Runnable
     public abstract boolean pingPongTest();
 
     /**
-     * Say which the name of player associated at this connection
+     * Say the action hero comment of player associated at this connection
+     * @return string that represent the action hero comment
+     */
+    public String getAction_hero_comment() {
+        return action_hero_comment;
+    }
+
+    /**
+     * Say the name of player associated at this connection
      * @return name of the player
      */
     public String getName()
@@ -48,6 +57,13 @@ public abstract class Connection implements Runnable
         return player;
     }
 
+    /**
+     * This method set the color of player associated at this connection
+     * @param player color to set
+     */
+    public void setPlayer(ColorId player) {
+        this.player = player;
+    }
 
     /**
      * Say if the connection is active or not
@@ -73,6 +89,9 @@ public abstract class Connection implements Runnable
         }
         catch (Exception e) //If there are problems
         {
+            action_hero_comment = "";
+            name = "";
+
             System.out.println(e.getMessage());//Player isn't active
             active = false;
             view.checkState();

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BoardImmutable implements Serializable
 {
+    private int originalSkullCouner;
     private int skullCounter;
     private int code;
     private List<Track> killShotTrack;
@@ -20,6 +21,7 @@ public class BoardImmutable implements Serializable
         this.skullCounter = board.getSkullCounter();
         this.code = board.getCode();
         this.killShotTrack = board.getKillShotTrack();
+        this.originalSkullCouner = board.getOriginalSkullCounter();
     }
 
     public int getSkullCounter() {
@@ -32,5 +34,9 @@ public class BoardImmutable implements Serializable
 
     public List<Track> getKillShotTrack() {
         return new ArrayList<>(killShotTrack);
+    }
+
+    public int getOriginalSkullCouner() {
+        return originalSkullCouner;
     }
 }

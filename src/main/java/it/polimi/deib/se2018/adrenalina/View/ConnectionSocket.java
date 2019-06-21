@@ -37,15 +37,17 @@ public class ConnectionSocket extends Connection implements Runnable
 
     }
 
+
+
     //Ask at client the name and the color of the user that will use during the match and save them
     @Override
     protected void askCredentials() throws Exception
     {
-        out.writeObject(new AskCredentials());//Send the request
+        out.writeObject(new AskCredentials(player));//Send the request
         ResponseCredentials credentials = (ResponseCredentials) in.readObject();//Receive the response
 
         name = credentials.getName();//Save the information
-        player = credentials.getColor();
+        action_hero_comment = credentials.getAction_hero_comment();
     }
 
     /**

@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PlayerImmutable;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PowerUpCardImmutable;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.BufferedReader;
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class CLI implements Terminal
 {
-    ColorId playerOfThisCli;
-    UpdateModel data;
+    private ColorId playerOfThisCli;
+    private UpdateModel data;
 
     /**
      * Create a CLI for a player
@@ -53,24 +54,27 @@ public class CLI implements Terminal
         {
             case 1:
                 showBoard1();
+                break;
             case 2:
                 showBoard2();
+                break;
             case 3:
                 showBoard3();
+                break;
             case 4:
                 showBoard4();
         }
 
         //Print the weapons in spawnPoints
-        System.out.println("Weapons in Blue Points:");
+        System.out.println("Armi nello Shop BLU:");
 
         System.out.println(blueWeapons);
 
-        System.out.println("Weapons in Red Points:");
+        System.out.println("Armi nello Shop ROSSO:");
 
         System.out.println(redWeapons);
 
-        System.out.println("Weapons in Yellow Points:");
+        System.out.println("Armi nello Shop GIALLO:");
 
         System.out.println(yellowWeapons);
 
@@ -81,10 +85,9 @@ public class CLI implements Terminal
 
         for (PlayerImmutable t:data.getDataOfAllPlayer())
         {
-            if (t.equals(playerOfThisCli))
+            if (t.getColor().equals(playerOfThisCli))
                 System.out.println("LA TUA PLANCIA:");
 
-            //todo stampare le cordinate di dove si trova il player
 
             showPlayerBoard(t);
 
@@ -105,8 +108,19 @@ public class CLI implements Terminal
      * Change the copy of the model updated
      * @param data new copy of the model
      */
-    public void setData(UpdateModel data) {
+    public void setData(UpdateModel data)
+    {
         this.data = data;
+    }
+
+    /**
+     * Set the color of the player of this CLI
+     * @param color color of the player
+     */
+    @Override
+    public void setColorOfPlayer(ColorId color)
+    {
+        playerOfThisCli = color;
     }
 
     /**
@@ -256,7 +270,10 @@ public class CLI implements Terminal
                 .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
                 .map(PlayerImmutable::getPowerupCardList)
                 .collect(Collectors.toList())
-                .get(0); //Obtain all powerUp of the player
+                .get(0)
+                .stream()
+                .map(PowerUpCardImmutable::powerToString)
+                .collect(Collectors.toList()); //Obtain all powerUp of the player
 
         boolean thereAreTeleOrNew = false;
 
@@ -295,7 +312,10 @@ public class CLI implements Terminal
                 .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
                 .map(PlayerImmutable::getPowerupCardList)
                 .collect(Collectors.toList())
-                .get(0); //Obtain the list of all PowerUP
+                .get(0)
+                .stream()
+                .map(PowerUpCardImmutable::powerToString)
+                .collect(Collectors.toList()); //Obtain the list of all PowerUP
 
         int i = 1;
 
@@ -328,7 +348,10 @@ public class CLI implements Terminal
                 .filter(playerImmutable -> playerImmutable.getColor().equals(playerOfThisCli))
                 .map(PlayerImmutable::getPowerupCardList)
                 .collect(Collectors.toList())
-                .get(0);
+                .get(0)
+                .stream()
+                .map(PowerUpCardImmutable::powerToString)
+                .collect(Collectors.toList()); //Obtain the list of all PowerUP
 
         if (allPowerUps.isEmpty())
             return 0;
@@ -377,9 +400,62 @@ public class CLI implements Terminal
         return false;
     }
 
+    /**
+     * Show at the user on the cli a possible choice for a request of input
+     * @param text text to print
+     */
+    @Override
+    public void addOptionInput(String text)
+    {
+        System.out.println(text);
+    }
+
+    /**
+     * Show at the user on the cli the description for a request of input
+     * @param text text to print
+     */
+    @Override
+    public void addTextInput(String text)
+    {
+        System.out.println(text);
+    }
+
+    /**
+     * Methods that ask at the user an int contained in acceptedInt and returns the integer chosen by user
+     * @param acceptedInt list of all integer accepted
+     * @return integer chosen by user
+     */
+    @Override
+    public int inputInt(List<Integer> acceptedInt)
+    {
+        boolean done = false;
+        int choice = 0;
+
+        while (!done)//While the user doesn't insert a integer valid you continue to ask a integer
+        {
+            try
+            {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                choice = Integer.parseInt(reader.readLine());//Read an input
+
+                if (!acceptedInt.contains(choice))//If int inserted from user isn't in the list of accepted integer
+                    throw new IOException();//Launch exception
+
+                done = true;//If there aren't exception use: the integer is valid
+            }
+            catch (IOException|NumberFormatException e)//If there are problem
+            {
+                System.out.println("Input non valido");//Print that the input is not valid
+            }
+
+        }
+
+        return  choice;
+    }
+
     //############ Private Methods #############
 
-    //Methods that to print the ARENAS
+    //Methods that needing to print the ARENAS
     private void showBoard1()
     {
         System.out.println(" y                                                 ");

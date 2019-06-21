@@ -7,19 +7,20 @@ import java.io.Serializable;
 
 public class ResponseCredentials extends ResponseInput implements Serializable
 {
-    private ColorId color;
     private String name;
+    private String action_hero_comment;
 
-    public ResponseCredentials(ColorId color, String name) {
-        this.color = color;
+    public ResponseCredentials(String name, String action_hero_comment)
+    {
         this.name = name;
-    }
-
-    public ColorId getColor() {
-        return color;
+        this.action_hero_comment = action_hero_comment;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getAction_hero_comment() {
+        return action_hero_comment;
     }
 }

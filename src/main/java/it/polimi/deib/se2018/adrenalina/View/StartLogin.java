@@ -1,6 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+
 /**
  * @author Cysko7927
  */
@@ -8,12 +10,22 @@ public class StartLogin implements StateVirtualView
 {
     View view;
 
+    ColorId[] allColors;
+
     /**
      * Create the object that will contain the method to insert the connections that will use by virtual view,after it was created
      * @param view reference to virtual view
      */
     public StartLogin(View view)
     {
+        allColors = new ColorId[5];
+
+        allColors[0] = ColorId.BLUE;
+        allColors[1] = ColorId.YELLOW;
+        allColors[2] = ColorId.GREY;
+        allColors[3] = ColorId.GREEN;
+        allColors[4] = ColorId.PURPLE;
+
         this.view = view;
     }
 
@@ -32,8 +44,11 @@ public class StartLogin implements StateVirtualView
         }
 
 
+
         if (view.getTimer().isAlive()) //If the timer is on
             view.getTimer().interrupt();//Interrupt it
+
+        connection.setPlayer(allColors[view.getConnections().size()-1]); //Set the color of the player
 
         view.getConnections().add(connection);//Add the connection to the list
         view.getExecutor().submit(new Thread(connection));//Run a thread to get the credentials of the player

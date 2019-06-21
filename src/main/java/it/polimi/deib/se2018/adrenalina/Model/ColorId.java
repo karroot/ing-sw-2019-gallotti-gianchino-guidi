@@ -9,6 +9,7 @@ public enum ColorId
     DUMMIE, //color used by dummie
     BLUE,
     GREEN,
-    PURPLE
+    PURPLE,
+    TERMINATOR
 
 }

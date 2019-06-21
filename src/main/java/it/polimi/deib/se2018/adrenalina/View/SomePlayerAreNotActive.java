@@ -2,6 +2,8 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Cysko7927
  */
@@ -27,20 +29,36 @@ public class SomePlayerAreNotActive implements StateVirtualView
     {
         view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials
 
-        ColorId color = connection.getPlayer(); //Get the credentials
+        while (true) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
+        {
+            try
+            {
+                if (!!view.getExecutor().awaitTermination(100, TimeUnit.MILLISECONDS)) break;
+            }
+            catch (InterruptedException e)
+            {
+                connection.closeConnection(); //Refuse the connection
+                return;
+            }
+
+        }
+
+        //Get the credentials
         String name = connection.getName();
+        String action = connection.getAction_hero_comment();
 
         Connection oldConnectionSocket = null;
 
         for (Connection t : view.getConnections())//Get the old Connection
         {
-            if (t.getPlayer().equals(color) && t.getName().equals(name))
+            if (t.getName().equals(name) && t.getAction_hero_comment().equals(action))
                 oldConnectionSocket = t;
         }
 
         if (oldConnectionSocket != null)//If the player was connected before
         {
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
+            connection.setPlayer(oldConnectionSocket.getPlayer()); //Add the color of the player
             view.getConnections().add(connection);//Add the new connection to the list
         }
         else

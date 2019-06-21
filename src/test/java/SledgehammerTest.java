@@ -69,7 +69,7 @@ public class SledgehammerTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
-    /*
+
     @Test
     public void checkTargetForModes()
     {
@@ -89,15 +89,15 @@ public class SledgehammerTest {
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        List<Player> effOut = new ArrayList<>();
-        effOut.add(pBlue);
-        effOut.add(pGreen);
+        List<ColorId> effOut = new ArrayList<>();
+        effOut.add(pBlue.getColor());
+        effOut.add(pGreen.getColor());
 
         List<ColorId> targets = weap.checkTargetForModes();
 
         assertTrue(targets.containsAll(effOut) && targets.size()==effOut.size());
     }
-*/
+
     @Test
     public void basicMode()
     {

@@ -37,6 +37,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     private ExecutorService executor = Executors.newFixedThreadPool(10);
     private List<Connection> connections = new ArrayList<>();
     protected  boolean creationIsFinished;
+    protected boolean gameIsStarted;
     private StateVirtualView state;
     private UpdateModel lastModelUpdated; //This variable saves the last version of the model updated
     private Controller controller;
@@ -53,6 +54,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     {
         this.PORT = PORT;
         this.lenghtTimer = timer;
+        gameIsStarted = false;
         creationIsFinished = false;
         state = new StartLogin(this);
         //Create the controller (ToDO)
@@ -141,6 +143,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         catch (IOException e)
         {
             System.out.println("Errore nella creazione dell' Accettatore di ConnectionSocket");
+            System.out.println("Non sarà possibile connetersi");
         }
 
         try
@@ -150,6 +153,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         catch (Exception e)
         {
             System.out.println("Errore  nella creazione dell' Accettatore di ConnectionRMI");
+            System.out.println("Non sarà possibile per i client usare RMI per connetersi");
         }
 
     }
@@ -246,6 +250,12 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
                                         .filter(connection -> !connection.isActive())
                                         .collect(Collectors.toList()).isEmpty();
 
+        if (creationIsFinished && !gameIsStarted)
+        {
+            //Si deve chiamare il metodo dal controller che avvia la logica della partita todo
+        }
+
+
         if (creationIsFinished && AllPlayerAreActive)
             state = new AllPlayerAreActive(this);
         else if (creationIsFinished)
@@ -311,7 +321,7 @@ class AcceptorRMI implements Runnable
             try {
                 Socket newSocket = serverSocket.accept();
                 ObjectInputStream stream = new ObjectInputStream(newSocket.getInputStream());
-                int portNumber = Integer.parseInt((String) stream.readObject()); //The client send a string that contain the number of port of the ServerRMI
+                int portNumber = newSocket.getPort(); //Obtain the number of port of the ServerRMI
 
                 String lookupName = "//" + newSocket.getInetAddress() + ":" + portNumber + "//networkH";
                 InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup(lookupName);

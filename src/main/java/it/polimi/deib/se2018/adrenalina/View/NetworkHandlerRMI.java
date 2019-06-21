@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesy;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         @Override
         public void run()
         {
-            view.requestToUseGranade();
+            view.requestToUseGrenade();
         }
     };
     Thread logicGrenade;
@@ -59,6 +60,15 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     };
     Thread logicRespawn;
 
+    Runnable codeOfLogicFrenesy = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startFrenesy();
+        }
+    };
+    Thread logicFrenesy;
 
     /**
      * Create a network handler tha handle the communication between the client and server
@@ -75,6 +85,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         logicRound = new Thread(codeOfLogicRound);
         logicGrenade = new Thread(codeOfLogicGrenade);
         logicRespawn = new Thread(codeOfLogicRespawn);
+        logicFrenesy = new Thread(codeOfLogicFrenesy);
 
         // Start RMI registry
         LocateRegistry.createRegistry(registryPortNumber);
@@ -86,8 +97,25 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
         register(view);
 
-        view.showError("Server RMI non funzionante");
-        //todo bisogna richiedere le informazioni sul server
+        //todo bisogna richiedere le informazioni sul server(colore)
+    }
+
+    /**
+     * This method can be used by view to reactive RMI after a disconnection
+     * @param ip IPV4 address of Server
+     * @param port Port TCP of the serve
+     * @throws IOException if there are problems with the connection
+     */
+    public void startConnection(String ip, int port) throws IOException
+    {
+        // Start RMI registry
+        LocateRegistry.createRegistry(registryPortNumber);
+        //binding
+        Naming.rebind("networkH",this);
+
+        Socket  socket = new Socket(ip,port);
+        socket.close();
+
     }
 
     /**
@@ -110,7 +138,10 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
                 catch (InterruptedException e)
                 {
 
+                    view.showError("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
+                    view.showError("Sei stato disconesso");
                     Thread.currentThread().interrupt();//If the the player is FK
+                    //todo invocare metodo askReconnection sulla view
                     //A message of timeout arrives at the server and the controller suspends the player //todo
                 }
             }
@@ -155,6 +186,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         }
         else if(message instanceof AskCredentials)//If the message is a request of credentials
         {
+            view.setColorId(((AskCredentials) msg).getColorId()); //Set the color of the player
             ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user
             update(credentials);//Save the credentials
             return;
@@ -167,6 +199,11 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         else if (message instanceof RequestToRespawn)//If the message is a request of respawn
         {
             logicRespawn.start(); //Start the thread that handles the respawn
+            return;
+        }
+        else if (message instanceof StartFrenesy)
+        {
+            logicFrenesy.start();
             return;
         }
 
@@ -200,7 +237,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         synchronized (msg)
         {
             messageToSend = message;
-            messageToSend.notifyAll();
+            msg.notifyAll();
         }
     }
 
@@ -208,8 +245,8 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     //This method takes the credentials from view and return the message Response with all credential
     private ResponseCredentials getCredentials()
     {
-        return null;
-    } //todo implementare il metodo
+        return new ResponseCredentials(view.getName(),view.getAction_hero_comment());
+    }
 
     //This class is observable for the message of RequestInput by VirtualView
 

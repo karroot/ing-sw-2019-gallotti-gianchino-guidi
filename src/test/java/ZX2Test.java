@@ -68,11 +68,11 @@ public class ZX2Test
         assertTrue(zx2.checkAvailableMode()[0] && zx2.checkAvailableMode()[1]);
     }
 
-    /*
+
     @Test
     public void checkBasicMode()
     {
-        List<Player> effOut = new ArrayList<>();
+        List<ColorId> effOut = new ArrayList<>();
         p5.addWeapon(zx2);
         zx2.setPlayer(p5);
 
@@ -89,14 +89,14 @@ public class ZX2Test
         p1.addWeapon(zx2);
         zx2.setPlayer(p1);
 
-        effOut.add(p4);
-        effOut.add(p5);
+        effOut.add(p4.getColor());
+        effOut.add(p5.getColor());
 
 
         assertTrue(effOut.containsAll(zx2.checkBasicMode()) & effOut.size()==zx2.checkBasicMode().size());
 
     }
-*/
+
     @Test
     public void basicMode()
     {
@@ -119,11 +119,11 @@ public class ZX2Test
         assertEquals(2,p4.checkMarker(p1.getColor()));
     }
 
-    /*
+
     @Test
     public void checkInScannerMode()
     {
-        List<Player> effOut = new LinkedList<>();
+        List<ColorId> effOut = new LinkedList<>();
 
         p1.addWeapon(zx2);
         zx2.setPlayer(p1);
@@ -139,26 +139,27 @@ public class ZX2Test
         }
 
         MethodsWeapons.moveTarget(p2,3,1);
-        effOut.add(p2);
-        effOut.add(p4);
-        effOut.add(p5);
+        effOut.add(p2.getColor());
+        effOut.add(p4.getColor());
+        effOut.add(p5.getColor());
 
         List<ColorId> players = zx2.checkInScannerMode();
 
         assertTrue(effOut.containsAll(players) & effOut.size()==players.size());
     }
-    */
-/*
+
+
+
     @Test
     public void inScannerMode()
     {
         MethodsWeapons.moveTarget(p2,3,1);
 
-        List<Player> players = new LinkedList<>();
+        List<ColorId> players;
 
         try
         {
-            zx2.inScannerMode(players);
+            zx2.inScannerMode(new ArrayList<>());
             fail();
         }
         catch (IllegalStateException e)
@@ -171,13 +172,14 @@ public class ZX2Test
 
         players = zx2.checkInScannerMode();
 
-        zx2.useWeapon(new ResponseZX2(players.stream().map(Player::getColor).collect(Collectors.toList())));
+        zx2.useWeapon(new ResponseZX2(players));
 
-        for (Player t:players)
+        for (Player t:board.getAllPlayer())
         {
-            assertEquals(1,t.checkMarker(p1.getColor()));
+            if (players.contains(t.getColor()))
+                assertEquals(1,t.checkMarker(p1.getColor()));
         }
     }
 
-    */
+
 }

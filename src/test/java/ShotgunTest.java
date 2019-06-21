@@ -68,7 +68,7 @@ public class ShotgunTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
-    /*
+
     @Test
     public void checkBasicMode()
     {
@@ -88,9 +88,9 @@ public class ShotgunTest {
         pYellow.addWeapon(weap);
         weap.setPlayer(pYellow);
 
-        List<Player> effOut = new LinkedList<>();
+        List<ColorId> effOut = new LinkedList<>();
 
-        effOut.add(pPurple);
+        effOut.add(pPurple.getColor());
 
 
         List<ColorId> targets = weap.checkBasicMode();
@@ -98,8 +98,8 @@ public class ShotgunTest {
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
 
     }
-*/
-    /*
+
+
     @Test
     public void checkMoveBasicMode() throws Exception
     {
@@ -130,7 +130,7 @@ public class ShotgunTest {
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
-*/
+
     @Test
     public void basicMode() throws Exception
     {
@@ -165,7 +165,7 @@ public class ShotgunTest {
         assertEquals(board.getArena().getSquare(4,3),pPurple.getSquare());
     }
 
-    /*
+
     @Test
     public void checkInLongBarrelMode() throws Exception
     {
@@ -185,17 +185,17 @@ public class ShotgunTest {
         pGrey.addWeapon(weap);
         weap.setPlayer(pGrey);
 
-        List<Player> effOut = new LinkedList<>();
+        List<ColorId> effOut = new LinkedList<>();
 
-        effOut.add(pYellow);
-        effOut.add(pPurple);
+        effOut.add(pYellow.getColor());
+        effOut.add(pPurple.getColor());
 
         List<ColorId> targets = weap.checkInLongBarrelMode();
 
 
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
-*/
+
     @Test
     public void inLongBarrelMode() throws Exception
     {

@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PowerUpCardImmutable;
 
 
 public abstract class PowerUpCard extends Card
@@ -59,6 +60,11 @@ public abstract class PowerUpCard extends Card
     public String powerToString()
     {
         return name+ ":" + color;
+    }
+
+    public PowerUpCardImmutable getCopyImm()
+    {
+        return new PowerUpCardImmutable(this);
     }
 
 

@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
@@ -8,21 +9,22 @@ public class ConnectionRMI extends Connection implements Runnable
 
     InterfaceNetworkHandlerRMI client;
 
-    public ConnectionRMI(View view,InterfaceNetworkHandlerRMI client)
+    public ConnectionRMI(View view, InterfaceNetworkHandlerRMI client)
     {
         this.view = view;
         this.client = client;
+        active = true;
     }
 
-    //Ask at client the name and the color of the user that will use during the match and save them
+    //Ask at client the name and send the color of the user that will use during the match and saves the name
     @Override
     protected void askCredentials() throws Exception
     {
-        client.receiveMessageRequest(new AskCredentials());//Send the request
+        client.receiveMessageRequest(new AskCredentials(player));//Send the request
         ResponseCredentials credentials = (ResponseCredentials) client.getResponseMessage();//Receive the response
 
         name = credentials.getName();//Save the information
-        player = credentials.getColor();
+        action_hero_comment = credentials.getAction_hero_comment();
     }
 
 

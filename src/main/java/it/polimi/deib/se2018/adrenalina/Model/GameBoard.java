@@ -27,6 +27,8 @@ public class GameBoard {
 
     private Graph arena;
 
+    private int originalSkullCounter;
+
     private int skullCounter;
 
     private List<Track> killShotTrack;
@@ -47,6 +49,7 @@ public class GameBoard {
         this.arena = FactoryArena.getArena(codeArena,this);
         this.roomList = FactoryArena.getRooms(this);
         this.skullCounter=skullCounter;
+        originalSkullCounter = skullCounter;
         this.ammoTilesStack=ammoTilesStack;
         this.killShotTrack= new LinkedList<>();
         this.allPlayerList = new ArrayList<>();
@@ -71,6 +74,10 @@ public class GameBoard {
     public  Graph getArena()
     {
         return arena;
+    }
+
+    public int getOriginalSkullCounter() {
+        return originalSkullCounter;
     }
 
     public List<Player> getAllPlayer()

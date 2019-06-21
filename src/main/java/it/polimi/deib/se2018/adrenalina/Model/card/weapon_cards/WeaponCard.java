@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.WeaponCardImmutable;
 
 /**
  * This class implements a weapon.
@@ -49,6 +50,10 @@ public abstract class WeaponCard extends Card
         return color;
     }
 
+    public int getWeaponID() {
+        return weaponID;
+    }
+
     public int getRedAmmoCost()
     {
         return redAmmoCost;
@@ -83,6 +88,13 @@ public abstract class WeaponCard extends Card
     {
         this.name = name;
     }
+
+
+    public WeaponCardImmutable getCopyImm()
+    {
+        return new WeaponCardImmutable(this);
+    }
+
 
     /**
      * This method takes a response message specified for a weapon and it reads the inputs and after

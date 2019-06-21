@@ -414,7 +414,6 @@ public class Player
             PowerUpCard temp = powerupCardList.get(indexDeckCard); //get power up using the index
 
             powerupCardList.remove(indexDeckCard); //Remove power up card
-            temp.setPlayer(null);
             return temp; //Return power up card
         }
         else//If index can't be used because the size of list is smaller
@@ -531,7 +530,7 @@ public class Player
 
     /**
      * if damage of this player is 11 or 12 returns a hash map with key color of player and value the score that he obtained doing damage
-     * to this player and it free player's board
+     * to this player and it frees player's board
      * It consider also the first blood but not the mark of revenge and the double kills
      * Else it launch exceptions if No Possible calculate Score
      * Requires : the number of player must be max 5 like written in the instruction set

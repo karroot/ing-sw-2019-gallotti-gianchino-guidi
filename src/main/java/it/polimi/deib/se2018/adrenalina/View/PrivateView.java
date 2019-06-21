@@ -1,18 +1,25 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Reload;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
+import it.polimi.deib.se2018.adrenalina.View.GUI.GUI;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.SquareImmutable;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.stream.Collectors;
 
 public class PrivateView extends Observable<ResponseInput> implements Observer<RequestInput>
 {
+
+    String name;
+    String action_hero_comment;
+    ColorId colorId;
 
     Terminal terminal;
     private boolean firstTurn;
@@ -24,27 +31,17 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
     /**
      * it Creates The private view and depending on the user's choices creates a network handler(RMI or Socket)
-     * @param technoloy it represents the choice of the user (RMI or Socket)
+     * @param technology it represents the choice of the user (RMI or Socket)
      * @param ip ip address of the server
      * @param port port tcp of the server
      * @param gui it represent if the user chooses the gui or not
      * @throws Exception if there are problem with the network handler
      */
-    public PrivateView(int technoloy,String ip,int port,boolean gui) throws Exception
-    {
-        if (technoloy == 1)
-        {
-            networkHandlerRMI = new NetworkHandlerRMI(this,ip,port);
-            register(networkHandlerRMI);
-        }
-        else
-        {
-            networkHandlerSocket = new NetworkHandlerSocket(ip,port,this);
+    public PrivateView(int technology,String ip,int port,boolean gui,String name,String action_hero_comment) throws IOException {
 
-            register(networkHandlerSocket);
-        }
+        this.name = name;
+        this.action_hero_comment = action_hero_comment;
 
-        //todo creazione  del terminale GUI o CLI
 
         if (!gui)
         {
@@ -52,12 +49,63 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         }
         else
         {
-
+            terminal = new GUI();
         }
+
+
+        if (technology == 1)
+        {
+
+            try
+            {
+                networkHandlerRMI = new NetworkHandlerRMI(this,ip,port);
+            }
+            catch (IOException e)//If there were problems with the RMI
+            {
+                showError("Server RMI non funzionante");
+                throw new IOException();
+            }
+                register(networkHandlerRMI);
+        }
+        else
+        {
+            try
+            {
+                networkHandlerSocket = new NetworkHandlerSocket(ip,port,this);
+            }
+            catch (IOException e) //If there were problems with the Socket
+            {
+                showError("Server non raggiungibile controllare le informazioni inserite");
+                throw new IOException();
+            }
+
+            register(networkHandlerSocket);
+        }
+
 
     }
 
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getAction_hero_comment()
+    {
+        return action_hero_comment;
+    }
+
+    public ColorId getColorId() {
+        return colorId;
+    }
+
+
+    public void setColorId(ColorId colorId)
+    {
+        this.colorId = colorId;
+        terminal.setColorOfPlayer(colorId);
+    }
 
     public void showMenu()
     {
@@ -190,7 +238,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     /**
      *
      */
-    public void requestToUseGranade() //todo completarlo insieme a gabriele
+    public void requestToUseGrenade() //todo completarlo insieme a gabriele
     {
 
     }

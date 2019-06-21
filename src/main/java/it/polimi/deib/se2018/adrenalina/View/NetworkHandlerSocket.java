@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesy;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 
@@ -45,20 +46,30 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         @Override
         public void run()
         {
-            view.requestToUseGranade();
+            view.requestToUseGrenade();
         }
     };
     Thread logicGrenade;
 
     Runnable codeOfLogicRespawn = new Runnable()
+{
+    @Override
+    public void run()
+    {
+        view.startRespawn();
+    }
+};
+    Thread logicRespawn;
+
+    Runnable codeOfLogicFrenesy = new Runnable()
     {
         @Override
         public void run()
         {
-            view.startRespawn();
+            view.startFrenesy();
         }
     };
-    Thread logicRespawn;
+    Thread logicFrenesy;
 
     /**
      * Create a network Handler that handles the connection between the client and the server
@@ -71,6 +82,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         logicRound = new Thread(codeOfLogicRound);
         logicGrenade = new Thread(codeOfLogicGrenade);
         logicRespawn = new Thread(codeOfLogicRespawn);
+        logicFrenesy = new Thread(codeOfLogicFrenesy);
 
         clientSocket = new Socket(ip, port);
         out = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -81,18 +93,26 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
 
         startConnection(ip, port);
 
-        view.showError("Server non raggiungibile controllare le informazioni inserite");
-        //todo bisogna richiedere le informazioni sul server
+        //todo bisogna richiedere le informazioni sul server(colore)
     }
 
     /**
      * This method create a connection TCP between the client and the server with IP address = ip and port = port
      * This method creates also a thread that executes in loop the method "receiveMessageNet" until the connection is active
+     * This method can be called by view to reactive the socket after a disconnection
      * @param ip Ip address of the server
      * @param port port tcp of the process running on server
      */
-    public void startConnection(String ip, int port)
+    public void startConnection(String ip, int port) throws IOException
     {
+
+        if (!clientSocket.isConnected())
+        {
+            clientSocket = new Socket(ip, port);
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
+        }
+
         Runnable codeOfTheThread = new Runnable()
         {
             @Override
@@ -107,7 +127,9 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
                 }
                 catch (Exception e)
                 {
-                    System.out.println("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
+                    view.showError("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
+                    view.showError("Sei stato disconesso");
+                    //todo invocare metodo askReconnection sulla view
                 }
 
 
@@ -178,7 +200,9 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         }
         else if(msg instanceof AskCredentials)//If the message is a request of credentials
         {
-            ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user
+
+            view.setColorId(((AskCredentials) msg).getColorId()); //Set the color of the player
+            ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user(name)
             sendMessageNet(credentials);
             return;
         }
@@ -190,6 +214,11 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         else if (msg instanceof RequestToRespawn)//If the message is a request of respawn
         {
             logicRespawn.start(); //Start the thread that handles the respawn
+            return;
+        }
+        else if (msg instanceof StartFrenesy)
+        {
+            logicFrenesy.start();
             return;
         }
 
@@ -220,8 +249,8 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
 
 
     //This method takes the credentials from view and return the message Response with all credential
-    private ResponseCredentials getCredentials()//Todo
+    private ResponseCredentials getCredentials()
     {
-        return null;
+        return new ResponseCredentials(view.getName(),view.getAction_hero_comment());
     }
 }

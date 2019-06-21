@@ -52,6 +52,60 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
+    /**
+     * This method say how many players are connected
+     * Hint: using when the phase of login is completed
+     * @return number of player connected
+     */
+    public int NumberOfPlayer()
+    {
+        return virtualView.getConnections().size();
+    }
+
+    /**
+     * This method returns the hero comment of player represented by an index
+     * Hint: using when the phase of login is completed
+     * @param index represents the number of the player which you want the hero comment
+     * @return the hero comment of the player represented by the index passed
+     * @throws IndexOutOfBoundsException if index is wrong
+     */
+    public String getHeroComment(int index) throws IndexOutOfBoundsException
+    {
+        if (virtualView.getConnections().size()< index || index <= 0)
+            throw new IndexOutOfBoundsException();
+
+        return virtualView.getConnections().get(index -1).getAction_hero_comment();
+    }
+
+    /**
+     * This method returns the name of the player represented by an index
+     * Hint: using when the phase of login is completed
+     * @param index represents the number of the player which you want the name that he inserted on client
+     * @return the name of the player represented by the index passed
+     * @throws IndexOutOfBoundsException if index is wrong
+     */
+    public String getName(int index) throws IndexOutOfBoundsException
+    {
+        if (virtualView.getConnections().size()< index || index <= 0)
+            throw new IndexOutOfBoundsException();
+
+        return virtualView.getConnections().get(index -1).getName();
+    }
+
+    /**
+     * This method returns the colorId of player represented by an index
+     * Hint: using when the phase of login is completed
+     * @param index represents the number of the player which you want the colorId
+     * @return colorId of the player represented by the index passed
+     * @throws IndexOutOfBoundsException if index is wrong
+     */
+    public ColorId getColorOfPlayer(int index) throws IndexOutOfBoundsException
+    {
+        if (virtualView.getConnections().size()< index || index <= 0)
+            throw new IndexOutOfBoundsException();
+
+        return virtualView.getConnections().get(index -1).getPlayer();
+    }
 
     // AUXILIARY FUNCTIONS
 
@@ -130,7 +184,7 @@ return false;
         {
             // fai saltare turno ma disattiva prossimi turni
         }
-        
+
     }
     private void checkForAfk(){
         if(msg instanceof Afk )
@@ -139,7 +193,8 @@ return false;
         }
     }
 
-    public void startRound() throws InterruptedException, ExecutionException {
+    public void startRound() throws InterruptedException, ExecutionException
+    {
         for(Player rp : g1.getAllPlayer() )
         {
             Future<Boolean> prova = executor.submit(new Callable<Boolean>()
@@ -162,7 +217,7 @@ return false;
 
             Boolean s = prova.get();
             checkForError(s);
-           checkForAfk();
+            checkForAfk();
 
 
 
@@ -170,9 +225,11 @@ return false;
 
             // fai scegliere square respawn in base a carta powerup scelta
 
-            try {
+            try
+            {
                 switcher(rp.getColor());
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
 
@@ -180,12 +237,13 @@ return false;
 
     }
 
-    
+
 //Switch function
 
     public void switcher(ColorId player) throws Exception
     {
-        for(Player p : g1.getAllPlayer()){
+        for(Player p : g1.getAllPlayer())
+        {
 
             if (p.getColor().equals(player))
                 roundPlayer=p;
@@ -239,7 +297,7 @@ return false;
 
             messageNet = msg;
         }
-    // at the end of round 
+    // at the end of round
         getPointAndRespawn();
         //refill board
 
@@ -1329,7 +1387,7 @@ checkForError(end);
       //chiedi come fare calcolo punteggi
         for(Player p : g1.getAllPlayer())
         {
-            if(p.isDead()) 
+            if(p.isDead())
             {
                 temppoint = p.calculateScoreForEachPlayer();
                 for(Player c : g1.getAllPlayer())
