@@ -23,6 +23,8 @@ public class GameBoard {
 
     private Stack<PowerUpCard> powerUpCardStack;
 
+    private boolean terminatorMode;
+
     private List<Room> roomList;
 
     private Graph arena;
@@ -65,6 +67,10 @@ public class GameBoard {
     public List<Room> getRoomList()
     {
         return new ArrayList<>(roomList);
+    }
+
+    public boolean isTerminatorMode() {
+        return terminatorMode;
     }
 
     public int getCode() {
@@ -160,6 +166,9 @@ public class GameBoard {
         this.powerUpCardStack = powerUpCardStack;
     }
 
+    public void setTerminatorMode(boolean terminatorMode) {
+        this.terminatorMode = terminatorMode;
+    }
 
     /**
      * //todo

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Player
 {
 
-
+    private boolean terminator=false;
     private boolean afk;
     private boolean frenzy;
 
@@ -151,7 +151,9 @@ public class Player
         return frenzy;
     }
 
-
+    public boolean isTerminator() {
+        return terminator;
+    }
 
     /**
      * Returns a array of ColorId that represent all damage points ordered and done by other players
@@ -277,6 +279,10 @@ public class Player
             this.ammoBlue = 3;
         else
             this.ammoBlue = ammoBlue;
+    }
+
+    public void setTerminator(boolean terminator) {
+        this.terminator = terminator;
     }
 
     /**

@@ -25,6 +25,7 @@ public class Controller implements Observer<ResponseInput>
     //switch da aggiungere quel che manca
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
+    public Player termi; //is the terminator
     private View virtualView;
     private boolean firstRound=true;
     private ResponseInput msg;
@@ -113,11 +114,10 @@ public class Controller implements Observer<ResponseInput>
         //qui vanno i settaggi iniziali
         while (!endGame)
         {
-            if(roundPlayer != null) {
-                if (roundPlayer.isFrenzy())
-                {
+            if(roundPlayer != null && roundPlayer.isFrenzy()) {
+
                     endGame = true; //if the last player that have played is now on frenzy this is the last round for everyone
-                }
+
             }
             if(g1!= null) {
                 for (Player p : g1.getAllPlayer()) {
@@ -143,11 +143,13 @@ public class Controller implements Observer<ResponseInput>
         {
             if(p.isDead())
             {
+
                 temppoint = p.calculateScoreForEachPlayer();
                 for(Player c : g1.getAllPlayer())
                 {
                     c.setScore(temppoint.get(c.getColor()));
                 }
+
                 askForRespawn(p);
             }
         }
@@ -296,10 +298,12 @@ public class Controller implements Observer<ResponseInput>
             }
 
        //end of user round
+       if(g1.isTerminatorMode())
+           executeTerminator();
 
         getPointAndRespawn();
         //refill board
-        //play terminator if terminator mode is active
+
     }
 
 
@@ -324,7 +328,7 @@ public class Controller implements Observer<ResponseInput>
         {
             if (messageNet instanceof AskMoveAround)
             {
-                runAround();
+                runAround(false);
             }
             else if (messageNet instanceof AskGrab)
             {
@@ -992,7 +996,40 @@ public class Controller implements Observer<ResponseInput>
         }
     }
 
+    private void spawnTerminator(int index)
+    {
 
+        Square resp = null;
+
+        if (index==2) {
+            try {
+                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(3,3);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+
+        if (index==3) {
+            try {
+                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(4,1);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+        if (index==1) {
+            try {
+                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(1,2);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+
+        roundPlayer.setSquare(resp);
+        if(resp!=null)
+            MethodsWeapons.moveTarget(roundPlayer, resp.getX(), resp.getY());
+
+
+    }
     /**
      * this method spawn the player
      * @param index of the power up to use for spawn
@@ -1036,47 +1073,108 @@ public class Controller implements Observer<ResponseInput>
         }
 
     /**
-     * this method ask the plkayer what power up he want to use for respawn
+     * this method ask the player what power up he want to use for respawn
      * @param p the player that has to respawn
      * @throws InterruptedException
      * @throws ExecutionException
      */
     private void askForRespawn(Player p) throws InterruptedException, ExecutionException {
-        drawPowerup(true);
 
-        List<Color> powerList= new LinkedList<>();
-        for(PowerUpCard pc : roundPlayer.getPowerupCardList())
+        //if first round and firstplayer he have to spawn terminator
+        if (p.isFirst() && firstRound && g1.isTerminatorMode())
         {
-            powerList.add(pc.getColor());
-        }
-        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
-        {
-            @Override
-            public Boolean call() throws Exception {
-                //Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+            Future<Boolean> test = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
 
-                virtualView.requestInput(new RequestRespawn(powerList),p.getColor());
-                virtualView.getResponseWithInputs(p.getColor());
+                    virtualView.requestInput(new RequestRespawnTerminator(), p.getColor());
+                    virtualView.getResponseWithInputs(p.getColor());
 
-                return true;
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
+
             }
-        });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
-        {
+            Boolean s = test.get();
+            if (!s)
+                return;
+            if (checkForAfk())
+                return;
 
+
+            ResponseRespawn prove = (ResponseRespawn) msg;
+            spawnTerminator(prove.getTargetSpawnPoint());
         }
 
-        Boolean s = prova.get();
-        if(!s)
-            return;
-        if(checkForAfk())
-                   return;
 
 
-        ResponseRespawn response = (ResponseRespawn) msg;
-        roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
-        spawn(response.getTargetSpawnPoint());
+
+        if (g1.isTerminatorMode() && p.isTerminator())
+        {
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+
+                    virtualView.requestInput(new RequestRespawnTerminator(), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s)
+                return;
+            if (checkForAfk())
+                return;
+
+
+            ResponseRespawn response = (ResponseRespawn) msg;
+            spawnTerminator(response.getTargetSpawnPoint());
+        }
+        else {
+            drawPowerup(true);
+
+            List<Color> powerList = new LinkedList<>();
+            for (PowerUpCard pc : roundPlayer.getPowerupCardList()) {
+                powerList.add(pc.getColor());
+            }
+            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    //Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+
+                    virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
+                    virtualView.getResponseWithInputs(p.getColor());
+
+                    return true;
+                }
+            });
+
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
+
+            }
+
+            Boolean s = prova.get();
+            if (!s)
+                return;
+            if (checkForAfk())
+                return;
+
+
+            ResponseRespawn response = (ResponseRespawn) msg;
+            roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
+            spawn(response.getTargetSpawnPoint());
+
+
+        }
     }
 
     /**
@@ -1095,7 +1193,7 @@ public class Controller implements Observer<ResponseInput>
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    private void runAround() throws InterruptedException, ExecutionException
+    private void runAround(boolean terminator) throws InterruptedException, ExecutionException
     {
         Future<Boolean> prova = executor.submit(new Callable<Boolean>()
         {
@@ -1127,10 +1225,18 @@ public class Controller implements Observer<ResponseInput>
         int chosenSquareX = response.getX();
         int chosenSquareY = response.getY();
 
-
+        if(terminator)
+            MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
 
         MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
 
+
+    }
+
+    private void executeTerminator() throws ExecutionException, InterruptedException {
+        runAround(true);
+        //fai shoot per terminator
+        //attento che se c'è un solo nemico gli devi sparare per forza
 
     }
 
