@@ -16,6 +16,7 @@ public class Player
 {
 
 
+    private boolean afk;
     private boolean frenzy;
 
     private ColorId color;
@@ -150,6 +151,8 @@ public class Player
         return frenzy;
     }
 
+
+
     /**
      * Returns a array of ColorId that represent all damage points ordered and done by other players
      * @return Array with the damage points
@@ -171,6 +174,14 @@ public class Player
     public int getScore()
     {
         return score;
+    }
+
+    /**
+     * return if the player is afk or not
+     * @return boolean that indicate the status of player
+     */
+    public boolean isAfk() {
+        return afk;
     }
 
     /**
@@ -304,8 +315,7 @@ public class Player
     }
 
 
-
-    //---------------------------
+//---------------------------
 
     /**
      * Add a weapon card in player's deck if player has minus of 3 weapons
@@ -651,6 +661,10 @@ public class Player
 
         return players; //Return the set of all players
 
+    }
+
+    public void setAfk(boolean afk) {
+        this.afk = afk;
     }
 
     public  Set<Square> lookForRunAround(Player player)
