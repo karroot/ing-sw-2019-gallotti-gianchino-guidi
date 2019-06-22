@@ -47,6 +47,7 @@ public class AmmoPoint extends Square
     public void replaceAmmoTiles ()
     {
         GameBoard tempGame = getGameBoard();
+        if isempty rimescolo
         ammoTiles = tempGame.getAmmoTilesStack().pop();
 
     }

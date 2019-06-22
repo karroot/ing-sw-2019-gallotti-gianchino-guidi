@@ -20,8 +20,10 @@ public class GameBoard {
     private Stack<WeaponCard> weaponCardStack;
 
     private Stack<AmmoTiles> ammoTilesStack;
+    private Stack<AmmoTiles> ammoTilesDiscardStack;
 
     private Stack<PowerUpCard> powerUpCardStack;
+    private Stack<PowerUpCard> powerUpCardDiscardStack;
 
     private boolean terminatorMode;
 
@@ -36,6 +38,8 @@ public class GameBoard {
     private List<Track> killShotTrack;
 
     private int code;
+
+
 
     /**
      * Create the GameBoard with its parameters
@@ -56,6 +60,8 @@ public class GameBoard {
         this.killShotTrack= new LinkedList<>();
         this.allPlayerList = new ArrayList<>();
         this.code = codeArena;
+        this.ammoTilesDiscardStack = new Stack<>();
+        this.powerUpCardDiscardStack = new Stack<>();
     }
 
 
@@ -117,13 +123,14 @@ public class GameBoard {
      *It Return the first card of the powerUpCard deck and remove it from the deck
      * @return
      */
-    public PowerUpCard drawPowerUpCard() throws NullPointerException {
+    public PowerUpCard drawPowerUpCard()
+    {
         if (!powerUpCardStack.isEmpty()) {
             PowerUpCard pop = powerUpCardStack.pop();
             return pop;
         }
         else {
-            throw new NullPointerException("deck is empty");
+            rimescolo pila scarti in pila, svuolo pila scarti e faccio pop
         }
     }
 

@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,8 +13,8 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 {
     //Attribute for the request
     private List<ColorId> playersBasicMode;
-    private List<String> squareToMoveAsString;
     private List<String> squaresExtraGrenadeAsString;
+    private HashMap<ColorId, List<String>> hashMapToMovePlayers;
 
     //Attribute for the response
     private ColorId targetBasicMode;
@@ -24,12 +25,12 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
 
-    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squareToMoveAsString, List<String> squaresExtraGrenadeAsString)
+    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers)
     {
         this.nameAdditionalmode = "modalità granata extra";
         this.availableMethod = availableMethod;
-        this.playersBasicMode = playerBasicMode;
-        this.squareToMoveAsString = squareToMoveAsString;
+        this.playersBasicMode = playersBasicMode;
+        this.hashMapToMovePlayers = hashMapToMovePlayers;
         this.squaresExtraGrenadeAsString = squaresExtraGrenadeAsString;
         responseIsReady = false;
     }
@@ -92,7 +93,6 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         int i = 1;
 
         List<ColorId> colorIdList = playersBasicMode;
-        List<String> squaresAsString = squareToMoveAsString;
 
         System.out.println("Scegli un player bersaglio:");
 
@@ -125,7 +125,8 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         System.out.println("Scegli un quadrato dove spostare il tuo bersaglio:");
 
         int w = 1;
-        List<String> squaresAsStringTemp = squareToMoveAsString;
+
+        List<String> squaresAsString = hashMapToMovePlayers.get(targetBasicMode);
 
         for (String squareAsStringIterate : squaresAsString)
         {
@@ -135,7 +136,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         choice = inputInt(1, w - 1);
 
-        targetSquareToMoveBasicModeAsString = squaresAsStringTemp.get(choice - 1);
+        targetSquareToMoveBasicModeAsString = squaresAsString.get(choice - 1);
 
 
 

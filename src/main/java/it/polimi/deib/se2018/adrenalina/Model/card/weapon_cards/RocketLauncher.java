@@ -144,7 +144,7 @@ public class RocketLauncher extends WeaponCard
     }
 
 
-    public List<ColorId> checkWithRocketJump ()
+    public List<ColorId> checkPlayersWithRocketJump ()
     {
         Set<Player> playerSet = checkPhaseGlide();
         List<ColorId> colorIdList = new ArrayList<>();
@@ -188,23 +188,36 @@ public class RocketLauncher extends WeaponCard
 
     }
 
-    /**
-     *
-     * @param responseInput
-     */
-    @Override
-    public void useWeapon(ResponseInput responseInput)
+    public List<String> checkSquaresToMove() throws IllegalStateException
     {
-       /* basicMode(ResponseRocketLauncher);
-            barbecueMode(((ResponseFlamethrower) responseInput).getTargetDirectionBarbecueMode(), ((ResponseFlamethrower) responseInput).getTargetBarbecueMode());
-            return;
+
+        Square square = player.getSquare();
+
+        Set<Square> squares = square.getGameBoard().getArena().squareReachableNoWall(square.getX(),square.getY(),2);//Obtain all the reachable square
+
+        return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
+    }
+
+    public List<ColorId> checkPlayersBasicMode ()
+    {
+        List<ColorId> players = new ArrayList<>();
+
+        for (Player playerIterate : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+            if (playerIterate.getSquare() != player.getSquare())
+                players.add(playerIterate.getColor());
         }
 
-        basicMode(((ResponseFlamethrower) responseInput).getTargetBasicMode1(), ((ResponseFlamethrower) responseInput).getTargetBasicMode2());
-
-
-        */
-
+        return players;
+    }
+    /**
+     *
+     * @param
+     */
+    @Override
+    public void useWeapon(ResponseInput responseMessage)
+    {
+        basicMode(((ResponseRocketLauncher) responseMessage).getTargetPlayerBasicMode(),((ResponseRocketLauncher) responseMessage).getOrderEffect(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringPlayerToMove(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringTargetToMove() ) ;
     }
 
 
@@ -215,9 +228,10 @@ public class RocketLauncher extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        //return new RequestRocketLaucher(checkAvailableMode(), checkBasicModeForMessage());
-        return null;
+        return new RequestRocketLauncher(checkAvailableMode(), checkPlayersBasicMode(), checkWithFragmentingWarhead(), player.getSquare().getX(), player.getSquare().getY(), checkSquaresToMove(), checkPlayersWithRocketJump());
+
     }
+
 
 
 

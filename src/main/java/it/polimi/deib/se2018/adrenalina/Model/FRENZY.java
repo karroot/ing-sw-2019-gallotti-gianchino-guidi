@@ -31,6 +31,11 @@ public class FRENZY extends StatePlayer
     //todo documentazione
 
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     @Override
     public Set<Square> lookForRunAround(Player player)
     {
@@ -47,6 +52,11 @@ public class FRENZY extends StatePlayer
         }
     }
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     @Override
     public Set<Square> lookForGrabStuff(Player player)
     {
@@ -65,18 +75,18 @@ public class FRENZY extends StatePlayer
 
     }
 
-
-    @Override
-    public List<Player> lookForShootPeople(Player player)
+    public Set<Square> move2AsFirst (Player player)
     {
-        return super.lookForShootPeople(player);
+        Set<Square>  squareSet;
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
+        return squareSet;
     }
 
-
-    @Override
-    public List<WeaponCard> checkReload(Player player)
+    public Set<Square> move1AsNotFirst (Player player)
     {
-        return super.checkReload(player);
+        Set<Square>  squareSet;
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
+        return squareSet;
     }
 
 }

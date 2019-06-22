@@ -2,10 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseFurnace;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseHellion;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,17 +30,21 @@ public class Hellion extends WeaponCard
      */
     public Hellion( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
-        this.name = "Hellion";
+        this.name = "Raggio Solare";
         yellowAmmoCost = 1;
         blueAmmoCost = 0;
         redAmmoCost = 1;
     }
 
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
-
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[0] = false;//I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -55,14 +56,12 @@ public class Hellion extends WeaponCard
 
             for (Player playerIterate : playerSet)
             {
-                if (playerIterate.getSquare() == player.getSquare()) //check is there is a player i
+                if (playerIterate.getSquare() == player.getSquare())
                    playerSet.remove(playerIterate);
-
             }
 
             if (!playerSet.isEmpty())
                 availableMethod[0] = true;
-
         }
 
 
@@ -75,10 +74,6 @@ public class Hellion extends WeaponCard
 
     }
 
-    @Override
-    public RequestInput getRequestMessage() {
-        return null;
-    }
 
     /**
      * Return the list of all target available for using the basic mode of this weapon
@@ -86,14 +81,8 @@ public class Hellion extends WeaponCard
      * @return all player that can be affected with the weapon in basic mode
      * @exception IllegalStateException if the basic mode can't be used
      */
-    private HashMap<Square, ArrayList<Player>> checkBasicModeFull() throws IllegalStateException
+    private HashMap<Square, ArrayList<Player>> checkBasicModeFull()
     {
-
-
-        if (!checkAvailableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
-
-
 
         HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
 
@@ -110,7 +99,12 @@ public class Hellion extends WeaponCard
 
     }
 
-    private List<String> checkBasicModeSquares () throws IllegalStateException
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
+    private List<String> checkBasicModeSquares ()
     {
         HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
 
@@ -123,6 +117,12 @@ public class Hellion extends WeaponCard
 
     }
 
+    /**
+     *
+     * @param squareTargetCoordinatesAsString
+     * @return
+     * @throws IllegalStateException
+     */
     private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString) throws IllegalStateException
     {
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
@@ -146,8 +146,16 @@ public class Hellion extends WeaponCard
 
     }
 
+    /**
+     *
+     * @return
+     */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
+        if (!checkAvailableMode()[0])
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
+
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
         List<String> stringListKeys = checkBasicModeSquares();
@@ -164,10 +172,15 @@ public class Hellion extends WeaponCard
 
     }
 
+    /**
+     *
+     * @param colorPlayer
+     * @throws IllegalStateException
+     */
     public void basicMode(ColorId colorPlayer) throws IllegalStateException
     {
-        if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+        if (!checkAvailableMode()[0])
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
@@ -179,18 +192,38 @@ public class Hellion extends WeaponCard
         isLoaded = false;
     }
 
+
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     private List<String> checkNanoTracerModeSquare () throws IllegalStateException
     {
         return checkBasicModeSquares();
     }
 
+    /**
+     *
+     * @param squareTargetCoordinatesAsString
+     * @return
+     * @throws IllegalStateException
+     */
     private List<ColorId>  checkNanoTracerModePlayer (String squareTargetCoordinatesAsString) throws IllegalStateException
     {
         return checkBasicModePlayers(squareTargetCoordinatesAsString);
     }
 
+    /**
+     *
+     * @return
+     */
     public HashMap<String, List<ColorId>> checkNanoTracerMode ()
     {
+        if (!checkAvailableMode()[1])
+            throw  new IllegalStateException("Modalità nano-traccianti dell'arma "+name+" non eseguibile.");
+
+
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
         List<String> stringListKeys = checkNanoTracerModeSquare();
@@ -206,10 +239,15 @@ public class Hellion extends WeaponCard
         return hashMapToReturn;
     }
 
+    /**
+     *
+     * @param colorPlayer
+     * @throws IllegalStateException
+     */
     public void nanoTracerMode(ColorId colorPlayer) throws IllegalStateException
     {
-        if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
+        if (!checkAvailableMode()[1])
+            throw  new IllegalStateException("Modalità nano-traccianti dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
@@ -223,6 +261,10 @@ public class Hellion extends WeaponCard
         isLoaded = false;
     }
 
+    /**
+     *
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage)
     {
@@ -233,7 +275,17 @@ public class Hellion extends WeaponCard
         }
 
         basicMode(((ResponseHellion) responseMessage).getTargetBasicMode());
+    }
 
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public RequestInput getRequestMessage()
+    {
+        return new RequestHellion(checkAvailableMode(), checkBasicMode(), checkNanoTracerMode());
     }
 
 }

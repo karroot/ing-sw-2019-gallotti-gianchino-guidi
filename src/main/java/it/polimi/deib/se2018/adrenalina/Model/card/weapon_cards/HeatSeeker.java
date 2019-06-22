@@ -23,32 +23,30 @@ public class HeatSeeker extends WeaponCard
     private boolean[] availableMethod = new boolean[1];
 
 
-
     /**
-     * This is the constructor for the card HeatSeeker
      *
      * @param color
      * @param weaponID
      * @param isLoaded
+     * @throws NullPointerException
      */
     public HeatSeeker( Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
         super( color, weaponID, isLoaded);
-        this.name = "HeatSeeker";
+        this.name = "Razzo Termico";
         yellowAmmoCost = 1;
         blueAmmoCost = 0;
         redAmmoCost = 2;
     }
 
     /**
-     * This method checks which modes of the weapon can be used by the player that owns this weapon
      *
-     * @return array of booleans of size 2. The first boolean represents the basic mode the second the alternative mode
-     * @exception IllegalStateException if this card doesn't belong to any player
+     * @return
+     * @throws IllegalStateException
      */
     public boolean[] checkAvailableMode() throws IllegalStateException {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[0] = false; //I suppose that the modes can't be used
 
@@ -61,8 +59,6 @@ public class HeatSeeker extends WeaponCard
     }
 
 
-    //così: seleziono tutti i player ed escludo quelli che posso vedere
-
     /**
      *
      * @return
@@ -70,24 +66,34 @@ public class HeatSeeker extends WeaponCard
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
         return checkPlayers();//Returns all targets
     }
 
     /**
      *
-     * @param
+     * @param colorPlayer
      * @throws SquareNotInGameBoard
      * @throws IllegalStateException
      */
     public void basicMode(ColorId colorPlayer) throws SquareNotInGameBoard,IllegalStateException
     {
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer))
+                        .collect(Collectors.toList()).get(0),3);
 
         this.isLoaded = false;
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     private List<ColorId> checkPlayers ()
     {
         List<ColorId> colorIdList = new ArrayList<>();
@@ -109,6 +115,10 @@ public class HeatSeeker extends WeaponCard
 
     }
 
+    /**
+     *
+     * @param responseInput
+     */
     @Override
     public void useWeapon(ResponseInput responseInput)
     {
@@ -122,7 +132,10 @@ public class HeatSeeker extends WeaponCard
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     @Override
     public RequestInput getRequestMessage()
     {

@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Controller;//package it.polimi.deib.se2
 
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 
 import java.time.Year;
@@ -15,7 +15,7 @@ import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 
 public class Setup
 {
-    /*
+
     public void spawn (ColorId player, Color PointOfSpawn)
     {
 
@@ -98,12 +98,66 @@ public class Setup
     {
         Stack<PowerUpCard> powerUpCardStack = new Stack<>();
 
-        220
-                    221
-                            IDS
+        PowerUpCard newtonRed1 = new Newton(RED, 291);
+        PowerUpCard newtonRed2 = new Newton(RED, 292);
+        PowerUpCard newtonBlue1 = new Newton(BLUE,281);
+        PowerUpCard newtonBlue2 = new Newton(BLUE, 282);
+        PowerUpCard newtonYellow1 = new Newton(YELLOW, 2101);
+        PowerUpCard newtonYellow2 = new Newton(YELLOW, 2102);
 
-                                    2 carte per colore
+        PowerUpCard teleporterRed1 = new Teleporter(RED, 2121);
+        PowerUpCard teleporterRed2 = new Teleporter(RED, 2122);
+        PowerUpCard teleporterBlue1 = new Teleporter(BLUE,2111);
+        PowerUpCard teleporterBlue2 = new Teleporter(BLUE, 2112);
+        PowerUpCard teleporterYellow1 = new Teleporter(YELLOW, 2131);
+        PowerUpCard teleporterYellow2 = new Teleporter(YELLOW, 2132);
 
+        PowerUpCard targettingScopeRed1 = new TargettingScope(RED, 261);
+        PowerUpCard targettingScopeRed2 = new TargettingScope(RED, 262);
+        PowerUpCard targettingScopeBlue1 = new TargettingScope(BLUE,251);
+        PowerUpCard targettingScopeBlue2 = new TargettingScope(BLUE, 252);
+        PowerUpCard targettingScopeYellow1 = new TargettingScope(YELLOW, 271);
+        PowerUpCard targettingScopeYellow2 = new TargettingScope(YELLOW, 272);
+
+        PowerUpCard tagbackGrenadeRed1 = new TagbackGranade(RED, 231);
+        PowerUpCard tagbackGrenadeRed2 = new TagbackGranade(RED, 232);
+        PowerUpCard tagbackGrenadeBlue1 = new TagbackGranade(BLUE,221);
+        PowerUpCard tagbackGrenadeBlue2 = new TagbackGranade(BLUE, 222);
+        PowerUpCard tagbackGrenadeYellow1 = new TagbackGranade(YELLOW, 241);
+        PowerUpCard tagbackGrenadeYellow2 = new TagbackGranade(YELLOW, 242);
+
+
+        powerUpCardStack.add(newtonRed1);
+        powerUpCardStack.add(newtonRed2);
+        powerUpCardStack.add(newtonBlue1);
+        powerUpCardStack.add(newtonBlue2);
+        powerUpCardStack.add(newtonYellow1);
+        powerUpCardStack.add(newtonYellow2);
+
+        powerUpCardStack.add(teleporterRed1);
+        powerUpCardStack.add(teleporterRed2);
+        powerUpCardStack.add(teleporterBlue1);
+        powerUpCardStack.add(teleporterBlue2);
+        powerUpCardStack.add(teleporterYellow1);
+        powerUpCardStack.add(teleporterYellow2);
+
+        powerUpCardStack.add(targettingScopeRed1);
+        powerUpCardStack.add(targettingScopeRed2);
+        powerUpCardStack.add(targettingScopeBlue1);
+        powerUpCardStack.add(targettingScopeBlue2);
+        powerUpCardStack.add(targettingScopeYellow1);
+        powerUpCardStack.add(targettingScopeYellow2);
+
+        powerUpCardStack.add(tagbackGrenadeRed1);
+        powerUpCardStack.add(tagbackGrenadeRed2);
+        powerUpCardStack.add(tagbackGrenadeBlue1);
+        powerUpCardStack.add(tagbackGrenadeBlue2);
+        powerUpCardStack.add(tagbackGrenadeYellow1);
+        powerUpCardStack.add(tagbackGrenadeYellow2);
+
+        Collections.shuffle(powerUpCardStack);
+
+        return powerUpCardStack;
 
     }
 
@@ -130,24 +184,24 @@ public class Setup
         JustAmmo justAmmo17 = new JustAmmo (418, BLUE, YELLOW);
         JustAmmo justAmmo18 = new JustAmmo (419, BLUE, RED);
 
-        PowerAndAmmo powerAndAmmo1 = new PowerAndAmmo (0420, YELLOW, YELLOW);
-        PowerAndAmmo powerAndAmmo2 = new PowerAndAmmo (0421, RED, RED);
-        PowerAndAmmo powerAndAmmo3 = new PowerAndAmmo (0422, BLUE, BLUE);
-        PowerAndAmmo powerAndAmmo4 = new PowerAndAmmo (0423, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo5 = new PowerAndAmmo (0424, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo6 = new PowerAndAmmo (0425, RED, BLUE);
-        PowerAndAmmo powerAndAmmo7 = new PowerAndAmmo (0426, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo8 = new PowerAndAmmo (0427, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo9 = new PowerAndAmmo(0428, RED, BLUE);
-        PowerAndAmmo powerAndAmmo10 = new PowerAndAmmo (0429, YELLOW, YELLOW);
-        PowerAndAmmo powerAndAmmo11 = new PowerAndAmmo (0430, RED, RED);
-        PowerAndAmmo powerAndAmmo12 = new PowerAndAmmo (0431, BLUE, BLUE);
-        PowerAndAmmo powerAndAmmo13 = new PowerAndAmmo (0432, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo14 = new PowerAndAmmo (0433, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo15 = new PowerAndAmmo (0434, RED, BLUE);
-        PowerAndAmmo powerAndAmmo16 = new PowerAndAmmo(0435, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo17 = new PowerAndAmmo(0436, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo18 = new PowerAndAmmo (0437, RED, BLUE);
+        PowerAndAmmo powerAndAmmo1 = new PowerAndAmmo (420, YELLOW, YELLOW);
+        PowerAndAmmo powerAndAmmo2 = new PowerAndAmmo (421, RED, RED);
+        PowerAndAmmo powerAndAmmo3 = new PowerAndAmmo (422, BLUE, BLUE);
+        PowerAndAmmo powerAndAmmo4 = new PowerAndAmmo (423, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo5 = new PowerAndAmmo (424, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo6 = new PowerAndAmmo (425, RED, BLUE);
+        PowerAndAmmo powerAndAmmo7 = new PowerAndAmmo (426, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo8 = new PowerAndAmmo (427, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo9 = new PowerAndAmmo(428, RED, BLUE);
+        PowerAndAmmo powerAndAmmo10 = new PowerAndAmmo (429, YELLOW, YELLOW);
+        PowerAndAmmo powerAndAmmo11 = new PowerAndAmmo (430, RED, RED);
+        PowerAndAmmo powerAndAmmo12 = new PowerAndAmmo (431, BLUE, BLUE);
+        PowerAndAmmo powerAndAmmo13 = new PowerAndAmmo (432, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo14 = new PowerAndAmmo (433, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo15 = new PowerAndAmmo (434, RED, BLUE);
+        PowerAndAmmo powerAndAmmo16 = new PowerAndAmmo(435, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo17 = new PowerAndAmmo(436, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo18 = new PowerAndAmmo (437, RED, BLUE);
 
         ammoTilesStack.add(justAmmo1);
         ammoTilesStack.add(justAmmo2);
@@ -194,19 +248,46 @@ public class Setup
 
     }
 
-    public List<Player> createAllPlayers ()
+
+    public Player createPlayer (ColorId colorId, String name, String action_hero_comment)
+    {
+        return null;
+    }
+
+    public List<Player> createPlayerList ()
     {
         List<Player> playerList = new ArrayList<>();
 
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Player player3 = new Player();
-        Player player4 = new Player();
-        Player player5 = new Player(); //todo mettere contatori i per numero max player e creare solo fino a dove necessario
+         player1 = createPlayer()
+         //todo mettere contatori i per numero max player e creare solo fino a dove necessario
 
         //aggiungi lista
-        //shuffle
-        //return
+        //return set lista
     }
+
+    public void replenishBoard (GameBoard gameBoard)
+    {
+        //controllo stack vuoti powerup+ammo
+
+        for (Room roomIterate : gameBoard.getRoomList())
+        {
+            for (Square squareIterate : roomIterate.getSquareList())
+            {
+                if (squareIterate.isSpawnPoint())
+                {
+                    if (((SpawnPoint) squareIterate).getWeaponCardList().size()<3)
+                        ((SpawnPoint) squareIterate).addNewWeapon();
+                }
+
+                if (squareIterate.isAmmoPoint())
+                {
+                    if ((AmmoPoint) squareIterate).get
+                }
+            }
+        }
+
+    }
+
+
 */
 }

@@ -26,7 +26,7 @@ public class VortexCannon extends WeaponCard
      */
     public VortexCannon( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
-        this.name = "Vortex Cannon";
+        this.name = "Cannone Vortex";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;
@@ -34,33 +34,26 @@ public class VortexCannon extends WeaponCard
 
 
     /**
-     * This method checks which modes of the weapon can be used by the player that owns this weapon
      *
-     * @return array of booleans of size 2. The first boolean represents the basic mode the second the alternative mode
-     * @exception IllegalStateException if this card doesn't belong to any player
+     * @return
+     * @throws IllegalStateException
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
 
-        availableMethod[0] = false;//I suppose that the modes can't be used
+        availableMethod[0] = false;
         availableMethod[1] = false;
-
-
-        //scelgo uno square che posso vedere ma non è il mio. Risucchio 1 player a distanza max 1 dallo square nello square e faccio due danni
-
-        //blackhole: in un raggio di distanza 1 dallo square risucchio fino ad altri 2 player nello square e faccio 1 danno a ciascuno
 
         if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, (List<Square>) MethodsWeapons.squareThatSee(player)))
         {
                 availableMethod[0] = true;
         }
 
-        if (isLoaded && availableMethod[0] && player.getAmmoRed() >= 1)
+        if (isLoaded && availableMethod[0] &&  player.getAmmoRed() >= 1)
         {
             availableMethod[1] = true;
-            //todo controllo aggiuntivo player??
         }
 
         return availableMethod;
@@ -68,42 +61,41 @@ public class VortexCannon extends WeaponCard
     }
 
     /**
-     * Return a list of all target available for using the basic mode of this weapon
      *
-     * @return all player that can be affected with the weapon in basic mode
-     * @exception IllegalStateException if the basic mode can't be used
+     * @return
+     * @throws IllegalStateException
      */
-//square o players?
     private HashMap<Square, ArrayList<Player>> checkBasicModeFull() throws IllegalStateException
     {
-            if (!checkAvailableMode()[0]) //check mode
-                throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-            HashMap<Square, ArrayList<Player>> hashMapreturn = new HashMap<Square, ArrayList<Player>>();
+        HashMap<Square, ArrayList<Player>> hashMapreturn = new HashMap<Square, ArrayList<Player>>();
 
-            Player playerTemp = new Player(null,null, null, true);
+        Player playerTemp = new Player(null,null, null, true);
 
-            List<Square> squareTarget = new ArrayList<>();
-            List<Player> playersTarget;
-            squareTarget = (ArrayList) MethodsWeapons.squareThatSee(player);
-            squareTarget.remove(player.getSquare()); //crate squarelist of possible vortex locations
+        List<Square> squareTarget = new ArrayList<>();
+        List<Player> playersTarget;
+        squareTarget = (ArrayList) MethodsWeapons.squareThatSee(player);
+        squareTarget.remove(player.getSquare()); //create squarelist of possible vortex locations
 
-            for (Square squareIterate: squareTarget)
-            {
-                playersTarget = new ArrayList<>();
-                playerTemp.setSquare(squareIterate);
-                for (Square squareIterate2: playerTemp.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1)) //all the square at distance 1 from the possible location of the vortex
+        for (Square squareIterate: squareTarget)
+        {
+            playersTarget = new ArrayList<>();
+            playerTemp.setSquare(squareIterate);
+            for (Square squareIterate2: playerTemp.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1)) //all the square at distance 1 from the possible location of the vortex
                 {
                   playersTarget.addAll(squareIterate2.getPlayerList());
-
                 }
-                if (!playersTarget.isEmpty())
-                    hashMapreturn.put(squareIterate, (ArrayList) playersTarget);
-            }
+            if (!playersTarget.isEmpty())
+                hashMapreturn.put(squareIterate, (ArrayList) playersTarget);
+        }
 
         return hashMapreturn;
 
     }
+
+
 
     private List<String> checkBasicModeSquares ()
     {
@@ -144,6 +136,9 @@ public class VortexCannon extends WeaponCard
 
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
+        if (!checkAvailableMode()[0])//check mode
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
+
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
         List<String> stringListKeys = checkBasicModeSquares();
@@ -163,7 +158,7 @@ public class VortexCannon extends WeaponCard
     public void basicMode (ColorId colorPlayer, String squareToMoveCoordinatesAsString)
     {
         if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsString);
@@ -173,16 +168,20 @@ public class VortexCannon extends WeaponCard
         MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
 
         isLoaded = false;
-
-
     }
 
 
-    //todo
+    /**
+     *
+     * @param colorPlayerAlreadySelected
+     * @param squareTargetCoordinatesAsString
+     * @return
+     * @throws IllegalStateException
+     */
     public List<ColorId> checkWithBlackHoleMode(ColorId colorPlayerAlreadySelected, String squareTargetCoordinatesAsString) throws IllegalStateException
     {
-        if (!checkAvailableMode()[1]) //check mode
-            throw  new IllegalStateException("Modalità black hole dell'arma: "+name+" non eseguibile");
+        if (!checkAvailableMode()[1])//check mode
+            throw  new IllegalStateException("Modalità black hole dell'arma "+name+" non eseguibile.");
 
         List<ColorId> colorIdList = checkBasicModePlayers(squareTargetCoordinatesAsString);
         colorIdList.remove(colorPlayerAlreadySelected);
@@ -191,8 +190,17 @@ public class VortexCannon extends WeaponCard
         else return null;
     }
 
+    /**
+     *
+     * @param playerTarget1
+     * @param playerTarget2
+     * @param vortexSquareAsString
+     */
     public void blackHoleMode (ColorId playerTarget1, ColorId playerTarget2, String vortexSquareAsString)
     {
+        if (!checkAvailableMode()[1])//check mode
+            throw  new IllegalStateException("Modalità black hole dell'arma "+name+" non eseguibile.");
+
         int x = MethodsWeapons.getXFromString(vortexSquareAsString);
         int y = MethodsWeapons.getYFromString(vortexSquareAsString);
 
@@ -210,6 +218,11 @@ public class VortexCannon extends WeaponCard
 
     }
 
+    /**
+     *
+     * @param responseMessage response message specified for the weapon
+     */
+    @Override
     public void useWeapon(ResponseInput responseMessage)
     {
         if (((ResponseVortexCannon) responseMessage).isMode())
@@ -219,6 +232,10 @@ public class VortexCannon extends WeaponCard
             basicMode(((ResponseVortexCannon) responseMessage).getTargetPlayerBasicMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public RequestInput getRequestMessage()
     {

@@ -19,6 +19,8 @@ public class SpawnPoint extends Square
 
     private List<WeaponCard> weaponCardList;
 
+
+
     /**
      * This is the public constructor for the class
      *
