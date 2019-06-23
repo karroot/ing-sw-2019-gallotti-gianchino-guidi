@@ -249,20 +249,18 @@ public class Setup
     }
 
 
-    public Player createPlayer (ColorId colorId, String name, String action_hero_comment)
-    {
-        return null;
-    }
-
-    public List<Player> createPlayerList ()
+    public List<Player> createPlayers ()
     {
         List<Player> playerList = new ArrayList<>();
 
-         player1 = createPlayer()
-         //todo mettere contatori i per numero max player e creare solo fino a dove necessario
+        int j = Controller.numberOfPlayer();
 
-        //aggiungi lista
-        //return set lista
+        for (int i=1; i==j; i++)
+        {
+            playerList.add(new Player(Controller.getColorOfPlayer(i), Controller.getName(i), Controller.getHeroComment(i)));
+        }
+
+        return playerList;
     }
 
     public void replenishBoard (GameBoard gameBoard)
@@ -276,7 +274,7 @@ public class Setup
                 if (squareIterate.isSpawnPoint())
                 {
                     if (((SpawnPoint) squareIterate).getWeaponCardList().size()<3)
-                        ((SpawnPoint) squareIterate).addNewWeapon(); //se lancia eccezione è un problema?
+                        ((SpawnPoint) squareIterate).addNewWeapon(); se lancia eccezione è un problema?
                 }
 
                 if (squareIterate.isAmmoPoint())

@@ -31,7 +31,7 @@ public class Controller implements Observer<ResponseInput>
     private ResponseInput msg;
     private boolean endGame;
     private GameBoard g1=null;
-   private Player roundPlayer=null;
+    private Player roundPlayer=null;
 
 
     //Controller deve avere un riferimento alla virtual view
@@ -53,7 +53,7 @@ public class Controller implements Observer<ResponseInput>
      * Hint: using when the phase of login is completed
      * @return number of player connected
      */
-    public int NumberOfPlayer()
+    public int numberOfPlayer()
     {
         return virtualView.getConnections().size();
     }
