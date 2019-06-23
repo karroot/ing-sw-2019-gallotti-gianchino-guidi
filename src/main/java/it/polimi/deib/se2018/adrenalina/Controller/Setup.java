@@ -276,12 +276,13 @@ public class Setup
                 if (squareIterate.isSpawnPoint())
                 {
                     if (((SpawnPoint) squareIterate).getWeaponCardList().size()<3)
-                        ((SpawnPoint) squareIterate).addNewWeapon();
+                        ((SpawnPoint) squareIterate).addNewWeapon(); //se lancia eccezione è un problema?
                 }
 
                 if (squareIterate.isAmmoPoint())
                 {
-                    if ((AmmoPoint) squareIterate).get
+                    if (((AmmoPoint) squareIterate).getAmmoTiles() == null)
+                        ((AmmoPoint) squareIterate).replaceAmmoTiles();
                 }
             }
         }

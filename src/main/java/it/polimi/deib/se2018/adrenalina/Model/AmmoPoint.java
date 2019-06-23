@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -35,6 +36,7 @@ public class AmmoPoint extends Square
     public AmmoTiles useAmmoTiles (Player player)
     {
         AmmoTiles tempAmmoTiles = ammoTiles;
+        player.getSquare().getGameBoard().getAmmoTilesDiscardStack().addElement(ammoTiles);
         ammoTiles.useAmmoTilesCards(player);
         ammoTiles = null;
         return tempAmmoTiles;
@@ -46,9 +48,16 @@ public class AmmoPoint extends Square
      */
     public void replaceAmmoTiles ()
     {
-        GameBoard tempGame = getGameBoard();
-        if isempty rimescolo
-        ammoTiles = tempGame.getAmmoTilesStack().pop();
+        if (getGameBoard().getAmmoTilesStack().isEmpty())
+            for (AmmoTiles ammoTilesIterate : getGameBoard().getAmmoTilesDiscardStack())
+            {
+                getGameBoard().getAmmoTilesStack().addElement(ammoTilesIterate);
+                getGameBoard().getAmmoTilesDiscardStack().remove(ammoTilesIterate);
+
+                Collections.shuffle(getGameBoard().getAmmoTilesStack());
+            }
+
+        ammoTiles = getGameBoard().getAmmoTilesStack().pop();
 
     }
 

@@ -75,6 +75,14 @@ public class GameBoard {
         return new ArrayList<>(roomList);
     }
 
+    public Stack<AmmoTiles> getAmmoTilesDiscardStack() {
+        return ammoTilesDiscardStack;
+    }
+
+    public Stack<PowerUpCard> getPowerUpCardDiscardStack() {
+        return powerUpCardDiscardStack;
+    }
+
     public boolean isTerminatorMode() {
         return terminatorMode;
     }
@@ -125,13 +133,26 @@ public class GameBoard {
      */
     public PowerUpCard drawPowerUpCard()
     {
-        if (!powerUpCardStack.isEmpty()) {
+        if (!powerUpCardStack.isEmpty())
+        {
             PowerUpCard pop = powerUpCardStack.pop();
+            powerUpCardDiscardStack.addElement(pop);
             return pop;
         }
-        else {
-            rimescolo pila scarti in pila, svuolo pila scarti e faccio pop
-        }
+        else
+            {
+                for (PowerUpCard powerUpCardIterate : powerUpCardDiscardStack)
+                 {
+                 powerUpCardStack.addElement(powerUpCardIterate);
+                 powerUpCardDiscardStack.remove(powerUpCardIterate);
+
+                Collections.shuffle(powerUpCardStack);
+                 }
+
+                PowerUpCard pop = powerUpCardStack.pop();
+                powerUpCardDiscardStack.addElement(pop);
+                return pop;
+            }
     }
 
 
