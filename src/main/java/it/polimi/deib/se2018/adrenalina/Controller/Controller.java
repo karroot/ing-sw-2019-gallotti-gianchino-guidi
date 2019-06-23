@@ -25,7 +25,7 @@ public class Controller implements Observer<ResponseInput>
     //switch da aggiungere quel che manca
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
-    public Player termi; //is the terminator
+    private Player termi; //is the terminator
     private View virtualView;
     private boolean firstRound=true;
     private ResponseInput msg;
@@ -302,7 +302,7 @@ public class Controller implements Observer<ResponseInput>
            executeTerminator();
 
         getPointAndRespawn();
-        //refill board
+        Setup.replenishBoard(g1);
 
     }
 
@@ -534,7 +534,7 @@ public class Controller implements Observer<ResponseInput>
                     }
 
                 }
-                // invia messaggio fine ciclo
+                // sends end cicle message
                 Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
@@ -627,7 +627,7 @@ public class Controller implements Observer<ResponseInput>
                 }
 
             }
-            // invia messaggio fine ciclo
+            // sends end cicle message
             Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
@@ -957,7 +957,7 @@ public class Controller implements Observer<ResponseInput>
 
 
             }
-            // invia messaggio fine ciclo
+            // sends end cicle message
             Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
@@ -1235,11 +1235,63 @@ public class Controller implements Observer<ResponseInput>
 
     private void executeTerminator() throws ExecutionException, InterruptedException {
         runAround(true);
-        //fai shoot per terminator
-        //attento che se c'è un solo nemico gli devi sparare per forza
+        shootTerminator();
+
 
     }
 
+    private void shootTerminator() throws InterruptedException, ExecutionException {
+        List<ColorId> enemiesColors=new LinkedList<>();
+        if(! (roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).isEmpty()))
+        {
+            for(Player p: roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()))
+            {
+                enemiesColors.add(p.getColor());
+            }
+
+                if(roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).size()>1)
+                {
+                    Future<Boolean> con = executor.submit(new Callable<Boolean>() {
+
+                        @Override
+                        public Boolean call() throws Exception {
+
+                            virtualView.requestInput(new RequestShootTerminator(enemiesColors),roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                            return true;
+                        }
+                    });
+
+                    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
+                    {
+
+                    }
+
+                    Boolean resp = con.get();
+                    if(!resp)
+                        return;
+                    if(checkForAfk())
+                        return;
+
+                    ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
+                    roundPlayer.doDamage(response.getTarget());
+                    if(roundPlayer.getDamageCounter().length>3)
+                    {
+                        roundPlayer.addMark(response.getTarget());
+                    }
+
+                }
+                else
+                {
+                    roundPlayer.doDamage(enemiesColors.get(0));
+                    if(roundPlayer.getDamageCounter().length>3)
+                    {
+                        roundPlayer.addMark(enemiesColors.get(0));
+                    }
+                }
+        }
+    }
     /**
      * this method ask the player what weapon he want to use and ask him to use it
      * @throws InterruptedException
@@ -1551,7 +1603,7 @@ public class Controller implements Observer<ResponseInput>
             }
 
         }
-        // invia messaggio fine ciclo
+        // sends end cicle message
         Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
