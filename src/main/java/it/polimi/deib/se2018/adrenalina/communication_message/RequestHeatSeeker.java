@@ -2,7 +2,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class RequestHeatSeeker extends RequestInput
 
 
     @Override
-    public void printActionsAndReceiveInput()
+    public void printActionsAndReceiveInput(Terminal terminal)
     {
         int i=1;
 

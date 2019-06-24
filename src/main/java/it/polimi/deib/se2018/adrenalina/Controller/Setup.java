@@ -17,10 +17,14 @@ public class Setup
 {
 
     Controller controller;
+    private int codeArena;
+    private boolean terminator;
 
-    public Setup(Controller controller)
+    public Setup(Controller controller,int codeArena,boolean terminator)
     {
         this.controller = controller;
+        this.codeArena = codeArena;
+        this.terminator = terminator;
     }
 
     public void spawn (ColorId player, Color PointOfSpawn)

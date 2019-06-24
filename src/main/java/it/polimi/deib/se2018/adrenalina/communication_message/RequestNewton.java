@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,10 @@ public class RequestNewton extends RequestInput
 
     /**
      * Ask at the user which player wants to move and in which square put him
+     * @param terminal
      */
     @Override
-    public void printActionsAndReceiveInput()
+    public void printActionsAndReceiveInput(Terminal terminal)
     {
         List<ColorId> targets = new ArrayList<>(targetAndSquares.keySet());
 

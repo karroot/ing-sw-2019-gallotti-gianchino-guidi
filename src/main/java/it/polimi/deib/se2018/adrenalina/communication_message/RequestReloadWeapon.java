@@ -1,6 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import java.util.List;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 public class RequestReloadWeapon extends RequestInput {
     //Attribute for the request
@@ -10,7 +10,7 @@ public class RequestReloadWeapon extends RequestInput {
     protected int weaponToReload;//Target chosen for the basic mode
 
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput(Terminal terminal) {
         inputBasicMode();
         responseIsReady = true;
     }

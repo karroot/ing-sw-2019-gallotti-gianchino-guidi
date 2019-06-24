@@ -1,8 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     }
 
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput(Terminal terminal) {
         int choice=0;
 
         System.out.println("Cosa vuoi fare:"); //Ask to user the first effect

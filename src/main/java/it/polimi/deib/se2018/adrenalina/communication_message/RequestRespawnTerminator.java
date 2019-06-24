@@ -1,11 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 public class RequestRespawnTerminator extends  RequestInput {
     private int targetSpawnPoint;
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput(Terminal terminal) {
         inputBasicMode();
         responseIsReady = true;
     }

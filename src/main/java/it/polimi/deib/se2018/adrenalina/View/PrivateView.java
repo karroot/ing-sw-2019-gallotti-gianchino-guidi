@@ -1,9 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
-import it.polimi.deib.se2018.adrenalina.Controller.Reload;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.View.GUI.GUI;
 import it.polimi.deib.se2018.adrenalina.View.GUI.SetupGui;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
@@ -12,7 +9,6 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Squar
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.stream.Collectors;
 
 public class PrivateView extends Observable<ResponseInput> implements Observer<RequestInput>
@@ -479,7 +475,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             notify(new AskMoveAround());//Notify at controller that the player wants to move
 
             RequestInput messageRequest = getMessageFromNetwHandl(); //Obtain the request message
-            messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
             ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
 
             notify(responseForController);//Send the message at controller
@@ -502,7 +498,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
             RequestInput messageRequest = getMessageFromNetwHandl(); //Obtain the request message with the squares
             //where the player can grab
-            messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
             ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
 
             ResponseGrabStuff temp = (ResponseGrabStuff) responseForController;
@@ -528,7 +524,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             {
                 messageRequest = getMessageFromNetwHandl(); //Obtain the request message with the weapons //message (RequestShootPeople)
                 //that the player can grab
-                messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
+                messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
                 responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
 
                 notify(responseForController);//Send the message at controller with the weapon chosen by player
@@ -569,7 +565,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 }
                 else
                 {
-                    messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
+                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
                     ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with the weapon chosen
                     //with all power ups that the player chose to increase his ammo
 
@@ -592,7 +588,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             }
 
 
-            messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
             ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with the weapon chosen
             //by user
 
@@ -603,7 +599,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             messageRequest = getMessageFromNetwHandl(); //Obtain the request message that ask at user
             //all input needed to use the weapon
 
-            messageRequest.printActionsAndReceiveInput();//Ask the inputs asked by controller
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
             responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with all input
             // inserted by user
 
@@ -640,7 +636,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 while (! (messageRequest instanceof End)) //If the message contains a
                 // weapons that it can be reloaded
                 {
-                    messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
                     ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
                     //with the response (yes or no)
                     notify(responseForController);//Send the message at controller
@@ -672,7 +668,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
                 RequestInput messageRequest = getMessageFromNetwHandl();//Obtain the request message
                 //to ask which powerUps to use
-                messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
 
 
                 RequestPowerUp temp = (RequestPowerUp) messageRequest;
@@ -692,7 +688,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
                 while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
                 {
-                    messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
                     responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
                     //with the response (yes or no) and the inputs needed
                     notify(responseForController);//Send the message of response at controller
@@ -741,7 +737,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 }
 
 
-                messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
                 ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
                 //with the targeting scope that the player chose to use
 
@@ -751,7 +747,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
                 while (! (messageRequest instanceof End)) //if the message contains a request to use the targeting scope
                 {
-                    messageRequest.printActionsAndReceiveInput();//Ask the input asked by controller
+                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
                     responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
                     //with the response and the inputs needed
                     notify(responseForController);//Send the message of response at controller

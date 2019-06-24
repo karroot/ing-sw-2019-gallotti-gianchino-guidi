@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,10 @@ public class RequestTeleporter extends RequestInput
 
     /**
      * Ask at the user in which square he wants to move
+     * @param terminal
      */
     @Override
-    public void printActionsAndReceiveInput()
+    public void printActionsAndReceiveInput(Terminal terminal)
     {
 
         System.out.println("Scegli un quadrato dove spostarti:");

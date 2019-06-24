@@ -1,11 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public abstract class RequestInput extends MessageNet
 
 
     //Method to handle the inputs
-    abstract public void printActionsAndReceiveInput();
+    abstract public void printActionsAndReceiveInput(Terminal terminal);
     //Method to generate the response message
     abstract public ResponseInput generateResponseMessage() throws IllegalStateException;
 

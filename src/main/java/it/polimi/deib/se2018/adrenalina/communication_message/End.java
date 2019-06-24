@@ -1,8 +1,10 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
+
 public class End extends  RequestInput {
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput(Terminal terminal) {
 
     }
 

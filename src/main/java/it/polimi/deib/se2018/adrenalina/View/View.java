@@ -57,7 +57,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         gameIsStarted = false;
         creationIsFinished = false;
         state = new StartLogin(this);
-        controller = new Controller();
+        //controller = new Controller();
         //ToDO passare al controller i dati necessari
     }
 

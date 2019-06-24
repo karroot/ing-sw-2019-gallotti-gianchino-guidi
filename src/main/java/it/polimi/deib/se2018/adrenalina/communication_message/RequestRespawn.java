@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RequestRespawn extends  RequestInput
     }
 
     @Override
-    public void printActionsAndReceiveInput() {
+    public void printActionsAndReceiveInput(Terminal terminal) {
         inputBasicMode();
         responseIsReady = true;
     }

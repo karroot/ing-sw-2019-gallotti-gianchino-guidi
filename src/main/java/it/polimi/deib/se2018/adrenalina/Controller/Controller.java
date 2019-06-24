@@ -103,9 +103,11 @@ public class Controller implements Observer<ResponseInput>
 
         return virtualView.getConnections().get(index -1).getPlayer();
     }
-    public Controller()
+
+
+    public Controller(int codeArena,boolean terminator)
     {
-      this.setup = new Setup(this);
+      this.setup = new Setup(this,codeArena,terminator);
     }
 
     /**

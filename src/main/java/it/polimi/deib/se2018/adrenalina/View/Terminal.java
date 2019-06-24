@@ -27,7 +27,7 @@ public interface Terminal
     public void setColorOfPlayer(ColorId color);
 
     //Method to handle the input
-    public int inputInt(int min,int max);
+    int inputInt(int min,int max);
     void addOptionInput(String text);
     void addTextInput(String text);
     int inputInt(List<Integer> acceptedInt);

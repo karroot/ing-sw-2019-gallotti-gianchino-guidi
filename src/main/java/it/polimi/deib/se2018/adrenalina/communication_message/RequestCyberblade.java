@@ -1,7 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,9 +60,10 @@ public class RequestCyberblade extends RequestInput
      * 1) to move onto a square and whack 2 people
      * 2)whack somebody, move, and whack somebody else
      * 3) or whack 2 people and then move
+     * @param terminal
      */
     @Override
-    public void printActionsAndReceiveInput()
+    public void printActionsAndReceiveInput(Terminal terminal)
     {
         System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
 
