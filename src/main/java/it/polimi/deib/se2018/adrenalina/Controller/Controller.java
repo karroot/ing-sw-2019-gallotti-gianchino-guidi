@@ -33,7 +33,9 @@ public class Controller implements Observer<ResponseInput>
     private boolean endGame;
     private GameBoard g1=null;
     private Player roundPlayer=null;
-
+    private int skullCounter;
+    private boolean terminatorMode;
+    private int codeArena;
 
     //Controller deve avere un riferimento alla virtual view
     /*
@@ -105,9 +107,9 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    public Controller(int codeArena,boolean terminator)
+    public Controller()
     {
-      this.setup = new Setup(this,codeArena,terminator);
+      this.setup = new Setup(this);
     }
 
     /**
@@ -115,7 +117,8 @@ public class Controller implements Observer<ResponseInput>
      */
     public void startGame() throws ExecutionException, InterruptedException
     {
-        //qui vanno i settaggi iniziali
+g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
+g1.setTerminatorMode(terminatorMode);
         while (!endGame)
         {
             if(roundPlayer != null && roundPlayer.isFrenzy()) {

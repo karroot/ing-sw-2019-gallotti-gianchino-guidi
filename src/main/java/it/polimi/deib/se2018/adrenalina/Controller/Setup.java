@@ -17,14 +17,11 @@ public class Setup
 {
 
     Controller controller;
-    private int codeArena;
-    private boolean terminator;
 
-    public Setup(Controller controller,int codeArena,boolean terminator)
+    public Setup(Controller controller)
     {
         this.controller = controller;
-        this.codeArena = codeArena;
-        this.terminator = terminator;
+
     }
 
     public void spawn (ColorId player, Color PointOfSpawn)
@@ -164,7 +161,7 @@ public class Setup
 
     }
 
-    public Stack<AmmoTiles> ammoTilesStack ()
+    public Stack<AmmoTiles> createAmmoTilesStack ()
     {
         Stack<AmmoTiles> ammoTilesStack = new Stack<>();
 
@@ -303,7 +300,5 @@ public class Setup
         }
 
     }
-
-
 
 }
