@@ -6,8 +6,11 @@ import java.util.concurrent.Executors;
 public class AppServer
 {
     static public View view;
-    final static private int Port = 5000;
-    final static private int timer = 120;
+    final static private int Port = 5000; //port of the acceptor Socket(Port AcceptorRMI = Port +1)
+    final static private int timer = 10;//second of the timer for login
+    final static public boolean terinator = false;
+    final static public int skullCounter = 5;
+    final static public int codeArena = 4;
 
     public static void main(String[] args)
     {

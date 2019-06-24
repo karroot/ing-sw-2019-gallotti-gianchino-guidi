@@ -65,13 +65,12 @@ public class RequestCyberblade extends RequestInput
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
-
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
 
         terminal.addOptionInput("1:Colpire");
         terminal.addOptionInput("2:Spostarti");
 
-        int choice = inputInt(1, 2);
+        int choice = terminal.inputInt(1, 2);
 
         if (choice == 1) //Ask the necessary dates to do the effect
         {

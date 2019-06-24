@@ -109,18 +109,20 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    public Controller()
+    public Controller(boolean terminatorMode,int codeArena,int skullCounter)
     {
-      this.setup = new Setup(this);
+        this.setup = new Setup(this);
+        this.terminatorMode = terminatorMode;
     }
 
     /**
      * this method is used to start the game
      */
-    public void startGame() throws ExecutionException, InterruptedException
+    public void startGame()
     {
-g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
-g1.setTerminatorMode(terminatorMode);
+        g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
+        g1.setTerminatorMode(terminatorMode);
+
         while (!endGame)
         {
             if(roundPlayer != null && roundPlayer.isFrenzy()) {
@@ -128,9 +130,18 @@ g1.setTerminatorMode(terminatorMode);
                     endGame = true; //if the last player that have played is now on frenzy this is the last round for everyone
 
             }
-            if(g1!= null) {
-                for (Player p : g1.getAllPlayer()) {
-                    startRound(p);
+            if(g1!= null)
+            {
+                for (Player p : g1.getAllPlayer())
+                {
+                    try
+                    {
+                        startRound(p);
+                    }
+                    catch (InterruptedException|ExecutionException e)
+                    {
+                        //Do nothing
+                    }
                 }
                 firstRound=false;
             }
@@ -1736,11 +1747,10 @@ g1.setTerminatorMode(terminatorMode);
 
 
 
-    public void updateModel(){
+    public void updateModel()
+    {
 
-
-   virtualView.update(new UpdateModel(g1));
-
+        virtualView.update(new UpdateModel(g1));
 
     }
 

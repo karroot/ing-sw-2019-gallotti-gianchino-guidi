@@ -468,6 +468,12 @@ public class Player
         checkState(); //Check the state of the player
     }
 
+    public void setFrenzy(boolean frenzy)
+    {
+        this.frenzy = frenzy;
+        checkState();
+    }
+
     /**
      * //Calculate the number of marks done by a player
      * @param player player that done the marks

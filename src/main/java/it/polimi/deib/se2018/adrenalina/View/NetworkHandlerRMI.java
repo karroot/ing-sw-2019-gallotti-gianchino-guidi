@@ -93,6 +93,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         Naming.rebind("networkH",this);
 
         Socket  socket = new Socket(ip,port);
+        socket.getOutputStream().write(5000);
         socket.close();
 
         register(view);

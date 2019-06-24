@@ -2,8 +2,10 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.EndUpdateModel;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
@@ -57,8 +59,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         gameIsStarted = false;
         creationIsFinished = false;
         state = new StartLogin(this);
-        //controller = new Controller();
-        //ToDO passare al controller i dati necessari
+        controller = new Controller(AppServer.terinator,AppServer.codeArena,AppServer.skullCounter);
     }
 
     /**
@@ -108,7 +109,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     /**
      * If there were changes in the model the controller use this method to send the model updated at all player active
      * The method continues to send the message until the client doesn't respond with a message of correct reception
-     * About the connections no active the message will not send
+     * About the connections that are no active the message will not send
      * @param message message to send that contain the model updated
      */
     @Override
@@ -120,11 +121,18 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
             try
             {   //If the connection is RMI use the method remote update of virtual view
                 //Else use the method "send" of the connection Socket
-                t.send(message); //Manca il controllo della ricezione del messaggio
+                t.send(message);
+                MessageNet receive = t.receive();
+
+                while (!(t.receive() instanceof EndUpdateModel))
+                {
+                    t.send(message);
+                    receive = t.receive();
+                }
             }
             catch (Exception e)
             {
-
+                System.out.println("Copia model: non mandata al player:"+t.getPlayer());
             }
         }
 
@@ -258,6 +266,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
             //Si deve chiamare il metodo dal controller che avvia la logica della partita todo
             gameIsStarted = true;
             System.out.println("Partita Iniziata");
+            controller.startGame();
         }
 
 
@@ -326,7 +335,7 @@ class AcceptorRMI implements Runnable
             try {
                 Socket newSocket = serverSocket.accept();
                 ObjectInputStream stream = new ObjectInputStream(newSocket.getInputStream());
-                int portNumber = newSocket.getPort(); //Obtain the number of port of the ServerRMI
+                int portNumber = newSocket.getPort() + 1; //Obtain the number of port of the ServerRMI
 
                 String lookupName = "//" + newSocket.getInetAddress() + ":" + portNumber + "//networkH";
                 InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup(lookupName);
