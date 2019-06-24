@@ -22,10 +22,10 @@ public class Furnace extends WeaponCard
 
 
     /**
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public Furnace( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
@@ -37,9 +37,9 @@ public class Furnace extends WeaponCard
 
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode () throws IllegalStateException
     {
@@ -73,8 +73,8 @@ public class Furnace extends WeaponCard
 
 
     /**
-     *
-     * @return
+     * This method checks the target for the basic mode.
+     * @return a list of the possible rooms to target
      */
     public List<ColorRoom> checkBasicMode ()
     {
@@ -101,8 +101,8 @@ public class Furnace extends WeaponCard
     }
 
     /**
-     *
-     * @param roomColor
+     *  This method is for the basic mode of the weapon.
+     * @param roomColor is the color of the room to fire
      */
     public void basicMode (ColorRoom roomColor)
     {
@@ -122,8 +122,8 @@ public class Furnace extends WeaponCard
 
 
     /**
-     *
-     * @return
+     * Checks the target for the second mode of the weapon
+     * @return a list of String of coordinate of the possible squares to target
      */
     public List<String> checkInCozyFireMode () {
 
@@ -149,8 +149,8 @@ public class Furnace extends WeaponCard
     }
 
     /**
-     *
-     * @param squareTargetCoordinatesAsString
+     * This method implements the alternative mode of the weapon.
+     * @param squareTargetCoordinatesAsString is the target square
      */
     public void inCozyFireMode (String squareTargetCoordinatesAsString)
     {

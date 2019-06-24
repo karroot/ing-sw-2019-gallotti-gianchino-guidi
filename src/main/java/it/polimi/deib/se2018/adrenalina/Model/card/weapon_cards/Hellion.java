@@ -22,11 +22,10 @@ public class Hellion extends WeaponCard
     private boolean[] availableMethod = new boolean[2];
 
     /**
-     * This is the constructor for the card Hellion
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public Hellion( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
@@ -37,9 +36,9 @@ public class Hellion extends WeaponCard
     }
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
@@ -76,10 +75,9 @@ public class Hellion extends WeaponCard
 
 
     /**
-     * Return the list of all target available for using the basic mode of this weapon
+     * First of 3 methods for check the targets for the basic mode.
      *
-     * @return all player that can be affected with the weapon in basic mode
-     * @exception IllegalStateException if the basic mode can't be used
+     * @return and hashmap of squares and arraylist of players of possible targets
      */
     private HashMap<Square, ArrayList<Player>> checkBasicModeFull()
     {
@@ -100,9 +98,9 @@ public class Hellion extends WeaponCard
     }
 
     /**
+     * Second of 3 methods for check the targets for the basic mode.
      *
-     * @return
-     * @throws IllegalStateException
+     * @return a list of string of possible squares target
      */
     private List<String> checkBasicModeSquares ()
     {
@@ -118,12 +116,11 @@ public class Hellion extends WeaponCard
     }
 
     /**
-     *
-     * @param squareTargetCoordinatesAsString
-     * @return
-     * @throws IllegalStateException
+     * Third of 3 methods for check the targets for the basic mode.
+     * @param squareTargetCoordinatesAsString is the square target
+     * @return a list of ColorId of possible targets in that square
      */
-    private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString) throws IllegalStateException
+    private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
     {
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
@@ -147,8 +144,9 @@ public class Hellion extends WeaponCard
     }
 
     /**
+     * Method to check the targets for the basic mode.
      *
-     * @return
+     * @return an hashmap of String and lists of ColorId
      */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
@@ -173,9 +171,10 @@ public class Hellion extends WeaponCard
     }
 
     /**
+     *Method for the basic mode of this weapon
      *
-     * @param colorPlayer
-     * @throws IllegalStateException
+     * @param colorPlayer is the target
+     * @throws IllegalStateException if the mode is not available
      */
     public void basicMode(ColorId colorPlayer) throws IllegalStateException
     {
@@ -194,29 +193,30 @@ public class Hellion extends WeaponCard
 
 
     /**
+     * It checks the targets for the NanoTracerMode
      *
-     * @return
-     * @throws IllegalStateException
+     * @return a list of string of square coordinates that are the possible target squares
      */
-    private List<String> checkNanoTracerModeSquare () throws IllegalStateException
+    private List<String> checkNanoTracerModeSquare ()
     {
         return checkBasicModeSquares();
     }
 
     /**
+     * It checks the targets for the NanoTracerMode
      *
-     * @param squareTargetCoordinatesAsString
-     * @return
-     * @throws IllegalStateException
+     * @param squareTargetCoordinatesAsString is the target square
+     * @return a list of ColorId of possible target players
      */
-    private List<ColorId>  checkNanoTracerModePlayer (String squareTargetCoordinatesAsString) throws IllegalStateException
+    private List<ColorId>  checkNanoTracerModePlayer (String squareTargetCoordinatesAsString)
     {
         return checkBasicModePlayers(squareTargetCoordinatesAsString);
     }
 
     /**
+     * It is the full implementation to check the targets for the nano tracer mode
      *
-     * @return
+     * @return an hashmap of String and lists of ColorId
      */
     public HashMap<String, List<ColorId>> checkNanoTracerMode ()
     {
@@ -240,9 +240,10 @@ public class Hellion extends WeaponCard
     }
 
     /**
+     * It implements the alternative mode for the weapon
      *
-     * @param colorPlayer
-     * @throws IllegalStateException
+     * @param colorPlayer is the target player
+     * @throws IllegalStateException if the mode is not available
      */
     public void nanoTracerMode(ColorId colorPlayer) throws IllegalStateException
     {

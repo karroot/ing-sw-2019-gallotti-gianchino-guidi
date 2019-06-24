@@ -38,14 +38,6 @@ public class Setup
         //resetta i danni
     }
 
-    public void replenishBoard ()
-    {
-
-    }
-
-
-
-
     public void initialize ()
     {
 
@@ -109,33 +101,33 @@ public class Setup
     {
         Stack<PowerUpCard> powerUpCardStack = new Stack<>();
 
-        PowerUpCard newtonRed1 = new Newton(RED, 291);
-        PowerUpCard newtonRed2 = new Newton(RED, 292);
-        PowerUpCard newtonBlue1 = new Newton(BLUE,281);
-        PowerUpCard newtonBlue2 = new Newton(BLUE, 282);
-        PowerUpCard newtonYellow1 = new Newton(YELLOW, 2101);
-        PowerUpCard newtonYellow2 = new Newton(YELLOW, 2102);
+        PowerUpCard newtonRed1 = new Newton(RED, 29);
+        PowerUpCard newtonRed2 = new Newton(RED, 29);
+        PowerUpCard newtonBlue1 = new Newton(BLUE,28);
+        PowerUpCard newtonBlue2 = new Newton(BLUE, 28);
+        PowerUpCard newtonYellow1 = new Newton(YELLOW, 210);
+        PowerUpCard newtonYellow2 = new Newton(YELLOW, 210);
 
-        PowerUpCard teleporterRed1 = new Teleporter(RED, 2121);
-        PowerUpCard teleporterRed2 = new Teleporter(RED, 2122);
-        PowerUpCard teleporterBlue1 = new Teleporter(BLUE,2111);
-        PowerUpCard teleporterBlue2 = new Teleporter(BLUE, 2112);
-        PowerUpCard teleporterYellow1 = new Teleporter(YELLOW, 2131);
-        PowerUpCard teleporterYellow2 = new Teleporter(YELLOW, 2132);
+        PowerUpCard teleporterRed1 = new Teleporter(RED, 212);
+        PowerUpCard teleporterRed2 = new Teleporter(RED, 212);
+        PowerUpCard teleporterBlue1 = new Teleporter(BLUE,211);
+        PowerUpCard teleporterBlue2 = new Teleporter(BLUE, 211);
+        PowerUpCard teleporterYellow1 = new Teleporter(YELLOW, 213);
+        PowerUpCard teleporterYellow2 = new Teleporter(YELLOW, 213);
 
-        PowerUpCard targettingScopeRed1 = new TargettingScope(RED, 261);
-        PowerUpCard targettingScopeRed2 = new TargettingScope(RED, 262);
-        PowerUpCard targettingScopeBlue1 = new TargettingScope(BLUE,251);
-        PowerUpCard targettingScopeBlue2 = new TargettingScope(BLUE, 252);
-        PowerUpCard targettingScopeYellow1 = new TargettingScope(YELLOW, 271);
-        PowerUpCard targettingScopeYellow2 = new TargettingScope(YELLOW, 272);
+        PowerUpCard targettingScopeRed1 = new TargettingScope(RED, 26);
+        PowerUpCard targettingScopeRed2 = new TargettingScope(RED, 26);
+        PowerUpCard targettingScopeBlue1 = new TargettingScope(BLUE,25);
+        PowerUpCard targettingScopeBlue2 = new TargettingScope(BLUE, 25);
+        PowerUpCard targettingScopeYellow1 = new TargettingScope(YELLOW, 27);
+        PowerUpCard targettingScopeYellow2 = new TargettingScope(YELLOW, 27);
 
-        PowerUpCard tagbackGrenadeRed1 = new TagbackGranade(RED, 231);
-        PowerUpCard tagbackGrenadeRed2 = new TagbackGranade(RED, 232);
-        PowerUpCard tagbackGrenadeBlue1 = new TagbackGranade(BLUE,221);
-        PowerUpCard tagbackGrenadeBlue2 = new TagbackGranade(BLUE, 222);
-        PowerUpCard tagbackGrenadeYellow1 = new TagbackGranade(YELLOW, 241);
-        PowerUpCard tagbackGrenadeYellow2 = new TagbackGranade(YELLOW, 242);
+        PowerUpCard tagbackGrenadeRed1 = new TagbackGranade(RED, 23);
+        PowerUpCard tagbackGrenadeRed2 = new TagbackGranade(RED, 23);
+        PowerUpCard tagbackGrenadeBlue1 = new TagbackGranade(BLUE,22);
+        PowerUpCard tagbackGrenadeBlue2 = new TagbackGranade(BLUE, 22);
+        PowerUpCard tagbackGrenadeYellow1 = new TagbackGranade(YELLOW, 24);
+        PowerUpCard tagbackGrenadeYellow2 = new TagbackGranade(YELLOW, 24);
 
 
         powerUpCardStack.add(newtonRed1);
@@ -182,18 +174,18 @@ public class Setup
         JustAmmo justAmmo4 = new JustAmmo (45, RED, YELLOW);
         JustAmmo justAmmo5 = new JustAmmo (46, BLUE, YELLOW);
         JustAmmo justAmmo6= new JustAmmo (47, BLUE, RED);
-        JustAmmo justAmmo7 = new JustAmmo (48, YELLOW, BLUE);
-        JustAmmo justAmmo8 = new JustAmmo (49, YELLOW, RED);
-        JustAmmo justAmmo9 = new JustAmmo (410, RED, BLUE);
-        JustAmmo justAmmo10 = new JustAmmo (411, RED, YELLOW);
-        JustAmmo justAmmo11 = new JustAmmo (412, BLUE, YELLOW);
-        JustAmmo justAmmo12 = new JustAmmo (413, BLUE, RED);
-        JustAmmo justAmmo13 = new JustAmmo (414, YELLOW, BLUE);
-        JustAmmo justAmmo14 = new JustAmmo (415, YELLOW, RED);
-        JustAmmo justAmmo15 = new JustAmmo (416, RED, BLUE);
-        JustAmmo justAmmo16 = new JustAmmo (417, RED, YELLOW);
-        JustAmmo justAmmo17 = new JustAmmo (418, BLUE, YELLOW);
-        JustAmmo justAmmo18 = new JustAmmo (419, BLUE, RED);
+        JustAmmo justAmmo7 = new JustAmmo (42, YELLOW, BLUE);
+        JustAmmo justAmmo8 = new JustAmmo (43, YELLOW, RED);
+        JustAmmo justAmmo9 = new JustAmmo (44, RED, BLUE);
+        JustAmmo justAmmo10 = new JustAmmo (45, RED, YELLOW);
+        JustAmmo justAmmo11 = new JustAmmo (46, BLUE, YELLOW);
+        JustAmmo justAmmo12 = new JustAmmo (47, BLUE, RED);
+        JustAmmo justAmmo13 = new JustAmmo (42, YELLOW, BLUE);
+        JustAmmo justAmmo14 = new JustAmmo (43, YELLOW, RED);
+        JustAmmo justAmmo15 = new JustAmmo (44, RED, BLUE);
+        JustAmmo justAmmo16 = new JustAmmo (45, RED, YELLOW);
+        JustAmmo justAmmo17 = new JustAmmo (46, BLUE, YELLOW);
+        JustAmmo justAmmo18 = new JustAmmo (47, BLUE, RED);
 
         PowerAndAmmo powerAndAmmo1 = new PowerAndAmmo (420, YELLOW, YELLOW);
         PowerAndAmmo powerAndAmmo2 = new PowerAndAmmo (421, RED, RED);
@@ -204,15 +196,15 @@ public class Setup
         PowerAndAmmo powerAndAmmo7 = new PowerAndAmmo (426, YELLOW, RED);
         PowerAndAmmo powerAndAmmo8 = new PowerAndAmmo (427, YELLOW, BLUE);
         PowerAndAmmo powerAndAmmo9 = new PowerAndAmmo(428, RED, BLUE);
-        PowerAndAmmo powerAndAmmo10 = new PowerAndAmmo (429, YELLOW, YELLOW);
-        PowerAndAmmo powerAndAmmo11 = new PowerAndAmmo (430, RED, RED);
-        PowerAndAmmo powerAndAmmo12 = new PowerAndAmmo (431, BLUE, BLUE);
-        PowerAndAmmo powerAndAmmo13 = new PowerAndAmmo (432, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo14 = new PowerAndAmmo (433, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo15 = new PowerAndAmmo (434, RED, BLUE);
-        PowerAndAmmo powerAndAmmo16 = new PowerAndAmmo(435, YELLOW, RED);
-        PowerAndAmmo powerAndAmmo17 = new PowerAndAmmo(436, YELLOW, BLUE);
-        PowerAndAmmo powerAndAmmo18 = new PowerAndAmmo (437, RED, BLUE);
+        PowerAndAmmo powerAndAmmo10 = new PowerAndAmmo (420, YELLOW, YELLOW);
+        PowerAndAmmo powerAndAmmo11 = new PowerAndAmmo (421, RED, RED);
+        PowerAndAmmo powerAndAmmo12 = new PowerAndAmmo (422, BLUE, BLUE);
+        PowerAndAmmo powerAndAmmo13 = new PowerAndAmmo (423, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo14 = new PowerAndAmmo (424, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo15 = new PowerAndAmmo (425, RED, BLUE);
+        PowerAndAmmo powerAndAmmo16 = new PowerAndAmmo(426, YELLOW, RED);
+        PowerAndAmmo powerAndAmmo17 = new PowerAndAmmo(427, YELLOW, BLUE);
+        PowerAndAmmo powerAndAmmo18 = new PowerAndAmmo (428, RED, BLUE);
 
         ammoTilesStack.add(justAmmo1);
         ammoTilesStack.add(justAmmo2);
@@ -266,17 +258,25 @@ public class Setup
 
         int j = controller.numberOfPlayer();
 
+        boolean isFirst = true;
+
         for (int i=1; i==j; i++)
         {
-            playerList.add(new Player(controller.getColorOfPlayer(i), controller.getName(i), controller.getHeroComment(i),false));//todo Sistemarlo
+            if (isFirst)
+            {
+                playerList.add(new Player(controller.getColorOfPlayer(i), controller.getName(i), controller.getHeroComment(i), true));
+                isFirst = false;
+            }
+            else
+                {
+                playerList.add(new Player(controller.getColorOfPlayer(i), controller.getName(i), controller.getHeroComment(i),false));
+                }
         }
-
         return playerList;
     }
 
     public void replenishBoard (GameBoard gameBoard)
     {
-        //controllo stack vuoti powerup+ammo
 
         for (Room roomIterate : gameBoard.getRoomList())
         {
@@ -286,7 +286,7 @@ public class Setup
                 {
                     if (((SpawnPoint) squareIterate).getWeaponCardList().size()<3) {
                         try{
-                        ((SpawnPoint) squareIterate).addNewWeapon(); //se lancia eccezione è un problema?
+                        ((SpawnPoint) squareIterate).addNewWeapon();
                     }
                     catch(NullPointerException e){
 

@@ -22,7 +22,12 @@ public class RocketLauncher extends WeaponCard
     private boolean[] availableMethod = new boolean[4];
     private Player dummie = new Player(ColorId.BLUE,"a","a",false);
 
-
+    /**
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
+     */
     public RocketLauncher( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
         this.name = "Rocket Launcher";
@@ -32,17 +37,12 @@ public class RocketLauncher extends WeaponCard
     }
 
 
-    //mod base: Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square.
 
-    //with rocket jump: Move 1 or 2 squares. This effect can be used either before or after the basic effect.
-
-    //with fragmenting warhead: During the basic effect, deal 1 damage to every player on your target's original square – including the target, even if you move it.
-
-    //Notes: If you use the rocket jump before the basic effect, you consider only your new square when determining if a target is legal.
-    // You can even move off a square so you can shoot someone on it.
-    // If you use the fragmenting warhead, you deal damage to everyone on the target's square before you move the target – your target will take 3 damage total.
-
-
+    /**
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
+     */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
@@ -78,6 +78,12 @@ public class RocketLauncher extends WeaponCard
 
     }
 
+    /**
+     * It checks the target for the basic mode
+     *
+     * @return a list of ColorId of possible targets
+     * @throws IllegalStateException if the mode is not available
+     */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[0]) //check mode
@@ -94,6 +100,14 @@ public class RocketLauncher extends WeaponCard
         return colorIdList;//Returns all targets
     }
 
+    /**
+     *
+     * @param colorPlayerTarget
+     * @param orderEffect
+     * @param squareCoordinatesAsStringPlayertoMove
+     * @param squareCoordinatesAsStringTargetToMove
+     * @throws IllegalStateException
+     */
     public void basicMode (ColorId colorPlayerTarget , String[] orderEffect, String squareCoordinatesAsStringPlayertoMove, String squareCoordinatesAsStringTargetToMove) throws IllegalStateException {
         if (!checkAvailableMode()[0]) //check mode
             throw new IllegalStateException("Modalità xxx dell'arma: " + name + " non eseguibile");
@@ -144,6 +158,10 @@ public class RocketLauncher extends WeaponCard
     }
 
 
+    /**
+     *
+     * @return
+     */
     public List<ColorId> checkPlayersWithRocketJump ()
     {
         Set<Player> playerSet = checkPhaseGlide();
@@ -155,6 +173,10 @@ public class RocketLauncher extends WeaponCard
     }
 
 
+    /**
+     *
+     * @return
+     */
     public List<ColorId> checkWithFragmentingWarhead ()
     {
         List<Player> playersTargetList;
@@ -169,6 +191,11 @@ public class RocketLauncher extends WeaponCard
     }
 
 
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     private Set<Player> checkPhaseGlide() throws IllegalStateException
     {
         Set<Player> playerReachable = new HashSet<>();
@@ -188,6 +215,11 @@ public class RocketLauncher extends WeaponCard
 
     }
 
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     public List<String> checkSquaresToMove() throws IllegalStateException
     {
 
@@ -198,6 +230,11 @@ public class RocketLauncher extends WeaponCard
         return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
     }
 
+
+    /**
+     *
+     * @return
+     */
     public List<ColorId> checkPlayersBasicMode ()
     {
         List<ColorId> players = new ArrayList<>();
@@ -210,6 +247,8 @@ public class RocketLauncher extends WeaponCard
 
         return players;
     }
+
+
     /**
      *
      * @param

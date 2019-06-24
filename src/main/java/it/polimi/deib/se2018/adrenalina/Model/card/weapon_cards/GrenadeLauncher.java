@@ -22,10 +22,10 @@ public class GrenadeLauncher extends WeaponCard
 
 
     /**
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public GrenadeLauncher (Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
@@ -36,9 +36,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
@@ -65,9 +65,10 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
+     * This method checks the possible targets for the basic mode of this weapon.
      *
-     * @return
-     * @throws IllegalStateException
+     * @return a list of players as possible targets
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     private List<Player> checkBasicModePlayers() throws IllegalStateException
     {
@@ -79,6 +80,11 @@ public class GrenadeLauncher extends WeaponCard
         return (List) playersTarget; //Returns all targets
     }
 
+    /**
+     * This method checks the possible targets for the basic mode of this weapon.
+     *
+     * @return a list of ColorId of possible targets
+     */
     public List<ColorId> checkBasicMode()
     {
         if (!checkAvailableMode()[0])//check mode
@@ -96,6 +102,11 @@ public class GrenadeLauncher extends WeaponCard
 
     }
 
+    /**
+     * Checks the square target for the basic mode.
+     *
+     * @return an hashmap of ColorId and square as strings
+     */
     public HashMap<ColorId, List<String>> checkBasicModeSquares ()
     {
         HashMap<ColorId, List<String>> hashMapToReturn = new HashMap<>();
@@ -124,10 +135,11 @@ public class GrenadeLauncher extends WeaponCard
 
 
     /**
+     * This method implements the basic mode of the weapon.
      *
-     * @param colorPlayer
-     * @param squareToMoveCoordinatesAsString
-     * @throws IllegalStateException
+     * @param colorPlayer is the target player
+     * @param squareToMoveCoordinatesAsString is the square where the player has to be moved
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public void basicMode(ColorId colorPlayer, String squareToMoveCoordinatesAsString) throws IllegalStateException
     {
@@ -145,8 +157,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
+     * Checks the square target for the extra grenade.
      *
-     * @return
+     * @return a list of square coordinate of possible targets
      */
     public List<String> checkExtraGrenade ()
     {
@@ -170,8 +183,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
+     * It implements the extra Granade for this weapon.
      *
-     * @param squareTargetCoordinatesAsString
+     * @param squareTargetCoordinatesAsString is the square target
      */
     public void extraGrenade (String squareTargetCoordinatesAsString)
     {

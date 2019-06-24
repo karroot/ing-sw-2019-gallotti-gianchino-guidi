@@ -24,11 +24,10 @@ public class HeatSeeker extends WeaponCard
 
 
     /**
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
-     * @throws NullPointerException
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public HeatSeeker( Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
@@ -40,9 +39,9 @@ public class HeatSeeker extends WeaponCard
     }
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode() throws IllegalStateException {
         if (player == null)
@@ -60,9 +59,10 @@ public class HeatSeeker extends WeaponCard
 
 
     /**
+     * It checks the possible targets for the basic mode
      *
-     * @return
-     * @throws IllegalStateException
+     * @return a list of ColorId of possible targets
+     * @throws IllegalStateException if the mode is not available
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
@@ -73,12 +73,12 @@ public class HeatSeeker extends WeaponCard
     }
 
     /**
+     *  It implements the basic mode of the weapon
      *
-     * @param colorPlayer
-     * @throws SquareNotInGameBoard
-     * @throws IllegalStateException
+     * @param colorPlayer is the target player as ColorId
+     * @throws IllegalStateException if the mode is not available
      */
-    public void basicMode(ColorId colorPlayer) throws SquareNotInGameBoard,IllegalStateException
+    public void basicMode(ColorId colorPlayer) throws IllegalStateException
     {
         if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
@@ -91,8 +91,9 @@ public class HeatSeeker extends WeaponCard
 
 
     /**
+     * Checks the possible target for the basic mode
      *
-     * @return
+     * @return a list of ColorId of possible targets
      */
     private List<ColorId> checkPlayers ()
     {
@@ -122,12 +123,7 @@ public class HeatSeeker extends WeaponCard
     @Override
     public void useWeapon(ResponseInput responseInput)
     {
-
-        try {
             basicMode(((ResponseHeatSeeker) responseInput).getTagetBasicMode());
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
 
     }
 

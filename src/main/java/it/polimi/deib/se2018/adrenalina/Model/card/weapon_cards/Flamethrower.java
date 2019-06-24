@@ -22,10 +22,10 @@ public class Flamethrower extends WeaponCard
     private boolean[] availableMethod = new boolean[2];
 
     /**
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public Flamethrower( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
@@ -35,10 +35,11 @@ public class Flamethrower extends WeaponCard
         redAmmoCost = 1;
     }
 
+
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are avaiable to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
@@ -66,9 +67,9 @@ public class Flamethrower extends WeaponCard
 
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * This method finds all the possible targets in all the directions.
+     * @return an hashmap with CardinalDirection as key and an array of dimension 2 of a List Players
+     * @throws IllegalStateException if this weapon doesn not belong to any player
      */
     private HashMap<CardinalDirection, ArrayList<Player>[]> checkBasicModePrivate() throws IllegalStateException
     {
@@ -153,8 +154,8 @@ public class Flamethrower extends WeaponCard
     }
 
     /**
-     *
-     * @return
+     * This method converts an hashmap of CardinalDirections and Players into CardinalDirections and ColorId
+     * @return an hashmap with CardinalDirection as key and an array of dimension 2 of a list of ColorId
      */
     public HashMap<CardinalDirection, ArrayList<ColorId>[]> checkBasicModeForMessage ()
     {
@@ -193,10 +194,10 @@ public class Flamethrower extends WeaponCard
 
 
     /**
-     *
-     * @param colorPlayerTarget1
-     * @param colorPlayerTarget2
-     * @throws IllegalStateException
+     * This is the basic mode of the weapon.
+     * @param colorPlayerTarget1 is the target in the fist square
+     * @param colorPlayerTarget2 is the target in the square behind the first one
+     * @throws IllegalStateException if this weapon doesn not belong to any player
      */
     public void basicMode(ColorId colorPlayerTarget1, ColorId colorPlayerTarget2) throws IllegalStateException
     {
@@ -211,8 +212,9 @@ public class Flamethrower extends WeaponCard
     }
 
     /**
-     *
-     * @return
+     * It checks the target of the Barbecue mode.
+     * @return an hashmap with CardinalDirection as key and an array of dimension 2 of a List Players
+     * @throws IllegalStateException if this weapon doesn not belong to any player
      */
     public  HashMap<CardinalDirection, ArrayList<Player>[]> checkBarbecueMode()
     {
@@ -223,9 +225,9 @@ public class Flamethrower extends WeaponCard
     }
 
     /**
-     *
-     * @param cardinalDirection
-     * @param colorTargetPlayerInThisDirection
+     * It implements the barbecue mode of the weapon
+     * @param cardinalDirection is the direction where the player decided to fire
+     * @param colorTargetPlayerInThisDirection is a target in that direction
      */
     public void barbecueMode (CardinalDirection cardinalDirection, ColorId colorTargetPlayerInThisDirection)
     {
@@ -240,9 +242,9 @@ public class Flamethrower extends WeaponCard
     }
 
     /**
-     *
-     * @param square1Target
-     * @param squareBehindTarget
+     * This method implements the damage for the barbecue mode
+     * @param square1Target the first square where the weapon will fire
+     * @param squareBehindTarget the square behind the fist one in the same direction to fire
      */
     private void barbecueModePrivate (Square square1Target, Square squareBehindTarget)
     {

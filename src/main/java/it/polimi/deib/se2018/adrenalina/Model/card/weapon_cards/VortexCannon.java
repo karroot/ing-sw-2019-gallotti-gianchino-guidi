@@ -19,10 +19,10 @@ public class VortexCannon extends WeaponCard
 
 
     /**
-     *
-     * @param color
-     * @param weaponID
-     * @param isLoaded
+     * It is the public constructor for the class.
+     * @param color is the color of the card
+     * @param weaponID is the unique id to identify the card
+     * @param isLoaded to indicate if the weapon is loaded
      */
     public VortexCannon( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
@@ -34,9 +34,9 @@ public class VortexCannon extends WeaponCard
 
 
     /**
-     *
-     * @return
-     * @throws IllegalStateException
+     * It checks which modes of the weapon can be used
+     * @return an array of boolean of which modes are available to the players
+     * @throws IllegalStateException if this card doesn't belong at a player
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
@@ -96,7 +96,10 @@ public class VortexCannon extends WeaponCard
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     private List<String> checkBasicModeSquares ()
     {
         HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
@@ -111,6 +114,11 @@ public class VortexCannon extends WeaponCard
     }
 
 
+    /**
+     *
+     * @param squareTargetCoordinatesAsString
+     * @return
+     */
     private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
     {
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
@@ -134,6 +142,10 @@ public class VortexCannon extends WeaponCard
 
     }
 
+    /**
+     *
+     * @return
+     */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
         if (!checkAvailableMode()[0])//check mode
@@ -155,6 +167,12 @@ public class VortexCannon extends WeaponCard
 
     }
 
+
+    /**
+     *
+     * @param colorPlayer
+     * @param squareToMoveCoordinatesAsString
+     */
     public void basicMode (ColorId colorPlayer, String squareToMoveCoordinatesAsString)
     {
         if (!checkAvailableMode()[0])//check mode
