@@ -36,7 +36,7 @@ public class Controller implements Observer<ResponseInput>
     private GameBoard g1=null;
     private Player roundPlayer=null;
     private int skullCounter;
-    private boolean terminatorMode;
+    private boolean terminatorMode=false;
     private int codeArena;
 
     //Controller deve avere un riferimento alla virtual view
@@ -113,6 +113,8 @@ public class Controller implements Observer<ResponseInput>
     {
         this.setup = new Setup(this);
         this.terminatorMode = terminatorMode;
+        this.codeArena=codeArena;
+        this.skullCounter=skullCounter;
     }
 
     /**
@@ -121,7 +123,8 @@ public class Controller implements Observer<ResponseInput>
     public void startGame()
     {
         g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
-        g1.setTerminatorMode(terminatorMode);
+        if(g1.getAllPlayer().size()<5)
+            g1.setTerminatorMode(terminatorMode);
 
         while (!endGame)
         {
@@ -163,6 +166,8 @@ public class Controller implements Observer<ResponseInput>
         {
             if(p.isDead())
             {
+                if(skullCounter>0)
+                    skullCounter--;
 
                 temppoint = p.calculateScoreForEachPlayer();
                 for(Player c : g1.getAllPlayer())
