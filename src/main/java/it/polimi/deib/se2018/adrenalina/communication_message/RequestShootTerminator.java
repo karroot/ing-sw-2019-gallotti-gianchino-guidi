@@ -33,11 +33,11 @@ public class RequestShootTerminator extends  RequestInput {
     {
         int i = 1;
 
-        System.out.println("Scegli un nemico a cui sparare:");
+        terminal.addTextInput("Scegli un nemico a cui sparare:");
 
         for (ColorId t: enemies)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 

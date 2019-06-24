@@ -51,21 +51,21 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     public void printActionsAndReceiveInput(Terminal terminal) {
         int choice=0;
 
-        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
+        terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1: solo attacco base");
+            terminal.addOptionInput("1: solo attacco base");
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2: attacco base e buco nero");
+            terminal.addOptionInput("2: attacco base e buco nero");
         }
 
         if (availableMethod[1])//Print the possible effects
         {
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
         }
-        else choice = inputInt(1, 1);
+        else choice = terminal.inputInt(1, 1);
 
         inputBasicMode();
 
@@ -86,28 +86,28 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         List<ColorId> colorIdList = playersBasicMode;
         List<String> squaresPossiblesForVortexAsString = squaresListBasicMode;
 
-        System.out.println("Scegli uno square bersaglio dove aprire il vortice:");
+        terminal.addTextInput("Scegli uno square bersaglio dove aprire il vortice:");
 
         for (String squareAsStringIterate : squaresPossiblesForVortexAsString)
         {
-            System.out.println(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1); //todo posso fare così??
+        int choice = terminal.inputInt(1, i - 1); //todo posso fare così??
 
         targetVortexSquareAsString = squaresPossiblesForVortexAsString.get(choice - 1);
 
         //Ask if the user wants move the target
-        System.out.println("Scegli un player bersaglio:");
+        terminal.addTextInput("Scegli un player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             i++;
         }
 
-        choice = inputInt(1, i - 1);
+        choice = terminal.inputInt(1, i - 1);
 
        targetPlayerBasicMode = colorIdList.get(choice - 1);
 
@@ -122,14 +122,14 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         List<ColorId> colorIdList = new ArrayList<>();
         colorIdList = playersBlackHoleMode;
 
-        System.out.println("Scegli un bersaglio per la modalità black hole:");
+        terminal.addTextInput("Scegli un bersaglio per la modalità black hole:");
 
         for (ColorId colorIdIterate : colorIdList) {
-            System.out.println(i + " " + colorIdList);
+            terminal.addOptionInput(i + " " + colorIdList);
             i++;
         }
 
-        int choice = inputInt(1, i - 1); //todo posso fare così??
+        int choice = terminal.inputInt(1, i - 1); //todo posso fare così??
 
         target1BlackHoleMode = colorIdList.get(choice - 1);
         colorIdList.remove(choice - 1);
@@ -138,14 +138,14 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
             i = 1;
 
-            System.out.println("Scegli un secondo bersaglio per la modalità buco nero:");
+            terminal.addTextInput("Scegli un secondo bersaglio per la modalità buco nero:");
 
             for (ColorId colorIdIterate : colorIdList) {
-                System.out.println(i + " " + colorIdList);
+                terminal.addOptionInput(i + " " + colorIdList);
                 i++;
             }
 
-            choice = inputInt(1, i - 1);
+            choice = terminal.inputInt(1, i - 1);
             target2BlackHoleMode = colorIdList.get(choice - 1);
         }
     }

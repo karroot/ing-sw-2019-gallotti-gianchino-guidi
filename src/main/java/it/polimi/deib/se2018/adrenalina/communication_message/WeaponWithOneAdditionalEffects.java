@@ -27,16 +27,16 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
         int choice = 0; //Da completare
         List<Integer> acceptedInt = new LinkedList<>();
 
-        System.out.println("Scegli modalità Arma:");
+        terminal.addTextInput("Scegli modalità Arma:");
 
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1:modalità base da sola");
+            terminal.addOptionInput("1:modalità base da sola");
             acceptedInt.add(1);
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2: modalità base con  "+ nameAdditionalmode);
+            terminal.addOptionInput("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
 
@@ -44,10 +44,10 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 
         //Handle the possible choice of the users asking the correct inputs
         if (availableMethod[0] && availableMethod[1])
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
 
         if (availableMethod[0] && !availableMethod[1])
-            choice = inputInt(1, 1);
+            choice = terminal.inputInt(1, 1);
 
         inputBasicMode();//Ask all the information necessary to use the basic mode
         mode = false; //Set the attribute mode
@@ -67,15 +67,15 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId t:playersBasicMode)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         targetBasicMode = playersBasicMode.get(anInt -1);
 

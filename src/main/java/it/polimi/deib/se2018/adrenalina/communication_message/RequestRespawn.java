@@ -38,15 +38,15 @@ public class RequestRespawn extends  RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli il colore dello square dove spawnare:");
+        terminal.addTextInput("Scegli il colore dello square dove spawnare:");
 
         for (Color t:playerPowerUp)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         targetSpawnPoint = anInt ;
 

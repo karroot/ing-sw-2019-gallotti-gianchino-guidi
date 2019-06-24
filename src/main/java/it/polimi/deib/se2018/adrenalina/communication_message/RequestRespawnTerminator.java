@@ -22,12 +22,12 @@ public class RequestRespawnTerminator extends  RequestInput {
     {
         int i = 1;
 
-        System.out.println("Scegli il colore dello square dove spawnare:");
+        terminal.addTextInput("Scegli il colore dello square dove spawnare:");
 
 
-            System.out.println("1: rosso");
-            System.out.println("2: blu");
-            System.out.println("3: giallo");
+            terminal.addOptionInput("1: rosso");
+            terminal.addOptionInput("2: blu");
+            terminal.addOptionInput("3: giallo");
 
         targetSpawnPoint  = inputInt(1, i - 1);
 

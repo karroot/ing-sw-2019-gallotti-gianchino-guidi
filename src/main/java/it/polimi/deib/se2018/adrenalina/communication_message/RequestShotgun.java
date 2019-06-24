@@ -48,15 +48,15 @@ public class RequestShotgun extends WeaponWithModeAlternative
     {
         int  k = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId b:targetsAlternativeMode)
         {
-            System.out.println(k + ":" + b);
+            terminal.addOptionInput(k + ":" + b);
             k++;
         }
 
-        int choice = inputInt(1,k-1);
+        int choice = terminal.inputInt(1,k-1);
 
         targetAlternativeMode = targetsAlternativeMode.get(choice-1);
     }
@@ -67,24 +67,24 @@ public class RequestShotgun extends WeaponWithModeAlternative
     {
         int j = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId z :targetsBasicMode)
         {
-            System.out.println(j + ":" + z);
+            terminal.addOptionInput(j + ":" + z);
             j++;
         }
 
-        int choice = inputInt(1,j-1);
+        int choice = terminal.inputInt(1,j-1);
 
         targetBasicMode = targetsBasicMode.get(choice-1);
 
         //Ask if the user wants move the target
-        System.out.println("Vuoi Spostare il bersaglio?");
-        System.out.println("1:Si");
-        System.out.println("2:No");
+        terminal.addTextInput("Vuoi Spostare il bersaglio?");
+        terminal.addOptionInput("1:Si");
+        terminal.addOptionInput("2:No");
 
-        choice = inputInt(1, 2);
+        choice = terminal.inputInt(1, 2);
 
         if (choice == 2)//If the user has chosen no
         {
@@ -95,17 +95,17 @@ public class RequestShotgun extends WeaponWithModeAlternative
         //else it continues asking the square where to move target
         move = true;
 
-        System.out.println("Scegli un quadrato dove spostare il tuo bersaglio:");
+        terminal.addTextInput("Scegli un quadrato dove spostare il tuo bersaglio:");
 
         int w = 1;
 
         for (String b:movesPossible)
         {
-            System.out.println(w+":"+ b);
+            terminal.addOptionInput(w+":"+ b);
             w++;
         }
 
-        choice = inputInt(1, w - 1);
+        choice = terminal.inputInt(1, w - 1);
 
         x = Integer.parseInt(movesPossible.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9
         y = Integer.parseInt(movesPossible.get(choice -1).substring(11));

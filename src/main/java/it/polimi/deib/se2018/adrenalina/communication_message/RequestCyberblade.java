@@ -65,10 +65,11 @@ public class RequestCyberblade extends RequestInput
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
-        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
 
-        System.out.println("1:Colpire");
-        System.out.println("2:Spostarti");
+        terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
+
+        terminal.addOptionInput("1:Colpire");
+        terminal.addOptionInput("2:Spostarti");
 
         int choice = inputInt(1, 2);
 
@@ -87,11 +88,11 @@ public class RequestCyberblade extends RequestInput
 
         for (String t:orderAva) //Ask to the user the second effect
         {
-            System.out.println(i+":"+orderAva.get(i-1));
+            terminal.addOptionInput(i+":"+orderAva.get(i-1));
             i++;
         }
 
-        choice = inputInt(1, i - 1);
+        choice = terminal.inputInt(1, i - 1);
 
         if (orderAva.get(choice-1).equals("with shadowstep"))//Ask the necessary dates to do the effect
         {
@@ -149,17 +150,17 @@ public class RequestCyberblade extends RequestInput
         else//Else
             players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
 
-            System.out.println("Scegli un bersaglio:");
+            terminal.addTextInput("Scegli un bersaglio:");
 
             int i = 1;
 
             for (ColorId t:players)//Ask to user the target
             {
-                System.out.println(i+":"+t);
+                terminal.addOptionInput(i+":"+t);
                 i++;
             }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         if (targetBasicEffect == null) //If this is the first target => the user has used the basic effect
         {
@@ -186,17 +187,18 @@ public class RequestCyberblade extends RequestInput
         else //Else
             squares = squaresAfterBasicEffect;//Take all the possible squares
 
-        System.out.println("Scegli un quadrato dove spostarti:");
+        terminal.addTextInput("Scegli un quadrato dove spostarti:");
 
         int i = 1;
 
         for (String t:squares)//Ask the square at the user
         {
-            System.out.println(i+":"+t);
+
+            terminal.addOptionInput(i+":"+t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         //Save the coordinate
         x = Integer.parseInt(squares.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9

@@ -38,45 +38,45 @@ public class RequestPowerGlove extends WeaponWithModeAlternative
     {
         List<String> directionPossible = new ArrayList<>(playersAlternativeMode.keySet());
 
-        System.out.println("Scegli una direzione:");
+        terminal.addTextInput("Scegli una direzione:");
 
         int i = 1;
 
         for (String t:directionPossible)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        int chose = inputInt(1,i-1);
+        int chose = terminal.inputInt(1,i-1);
 
         List<List<ColorId>> temp = playersAlternativeMode.get(directionPossible.get(chose - 1));
 
-        System.out.println("Scegli un player per il primo spostamento");
+        terminal.addTextInput("Scegli un player per il primo spostamento");
 
         i = 1;
 
         for (ColorId t:temp.get(0))
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        chose = inputInt(1,i-1);
+        chose = terminal.inputInt(1,i-1);
 
         targetsAlternativeMode.add(temp.get(0).get(chose));
 
-        System.out.println("Scegli un player per il secondo spostamento");
+        terminal.addTextInput("Scegli un player per il secondo spostamento");
 
         i = 1;
 
         for (ColorId t:temp.get(1))
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        chose = inputInt(1,i-1);
+        chose = terminal.inputInt(1,i-1);
 
         targetsAlternativeMode.add(temp.get(1).get(chose));
 
@@ -88,15 +88,15 @@ public class RequestPowerGlove extends WeaponWithModeAlternative
     {
         int l = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId a:playersBasicMode)
         {
-            System.out.println(l + ":" + a);
+            terminal.addOptionInput(l + ":" + a);
             l++;
         }
 
-        int chose = inputInt(1, l - 1);
+        int chose = terminal.inputInt(1, l - 1);
 
         targetBasicMode = playersBasicMode.get(chose -1);
     }

@@ -39,17 +39,17 @@ public class RequestShootPeople extends RequestInput
     {
             int i = 1;
 
-            System.out.println("Scegli l'arma che vuoi usare:");
+            terminal.addTextInput("Scegli l'arma che vuoi usare:");
 
             for (String w : weaponCardsName)
             {
 
-                    System.out.println(i + ": " + w);
+                    terminal.addOptionInput(i + ": " + w);
                     i++;
 
             }
 
-            int anInt = inputInt(1, i - 1);
+            int anInt = terminal.inputInt(1, i - 1);
 
         weaponCardNameChosen = anInt ;
 

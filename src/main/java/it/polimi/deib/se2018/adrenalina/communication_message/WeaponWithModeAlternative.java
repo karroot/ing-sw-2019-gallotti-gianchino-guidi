@@ -35,28 +35,28 @@ public abstract class WeaponWithModeAlternative extends RequestInput
         int choice = 0;
         //Print the possible mode of the weapon
 
-        System.out.println("Scegli modalità Arma:");
+        terminal.addTextInput("Scegli modalità Arma:");
 
         if (availableMethod[0])
         {
-            System.out.println("1:modalità base");
+            terminal.addOptionInput("1:modalità base");
         }
 
         if (availableMethod[1])//If the alternative mode can be used
         {
-            System.out.println("2:"+nameAlternaivemode);
+            terminal.addOptionInput("2:"+nameAlternaivemode);
         }
 
         int j = 0;
 
         //Handle the possible choice of the users asking the correct inputs
         if (availableMethod[0] && availableMethod[1])
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
 
         if (!availableMethod[0] && availableMethod[1])
-            choice = inputInt(2, 2);
+            choice = terminal.inputInt(2, 2);
         if (availableMethod[0] && !availableMethod[1])
-            choice = inputInt(1, 1);
+            choice = terminal.inputInt(1, 1);
 
 
         if (choice == 1) //If the user choices the basic mode
@@ -81,15 +81,15 @@ public abstract class WeaponWithModeAlternative extends RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId t:playersBasicMode)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         targetBasicMode = playersBasicMode.get(anInt -1);
 

@@ -54,26 +54,26 @@ public class RequestMachineGun extends RequestInput {
         int choice = 0; //Da completare
         List<Integer> acceptedInt = new LinkedList<>();
 
-        System.out.println("Scegli modalità Arma:");
+        terminal.addTextInput("Scegli modalità Arma:");
 
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1:modalità base da sola");
+            terminal.addOptionInput("1:modalità base da sola");
             acceptedInt.add(1);
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2: modalità base con  "+ nameAdditionalmode);
+            terminal.addOptionInput("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
         if (availableMethod[2])
         {
-            System.out.println("3: modalità base con  " + nameSecondAdditionalmode);
+            terminal.addOptionInput("3: modalità base con  " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
         if (availableMethod[2] && availableMethod[1])//Print the possible effects
         {
-            System.out.println("4: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
+            terminal.addOptionInput("4: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
 
@@ -83,13 +83,13 @@ oneAndThree.add(1);
 oneAndThree.add(3);
         //Handle the possible choice of the users asking the correct inputs
         if (availableMethod[0] && availableMethod[1] && availableMethod[2])
-            choice = inputInt(1, 4);
+            choice = terminal.inputInt(1, 4);
         if (availableMethod[0] && availableMethod[1] && !availableMethod[2])
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
         if (availableMethod[0] && !availableMethod[1] && availableMethod[2])
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
         if (availableMethod[0] && !availableMethod[1] && !availableMethod[2])
-            choice = inputInt(oneAndThree);
+            choice = terminal.inputInt(oneAndThree);
 
         mode = false; //Set the attribute mode
         addDamage=false;
@@ -165,11 +165,11 @@ oneAndThree.add(3);
         {
             if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond))
             {
-                System.out.println(i+" :"+t);
+                terminal.addOptionInput(i+" :"+t);
                 i++;
             }
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetAdditionalMode  = players.get(choice-1);
 
 
@@ -182,27 +182,27 @@ oneAndThree.add(3);
         int i = 1;
         if (players != null)
         {
-            System.out.println( " vuoi fare danno a un altro player ? " );
-            System.out.println( " 1 : sì " );
-            System.out.println( " 2 : no " );
-            choice = inputInt(1, 2);
+            terminal.addTextInput(" vuoi fare danno a un altro player ? " );
+            terminal.addOptionInput("1 : sì " );
+            terminal.addOptionInput(" 2 : no " );
+            choice = terminal.inputInt(1, 2);
 
             if(choice==1) {
 
-                System.out.println(" altro player a cui far danno");
+                terminal.addTextInput(" altro player a cui far danno");
                 for (ColorId t : players)//Ask to user the target
                 {
-                    System.out.println(i + " : " + t);
+                    terminal.addOptionInput(i + " : " + t);
                     i++;
                 }
-                choice = inputInt(1, i - 1);
+                choice = terminal.inputInt(1, i - 1);
                 targetSecondAdditionalMode = players.get(choice - 1);
             }
         }
-        System.out.println( " vuoi fare danno a un player gia attaccato ? " );
-        System.out.println( " 1 : sì " );
-        System.out.println( " 2 : no " );
-        choice = inputInt(1, 2);
+        terminal.addTextInput(" vuoi fare danno a un player gia attaccato ? " );
+        terminal.addOptionInput(" 1 : sì " );
+        terminal.addOptionInput(" 2 : no " );
+        choice = terminal.inputInt(1, 2);
 
         if(choice==1) {
             players = playersBasicMode;
@@ -210,11 +210,11 @@ oneAndThree.add(3);
             for (ColorId t : players)//Ask to user the target
             {
                 if (!(t.equals(targetAdditionalMode))) {
-                    System.out.println(i + ": " + t);
+                    terminal.addOptionInput(i + ": " + t);
                     i++;
                 }
             }
-            choice = inputInt(1, i - 1);
+            choice = terminal.inputInt(1, i - 1);
             targetSecondAdditionalModeSecond = players.get(choice - 1);
             addDamage = true;
         }
@@ -227,22 +227,22 @@ oneAndThree.add(3);
 
         players = playersBasicMode;
         int i = 1;
-        System.out.println("seleziona il primo player :");
+        terminal.addTextInput("seleziona il primo player :");
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+" :"+t);
+            terminal.addOptionInput(i+" :"+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
 
-        System.out.println("seleziona il secondo player :");
+        terminal.addTextInput("seleziona il secondo player :");
         i = 1;
         for (ColorId t:players)//Ask to user the target
         {
             if (!t.equals(targetBasicMode))
             {
-                System.out.println(i+":"+t);
+                terminal.addOptionInput(i+":"+t);
                 i++;
             }
         }

@@ -69,11 +69,11 @@ public class RequestZX2 extends WeaponWithModeAlternative
 
         List<Integer> intchoice = new LinkedList<>();
 
-        System.out.println("Scegli tre bersagli da marchiare:");
+        terminal.addTextInput("Scegli tre bersagli da marchiare:");
 
         for (ColorId t:playersAlternativeMode) //Print the possible choice
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
@@ -83,11 +83,11 @@ public class RequestZX2 extends WeaponWithModeAlternative
 
         while (j<=3 || j <= playersAlternativeMode.size())//Player must choose three target not equals
         {
-            inputInt = inputInt(1, playersAlternativeMode.size());//Ask a target
+            inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a target
 
             while (intchoice.contains(inputInt)) //if the target was chosen before
             {
-                inputInt = inputInt(1, playersAlternativeMode.size());//Ask a new target
+                inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a new target
             }
 
             intchoice.add(inputInt); //Add the target in the list of targets

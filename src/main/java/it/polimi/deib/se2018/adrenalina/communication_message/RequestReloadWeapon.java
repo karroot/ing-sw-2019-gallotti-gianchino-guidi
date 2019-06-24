@@ -30,13 +30,13 @@ public class RequestReloadWeapon extends RequestInput {
     protected void inputBasicMode() {
         int i = 1;
 
-        System.out.println("vuoi ricaricare " + weaponsAvailableToReaload );
+        terminal.addTextInput("vuoi ricaricare " + weaponsAvailableToReaload );
 
 
-            System.out.println( "1: si " );
-            System.out.println( "2: no " );
+            terminal.addOptionInput("1: si " );
+            terminal.addOptionInput("2: no " );
 
-        int anInt = inputInt(1,2);
+        int anInt = terminal.inputInt(1,2);
 
         weaponToReload = anInt ;
 

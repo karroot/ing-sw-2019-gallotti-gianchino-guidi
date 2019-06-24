@@ -43,11 +43,11 @@ public class RequestSledgehammer extends WeaponWithModeAlternative
         inputBasicMode();
 
         //Ask if the user wants move the target
-        System.out.println("Vuoi Spostare il bersaglio?");
-        System.out.println("1:Si");
-        System.out.println("2:No");
+        terminal.addTextInput("Vuoi Spostare il bersaglio?");
+        terminal.addOptionInput("1:Si");
+        terminal.addOptionInput("2:No");
 
-        int anInt = inputInt(1, 2);
+        int anInt = terminal.inputInt(1, 2);
 
         if (anInt == 2)//If the user has chosen no
         {
@@ -58,17 +58,17 @@ public class RequestSledgehammer extends WeaponWithModeAlternative
         //else it continues asking the square where to move target
         move = true;
 
-        System.out.println("Scegli un quadrato dove spostare il tuo bersaglio:");
+        terminal.addTextInput("Scegli un quadrato dove spostare il tuo bersaglio:");
 
         int i = 1;
 
         for (String t:movementPossible)
         {
-            System.out.println(i+":"+ t);
+            terminal.addOptionInput(i+":"+ t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         x = Integer.parseInt(movementPossible.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9
         y = Integer.parseInt(movementPossible.get(choice -1).substring(11));
@@ -79,17 +79,17 @@ public class RequestSledgehammer extends WeaponWithModeAlternative
     @Override
     protected void inputBasicMode()
     {
-        System.out.println("Scegli bersaglio nel tuo square:");
+        terminal.addTextInput("Scegli bersaglio nel tuo square:");
 
         int i = 1;
 
         for (ColorId t:players)
         {
-            System.out.println(i+":"+ t);
+            terminal.addOptionInput(i+":"+ t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         target = players.get(choice -1);
     }

@@ -35,17 +35,17 @@ public class RequestGrabStuff extends RequestInput
     {
         int i = 1;
 
-        System.out.println("Scegli dove spostarti per raccogliere:");
+        terminal.addTextInput("Scegli dove spostarti per raccogliere:");
 
         for (String w : squareAviableToGrab)
         {
 
-            System.out.println(i + ": " + w);
+            terminal.addOptionInput(i + ": " + w);
             i++;
 
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         y = Integer.parseInt(squareAviableToGrab.get(anInt -1).substring(11));
         x = Integer.parseInt(squareAviableToGrab.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9

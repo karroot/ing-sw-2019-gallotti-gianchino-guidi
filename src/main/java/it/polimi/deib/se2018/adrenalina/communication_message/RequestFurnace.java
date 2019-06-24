@@ -47,14 +47,14 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
         List<ColorRoom> colorRoomList = roomsBasicMode;
 
-        System.out.println("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (ColorRoom colorRoomIterate : colorRoomList) {
-            System.out.println(i + " " + colorRoomIterate);
+            terminal.addTextInput(i + " " + colorRoomIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetBasicMode = colorRoomList.get(choice - 1);
         responseIsReady = true;
@@ -67,14 +67,14 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
         List<String> stringList = squaresAlternativeMode;
 
-        System.out.println("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (String squareAsStringIterate : stringList) {
-            System.out.println(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetAlternativeMode = stringList.get(choice - 1);
         responseIsReady = true;

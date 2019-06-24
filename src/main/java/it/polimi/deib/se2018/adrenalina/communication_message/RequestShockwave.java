@@ -41,17 +41,17 @@ public class RequestShockwave extends WeaponWithModeAlternative
     {
         for (String t:playersBasicMode.keySet())
         {
-            System.out.println("Scegli un bersaglio che è nel quadrato con coordinate:"+t);
+            terminal.addTextInput("Scegli un bersaglio che è nel quadrato con coordinate:"+t);
 
             int i = 1;
 
             for (ColorId c:playersBasicMode.get(t))
             {
-                System.out.println(i+":"+c);
+                terminal.addOptionInput(i+":"+c);
                 i++;
             }
 
-            int anInt = inputInt(1, i - 1);
+            int anInt = terminal.inputInt(1, i - 1);
 
             targetsBasicMode.add(playersBasicMode.get(t).get(anInt));
         }

@@ -20,7 +20,7 @@ public abstract class RequestInput extends MessageNet
 
     protected boolean responseIsReady;
 
-
+    protected Terminal terminal;
 
 
     //Method to handle the inputs
@@ -49,7 +49,7 @@ public abstract class RequestInput extends MessageNet
             }
             catch (IOException|NumberFormatException e) //If there are problem
             {
-                System.out.println("Input non valido");//Print that the input is not valid
+                terminal.addTextInput("Input non valido");//Print that the input is not valid
             }
 
         }
@@ -77,7 +77,7 @@ public abstract class RequestInput extends MessageNet
             }
             catch (IOException|NumberFormatException e)//If there are problem
             {
-                System.out.println("Input non valido");//Print that the input is not valid
+                terminal.addTextInput("Input non valido");//Print that the input is not valid
             }
 
         }

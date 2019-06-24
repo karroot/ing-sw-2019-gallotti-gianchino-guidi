@@ -34,12 +34,12 @@ public class RequestTagbackGranade extends RequestInput
     {
         int i = 1;
 
-        System.out.println("vuoi usare un powerup:");
+        terminal.addTextInput("vuoi usare un powerup:");
 
-        System.out.println("1 : sì");
-        System.out.println("2 : no");
+        terminal.addOptionInput("1 : sì");
+        terminal.addOptionInput("2 : no");
 
-        int anInt = inputInt(1,2);
+        int anInt = terminal.inputInt(1,2);
         if (anInt==1)
             targetBasicMode = playerBasicMode;
         else

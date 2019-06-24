@@ -39,31 +39,31 @@ public class RequestNewton extends RequestInput
 
         int  k = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId b:targets)
         {
-            System.out.println(k + ":" + b);
+            terminal.addOptionInput(k + ":" + b);
             k++;
         }
 
-        int choice = inputInt(1,k-1);
+        int choice = terminal.inputInt(1,k-1);
 
         target = targets.get(choice-1);
 
         List<String> squares = targetAndSquares.get(target);
 
-        System.out.println("Scegli un quadrato dove spostare il bersaglio " + target + ":");
+        terminal.addTextInput("Scegli un quadrato dove spostare il bersaglio " + target + ":");
 
         k = 1;
 
         for (String t:squares)
         {
-            System.out.println(k + ":" + t);
+            terminal.addOptionInput(k + ":" + t);
             k++;
         }
 
-        choice = inputInt(1,k-1);
+        choice = terminal.inputInt(1,k-1);
 
         x = MethodsWeapons.getXFromString(squares.get(choice-1));
         y = MethodsWeapons.getYFromString(squares.get(choice-1));

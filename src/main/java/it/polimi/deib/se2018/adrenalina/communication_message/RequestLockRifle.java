@@ -54,20 +54,21 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
     public void printActionsAndReceiveInput(Terminal terminal) {
 
         int choice=0;
-        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
+
+        terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1: solo attacco base");
+            terminal.addOptionInput("1: solo attacco base");
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2:attacco base e aggiunta marchio");
+            terminal.addOptionInput("2:attacco base e aggiunta marchio");
         }
         if (availableMethod[1])//Print the possible effects
         {
-             choice = inputInt(1, 2);
+             choice = terminal.inputInt(1, 2);
         }
-        else choice = inputInt(1, 1);
+        else choice = terminal.inputInt(1, 1);
 
         if (choice==2)
         {
@@ -87,10 +88,10 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            terminal.addOptionInput(i+":"+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetAdditionalMode  = players.get(choice-1);
     }
 

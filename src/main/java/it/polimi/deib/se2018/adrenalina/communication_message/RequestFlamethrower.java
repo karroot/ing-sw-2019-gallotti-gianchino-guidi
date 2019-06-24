@@ -56,10 +56,10 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         List<CardinalDirection> cardinalDirections = new ArrayList<>();
         hashMapForModes.keySet().addAll(cardinalDirections);
 
-        System.out.println("Scegli una direzione bersaglio:");
+        terminal.addTextInput("Scegli una direzione bersaglio:");
 
         for (CardinalDirection cardinalDirectionIterate : cardinalDirections) {
-            System.out.println(i + " " + cardinalDirectionIterate);
+            terminal.addOptionInput(i + " " + cardinalDirectionIterate);
             i++;
         }
 
@@ -83,10 +83,10 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         List<CardinalDirection> cardinalDirections = new ArrayList<>();
         hashMapForModes.keySet().addAll(cardinalDirections);
 
-        System.out.println("Scegli una direzione bersaglio:");
+        terminal.addTextInput("Scegli una direzione bersaglio:");
 
         for (CardinalDirection cardinalDirectionIterate : cardinalDirections) {
-            System.out.println(i + " " + cardinalDirectionIterate);
+            terminal.addOptionInput(i + " " + cardinalDirectionIterate);
             i++;
         }
 
@@ -97,10 +97,10 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
         int j=1;
 
-        System.out.println("Scegli il primo player bersaglio:");
+        terminal.addTextInput("Scegli il primo player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdTargets[0]) {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             j++;
         }
 
@@ -112,10 +112,10 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         {
             int k = 1;
 
-            System.out.println("Scegli il secondo player bersaglio:");
+            terminal.addTextInput("Scegli il secondo player bersaglio:");
 
             for (ColorId colorIdIterate : colorIdTargets[1]) {
-                System.out.println(i + " " + colorIdIterate);
+                terminal.addOptionInput(i + " " + colorIdIterate);
                 j++;
             }
 

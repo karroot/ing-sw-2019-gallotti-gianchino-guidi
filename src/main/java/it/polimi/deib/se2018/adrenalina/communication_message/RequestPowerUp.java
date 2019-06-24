@@ -38,13 +38,13 @@ public class RequestPowerUp extends RequestInput {
         int anInt=0;
         for (String t:powerUptoChose)
         {
-        System.out.println("vuoi usare il poweup: " + t + " ?");
+        terminal.addTextInput("vuoi usare il poweup: " + t + " ?");
 
 
-            System.out.println( "1 : sì");
-            System.out.println( "2 : no");
+            terminal.addOptionInput("1 : sì");
+            terminal.addOptionInput("2 : no");
 
-             anInt = inputInt(1,2);
+             anInt = terminal.inputInt(1,2);
              if(anInt==1)
                  chosenPowerUp.add(t);
         }

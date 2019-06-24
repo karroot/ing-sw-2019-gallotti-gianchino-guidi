@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * @author Cysko7927
  */
-public abstract class UpdateModel extends MessageNet
+public class UpdateModel extends MessageNet
 {
     List<PlayerImmutable> dataOfAllPlayer;
     List<SquareImmutable> dataOfAllSquare;

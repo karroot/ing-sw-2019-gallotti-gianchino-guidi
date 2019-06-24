@@ -41,14 +41,14 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
 
         int i = 1; //Variable to cycle
 
-        System.out.println("Scegli bersaglio:");
+        terminal.addTextInput("Scegli bersaglio:");
 
         for (ColorId t:playersAlternativeMode) //Print the possible choice
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         targetAlternativeMode = playersAlternativeMode.get(anInt -1);
 
@@ -61,28 +61,28 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
         int i = 1; //Variable to cycle
         List<ColorId> target = new ArrayList<ColorId>(playersBasicMode.keySet());
 
-        System.out.println("Scegli bersaglio:");
+        terminal.addTextInput("Scegli bersaglio:");
 
         for (ColorId t:playersBasicMode.keySet()) //Print the possible choice
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
         targetBasicMode = target.get(anInt -1);
 
 
 
-        System.out.println("Scegli square dove spostarlo:");
+        terminal.addTextInput("Scegli square dove spostarlo:");
 
         i=1;
         for (String s : playersBasicMode.get(targetBasicMode)) //Print the possible choice
         {
-            System.out.println(i + ":" + s);
+            terminal.addOptionInput(i + ":" + s);
             i++;
         }
-         anInt = inputInt(1, i - 1);
+         anInt = terminal.inputInt(1, i - 1);
 //Save the coordinate
         y = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(11));
           x = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9

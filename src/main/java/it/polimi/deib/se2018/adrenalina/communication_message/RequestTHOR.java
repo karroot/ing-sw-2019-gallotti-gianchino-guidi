@@ -49,21 +49,21 @@ public class RequestTHOR  extends RequestInput{
         int choice = 0; //Da completare
         List<Integer> acceptedInt = new LinkedList<>();
 
-        System.out.println("Scegli modalità Arma:");
+        terminal.addTextInput("Scegli modalità Arma:");
 
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1:modalità base da sola");
+            terminal.addOptionInput("1:modalità base da sola");
             acceptedInt.add(1);
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2: modalità base con  "+ nameAdditionalmode);
+            terminal.addOptionInput("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
         if (availableMethod[2])//Print the possible effects
         {
-            System.out.println("3: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
+            terminal.addOptionInput("3: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
         int j = 0;
@@ -134,7 +134,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+" : "+t);
+            terminal.addOptionInput(i+" : "+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
@@ -149,7 +149,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+": "+t);
+            terminal.addOptionInput(i+": "+t);
             i++;
         }
         int choice = inputInt(1, i - 1);
@@ -166,7 +166,7 @@ public class RequestTHOR  extends RequestInput{
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+" :"+t);
+            terminal.addOptionInput(i+" :"+t);
             i++;
         }
         int choice = inputInt(1, i - 1);

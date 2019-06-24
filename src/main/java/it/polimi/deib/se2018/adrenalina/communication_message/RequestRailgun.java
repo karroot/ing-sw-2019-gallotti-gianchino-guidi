@@ -45,11 +45,11 @@ public class RequestRailgun extends WeaponWithModeAlternative
 
         for (ColorId z:players)
         {
-            System.out.println(j+":"+z);
+            terminal.addOptionInput(j+":"+z);
             j++;
         }
 
-        int choiceTarget = inputInt(1, j - 1);
+        int choiceTarget = terminal.inputInt(1, j - 1);
 
         target2 = players.get(choiceTarget - 1);
         players.remove(choiceTarget - 1);
@@ -60,7 +60,7 @@ public class RequestRailgun extends WeaponWithModeAlternative
     @Override
     protected void inputBasicMode()
     {
-        System.out.println("Scegli una direzione cardinale:");
+        terminal.addTextInput("Scegli una direzione cardinale:");
 
         List<String> choicesDirections = new ArrayList<>(playersWithCardinalDirections.keySet());
 
@@ -68,11 +68,11 @@ public class RequestRailgun extends WeaponWithModeAlternative
 
         for (String t:choicesDirections)
         {
-            System.out.println(i+":"+t);
+            terminal.addOptionInput(i+":"+t);
             i++;
         }
 
-        int choiceDirection = inputInt(1, i - 1);
+        int choiceDirection = terminal.inputInt(1, i - 1);
 
         players = playersWithCardinalDirections.get(choicesDirections.get(choiceDirection - 1));
 
@@ -80,11 +80,11 @@ public class RequestRailgun extends WeaponWithModeAlternative
 
         for (ColorId z:players)
         {
-            System.out.println(i+":"+z);
+            terminal.addOptionInput(i+":"+z);
             i++;
         }
 
-        int choiceTarget = inputInt(1, i - 1);
+        int choiceTarget = terminal.inputInt(1, i - 1);
 
         target1 = players.get(choiceTarget - 1);
         players.remove(choiceTarget - 1);

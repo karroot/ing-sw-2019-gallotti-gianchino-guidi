@@ -53,10 +53,10 @@ public class RequestWhisper extends RequestInput  {
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+":"+t);
+            terminal.addOptionInput(i+":"+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
     }
 

@@ -35,15 +35,15 @@ public class RequestRunAround extends RequestInput {
     {
         int i = 1;
 
-        System.out.println("Scegli le coordinate:");
+        terminal.addTextInput("Scegli le coordinate:");
 
         for (String q: squareToChose)
         {
-            System.out.println(i + ":" + q );
+            terminal.addOptionInput(i + ":" + q );
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
         y = Integer.parseInt(squareToChose.get(anInt -1).substring(11));
         x = Integer.parseInt(squareToChose.get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
 

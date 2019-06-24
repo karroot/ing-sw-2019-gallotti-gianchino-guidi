@@ -42,30 +42,30 @@ public class RequestTargettingScope  extends RequestInput{
 
         int i = 1;
 
-        System.out.println("Scegli un bersaglio:");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId t:playersBasicMode)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
 
         targetBasicMode = playersBasicMode.get(anInt -1);
 
 
         i=1;
-        System.out.println("Scegli una munizione:");
+        terminal.addTextInput("Scegli una munizione:");
 
         for (Color t:playerAmmo)
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
-         anInt = inputInt(1, i - 1);
+         anInt = terminal.inputInt(1, i - 1);
         targetAmmo= playerAmmo.get(anInt-1);
     }
 

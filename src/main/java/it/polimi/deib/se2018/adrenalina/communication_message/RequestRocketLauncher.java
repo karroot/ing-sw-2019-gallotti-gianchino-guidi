@@ -59,15 +59,15 @@ public class RequestRocketLauncher extends RequestInput {
     {
         int choice;
 
-        System.out.println("Cosa vuoi fare?"); //Ask to user the first effect
+        terminal.addTextInput("Cosa vuoi fare?"); //Ask to user the first effect
 
-        System.out.println("1: Sparare");
+        terminal.addOptionInput("1: Sparare");
         if (availableMethod[2])
-        System.out.println("2: Spostarti");
+        terminal.addOptionInput("2: Spostarti");
 
         if (availableMethod[2])
         {
-             choice = inputInt(1, 2);
+             choice = terminal.inputInt(1, 2);
 
             if (choice == 1) //Ask the necessary dates to do the effect
             {
@@ -78,7 +78,7 @@ public class RequestRocketLauncher extends RequestInput {
                 orderTemp.add("con razzi portatili");
             }
         } else {
-            choice = inputInt(1, 1);
+            choice = terminal.inputInt(1, 1);
 
             if (choice == 1) //Ask the necessary dates to do the effect
             {
@@ -91,11 +91,11 @@ public class RequestRocketLauncher extends RequestInput {
 
         for (String t:orderAva) //Ask to the user the second effect
         {
-            System.out.println(i+" : "+orderAva.get(i-1));
+            terminal.addOptionInput(i+" : "+orderAva.get(i-1));
             i++;
         }
 
-        choice = inputInt(1, i - 1);
+        choice = terminal.inputInt(1, i - 1);
 
         if (orderAva.get(choice-1).equals("con razzi portatili"))//Ask the necessary dates to do the effect
         {
@@ -130,17 +130,17 @@ public class RequestRocketLauncher extends RequestInput {
             players = colorIdListBasicMode;
         else//Else
             players = playersAfterMove;
-        System.out.println("Scegli un bersaglio :");
+        terminal.addTextInput("Scegli un bersaglio :");
 
         int i = 1;
 
         for (ColorId t : players)//Ask to user the target
         {
-            System.out.println(i + " : " + t);
+            terminal.addOptionInput(i + " : " + t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
 
         targetBasicEffect = players.get(choice - 1);
@@ -148,24 +148,24 @@ public class RequestRocketLauncher extends RequestInput {
         orderTemp.add("base");
 
         if (availableMethod[2]) {
-            System.out.println("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
+            terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 
-            System.out.println("1: modalità granata a frammentazione");
-            choice = inputInt(1, 1);
+            terminal.addOptionInput("1: modalità granata a frammentazione");
+            choice = terminal.inputInt(1, 1);
 
             if (choice == 1) {
-                System.out.println("Scegli un bersaglio :");
+                terminal.addTextInput("Scegli un bersaglio :");
 
                 int j = 1;
 
                 for (ColorId t : colorIdListWithFragmentingWarhead)//Ask to user the target
                 {
-                    System.out.println(j + " : " + t);
+                    terminal.addOptionInput(j + " : " + t);
                     j++;
                 }
 
-                int choice2 = inputInt(1, i - 1);
+                int choice2 = terminal.inputInt(1, i - 1);
 
 
                 targetBasicEffect = players.get(choice2 - 1);
@@ -181,17 +181,17 @@ public class RequestRocketLauncher extends RequestInput {
 
         squares = squaresToMove;
 
-        System.out.println("Scegli un quadrato dove spostarti: ");
+        terminal.addTextInput("Scegli un quadrato dove spostarti: ");
 
         int i = 1;
 
         for (String t:squares)//Ask the square at the user
         {
-            System.out.println(i+" : "+t);
+            terminal.addOptionInput(i+" : "+t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         //Save the coordinate
         x = Integer.parseInt(squares.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9

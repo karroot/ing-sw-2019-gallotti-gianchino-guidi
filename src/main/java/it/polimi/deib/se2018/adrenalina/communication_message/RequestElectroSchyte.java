@@ -39,11 +39,11 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
 
         List<Integer> intchoice = new LinkedList<>();
 
-        System.out.println("Scegli bersagli a cui fare danno:");
+        terminal.addTextInput("Scegli bersagli a cui fare danno:");
 
         for (ColorId t:playersAlternativeMode) //Print the possible choice
         {
-            System.out.println(i + ":" + t);
+            terminal.addOptionInput(i + ":" + t);
             i++;
         }
 
@@ -53,11 +53,11 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
 
         while (j <= playersAlternativeMode.size())//Player must choose targets not equals
         {
-            inputInt = inputInt(1, playersAlternativeMode.size());//Ask a target
+            inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a target
 
             while (intchoice.contains(inputInt)) //if the target was chosen before
             {
-                inputInt = inputInt(1, playersAlternativeMode.size());//Ask a new target
+                inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a new target
             }
 
             intchoice.add(inputInt); //Add the target in the list of targets

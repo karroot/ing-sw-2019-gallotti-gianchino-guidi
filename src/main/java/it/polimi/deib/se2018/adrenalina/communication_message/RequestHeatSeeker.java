@@ -33,15 +33,15 @@ public class RequestHeatSeeker extends RequestInput
 
         List<ColorId> colorIdList = colorIdListBasicMode;
 
-        System.out.println("Scegli una player bersaglio:");
+        terminal.addTextInput("Scegli una player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetBasicMode = colorIdList.get(choice - 1);
         responseIsReady = true;

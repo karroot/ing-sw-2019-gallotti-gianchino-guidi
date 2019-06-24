@@ -58,15 +58,15 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         List<String> stringSquaresList = (List) hashMapBasicMode.keySet();
 
-        System.out.println("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (String squareAsStringIterate : stringSquaresList)
         {
-            System.out.println(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetBasicModeSquare = stringSquaresList.get(choice - 1);
     }
@@ -77,15 +77,15 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         List<ColorId> colorIdList = hashMapBasicMode.get(targetBasicModeSquare);
 
-        System.out.println("Scegli un player bersaglio:");
+        terminal.addTextInput("Scegli un player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetBasicModePlayer = colorIdList.get(choice - 1);
     }
@@ -108,15 +108,15 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         List<String> stringSquaresList = (List) hashMapNanoTracerMode.keySet();
 
-        System.out.println("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (String squareAsStringIterate : stringSquaresList)
         {
-            System.out.println(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetAlternativeModeSquare = stringSquaresList.get(choice - 1);
     }
@@ -127,15 +127,15 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         List<ColorId> colorIdList = hashMapNanoTracerMode.get(targetAlternativeModeSquare);
 
-        System.out.println("Scegli un player bersaglio:");
+        terminal.addTextInput("Scegli un player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetAlternativeModePlayer = colorIdList.get(choice - 1);
     }

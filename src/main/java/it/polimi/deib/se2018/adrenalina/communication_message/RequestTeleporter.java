@@ -47,17 +47,17 @@ public class RequestTeleporter extends RequestInput
     public void printActionsAndReceiveInput(Terminal terminal)
     {
 
-        System.out.println("Scegli un quadrato dove spostarti:");
+        terminal.addTextInput("Scegli un quadrato dove spostarti:");
 
         int i = 1;
 
         for (String t:allSquaresPossible)//Ask the square at the user
         {
-            System.out.println(i+":"+t);
+            terminal.addOptionInput(i+":"+t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         //Save the coordinate
         x = Integer.parseInt(allSquaresPossible.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9

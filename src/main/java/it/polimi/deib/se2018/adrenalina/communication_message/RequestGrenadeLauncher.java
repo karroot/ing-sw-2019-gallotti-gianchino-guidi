@@ -60,21 +60,21 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     public void printActionsAndReceiveInput(Terminal terminal) {
         int choice=0;
 
-        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
+        terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
         if (availableMethod[0])//Print the possible effects
         {
-            System.out.println("1: solo attacco base");
+            terminal.addOptionInput("1: solo attacco base");
         }
         if (availableMethod[1])//Print the possible effects
         {
-            System.out.println("2:attacco base e granata extra");
+            terminal.addOptionInput("2:attacco base e granata extra");
         }
 
         if (availableMethod[1])//Print the possible effects
         {
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
         }
-        else choice = inputInt(1, 1);
+        else choice = terminal.inputInt(1, 1);
 
         inputBasicMode();
 
@@ -95,24 +95,24 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         List<ColorId> colorIdList = playersBasicMode;
 
-        System.out.println("Scegli un player bersaglio:");
+        terminal.addTextInput("Scegli un player bersaglio:");
 
         for (ColorId colorIdIterate : playersBasicMode)
         {
-            System.out.println(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " " + colorIdIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetBasicMode = playersBasicMode.get(choice - 1);
 
         //Ask if the user wants move the target
-        System.out.println("Vuoi Spostare il bersaglio?");
-        System.out.println("1: Sì");
-        System.out.println("2: No");
+        terminal.addTextInput("Vuoi Spostare il bersaglio?");
+        terminal.addOptionInput("1: Sì");
+        terminal.addOptionInput("2: No");
 
-        choice = inputInt(1, 2);
+        choice = terminal.inputInt(1, 2);
 
         if (choice == 2)//If the user has chosen no
         {
@@ -123,7 +123,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         move = true;
 
 
-        System.out.println("Scegli un quadrato dove spostare il tuo bersaglio:");
+        terminal.addTextInput("Scegli un quadrato dove spostare il tuo bersaglio:");
 
         int w = 1;
 
@@ -131,11 +131,11 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresAsString)
         {
-            System.out.println(w+":"+ squareAsStringIterate);
+            terminal.addOptionInput(w+":"+ squareAsStringIterate);
             w++;
         }
 
-        choice = inputInt(1, w - 1);
+        choice = terminal.inputInt(1, w - 1);
 
         targetSquareToMoveBasicModeAsString = squaresAsString.get(choice - 1);
 
@@ -150,15 +150,15 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         List<String> squaresToTargetForAdditionalGrenade = squaresExtraGrenadeAsString;
 
-        System.out.println("Scegli uno square bersaglio per la granata aggiuntiva:");
+        terminal.addTextInput("Scegli uno square bersaglio per la granata aggiuntiva:");
 
         for (String squareAsStringIterate : squaresToTargetForAdditionalGrenade)
         {
-            System.out.println(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         targetSquareExtraGrenadeAsString = squaresToTargetForAdditionalGrenade.get(choice - 1);
     }

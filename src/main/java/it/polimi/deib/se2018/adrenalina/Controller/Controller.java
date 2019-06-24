@@ -10,6 +10,8 @@ import it.polimi.deib.se2018.adrenalina.View.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
+
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
@@ -266,7 +268,7 @@ g1.setTerminatorMode(terminatorMode);
             if (p.equals(rp))
                 roundPlayer=p;
         }
-
+        updateModel();
             Future<Boolean> prova = executor.submit(new Callable<Boolean>()
             {
                 @Override
@@ -1736,7 +1738,8 @@ g1.setTerminatorMode(terminatorMode);
 
     public void updateModel(){
 
-    // serializza il model e lo invia a tutte le view remote
+
+   virtualView.update(new UpdateModel(g1));
 
 
     }

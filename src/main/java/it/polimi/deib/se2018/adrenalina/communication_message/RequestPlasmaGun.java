@@ -62,12 +62,12 @@ public class RequestPlasmaGun extends  RequestInput
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
-        System.out.println("Cosa vuoi fare:"); //Ask to user the first effect
+        terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
 
-        System.out.println("1:sparare");
-        System.out.println("2:Spostarti");
+        terminal.addOptionInput("1:sparare");
+        terminal.addOptionInput("2:Spostarti");
 
-        int choice = inputInt(1, 2);
+        int choice = terminal.inputInt(1, 2);
 
         if (choice == 1) //Ask the necessary dates to do the effect
         {
@@ -84,11 +84,11 @@ public class RequestPlasmaGun extends  RequestInput
 
         for (String t:orderAva) //Ask to the user the second effect
         {
-            System.out.println(i+" : "+orderAva.get(i-1));
+            terminal.addOptionInput(i+" : "+orderAva.get(i-1));
             i++;
         }
 
-        choice = inputInt(1, i - 1);
+        choice = terminal.inputInt(1, i - 1);
 
         if (orderAva.get(choice-1).equals("with phase glide"))//Ask the necessary dates to do the effect
         {
@@ -131,17 +131,17 @@ public class RequestPlasmaGun extends  RequestInput
         else//Else
             players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
 
-        System.out.println("Scegli un bersaglio :");
+        terminal.addTextInput("Scegli un bersaglio :");
 
         int i = 1;
 
         for (ColorId t:players)//Ask to user the target
         {
-            System.out.println(i+" : "+t);
+            terminal.addOptionInput(i+" : "+t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
 
             targetBasicEffect = players.get(choice-1);
@@ -149,11 +149,11 @@ public class RequestPlasmaGun extends  RequestInput
             orderTemp.add("basic");
 
   if (availableMethod[2]) {
-      System.out.println("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
+      terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 
-      System.out.println("1:aggi<ungi danno");
-      choice = inputInt(1, 1);
+      terminal.addOptionInput("1:aggi<ungi danno");
+      choice = terminal.inputInt(1, 1);
 
       if (choice == 1) {
           orderAva.remove("with charged shot");
@@ -172,17 +172,17 @@ public class RequestPlasmaGun extends  RequestInput
         else //Else
             squares = squaresAfterBasicEffect;//Take all the possible squares
 
-        System.out.println("Scegli un quadrato dove spostarti: ");
+        terminal.addTextInput("Scegli un quadrato dove spostarti: ");
 
         int i = 1;
 
         for (String t:squares)//Ask the square at the user
         {
-            System.out.println(i+" : "+t);
+            terminal.addOptionInput(i+" : "+t);
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
 
         //Save the coordinate
         x = Integer.parseInt(squares.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9
