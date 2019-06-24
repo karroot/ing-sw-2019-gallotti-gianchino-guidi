@@ -109,12 +109,13 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    public Controller(boolean terminatorMode,int codeArena,int skullCounter)
+    public Controller(boolean terminatorMode,int codeArena,int skullCounter,View virtualView)
     {
         this.setup = new Setup(this);
         this.terminatorMode = terminatorMode;
         this.codeArena=codeArena;
-        this.skullCounter=skullCounter;
+        this.skullCounter = skullCounter;
+        this.virtualView = virtualView;
     }
 
     /**
@@ -123,8 +124,11 @@ public class Controller implements Observer<ResponseInput>
     public void startGame()
     {
         g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
+
         if(g1.getAllPlayer().size()<5)
             g1.setTerminatorMode(terminatorMode);
+
+        g1.setAllPlayerList(setup.createPlayers());
 
         while (!endGame)
         {
@@ -277,7 +281,9 @@ public class Controller implements Observer<ResponseInput>
      * @throws InterruptedException 
      * @throws ExecutionException
      */
-    private void startRound(Player rp) throws InterruptedException, ExecutionException {
+    private void startRound(Player rp) throws InterruptedException, ExecutionException
+    {
+
         for(Player p : g1.getAllPlayer())
         {
 
@@ -285,7 +291,7 @@ public class Controller implements Observer<ResponseInput>
                 roundPlayer=p;
         }
         updateModel();
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
             {
                 @Override
                 public Boolean call() throws Exception {

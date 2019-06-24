@@ -59,7 +59,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         gameIsStarted = false;
         creationIsFinished = false;
         state = new StartLogin(this);
-        controller = new Controller(AppServer.terinator,AppServer.codeArena,AppServer.skullCounter);
+        controller = new Controller(AppServer.terinator,AppServer.codeArena,AppServer.skullCounter,this);
     }
 
     /**

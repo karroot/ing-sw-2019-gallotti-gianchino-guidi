@@ -207,9 +207,14 @@ public class GameBoard {
         this.ammoTilesStack = ammoTilesStack;
     }
 
-    public void setAllPlayer(Player playerToAdd) {
-
+    public void setAllPlayer(Player playerToAdd)
+    {
         allPlayerList.add(playerToAdd);
+    }
+
+    public void setAllPlayerList(List<Player> playerList)
+    {
+        allPlayerList.addAll(playerList);
     }
 
     /**

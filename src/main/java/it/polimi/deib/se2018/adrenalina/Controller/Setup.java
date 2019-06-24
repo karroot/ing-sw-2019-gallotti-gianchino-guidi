@@ -257,7 +257,7 @@ public class Setup
 
         boolean isFirst = true;
 
-        for (int i=1; i==j; i++)
+        for (int i=1; i<=j; i++)
         {
             if (isFirst)
             {
