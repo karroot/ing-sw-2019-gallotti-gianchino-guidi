@@ -125,6 +125,8 @@ public class Controller implements Observer<ResponseInput>
     {
         g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
 
+        setup.replenishBoard(g1);
+
         if(g1.getAllPlayer().size()<5)
             g1.setTerminatorMode(terminatorMode);
 
