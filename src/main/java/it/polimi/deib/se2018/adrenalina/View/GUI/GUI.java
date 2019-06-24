@@ -2,10 +2,7 @@ package it.polimi.deib.se2018.adrenalina.View.GUI;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
-import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PlayerImmutable;
-import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PowerUpCardImmutable;
-import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
-import it.polimi.deib.se2018.adrenalina.communication_message.update_model.WeaponCardImmutable;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.*;
 
 import javax.swing.*;
 import java.util.List;
@@ -23,7 +20,7 @@ public class GUI implements Terminal
 
     public GUI()
     {
-        boardGUI = new BoardGUI();
+        boardGUI = new BoardGUI(this);
     }
 
     /**
@@ -51,19 +48,16 @@ public class GUI implements Terminal
         boardGUI.setPanelSkulls(data.getDataOfBoard().getOriginalSkullCouner(),data.getDataOfBoard().getKillShotTrack());
 
         //Show the arena updated
-        switch (data.getDataOfBoard().getCode())//todo
+        boardGUI.clearAllSquares();//Delete all icons on the square
+        boardGUI.setArena(data.getDataOfBoard().getCode());
+
+        for (SquareImmutable t:data.getDataOfAllSquare())
         {
-            case 1:
+            for (ColorId c:t.getPlayerList())
+                boardGUI.setPlayerOnSquare(squareToIndexGui(t.getX(),t.getY()),c);
 
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
+            if (t.isAmmoPoint())
+                boardGUI.setAmmoTilesOnSquare(squareToIndexGui(t.getX(),t.getY()),t.getAmmoTiles().getAmmoCardID());
         }
 
         //Print the weapons in spawnPoints
@@ -74,11 +68,20 @@ public class GUI implements Terminal
 
         boardGUI.setWeaponPointY(yellowWeapons.toString());
 
-        //Print the player's board
+        //Print the player's board and set the possible boards
+
+        boardGUI.clearBoardsPossible();
         for (PlayerImmutable t:data.getDataOfAllPlayer())
         {
+
             if (t.getColor().equals(playerOfThisCli))
+            {
                 showPlayerBoard(t);
+                boardGUI.setBoardsPossible("Tua Plancia");
+            }
+            else
+                boardGUI.setBoardsPossible("Plancia Giocatore:"+t.getColor());
+
         }
 
     }
@@ -120,6 +123,30 @@ public class GUI implements Terminal
     }
 
     /**
+     * This method being called by boardGui to handle the switch of the boards when the
+     * player selected another board from menu
+     * @param player color of the player to show
+     */
+    public void changePlayerBoard(ColorId player)
+    {
+        try
+        {
+            List<PlayerImmutable> dataOfAllPlayer = data.getDataOfAllPlayer();
+
+            for (PlayerImmutable t:dataOfAllPlayer)
+            {
+                if (t.getColor().equals(playerOfThisCli))
+                    showPlayerBoard(t);
+            }
+        }
+        catch (NullPointerException e)
+        {
+
+        }
+
+    }
+
+    /**
      * Updates the gui with all the statistic of the player
      * @param player player to show
      */
@@ -145,10 +172,13 @@ public class GUI implements Terminal
 
         i = 1;
 
-        for (PowerUpCardImmutable t:player.getPowerupCardList())
+        if (player.getColor().equals(playerOfThisCli))
         {
-            boardGUI.setPower(t.getIdPU(),i);
-            i++;
+            for (PowerUpCardImmutable t:player.getPowerupCardList())
+            {
+                boardGUI.setPower(t.getIdPU(),i);
+                i++;
+            }
         }
 
 
@@ -415,5 +445,37 @@ public class GUI implements Terminal
     public int inputInt(List<Integer> acceptedInt)
     {
         return boardGUI.getInputChoice();
+    }
+
+    //Methods Private
+    private int squareToIndexGui(int x,int y)
+    {
+        if (x == 1 && y == 1)
+            return 0;
+        if (x == 2 && y == 1)
+            return 1;
+        if (x == 3 && y == 1)
+            return 2;
+        if (x == 4 && y == 1)
+            return 3;
+        if (x == 1 && y == 2)
+            return 4;
+        if (x == 2 && y == 2)
+            return 5;
+        if (x == 3 && y == 2)
+            return 6;
+        if (x == 4 && y == 2)
+            return 7;
+        if (x == 1 && y == 3)
+            return 8;
+        if (x == 2 && y == 3)
+            return 9;
+        if (x == 3 && y == 3)
+            return 10;
+        if (x == 4 && y == 3)
+            return 11;
+
+        throw new IllegalArgumentException("Cordinate square inesistenti");
+
     }
 }

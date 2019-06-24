@@ -21,6 +21,7 @@ public class AllPlayerAreActive implements StateVirtualView
     @Override
     public void insertConnection(Connection connection)
     {
+        System.out.println("Connessione Rifiutata");
         connection.closeConnection();
     }
 }

@@ -33,11 +33,12 @@ public class SomePlayerAreNotActive implements StateVirtualView
         {
             try
             {
-                if (!!view.getExecutor().awaitTermination(100, TimeUnit.MILLISECONDS)) break;
+                if (!view.getExecutor().awaitTermination(100, TimeUnit.MILLISECONDS)) break;
             }
             catch (InterruptedException e)
             {
                 connection.closeConnection(); //Refuse the connection
+                Thread.currentThread().interrupt();
                 return;
             }
 
@@ -62,6 +63,10 @@ public class SomePlayerAreNotActive implements StateVirtualView
             view.getConnections().add(connection);//Add the new connection to the list
         }
         else
-            connection.closeConnection(); //Refuse the connection
+            {
+                System.out.println("Connessione rifiutata:"+connection.getName()+"Non è un player della partita in corso");
+                connection.closeConnection(); //Refuse the connection
+            }
+
     }
 }

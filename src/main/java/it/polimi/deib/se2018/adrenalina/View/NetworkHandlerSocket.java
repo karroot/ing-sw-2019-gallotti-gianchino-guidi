@@ -92,8 +92,6 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         register(view);
 
         startConnection(ip, port);
-
-        //todo bisogna richiedere le informazioni sul server(colore)
     }
 
     /**
@@ -129,7 +127,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
                 {
                     view.showError("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
                     view.showError("Sei stato disconesso");
-                    //todo invocare metodo askReconnection sulla view
+                    view.askReconnection();
                 }
 
 

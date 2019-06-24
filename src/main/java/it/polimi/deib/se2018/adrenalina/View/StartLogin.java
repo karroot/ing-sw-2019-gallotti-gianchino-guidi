@@ -39,19 +39,22 @@ public class StartLogin implements StateVirtualView
     {
         if (view.getConnections().size() >= 5)//If there are already five players
         {
+            view.creationIsFinished = true;//change the state of the virtual view to start the match
+            view.checkState();
             connection.closeConnection();//Refuse the connection
             return;//Stop
         }
 
 
 
-        if (view.getTimer().isAlive()) //If the timer is on
+        if (view.getTimer() != null && view.getTimer().isAlive()) //If the timer is on
             view.getTimer().interrupt();//Interrupt it
 
-        connection.setPlayer(allColors[view.getConnections().size()-1]); //Set the color of the player
+        connection.setPlayer(allColors[view.getConnections().size()]); //Set the color of the player
 
         view.getConnections().add(connection);//Add the connection to the list
         view.getExecutor().submit(new Thread(connection));//Run a thread to get the credentials of the player
+        System.out.println("Player:"+connection.getName()+" "+connection.getPlayer()+" " + connection.getAction_hero_comment()+" si è connesso");
 
         //if there are more of three player do to start the timer in an other thread
         if (view.getConnections().size() >= 3 && view.getConnections().size() <= 4 && !view.creationIsFinished )

@@ -25,6 +25,7 @@ public class Controller implements Observer<ResponseInput>
     //switch da aggiungere quel che manca
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
+    private Setup setup;
     private Player termi; //is the terminator
     private View virtualView;
     private boolean firstRound=true;
@@ -104,13 +105,14 @@ public class Controller implements Observer<ResponseInput>
     }
     public Controller()
     {
-      
+      this.setup = new Setup(this);
     }
 
     /**
      * this method is used to start the game
      */
-    public void startGame() throws ExecutionException, InterruptedException {
+    public void startGame() throws ExecutionException, InterruptedException
+    {
         //qui vanno i settaggi iniziali
         while (!endGame)
         {
@@ -253,7 +255,8 @@ public class Controller implements Observer<ResponseInput>
      * @throws ExecutionException
      */
     private void startRound(Player rp) throws InterruptedException, ExecutionException {
-        for(Player p : g1.getAllPlayer()){
+        for(Player p : g1.getAllPlayer())
+        {
 
             if (p.equals(rp))
                 roundPlayer=p;
@@ -302,7 +305,7 @@ public class Controller implements Observer<ResponseInput>
            executeTerminator();
 
         getPointAndRespawn();
-        Setup.replenishBoard(g1);
+        setup.replenishBoard(g1);
 
     }
 

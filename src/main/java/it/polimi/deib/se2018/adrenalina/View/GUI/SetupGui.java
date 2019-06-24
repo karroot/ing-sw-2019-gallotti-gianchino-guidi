@@ -1,6 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.View.GUI;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Setup;
+import it.polimi.deib.se2018.adrenalina.View.AppClient;
+import sun.security.krb5.internal.APOptions;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,8 +34,19 @@ public class SetupGui
     //Ok button
     JButton ok = new JButton("Ok");
 
+    boolean ready;
+
+    //Information inserted
+    String nameW;
+    String heroEffectW;
+    String ipW;
+    String portW;
+    boolean guiW;
+    String commW;
+
     public SetupGui()
     {
+        ready = false;
         setupWindow.getContentPane().setLayout(layout);
         name.setColumns(20);
         heroEffect.setColumns(20);
@@ -79,7 +92,57 @@ public class SetupGui
 
         ok.addActionListener(new ClickOk(this));
 
-        setupWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setupWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setupWindow.setVisible(true);
+    }
+
+    public SetupGui(String nameS,String heroEffectS)
+    {
+        ready = false;
+        setupWindow.getContentPane().setLayout(layout);
+        title.setText("Reinserisci le informazioni del server");
+        name.setColumns(20);
+        name.setText(nameS);
+        heroEffect.setColumns(20);
+        heroEffect.setText(heroEffectS);
+        ip.setColumns(15);
+        port.setColumns(6);
+        setupWindow.setBounds(500,500,600,300);
+
+        setupWindow.add(title);
+        setupWindow.getContentPane().add(l1);
+        setupWindow.getContentPane().add(name);
+        setupWindow.getContentPane().add(l2);
+        setupWindow.getContentPane().add(heroEffect);
+        setupWindow.getContentPane().add(l3);
+        setupWindow.getContentPane().add(ip);
+        setupWindow.getContentPane().add(l4);
+        setupWindow.getContentPane().add(port);
+        setupWindow.getContentPane().add(ok);
+
+
+        layout.putConstraint(SpringLayout.NORTH,name,10,SpringLayout.SOUTH,title);
+        layout.putConstraint(SpringLayout.NORTH,l1,10,SpringLayout.SOUTH,title);
+        layout.putConstraint(SpringLayout.WEST, name,  5,SpringLayout.EAST, l1);
+
+        layout.putConstraint(SpringLayout.NORTH,heroEffect,5,SpringLayout.SOUTH,name);
+        layout.putConstraint(SpringLayout.NORTH,l2,10,SpringLayout.SOUTH,l1);
+        layout.putConstraint(SpringLayout.WEST, heroEffect,  5,SpringLayout.EAST, l2);
+
+        layout.putConstraint(SpringLayout.NORTH,ip,5,SpringLayout.SOUTH,heroEffect);
+        layout.putConstraint(SpringLayout.NORTH,l3,10,SpringLayout.SOUTH,l2);
+        layout.putConstraint(SpringLayout.WEST, ip,  5,SpringLayout.EAST, l3);
+
+        layout.putConstraint(SpringLayout.NORTH,port,5,SpringLayout.SOUTH,ip);
+        layout.putConstraint(SpringLayout.NORTH,l4,10,SpringLayout.SOUTH,l3);
+        layout.putConstraint(SpringLayout.WEST, port,  5,SpringLayout.EAST, l4);
+
+        layout.putConstraint(SpringLayout.NORTH,ok,15,SpringLayout.SOUTH,commList);
+
+        ok.addActionListener(new ClickOk(this));
+
+        setupWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setupWindow.setVisible(true);
     }
@@ -106,9 +169,9 @@ public class SetupGui
         return ip.getText();
     }
 
-    public String getPort()
+    public int getPort()
     {
-        return port.getText();
+        return Integer.parseInt(port.getText());
     }
 
     public boolean getGui()
@@ -119,6 +182,11 @@ public class SetupGui
     public int getTechnology()
     {
         return commList.getSelectedIndex();
+    }
+
+    public boolean isReady()
+    {
+        return ready;
     }
 }
 
@@ -158,7 +226,7 @@ class ClickOk implements ActionListener
             thereAreErrors = true;
             error = error + "IP: Non hai inserito un IP\n";
         }
-        if (!isNumeric(setupGui.getPort()))
+        if (!isNumeric(setupGui.port.getText()))
         {
             thereAreErrors = true;
             error = error + "Porta: Non hai inserito un numero di porta\n";
@@ -170,7 +238,15 @@ class ClickOk implements ActionListener
         }
         else
         {
-            //Tutte le informazioni vengono passate alla private view per creare il client
+            setupGui.ready = true;
+            setupGui.getSetupWindow().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            setupGui.getSetupWindow().dispose();
+
+            synchronized (AppClient.syncSetup)
+            {
+                AppClient.syncSetup.notifyAll(); //notify that the information are ready
+            }
+
         }
 
 

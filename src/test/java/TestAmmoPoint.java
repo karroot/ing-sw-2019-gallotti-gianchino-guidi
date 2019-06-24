@@ -99,7 +99,7 @@ public class TestAmmoPoint {
         assertEquals(ammoTiles, ammoPointTest.getAmmoTiles());
 
     }
-
+/*
     @Test
     public void testUseAmmoTiles ()
     {
@@ -115,7 +115,7 @@ public class TestAmmoPoint {
 
 
 
-    }
+    }*/
 
 
 }

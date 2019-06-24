@@ -4,5 +4,9 @@ import java.io.Serializable;
 
 public abstract class AmmoTilesImmutable implements Serializable
 {
+    protected int ammoCardID;
 
+    public int getAmmoCardID() {
+        return ammoCardID;
+    }
 }

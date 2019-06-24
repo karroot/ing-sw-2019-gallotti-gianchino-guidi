@@ -212,12 +212,34 @@ public class CLI implements Terminal
         boolean done = false;
         int choice = 0;
 
+
         while (!done)//While the user doesn't insert a integer valid you continue to ask a integer
         {
+            boolean ready = false;
+
             try
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                choice = Integer.parseInt(reader.readLine());//Read an input
+
+                TimerAFK.startTimer(Thread.currentThread());
+
+                while (!Thread.currentThread().isInterrupted() && !ready)
+                {
+                    if (reader.ready())
+                    {
+                        choice = Integer.parseInt(reader.readLine());//Read an input
+                        TimerAFK.interruptTimer();
+                        ready = true;
+                    }
+
+                }
+
+                if (Thread.currentThread().isInterrupted()) //If the while is terminated because the timer is over
+                {
+                    System.out.println("Hai impiegato troppo tempo:Turno Saltato");
+                    throw new ThreadDeath(); //Kill the thread
+                }
+
 
                 if (!(choice>= min && choice<=max)) //If int digits from user isn't in the range
                     throw new IOException();//Launch exception
@@ -227,6 +249,11 @@ public class CLI implements Terminal
             catch (IOException|NumberFormatException e) //If there are problem
             {
                 System.out.println("Input non valido");//Print that the input is not valid
+            }
+            catch (Exception e)//If the timer AFK is over
+            {
+                System.out.println("Hai impiegato troppo tempo:Turno Saltato");
+                throw new ThreadDeath(); //Interrupt
             }
 
         }
@@ -433,10 +460,30 @@ public class CLI implements Terminal
 
         while (!done)//While the user doesn't insert a integer valid you continue to ask a integer
         {
+            boolean ready = false;
+
             try
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                choice = Integer.parseInt(reader.readLine());//Read an input
+
+                TimerAFK.startTimer(Thread.currentThread());
+
+                while (!Thread.currentThread().isInterrupted() && !ready)
+                {
+                    if (reader.ready())
+                    {
+                        choice = Integer.parseInt(reader.readLine());//Read an input
+                        TimerAFK.interruptTimer();
+                        ready = true;
+                    }
+
+                }
+
+                if (Thread.currentThread().isInterrupted()) //If the while is terminated because the timer is over
+                {
+                    System.out.println("Hai impiegato troppo tempo:Turno Saltato");
+                    throw new ThreadDeath(); //Kill the thread
+                }
 
                 if (!acceptedInt.contains(choice))//If int inserted from user isn't in the list of accepted integer
                     throw new IOException();//Launch exception

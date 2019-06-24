@@ -16,6 +16,13 @@ import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 public class Setup
 {
 
+    Controller controller;
+
+    public Setup(Controller controller)
+    {
+        this.controller = controller;
+    }
+
     public void spawn (ColorId player, Color PointOfSpawn)
     {
 
@@ -253,11 +260,11 @@ public class Setup
     {
         List<Player> playerList = new ArrayList<>();
 
-        int j = Controller.numberOfPlayer();
+        int j = controller.numberOfPlayer();
 
         for (int i=1; i==j; i++)
         {
-            playerList.add(new Player(Controller.getColorOfPlayer(i), Controller.getName(i), Controller.getHeroComment(i)));
+            playerList.add(new Player(controller.getColorOfPlayer(i), controller.getName(i), controller.getHeroComment(i),false));//todo Sistemarlo
         }
 
         return playerList;
@@ -294,5 +301,5 @@ public class Setup
     }
 
 
-*/
+
 }

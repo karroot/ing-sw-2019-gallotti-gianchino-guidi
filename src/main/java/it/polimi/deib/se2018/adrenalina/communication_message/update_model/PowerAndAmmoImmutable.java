@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 public class PowerAndAmmoImmutable extends AmmoTilesImmutable implements Serializable
 {
-    private int ammoCardID;
     private Color singleAmmo;
     private Color secondSingleAmmo;
 
@@ -17,9 +16,6 @@ public class PowerAndAmmoImmutable extends AmmoTilesImmutable implements Seriali
         this.secondSingleAmmo = secondSingleAmmo;
     }
 
-    public int getAmmoCardID() {
-        return ammoCardID;
-    }
 
     public Color getSingleAmmo() {
         return singleAmmo;

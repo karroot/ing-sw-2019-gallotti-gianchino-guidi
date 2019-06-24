@@ -92,6 +92,7 @@ public class TestGameboard {
         }
 
     }
+    /*
     @Test
     public void InizializePowerUpStack() {
 
@@ -109,6 +110,8 @@ public class TestGameboard {
             System.out.println("PowerUpStackOK");
         }
     }
+    */
+
 @Test
     public void InizializeWeaponStack() {
 

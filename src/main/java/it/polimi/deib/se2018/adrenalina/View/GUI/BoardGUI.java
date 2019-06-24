@@ -2,39 +2,33 @@ package it.polimi.deib.se2018.adrenalina.View.GUI;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Track;
+import it.polimi.deib.se2018.adrenalina.View.GUI.square_components.SquareComponentGui;
+import it.polimi.deib.se2018.adrenalina.View.Terminal;
+import it.polimi.deib.se2018.adrenalina.View.TimerAFK;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
+import java.util.Timer;
+import java.util.logging.Logger;
 
 public class BoardGUI
 {
 
+    GUI terminal;
     //############
     private JFrame allBoardWindow = new JFrame("Adrenalina");//Frame per tutta la finestra
     private BorderLayout layoutAll = new BorderLayout();
 
-    //Arena Grid
+    //Arena
     private JPanel arenaWindow = new JPanel();
-    private GridLayout layoutForArena = new GridLayout(3,4);
-    //All square
-    JButton x1y3 = new JButton();
-    JButton x2y3 = new JButton();
-    JButton x3y3 = new JButton();
-    JButton x4y3 = new JButton();
-    JButton x1y2 = new JButton();
-    JButton x2y2 = new JButton();
-    JButton x3y2 = new JButton();
-    JButton x4y2 = new JButton();
-    JButton x1y1 = new JButton();
-    JButton x2y1 = new JButton();
-    JButton x3y1 = new JButton();
-    JButton x4y1 = new JButton();
+    private SpringLayout layoutForArena = new SpringLayout();
+    private JLabel arena = new JLabel();
+    private SquareComponentGui[] allSquares = new SquareComponentGui[12];
 
     //Pannel to Ask the request of input
     private JPanel inputWindow = new JPanel();
@@ -50,6 +44,7 @@ public class BoardGUI
     private JLabel weapon2 = new JLabel();
     private JLabel weapon3 = new JLabel();
     private SpringLayout layoutForPlayerBoard = new SpringLayout();
+    private JComboBox chosenBoard = new JComboBox();
 
     //Elements that are in the center of the window
     private JPanel centerWindow = new JPanel();
@@ -74,10 +69,12 @@ public class BoardGUI
     private List<JButton> listOfAllOptions = new LinkedList<>();
     private boolean onInput = false;
     private int choice = -1; //represent the choice made by user(Default = -1 => The user didn't click on a button)
-    Object choiceSyn = new Object(); //Variable to sync the read of input after that the user clicked
+    private final Object choiceSyn = new Object(); //Variable to sync the read of input after that the user clicked
 
-    public BoardGUI()
+    public BoardGUI(Terminal terminal)
     {
+        //this.terminal = terminal;
+
         //Create the labels for the damage Point
         for (int i = 0;i<damages.length;i++)
             damages[i] = new JLabel();
@@ -86,7 +83,6 @@ public class BoardGUI
         allBoardWindow.setBounds(500,500,600,300);
 
         allBoardWindow.setLayout(layoutAll);
-        arenaWindow.setLayout(layoutForArena);
         inputWindow.setLayout(layoutForInput);
         centerWindow.setLayout(layoutForCenterWindow);
         panelSkulls.setLayout(layoutForPanelSkulls);
@@ -115,19 +111,22 @@ public class BoardGUI
         panelPower.add(power2);
         panelPower.add(power3);
 
-        //Add all square
-        arenaWindow.add(x1y3);
-        arenaWindow.add(x2y3);
-        arenaWindow.add(x3y3);
-        arenaWindow.add(x4y3);
-        arenaWindow.add(x1y2);
-        arenaWindow.add(x2y2);
-        arenaWindow.add(x3y2);
-        arenaWindow.add(x4y2);
-        arenaWindow.add(x1y1);
-        arenaWindow.add(x2y1);
-        arenaWindow.add(x3y1);
-        arenaWindow.add(x4y1);
+        //Add all square and set the component to represent the player on the arena
+        arenaWindow.add(arena);
+        arena.setLayout(layoutForArena);
+        allSquares[0] = new SquareComponentGui(arena,329,13);
+        allSquares[1] = new SquareComponentGui(arena,329,153);
+        allSquares[2] = new SquareComponentGui(arena,329,317);
+        allSquares[3] = new SquareComponentGui(arena,329,440);
+        allSquares[4] = new SquareComponentGui(arena,180,13);
+        allSquares[5] = new SquareComponentGui(arena,180,153);
+        allSquares[6] = new SquareComponentGui(arena,180,317);
+        allSquares[7] = new SquareComponentGui(arena,180,440);
+        allSquares[8] = new SquareComponentGui(arena,50,13);
+        allSquares[9] = new SquareComponentGui(arena,50,153);
+        allSquares[10] = new SquareComponentGui(arena,50,317);
+        allSquares[11] = new SquareComponentGui(arena,50,471);
+
 
         //Add player's Board
         playerBoard = new JLabel();
@@ -142,6 +141,8 @@ public class BoardGUI
         playerWindow.add(weapon1);
         playerWindow.add(weapon2);
         playerWindow.add(weapon3);
+        playerWindow.add(chosenBoard);
+        chosenBoard.addActionListener(new ComboBoxSwitchBoards(this));
 
         //Add all damage Point
 
@@ -153,6 +154,7 @@ public class BoardGUI
         //Add all the skulls for player's Board
         createSkullScore();
 
+        //
 
         allBoardWindow.setVisible(true);
     }
@@ -179,7 +181,10 @@ public class BoardGUI
     public int getInputChoice()
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
         onInput = true;
+
+        TimerAFK.startTimer(Thread.currentThread());
         synchronized (choiceSyn)
         {
             while (choice == -1)
@@ -190,9 +195,19 @@ public class BoardGUI
                 }
                 catch (InterruptedException e)
                 {
-
+                    onInput = false;
+                    allBoardWindow.setVisible(false);
+                    clearWindowInput(); //Clear the input window
+                    allBoardWindow.setVisible(true);
+                    allBoardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    JOptionPane.showMessageDialog(allBoardWindow, "Hai impiegato troppo tempo:Turno Saltato");
+                    Thread.currentThread().interrupt();
+                    throw new ThreadDeath();
                 }
             }
+
+
+            TimerAFK.interruptTimer();
 
             int temp = choice; //Read the choice of the user
             choice = -1;
@@ -237,6 +252,35 @@ public class BoardGUI
         ammoRed.setText("Munizioni Rosse:"+text);
     }
 
+    public void setBoardsPossible(String player)
+    {
+        chosenBoard.addItem(player);
+    }
+
+    public void clearBoardsPossible()
+    {
+        chosenBoard.removeAllItems();
+    }
+
+    //Methods that handles the player and the ammoTiles on Square
+    public void setPlayerOnSquare(int indexOfSquare,ColorId player)
+    {
+        allSquares[indexOfSquare].addPlayer(player);
+    }
+
+    //Methods that clears all the square on the Arena : All the player and the ammotiles icon will reset
+    public void clearAllSquares()
+    {
+        for (SquareComponentGui t:allSquares)
+        {
+            t.clearSquare();
+        }
+    }
+
+    public void setAmmoTilesOnSquare(int indexOfSquare,int code)
+    {
+        allSquares[indexOfSquare].addAmmoTiles(code);
+    }
 
     //Method that handles the weapon showed
     public void setWeapon(String nameWeapon,int index,boolean reloaded)
@@ -320,23 +364,9 @@ public class BoardGUI
     }
 
     //Show the arena represented by the code
-    public void setArena(int codeArena)//todo implementarlo
+    public void setArena(int codeArena)
     {
-        switch (codeArena)
-        {
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-        }
+        arena.setIcon(new ImageIcon("C:\\Users\\Cysko7927\\IdeaProjects\\ing-sw-2019-gallotti-gianchino-guidi\\src\\main\\java\\it\\polimi\\deib\\se2018\\adrenalina\\View\\Asset\\"+codeArena+".png"));
     }
 
     //Show the skull on the player's Board
@@ -602,4 +632,51 @@ class ClickInput implements ActionListener
 
     }
 }
+
+class ComboBoxSwitchBoards  implements ActionListener
+{
+
+    BoardGUI gui;
+    public ComboBoxSwitchBoards(BoardGUI gui)
+    {
+        this.gui = gui;
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        JComboBox cb = (JComboBox)e.getSource();
+        String choice = (String)cb.getSelectedItem();
+
+        try
+        {
+            switch (choice)
+            {
+                case "Tua Plancia":
+                    break;
+                case "Plancia Giocatore:BLUE":
+                    gui.terminal.changePlayerBoard(ColorId.BLUE);
+                    break;
+                case "Plancia Giocatore:GREEN":
+                    gui.terminal.changePlayerBoard(ColorId.GREEN);
+                    break;
+                case "Plancia Giocatore:GREY":
+                    gui.terminal.changePlayerBoard(ColorId.GREY);
+                    break;
+                case "Plancia Giocatore:PURPLE":
+                    gui.terminal.changePlayerBoard(ColorId.PURPLE);
+                    break;
+                case "Plancia Giocatore:YELLOW":
+                    gui.terminal.changePlayerBoard(ColorId.YELLOW);
+                    break;
+            }
+        }
+        catch (NullPointerException ex)
+        {
+
+        }
+
+    }
+
+}
+
 

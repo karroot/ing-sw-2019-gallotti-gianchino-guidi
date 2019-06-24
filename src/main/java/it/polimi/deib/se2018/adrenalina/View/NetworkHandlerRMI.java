@@ -140,9 +140,8 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
                     view.showError("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
                     view.showError("Sei stato disconesso");
-                    Thread.currentThread().interrupt();//If the the player is FK
-                    //todo invocare metodo askReconnection sulla view
-                    //A message of timeout arrives at the server and the controller suspends the player //todo
+                    view.askReconnection();
+                    Thread.currentThread().interrupt();
                 }
             }
 
@@ -152,7 +151,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
             return temp;//And return it
 
-            //If the the player is FK
+            //If the the player is AFK
             //A message of timeout arrives at the server and the controller suspends the player
         }
     }

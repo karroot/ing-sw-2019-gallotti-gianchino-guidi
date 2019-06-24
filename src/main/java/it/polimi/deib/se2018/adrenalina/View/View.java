@@ -50,14 +50,15 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
      * @param timer timeout used by server to wait the user after at least three user will connect.
      *              it being used by Network Handler also to wait the input of user
      */
-    public View(int PORT,int timer)
+    public View(int PORT,int timer) throws Exception
     {
         this.PORT = PORT;
         this.lenghtTimer = timer;
         gameIsStarted = false;
         creationIsFinished = false;
         state = new StartLogin(this);
-        //Create the controller (ToDO)
+        controller = new Controller();
+        //ToDO passare al controller i dati necessari
     }
 
     /**
@@ -139,6 +140,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         try
         {
             executor.submit(new AcceptorSocket(this));
+            System.out.println("creazione dell' Accettatore di ConnectionSocket riuscita");
         }
         catch (IOException e)
         {
@@ -149,6 +151,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         try
         {
             executor.submit(new AcceptorRMI(this));
+            System.out.println("creazione dell' Accettatore di ConnectionRMI riuscita");
         }
         catch (Exception e)
         {
@@ -253,6 +256,8 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         if (creationIsFinished && !gameIsStarted)
         {
             //Si deve chiamare il metodo dal controller che avvia la logica della partita todo
+            gameIsStarted = true;
+            System.out.println("Partita Iniziata");
         }
 
 
@@ -361,7 +366,7 @@ class Timer implements Runnable
         catch (InterruptedException e)
         {
             Thread.currentThread().interrupt();
-            return;
+            throw new ThreadDeath();
         }
 
         view.creationIsFinished = true;

@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.View.GUI.GUI;
+import it.polimi.deib.se2018.adrenalina.View.GUI.SetupGui;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.SquareImmutable;
@@ -16,18 +17,17 @@ import java.util.stream.Collectors;
 
 public class PrivateView extends Observable<ResponseInput> implements Observer<RequestInput>
 {
-
-    String name;
-    String action_hero_comment;
-    ColorId colorId;
+    private String name;
+    private String action_hero_comment;
+    private ColorId colorId;
 
     Terminal terminal;
     private boolean firstTurn;
     private final Object msg = new Object();
     private int cont;
-    RequestInput messageBuffer;
-    NetworkHandlerRMI networkHandlerRMI = null;
-    NetworkHandlerSocket networkHandlerSocket = null;
+    private RequestInput messageBuffer;
+    private NetworkHandlerRMI networkHandlerRMI = null;
+    private NetworkHandlerSocket networkHandlerSocket = null;
 
     /**
      * it Creates The private view and depending on the user's choices creates a network handler(RMI or Socket)
@@ -37,11 +37,31 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      * @param gui it represent if the user chooses the gui or not
      * @throws Exception if there are problem with the network handler
      */
-    public PrivateView(int technology,String ip,int port,boolean gui,String name,String action_hero_comment) throws IOException {
+    public PrivateView(int technology,String ip,int port,boolean gui,String name,String action_hero_comment) throws IOException
+    {
 
         this.name = name;
         this.action_hero_comment = action_hero_comment;
+        firstTurn = true;
 
+        if (technology == 1)
+        {
+            networkHandlerRMI = new NetworkHandlerRMI(this,ip,port);
+            TimerAFK.setNetworkHandlerRMI(networkHandlerRMI);
+
+
+            register(networkHandlerRMI);
+        }
+        else
+        {
+
+
+            networkHandlerSocket = new NetworkHandlerSocket(ip,port,this);
+
+            TimerAFK.setNetworkHandlerSocket(networkHandlerSocket);
+
+            register(networkHandlerSocket);
+        }
 
         if (!gui)
         {
@@ -53,34 +73,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         }
 
 
-        if (technology == 1)
-        {
-
-            try
-            {
-                networkHandlerRMI = new NetworkHandlerRMI(this,ip,port);
-            }
-            catch (IOException e)//If there were problems with the RMI
-            {
-                showError("Server RMI non funzionante");
-                throw new IOException();
-            }
-                register(networkHandlerRMI);
-        }
-        else
-        {
-            try
-            {
-                networkHandlerSocket = new NetworkHandlerSocket(ip,port,this);
-            }
-            catch (IOException e) //If there were problems with the Socket
-            {
-                showError("Server non raggiungibile controllare le informazioni inserite");
-                throw new IOException();
-            }
-
-            register(networkHandlerSocket);
-        }
 
 
     }
@@ -109,6 +101,59 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
     public void showMenu()
     {
+
+    }
+
+    /**
+     * This method being called by Network Handler in case of disconnection to re-ask the credentials
+     * of the server
+     * The method will continue to ask the credentials until the connection will not be again active
+     */
+    public void askReconnection()
+    {
+
+        SetupGui setupGui;
+        boolean finished = false;
+
+        while (!finished)
+        {
+            finished = true;
+
+            synchronized (AppClient.syncSetup)
+            {
+                setupGui = new SetupGui(name,action_hero_comment);
+
+                while (!setupGui.isReady())
+                {
+                    try
+                    {
+                        wait();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+
+            try
+            {
+                if (networkHandlerSocket!= null)
+                {
+                    networkHandlerSocket.startConnection(setupGui.getIP(), setupGui.getPort());
+                }
+                else
+                {
+                    networkHandlerRMI.startConnection(setupGui.getIP(), setupGui.getPort());
+                }
+            }
+            catch (IOException e)
+            {
+                showError("Impossible connetersi:Controlla le informazioni inserite");
+                finished = false;
+            }
+
+        }
 
     }
 
@@ -407,7 +452,8 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         {
             while (messageBuffer == null)
             {
-                try {
+                try
+                {
                     msg.wait();
                 }
                 catch (InterruptedException e)
