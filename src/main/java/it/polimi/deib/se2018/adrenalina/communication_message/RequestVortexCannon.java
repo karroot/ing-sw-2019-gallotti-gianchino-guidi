@@ -48,7 +48,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     }
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         int choice=0;
 
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect

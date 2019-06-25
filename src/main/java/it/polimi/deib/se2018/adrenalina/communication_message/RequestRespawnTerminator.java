@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 public class RequestRespawnTerminator extends  RequestInput {
     private int targetSpawnPoint;
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }

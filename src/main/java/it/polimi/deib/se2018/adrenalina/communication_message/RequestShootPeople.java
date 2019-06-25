@@ -14,7 +14,7 @@ public class RequestShootPeople extends RequestInput
     protected int weaponCardNameChosen;//Target chosen for the basic mode
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady=true;
     }

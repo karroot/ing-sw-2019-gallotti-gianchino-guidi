@@ -34,7 +34,7 @@ public class RequestNewton extends RequestInput
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         List<ColorId> targets = new ArrayList<>(targetAndSquares.keySet());
 
         int  k = 1;

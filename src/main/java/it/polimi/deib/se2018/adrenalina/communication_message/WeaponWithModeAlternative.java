@@ -31,7 +31,7 @@ public abstract class WeaponWithModeAlternative extends RequestInput
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         int choice = 0;
         //Print the possible mode of the weapon
 

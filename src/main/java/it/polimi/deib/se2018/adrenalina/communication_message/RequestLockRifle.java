@@ -51,7 +51,7 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
 
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
 
         int choice=0;
 

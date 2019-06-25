@@ -56,7 +56,7 @@ public class RequestRocketLauncher extends RequestInput {
 
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         int choice;
 
         terminal.addTextInput("Cosa vuoi fare?"); //Ask to user the first effect

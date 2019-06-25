@@ -30,7 +30,7 @@ public class RequestWhisper extends RequestInput  {
     }
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         choseTarget();
         responseIsReady = true;
 

@@ -45,7 +45,7 @@ public class RequestTeleporter extends RequestInput
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
 
         terminal.addTextInput("Scegli un quadrato dove spostarti:");
 

@@ -23,7 +23,7 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         int choice = 0; //Da completare
         List<Integer> acceptedInt = new LinkedList<>();
 

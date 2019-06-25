@@ -7,7 +7,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 public class RequestToRespawn extends RequestInput
 {
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
 
     }
 

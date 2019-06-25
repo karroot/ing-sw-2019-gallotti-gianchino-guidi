@@ -4,7 +4,7 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 public class End extends  RequestInput {
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
 
     }
 

@@ -28,7 +28,7 @@ public class RequestHeatSeeker extends RequestInput
 
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         int i=1;
 
         List<ColorId> colorIdList = colorIdListBasicMode;

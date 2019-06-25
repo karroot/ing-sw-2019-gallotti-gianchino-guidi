@@ -64,7 +64,7 @@ public class RequestCyberblade extends RequestInput
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
-    {
+    { this.terminal=terminal;
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
 
         terminal.addOptionInput("1:Colpire");

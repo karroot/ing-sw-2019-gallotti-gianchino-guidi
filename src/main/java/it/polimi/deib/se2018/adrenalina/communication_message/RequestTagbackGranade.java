@@ -16,7 +16,7 @@ public class RequestTagbackGranade extends RequestInput
     }
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
