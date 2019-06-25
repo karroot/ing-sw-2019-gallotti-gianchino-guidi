@@ -293,25 +293,31 @@ public class Controller implements Observer<ResponseInput>
                 roundPlayer=p;
         }
         updateModel();
-        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception
             {
-                @Override
-                public Boolean call() throws Exception {
 
-
-                    virtualView.requestInput(new RequestStartRound(),rp.getColor()); 
-                    virtualView.getResponseWithInputs(roundPlayer.getColor());
-
+                try
+                {
+                    virtualView.requestInput(new RequestStartRound(),rp.getColor());
                     return true;
                 }
-            });
-
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+                catch (Exception e)
+                {
+                    return false;
+                }
 
             }
+        });
 
-            boolean s = prova.get();
+        boolean s = executor.invokeAny(callableList);
+
+
+
             if(!s)
              return;
            if(checkForAfk())
@@ -1119,7 +1125,8 @@ public class Controller implements Observer<ResponseInput>
         {
             Future<Boolean> test = executor.submit(new Callable<Boolean>() {
                 @Override
-                public Boolean call() throws Exception {
+                public Boolean call() throws Exception
+                {
 
                     virtualView.requestInput(new RequestRespawnTerminator(), p.getColor());
                     virtualView.getResponseWithInputs(p.getColor());
@@ -1128,7 +1135,8 @@ public class Controller implements Observer<ResponseInput>
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
+            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
+            {
 
             }
 
@@ -1176,6 +1184,8 @@ public class Controller implements Observer<ResponseInput>
         else {
             drawPowerup(true);
 
+            updateModel();
+
             List<Color> powerList = new LinkedList<>();
             for (PowerUpCard pc : roundPlayer.getPowerupCardList()) {
                 powerList.add(pc.getColor());
@@ -1183,7 +1193,6 @@ public class Controller implements Observer<ResponseInput>
             Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    //Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
 
                     virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
                     virtualView.getResponseWithInputs(p.getColor());
@@ -1207,6 +1216,7 @@ public class Controller implements Observer<ResponseInput>
             roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
             spawn(response.getTargetSpawnPoint());
 
+            updateModel();
 
         }
     }
@@ -1216,7 +1226,8 @@ public class Controller implements Observer<ResponseInput>
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    private void askForFirstSpawn() throws InterruptedException, ExecutionException {
+    private void askForFirstSpawn() throws InterruptedException, ExecutionException
+    {
         drawPowerup(false);
     
         askForRespawn(roundPlayer);

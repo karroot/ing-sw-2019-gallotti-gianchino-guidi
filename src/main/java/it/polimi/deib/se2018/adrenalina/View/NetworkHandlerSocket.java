@@ -181,7 +181,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     {
         Object msg = in.readObject();
 
-        if (msg instanceof StartTurn)
+        if (msg instanceof RequestStartRound)
         {
             logicRound.start();
             return;

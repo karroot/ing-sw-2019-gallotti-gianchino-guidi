@@ -175,13 +175,16 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         {
 
             //Ask at the player which power up to use for the respawn
-            showPowerUp();
 
-            int choice = selectPowerUp();
+            RequestInput messageFromNetwHandl = getMessageFromNetwHandl();
+
+            messageFromNetwHandl.printActionsAndReceiveInput(terminal);
+
+            ResponseInput responseInput = messageFromNetwHandl.generateResponseMessage();
 
             try
             {
-                notify(new AskUsePowerUpRespawn(choice));
+                notify(responseInput);
             }
             catch (Exception e)
             {

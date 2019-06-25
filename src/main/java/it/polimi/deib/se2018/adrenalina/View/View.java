@@ -80,12 +80,18 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
                 .get(0);
 
 
+        System.out.println("Ping Pong per:"+correctConnection.getPlayer());
         final boolean esite = correctConnection.pingPongTest();
 
-        if (esite) //If the ping pong test has been successful
+        if (esite)
+        {   //If the ping pong test has been successful
+            System.out.println("Ping Pong Superato");
+            System.out.println("invio messaggio a :"+correctConnection.getPlayer());
             correctConnection.send(message);//Ask to send the message
+        }
         else
             throw new ClosedChannelException();//Test failed = connection isn't active
+        System.out.println("Richiesta inviata");
     }
 
     /**
@@ -103,6 +109,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
                 .filter(connection -> connection.getPlayer().equals(player))
                 .collect(Collectors.toList()).get(0);
 
+        System.out.println("Attesa messaggio da parte di:"+correctConnection.getPlayer());
         notify((ResponseInput) correctConnection.receive());//Wait the message that will arrive
     }
 
@@ -124,7 +131,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
                 t.send(message);
                 MessageNet receive = t.receive();
 
-                while (!(t.receive() instanceof EndUpdateModel))
+                while (!(receive instanceof EndUpdateModel))
                 {
                     t.send(message);
                     receive = t.receive();
@@ -335,7 +342,7 @@ class AcceptorRMI implements Runnable
             try {
                 Socket newSocket = serverSocket.accept();
                 ObjectInputStream stream = new ObjectInputStream(newSocket.getInputStream());
-                int portNumber = newSocket.getPort() + 1; //Obtain the number of port of the ServerRMI
+                int portNumber = stream.readInt(); //Obtain the number of port of the ServerRMI
 
                 String lookupName = "//" + newSocket.getInetAddress() + ":" + portNumber + "//networkH";
                 InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup(lookupName);

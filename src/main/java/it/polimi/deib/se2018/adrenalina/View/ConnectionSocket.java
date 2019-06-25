@@ -85,6 +85,7 @@ public class ConnectionSocket extends Connection implements Runnable
 
         out.writeObject(message);
         out.flush();
+        System.out.println("Messaggio inviato");
     }
 
 
@@ -100,7 +101,11 @@ public class ConnectionSocket extends Connection implements Runnable
         if (!active)
             throw new IllegalStateException("Connessione non attiva impossibile inviare il messaggio");
 
-        return (MessageNet) in.readObject();
+        System.out.println(".......");
+        MessageNet temp =(MessageNet) in.readObject();
+
+
+        return (MessageNet) temp;
     }
 
     /**

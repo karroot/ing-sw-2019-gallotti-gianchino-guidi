@@ -23,7 +23,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 {
 
     private PrivateView view;
-    private static int registryPortNumber = 5000; //Port
+    private static int registryPortNumber = 6000; //Port
     private MessageNet messageToSend = null;
     private final Object msg = new Object(); //Variable used to synchronize  the methods getResponseMessage and update
 
@@ -90,11 +90,23 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         // Start RMI registry
         LocateRegistry.createRegistry(registryPortNumber);
         //binding
-        Naming.rebind("networkH",this);
+        try
+        {
+            Naming.rebind("//localhost/networkH",this);
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
 
         Socket  socket = new Socket(ip,port);
-        socket.getOutputStream().write(5000);
+        socket.getOutputStream().write(registryPortNumber);
+
+
         socket.close();
+
+
 
         register(view);
 
@@ -174,7 +186,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     @Override
     public void receiveMessageRequest(MessageNet message)throws RemoteException,Exception
     {
-        if (message instanceof StartTurn) //If the message says to start the turn of player
+        if (message instanceof RequestStartRound) //If the message says to start the turn of player
         {
             logicRound.start();
             return;

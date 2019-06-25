@@ -46,7 +46,9 @@ public class ConnectionRMI extends Connection implements Runnable
         }
 
 
+
         client.receiveMessageRequest(message);
+        System.out.println("Messaggio inviato");
     }
 
     /**
@@ -61,6 +63,7 @@ public class ConnectionRMI extends Connection implements Runnable
         if (!active)
             throw new IllegalStateException("Connessione non attiva impossibile inviare il messaggio");
 
+        System.out.println("......");
         return client.getResponseMessage();
     }
 
