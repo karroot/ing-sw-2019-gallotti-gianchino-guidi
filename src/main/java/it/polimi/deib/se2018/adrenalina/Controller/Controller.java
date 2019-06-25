@@ -249,7 +249,7 @@ public class Controller implements Observer<ResponseInput>
     }
 
     private void drawPowerup(boolean respawn){
-        PowerUpCard pc= roundPlayer.getSquare().getGameBoard().drawPowerUpCard();
+        PowerUpCard pc= g1.drawPowerUpCard();
 
         if(respawn)
             roundPlayer.addPowerUpRespawn(pc);
@@ -421,7 +421,7 @@ public class Controller implements Observer<ResponseInput>
      */
     private void askForPowerUpTeleportOrNewton() throws InterruptedException, ExecutionException {
         boolean vuota=false;
-        boolean s;
+
         boolean t;
         List<String> powerUpList = new LinkedList<>();
         for (PowerUpCard pc : roundPlayer.getPowerupCardList()) 
@@ -432,23 +432,28 @@ public class Controller implements Observer<ResponseInput>
         if (powerUpList.isEmpty())
             vuota = true;
         if (!vuota) {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    try{virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
 
-                    return true;
+
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
-            {
 
-            }
 
-             s = prova.get();
+            boolean s = executor.invokeAny(callableList);
             if(!s)
                 return;
 
@@ -469,43 +474,51 @@ public class Controller implements Observer<ResponseInput>
                 }
             }
             // send end chicle message
-            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    virtualView.requestInput(new End(), roundPlayer.getColor()); 
-
-
-                    return true;
+                    try {
+                        virtualView.requestInput(new End(), roundPlayer.getColor());
+                        return true;
+                    }
+             catch(Exception e)
+             {
+                 return false;
+             }
                 }
             });
 
 
 
-            Boolean end = fine.get();
+            Boolean end =  executor.invokeAny(callableListA);
             if(!end)
                 return;
 
         }
         else
         {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
 
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                   try {
+                       virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
 
 
-                    return true;
+                       return true;
+                   }
+                catch(Exception e)
+                {
+                    return false;
+                }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
 
-            }
-
-            t  = prova.get();
+            t  =  executor.invokeAny(callableListA);
             if(!t)
                 return;
 
@@ -541,28 +554,31 @@ public class Controller implements Observer<ResponseInput>
             if (powerUpList.isEmpty())
                 vuota = true;
             if (!vuota) {
-                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
 
-                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-                        virtualView.getResponseWithInputs(roundPlayer.getColor());
+                       try{                        
+                           virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                           virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                        return true;
+                           return true;
+                       }
+                        catch (Exception e)
+                        {
+                            return false;
+                        }
                     }
                 });
 
-                while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-                {
+                
 
-                }
-
-                Boolean s = prova.get();
+                Boolean s = executor.invokeAny(callableList);
                 if(!s)
                     return;
-
-                              if(checkForAfk())
-               return;
+                if(checkForAfk())
+                    return;
 
 
                 ResponsePowerUp risp = (ResponsePowerUp) msg;
@@ -575,40 +591,50 @@ public class Controller implements Observer<ResponseInput>
 
                 }
                 // sends end cicle message
-                Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+
+                List<Callable<Boolean>> callableListA = new LinkedList<>();
+                callableListA.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        virtualView.requestInput(new End(), roundPlayer.getColor()); 
-
-
-                        return true;
+                        try {
+                            virtualView.requestInput(new End(), roundPlayer.getColor());
+                            return true;
+                        }
+                        catch(Exception e)
+                        {
+                            return false;
+                        }
                     }
                 });
 
 
-                Boolean end = fine.get();
+
+                Boolean end =  executor.invokeAny(callableListA);
                 if(!end)
                     return;
 
-            } else {
-                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            }
+            else 
+                {
+                    List<Callable<Boolean>> callableList = new LinkedList<>();
+                    callableList.add(new Callable<Boolean>() {
 
                     @Override
                     public Boolean call() throws Exception {
 
-                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-
-
-                        return true;
+                       try {
+                           virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                      
+                          return true; }
+                       catch (Exception e)
+                       {
+                           return  false;
+                       }
                     }
                 });
 
-                while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-                {
 
-                }
-
-                Boolean s = prova.get();
+                Boolean s =  executor.invokeAny(callableList);
                 if(!s)
                     return;
             }
@@ -634,23 +660,28 @@ public class Controller implements Observer<ResponseInput>
         if (powerUpList.isEmpty())
             empty = true;
         if (!empty) {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                   try {
+                       virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                  
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                     return true;
+                   }
+                   catch (Exception e)
+                   {
+                       return  false;
+                   }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
 
-            }
-
-            boolean s = prova.get();
+            boolean s = executor.invokeAny(callableList);
             if(!s)
                 return;
 
@@ -668,40 +699,50 @@ public class Controller implements Observer<ResponseInput>
 
             }
             // sends end cicle message
-            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    virtualView.requestInput(new End(), roundPlayer.getColor()); 
-
-
-                    return true;
+                    try {
+                        virtualView.requestInput(new End(), roundPlayer.getColor());
+                        return true;
+                    }
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
                 }
             });
 
 
 
-            Boolean end = fine.get();
+            Boolean end =  executor.invokeAny(callableListA);
             if(!end)
                 return;
 
         }
         else
         {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
 
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    try {
+                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
 
-
-                    return true;
+                        return true; }
+                    catch (Exception e)
+                    {
+                        return  false;
+                    }
                 }
             });
 
 
-
-            Boolean s = prova.get();
+            Boolean s =  executor.invokeAny(callableList);
             if(!s)
                 return;
 
@@ -716,22 +757,25 @@ public class Controller implements Observer<ResponseInput>
      */
     public void askForTeleport(String choice) throws InterruptedException, ExecutionException {
         Teleporter tele=null;
-        Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
 
-                virtualView.requestInput(new RequestTeleporter(roundPlayer.getSquare().getGameBoard(), roundPlayer), roundPlayer.getColor());
+                try{   virtualView.requestInput(new RequestTeleporter(roundPlayer.getSquare().getGameBoard(), roundPlayer), roundPlayer.getColor());
                 virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                return true;
+                return true;}
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
-        {
-        }
 
-         boolean ric = rich.get();
+
+         boolean ric = executor.invokeAny(callableList);
         if(!ric)
             return;
         if(checkForAfk())
@@ -774,23 +818,27 @@ public class Controller implements Observer<ResponseInput>
             i++;
         }
         Newton finalCard = card;
-        Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
 
-                virtualView.requestInput(new RequestNewton(finalCard.checkMoveTarget(roundPlayer.getSquare().getGameBoard())), roundPlayer.getColor()); // come gli passo la richiesta ?
-                virtualView.getResponseWithInputs(roundPlayer.getColor());
+                try {
+                    virtualView.requestInput(new RequestNewton(finalCard.checkMoveTarget(roundPlayer.getSquare().getGameBoard())), roundPlayer.getColor()); // come gli passo la richiesta ?
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                return true;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
 
-        }
 
-        Boolean ric = rich.get();
+        Boolean ric =  executor.invokeAny(callableList);
         if(!ric)
             return;
         if(checkForAfk())
@@ -836,24 +884,26 @@ public class Controller implements Observer<ResponseInput>
         TargettingScope finalCard = card;
 
 
-
-        Future<Boolean> rich = executor.submit(new Callable<Boolean>() {
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
 
+                try{
                 virtualView.requestInput(new RequestTargettingScope(roundDamageList.get(finalCard.getPlayer().getColor()),finalCard.check()), roundPlayer.getColor());
                 virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                return true;
+                return true;}
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
+       
 
-        }
-
-        Boolean ric = rich.get();
+        Boolean ric = executor.invokeAny(callableList);
         if(!ric)
             return;
         if(checkForAfk())
@@ -884,25 +934,28 @@ public class Controller implements Observer<ResponseInput>
             if(pc.powerToString().equals(choice))
                 cardpower=(TagbackGranade) pc;
         }
-        Future<Boolean> rich = executor.submit(new Callable<Boolean>()
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>()
         {
             @Override
             public Boolean call() throws Exception
             {
 
+                try{
                 virtualView.requestInput(new RequestTagbackGranade(roundPlayer.getColor()),tempPlayer.getColor());
                 virtualView.getResponseWithInputs(tempPlayer.getColor());
 
-                return true;
+                return true;}
+                catch (Exception e)
+                {
+                    return  false;
+                }
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
+      
 
-        }
-
-        Boolean ric = rich.get();
+        Boolean ric = executor.invokeAny(callableList);
         if(!ric)
             return;
         if(checkForAfk())
@@ -942,23 +995,25 @@ public class Controller implements Observer<ResponseInput>
         if (powerUpList.isEmpty())
             empty = true;
         if (!empty) {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    try{virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                    return true;
+                    return true;}
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+           
 
-            }
-
-            Boolean s = prova.get();
+           boolean s = executor.invokeAny(callableList);
             if(!s)
                 return;
             if(checkForAfk())
@@ -998,38 +1053,50 @@ public class Controller implements Observer<ResponseInput>
 
             }
             // sends end cicle message
-            Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    virtualView.requestInput(new End(), roundPlayer.getColor()); 
-
-
-                    return true;
+                    try {
+                        virtualView.requestInput(new End(), roundPlayer.getColor());
+                        return true;
+                    }
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
                 }
             });
 
 
 
-            Boolean end = fine.get();
+            Boolean end =  executor.invokeAny(callableListA);
             if(!end)
                 return;
+
         }
         else
         {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
 
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    try {
+                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
 
-                    return true;
+                        return true; }
+                    catch (Exception e)
+                    {
+                        return  false;
+                    }
                 }
             });
 
 
-
-            Boolean s = prova.get();
+            Boolean s =  executor.invokeAny(callableList);
             if(!s)
                 return;
 
@@ -1123,24 +1190,27 @@ public class Controller implements Observer<ResponseInput>
         //if first round and firstplayer he have to spawn terminator
         if (p.isFirst() && firstRound && g1.isTerminatorMode())
         {
-            Future<Boolean> test = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception
                 {
 
-                    virtualView.requestInput(new RequestRespawnTerminator(), p.getColor());
-                    virtualView.getResponseWithInputs(p.getColor());
+                    try
+                    {virtualView.requestInput(new RequestRespawnTerminator(), p.getColor());
+                        virtualView.getResponseWithInputs(p.getColor());
 
-                    return true;
+                        return true;}
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
                 }
             });
+            boolean s = executor.invokeAny(callableList);
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
-            {
 
-            }
 
-            Boolean s = test.get();
             if (!s)
                 return;
             if (checkForAfk())
@@ -1156,22 +1226,23 @@ public class Controller implements Observer<ResponseInput>
 
         if (g1.isTerminatorMode() && p.isTerminator())
         {
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestRespawnTerminator(), roundPlayer.getColor());
+                   try{ virtualView.requestInput(new RequestRespawnTerminator(), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                    return true;
+                    return true;}
+                   catch(Exception e)
+                   {
+                       return false;
+                   }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
-
-            }
-
-            Boolean s = prova.get();
+            boolean s = executor.invokeAny(callableList);
             if (!s)
                 return;
             if (checkForAfk())
@@ -1190,22 +1261,25 @@ public class Controller implements Observer<ResponseInput>
             for (PowerUpCard pc : roundPlayer.getPowerupCardList()) {
                 powerList.add(pc.getColor());
             }
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
+                   try{ virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
                     virtualView.getResponseWithInputs(p.getColor());
 
-                    return true;
+                    return true;}
+                   catch (Exception e){
+                       return false;
+                   }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) {
 
-            }
 
-            Boolean s = prova.get();
+
+            boolean s = executor.invokeAny(callableList);
             if (!s)
                 return;
             if (checkForAfk())
@@ -1239,26 +1313,28 @@ public class Controller implements Observer<ResponseInput>
      * @throws ExecutionException
      */
     private void runAround(boolean terminator) throws InterruptedException, ExecutionException
-    {
-        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+    { List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>()
         {
             @Override
             public Boolean call() throws Exception {
             Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
 
-                virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)),roundPlayer.getColor()); 
+            try {
+                virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
                 virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                 return true;
             }
+            catch (Exception e){
+                return  false;
+            }
+            }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
+       
 
-        }
-
-        Boolean s = prova.get();
+       boolean s = executor.invokeAny(callableList);
         if(!s)
             return;
         if(checkForAfk())
@@ -1296,24 +1372,28 @@ public class Controller implements Observer<ResponseInput>
 
                 if(roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).size()>1)
                 {
-                    Future<Boolean> con = executor.submit(new Callable<Boolean>() {
+                    List<Callable<Boolean>> callableList = new LinkedList<>();
+                    callableList.add(new Callable<Boolean>() {
 
                         @Override
                         public Boolean call() throws Exception {
 
-                            virtualView.requestInput(new RequestShootTerminator(enemiesColors),roundPlayer.getColor());
-                            virtualView.getResponseWithInputs(roundPlayer.getColor());
+                            try {
+                                virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
+                                virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                            return true;
+                                return true;
+                            }
+                            catch (Exception e)
+                            {
+                                return  false;
+                            }
                         }
                     });
 
-                    while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS))
-                    {
 
-                    }
 
-                    Boolean resp = con.get();
+                    Boolean resp = executor.invokeAny(callableList);
                     if(!resp)
                         return;
                     if(checkForAfk())
@@ -1359,25 +1439,29 @@ public class Controller implements Observer<ResponseInput>
             vuota = true;
         if (!vuota)
         {
-                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
 
                     @Override
                     public Boolean call() throws Exception {
 
-                        virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor()); 
+                        try {
+                            virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor());
 
-                        virtualView.getResponseWithInputs(roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                        return true;
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return  false;
+                        }
                     }
                 });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+           
 
-            }
-
-            Boolean s = prova.get();
+           boolean s = executor.invokeAny(callableList);
             if(!s)
                 return;
 
@@ -1391,24 +1475,28 @@ public class Controller implements Observer<ResponseInput>
 
             //USA ARMA
 
-            Future<Boolean> con = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
 
                 @Override
                 public Boolean call() throws Exception {
 
+                    try{
                       virtualView.requestInput(weaponChosen.getRequestMessage(),roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                     return true;
                 }
+                catch (Exception e)
+                {
+                    return  false;
+                }
+                }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+           
 
-            }
-
-            Boolean resp = con.get();
+            Boolean resp = executor.invokeAny(callableListA);
             if(!resp)
                 return;
             if(checkForAfk())
@@ -1423,26 +1511,28 @@ public class Controller implements Observer<ResponseInput>
         else // send empty list and dont wait anything
         {
 
-            Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
 
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor()); 
+                    try {
+                        virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor());
 
-
-
-                    return true;
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return  false;
+                    }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+           
 
-            }
-
-            Boolean s = prova.get();
-              if(!s)
+           boolean s = executor.invokeAny(callableList);
+           if(!s)
             return;
 
 
@@ -1457,26 +1547,29 @@ public class Controller implements Observer<ResponseInput>
      */
     public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard
     {
-
-        Future<Boolean> prova = executor.submit(new Callable<Boolean>()
+        Set<Square> squareToChange =roundPlayer.lookForGrabStuff(roundPlayer);
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>()
         {
             @Override
             public Boolean call() throws Exception {
-                Set<Square> squareToChange =roundPlayer.lookForGrabStuff(roundPlayer);
+               try {
 
-                virtualView.requestInput(new RequestGrabStuff(changeToList(squareToChange)),roundPlayer.getColor()); 
-                virtualView.getResponseWithInputs(roundPlayer.getColor());
+                   virtualView.requestInput(new RequestGrabStuff(changeToList(squareToChange)), roundPlayer.getColor());
+                   virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                return true;
+                   return true;
+               }
+               catch (Exception e)
+               {
+                   return false;
+               }
             }
         });
 
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
+       
 
-        }
-
-        Boolean s = prova.get();
+       boolean s = executor.invokeAny(callableList);
         if(!s)
             return;
         if(checkForAfk())
@@ -1510,28 +1603,31 @@ public class Controller implements Observer<ResponseInput>
                     weaponsName.add(wc.getName());
             }
 
-
-            Future<Boolean> seconda = executor.submit(new Callable<Boolean>()
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>()
             {
                 @Override
                 public Boolean call() throws Exception {
 
-                    virtualView.requestInput(new RequestShootPeople(weaponsName),roundPlayer.getColor());
-                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+                    try {
+                        virtualView.requestInput(new RequestShootPeople(weaponsName), roundPlayer.getColor());
+                        virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                    return true;
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return  false;
+                    }
                 }
             });
 
-            while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-            {
+           
 
-            }
-
-            Boolean valid = seconda.get();
+            Boolean valid = executor.invokeAny(callableListA);
             if(!valid)
                 return;
-                       if(checkForAfk())
+            if(checkForAfk())
                return;
 
 
@@ -1557,29 +1653,32 @@ public class Controller implements Observer<ResponseInput>
                     playerWeaponsName.add(wc.getName());
                 }
 
-
-                Future<Boolean> terza = executor.submit(new Callable<Boolean>()
+                List<Callable<Boolean>> callableListS = new LinkedList<>();
+                callableListS.add(new Callable<Boolean>()
                 {
                     @Override
                     public Boolean call() throws Exception {
 
-                        virtualView.requestInput(new RequestShootPeople(playerWeaponsName),roundPlayer.getColor());
-                        virtualView.getResponseWithInputs(roundPlayer.getColor());
+                        try {
+                            virtualView.requestInput(new RequestShootPeople(playerWeaponsName), roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                        return true;
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return  false;
+                        }
                     }
                 });
 
-                while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-                {
+               
 
-                }
-
-                Boolean correct = terza.get();
+                Boolean correct =  executor.invokeAny(callableListS);
                 if(!correct)
                     return;
-                              if(checkForAfk())
-               return;
+                if(checkForAfk())
+                    return;
 
 
                 ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
@@ -1614,22 +1713,25 @@ public class Controller implements Observer<ResponseInput>
 
 
                 String finalChargableWeaponName = chargableWeaponName;
-                Future<Boolean> prova = executor.submit(new Callable<Boolean>() {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
+                        try{
                         virtualView.requestInput(new RequestReloadWeapon(finalChargableWeaponName), roundPlayer.getColor()); 
                         virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                        return true;
+                        return true;}
+                        catch (Exception e)
+                        {
+                            return false;
+                        }
                     }
                 });
 
-                while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-                {
+               
 
-                }
-
-                Boolean s = prova.get();
+               boolean s = executor.invokeAny(callableList);
                 if(!s)
                     return;
               if(checkForAfk())
@@ -1649,17 +1751,20 @@ public class Controller implements Observer<ResponseInput>
 
         }
         // sends end cicle message
-        Future<Boolean> fine = executor.submit(new Callable<Boolean>() {
+        List<Callable<Boolean>> callableListH = new LinkedList<>();
+        callableListH.add(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
+                try{
                 virtualView.requestInput(new End(), roundPlayer.getColor()); 
-
-
-                return true;
+                return true;}
+                catch (Exception e){
+                    return  false;
+                }
             }
         });
 
-        Boolean end = fine.get();
+        Boolean end = executor.invokeAny(callableListH);
 
 
     }
@@ -1779,26 +1884,6 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    public void createNewGame (int idArena, ColorId[] players, boolean isFrenetic, boolean onTerminator, int numSkulls, ColorId firstPlayer) throws InterruptedException, ExecutionException {
-        Future<String> prova = executor.submit(new Callable<String>()
-        {
-            @Override
-            public String call() throws Exception {
-
-
-
-                return "Ciao";
-            }
-        });
-
-        while (!executor.awaitTermination(200, TimeUnit.MILLISECONDS)) 
-        {
-
-        }
-
-        String s = prova.get();
-
-    }
 
 
 
