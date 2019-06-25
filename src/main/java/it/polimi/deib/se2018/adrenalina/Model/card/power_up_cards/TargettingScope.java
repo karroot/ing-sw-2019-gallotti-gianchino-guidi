@@ -17,7 +17,7 @@ public class TargettingScope extends PowerUpCard
     public TargettingScope(Color color, int idPU)
     {
         super(color, idPU);
-        name = "TargettingScope";
+        name = "Mirino";
 
     }
 

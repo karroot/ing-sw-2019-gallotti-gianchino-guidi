@@ -80,6 +80,7 @@ public class SpawnPoint extends Square
     public WeaponCard swapWeapon (WeaponCard chosenNewWeapon, WeaponCard chosenOldWeapon)
     {
         weaponCardList.remove(chosenNewWeapon);
+        chosenOldWeapon.setLoaded(true);
         weaponCardList.add(chosenOldWeapon);
         return chosenNewWeapon;
     }

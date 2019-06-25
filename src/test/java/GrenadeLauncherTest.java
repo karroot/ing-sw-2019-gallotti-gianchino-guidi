@@ -28,22 +28,6 @@ public class GrenadeLauncherTest {
     @Before
     public void setUp() throws Exception
     {
-        //  start = board.getArena().getSquare(1,1);
-        // p1.setSquare(start);
-        //     p2.setSquare(start);
-        //  p3.setSquare(start);
-        //p4.setSquare(start);
-        //p5.setSquare(start);
-
-
-
-        //MethodsWeapons.moveTarget(p1,3,3);
-        //   MethodsWeapons.moveTarget(p2,2,2);
-        // MethodsWeapons.moveTarget(p3,1,2);
-        //MethodsWeapons.moveTarget(p4,2,3);
-        //MethodsWeapons.moveTarget(p5,4,1);
-
-
         start = board.getArena().getSquare(2,1);
 
         board.setAllPlayer(p1);
@@ -63,7 +47,8 @@ public class GrenadeLauncherTest {
     }
 
     @Test
-    public void checkAvailableMode() {
+    public void checkAvailableMode()
+    {
         assertFalse(grenadeLauncher.checkAvailableMode()[0]);
         assertFalse(grenadeLauncher.checkAvailableMode()[1]);
 
@@ -82,7 +67,8 @@ public class GrenadeLauncherTest {
     }
 
     @Test
-    public void checkBasicMode() {
+    public void checkBasicMode()
+    {
         MethodsWeapons.moveTarget(p2,3,1);
         p3.setSquare(start);
         MethodsWeapons.moveTarget(p3,3,2);
@@ -116,10 +102,30 @@ public class GrenadeLauncherTest {
     @Test
     public void checkExtraGrenade()
     {
+        MethodsWeapons.moveTarget(p2,3,1);
+        p3.setSquare(start);
+        MethodsWeapons.moveTarget(p3,4,1);
+
+        List<String> stringList = grenadeLauncher.checkExtraGrenade();
+
+        assertTrue(stringList.contains(p2.getSquare().toStringCoordinates()));
+
     }
 
     @Test
-    public void extraGrenade() {
+    public void extraGrenade()
+    {
+        MethodsWeapons.moveTarget(p2,3,1);
+        p3.setSquare(start);
+        MethodsWeapons.moveTarget(p3,4,1);
+
+        grenadeLauncher.extraGrenade(p2.getSquare().toStringCoordinates());
+
+        assertEquals(1, p2.getNumberOfDamagePoint());
+
+        assertFalse(grenadeLauncher.isLoaded());
+
+
     }
 
 

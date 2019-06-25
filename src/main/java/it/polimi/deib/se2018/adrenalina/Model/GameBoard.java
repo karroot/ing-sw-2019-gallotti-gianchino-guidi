@@ -115,7 +115,7 @@ public class GameBoard {
             return pop;
         }
         else {
-            throw new NullPointerException("deck is empty");
+            throw new NullPointerException("Il deck è vuoto.");
         }
     }
 

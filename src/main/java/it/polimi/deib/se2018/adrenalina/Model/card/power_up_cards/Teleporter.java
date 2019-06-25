@@ -22,7 +22,7 @@ public class Teleporter extends PowerUpCard
     public Teleporter(Color color, int idPU)
     {
         super(color, idPU);
-        name = "Teleporter";
+        name = "Teletrasporto";
     }
 
     /**

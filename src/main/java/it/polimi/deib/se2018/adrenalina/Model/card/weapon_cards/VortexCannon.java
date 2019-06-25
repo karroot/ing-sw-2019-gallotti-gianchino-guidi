@@ -46,7 +46,12 @@ public class VortexCannon extends WeaponCard
         availableMethod[0] = false;
         availableMethod[1] = false;
 
-        if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, (List<Square>) MethodsWeapons.squareThatSee(player)))
+        List<Square> squareList = new ArrayList<>();
+
+        squareList.addAll(MethodsWeapons.squareThatSee(player));
+        squareList.remove(player.getSquare());
+
+        if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, squareList))
         {
                 availableMethod[0] = true;
         }
@@ -65,12 +70,12 @@ public class VortexCannon extends WeaponCard
      * @return
      * @throws IllegalStateException
      */
-    private HashMap<Square, ArrayList<Player>> checkBasicModeFull() throws IllegalStateException
+    private HashMap<Square, List<Player>> checkBasicModeFull() throws IllegalStateException
     {
         if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        HashMap<Square, ArrayList<Player>> hashMapreturn = new HashMap<Square, ArrayList<Player>>();
+        HashMap<Square, List<Player>> hashMapreturn = new HashMap<>();
 
         Player playerTemp = new Player(null,null, null, true);
 
@@ -102,7 +107,7 @@ public class VortexCannon extends WeaponCard
      */
     private List<String> checkBasicModeSquares ()
     {
-        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
+        HashMap<Square, List<Player>> squarePlayersHashMap = checkBasicModeFull();
 
         List<String> squareListCoordinatesAsString = new ArrayList<>();
 
@@ -133,7 +138,7 @@ public class VortexCannon extends WeaponCard
             squareNotInGameBoard.printStackTrace();
         }
 
-        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
+        HashMap<Square, List<Player>> squarePlayersHashMap = checkBasicModeFull();
 
         for (Player playerIterate : squarePlayersHashMap.get(square))
             colorIdList.add(playerIterate.getColor());

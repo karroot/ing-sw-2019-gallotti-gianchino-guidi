@@ -10,7 +10,7 @@ public class TagbackGranade extends PowerUpCard
     public TagbackGranade(Color color, int idPU)
     {
         super(color, idPU);
-        name = "TagbackGranade";
+        name = "Granata Venom";
 
     }
 
