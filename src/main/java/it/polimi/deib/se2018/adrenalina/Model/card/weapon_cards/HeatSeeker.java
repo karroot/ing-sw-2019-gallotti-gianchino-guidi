@@ -87,6 +87,7 @@ public class HeatSeeker extends WeaponCard
                         .collect(Collectors.toList()).get(0),3);
 
         this.isLoaded = false;
+
     }
 
 

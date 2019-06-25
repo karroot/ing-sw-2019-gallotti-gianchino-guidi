@@ -15,7 +15,6 @@ import static org.junit.Assert.*;
  * @author giovanni
  */
 public class GrenadeLauncherTest {
-    /*
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),2,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
@@ -43,7 +42,16 @@ public class GrenadeLauncherTest {
         // MethodsWeapons.moveTarget(p3,1,2);
         //MethodsWeapons.moveTarget(p4,2,3);
         //MethodsWeapons.moveTarget(p5,4,1);
+
+
         start = board.getArena().getSquare(2,1);
+
+        board.setAllPlayer(p1);
+        board.setAllPlayer(p2);
+        board.setAllPlayer(p3);
+        board.setAllPlayer(p4);
+        board.setAllPlayer(p5);
+
         p1.setSquare(start);
         p2.setSquare(start);
 
@@ -60,6 +68,7 @@ public class GrenadeLauncherTest {
         assertFalse(grenadeLauncher.checkAvailableMode()[1]);
 
         p3.setSquare(start);
+
         MethodsWeapons.moveTarget(p3,3,2);
 
         assertTrue(grenadeLauncher.checkAvailableMode()[0]);
@@ -80,12 +89,12 @@ public class GrenadeLauncherTest {
         p4.setSquare(start);
         MethodsWeapons.moveTarget(p4,2,2);
 
-        List<Player> playerList = new ArrayList<>();
-        playerList.add(p2);
-        playerList.add(p3);
-        playerList.add(p4);
+        List<ColorId> colorIdList = new ArrayList<>();
+        colorIdList.add(p2.getColor());
+        colorIdList.add(p3.getColor());
+        colorIdList.add(p4.getColor());
 
-        assertEquals(playerList, grenadeLauncher.checkBasicMode());
+        assertEquals(colorIdList, grenadeLauncher.checkBasicMode());
 
 
     }
@@ -98,19 +107,20 @@ public class GrenadeLauncherTest {
 
         Square square = p3.getSquare();
 
-        grenadeLauncher.basicMode(p2, 4,1);
+        grenadeLauncher.basicMode(p2.getColor(), "x = 4, y = 1");
 
         assertEquals(1,p2.getNumberOfDamagePoint());
         assertEquals(square,p2.getSquare());
     }
 
     @Test
-    public void checkExtraGrenade() {
+    public void checkExtraGrenade()
+    {
     }
 
     @Test
     public void extraGrenade() {
     }
 
-     */
+
 }

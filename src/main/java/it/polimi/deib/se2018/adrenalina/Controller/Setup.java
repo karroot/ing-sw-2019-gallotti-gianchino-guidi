@@ -281,13 +281,15 @@ public class Setup
             {
                 if (squareIterate.isSpawnPoint())
                 {
-                    if (((SpawnPoint) squareIterate).getWeaponCardList().size()<3) {
-                        try{
-                        ((SpawnPoint) squareIterate).addNewWeapon();
-                    }
-                    catch(NullPointerException e){
-
-                    }
+                    while (((SpawnPoint) squareIterate).getWeaponCardList().size()<3)
+                    {
+                        try
+                        {
+                            ((SpawnPoint) squareIterate).addNewWeapon();
+                        }
+                        catch(NullPointerException e)
+                        {
+                        }
                     }
                 }
 

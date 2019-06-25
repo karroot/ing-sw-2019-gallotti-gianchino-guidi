@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 
 
 public class FurnaceTest {
-    /*
+
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),1,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
@@ -34,23 +35,27 @@ public class FurnaceTest {
     @Before
     public void setUp() throws Exception
     {
-      //  start = board.getArena().getSquare(1,1);
-       // p1.setSquare(start);
-   //     p2.setSquare(start);
-      //  p3.setSquare(start);
-        //p4.setSquare(start);
-        //p5.setSquare(start);
+        start = board.getArena().getSquare(1,1);
+
+        board.setAllPlayer(p1);
+        board.setAllPlayer(p2);
+        board.setAllPlayer(p3);
+        board.setAllPlayer(p4);
+        board.setAllPlayer(p5);
+
+        p1.setSquare(start);
+        p2.setSquare(start);
 
 
 
-        //MethodsWeapons.moveTarget(p1,3,3);
-     //   MethodsWeapons.moveTarget(p2,2,2);
-       // MethodsWeapons.moveTarget(p3,1,2);
-        //MethodsWeapons.moveTarget(p4,2,3);
-        //MethodsWeapons.moveTarget(p5,4,1);
+
+        MethodsWeapons.moveTarget(p1,3,3);
+        MethodsWeapons.moveTarget(p2,2,2);
+
         start = board.getArena().getSquare(1,1);
         p1.setSquare(start);
         p2.setSquare(start);
+        p3.setSquare(start);
 
         MethodsWeapons.moveTarget(p2,2,2);
 
@@ -61,10 +66,9 @@ public class FurnaceTest {
 
     @Test
     public void checkAvailableMode() throws  Exception {
+
         assertFalse(furnace.checkAvailableMode()[0]);
         assertFalse(furnace.checkAvailableMode()[1]);
-
-
 
         MethodsWeapons.moveTarget(p2,1,1);
         assertTrue(!furnace.checkAvailableMode()[0] && !furnace.checkAvailableMode()[1]);
@@ -98,13 +102,10 @@ public class FurnaceTest {
 
     @Test
     public void checkBasicMode() throws Exception {
-        p3.setSquare(start);
         p4.setSquare(start);
         p5.setSquare(start);
 
-        HashMap<Room, ArrayList<Player>> roomArrayListHashMap = new HashMap<>();
-
-        Room key;
+        List<ColorRoom> colorRoomList = new ArrayList<>();
 
         MethodsWeapons.moveTarget(p1,1,1);
         MethodsWeapons.moveTarget(p2,1,2);
@@ -112,21 +113,20 @@ public class FurnaceTest {
         MethodsWeapons.moveTarget(p4,2,1);
         MethodsWeapons.moveTarget(p5,2,1);
 
-        key = p4.getSquare().getRoom();
 
-        roomArrayListHashMap = furnace.checkBasicMode();
+        colorRoomList = furnace.checkBasicMode();
 
-        assertFalse(roomArrayListHashMap.containsKey(key));
-
-        key = p3.getSquare().getRoom();
-        assertEquals(2, roomArrayListHashMap.get(key).size());
-        assertTrue(roomArrayListHashMap.get(key).contains(p2));
-        assertTrue(roomArrayListHashMap.get(key).contains(p3));
-        assertFalse(roomArrayListHashMap.get(key).contains(p4));
+        assertFalse(colorRoomList.contains(p4.getSquare().getRoom().getColor()));
 
 
+        assertEquals(1, colorRoomList.size());
+
+        ColorRoom colorRoom = p2.getSquare().getRoom().getColor();
 
 
+        assertTrue(p1.getSquare().getGameBoard().getRoomList().stream().filter(room1 -> room1.getColor().equals(colorRoom)).collect(Collectors.toList()).get(0).getPlayerRoomList().contains(p2));
+        assertTrue(p1.getSquare().getGameBoard().getRoomList().stream().filter(room1 -> room1.getColor().equals(colorRoom)).collect(Collectors.toList()).get(0).getPlayerRoomList().contains(p3));
+        assertFalse(p1.getSquare().getGameBoard().getRoomList().stream().filter(room1 -> room1.getColor().equals(colorRoom)).collect(Collectors.toList()).get(0).getPlayerRoomList().contains(p4));
 
 
     }
@@ -139,24 +139,21 @@ public class FurnaceTest {
         MethodsWeapons.moveTarget(p2,1,2);
         MethodsWeapons.moveTarget(p3,1,2);
 
-        furnace.basicMode(p2.getSquare().getRoom());
+        furnace.basicMode(p2.getSquare().getRoom().getColor());
 
         assertEquals(1,p2.getNumberOfDamagePoint());
         assertEquals(1,p3.getNumberOfDamagePoint());
     }
 
     @Test
-    public void checkInCozyFireMode() throws Exception {
-        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
-        Square key;
+    public void checkInCozyFireModeTest() throws Exception {
 
-        List<Player> playerList = new ArrayList<>();
+
+        List<ColorId> colorIdList = new ArrayList<>();
 
         p3.setSquare(start);
         p4.setSquare(start);
         p5.setSquare(start);
-
-
 
         MethodsWeapons.moveTarget(p1,1,1);
         MethodsWeapons.moveTarget(p2,1,2);
@@ -164,19 +161,16 @@ public class FurnaceTest {
         MethodsWeapons.moveTarget(p4,2,1);
         MethodsWeapons.moveTarget(p5,2,1);
 
-        key = p2.getSquare();
-        playerList.add(p2);
-        playerList.add(p3);
+        colorIdList.add(p2.getColor());
+        colorIdList.add(p3.getColor());
 
-        hashSquarePlayer = furnace.checkInCozyFireMode();
 
-        assertTrue(hashSquarePlayer.containsKey(key));
-        assertEquals(hashSquarePlayer.get(key), playerList);
 
-        key = p4.getSquare();
+        assertTrue(furnace.checkInCozyFireMode().contains(p2.getSquare().toStringCoordinates()));
+        assertTrue(furnace.checkInCozyFireMode().contains(p3.getSquare().toStringCoordinates()));
 
-        assertTrue(hashSquarePlayer.containsKey(key));
-        assertEquals(hashSquarePlayer.get(key).size(), 2);
+
+        assertEquals(2,furnace.checkInCozyFireMode().size());
     }
 
     @Test
@@ -192,7 +186,7 @@ public class FurnaceTest {
         MethodsWeapons.moveTarget(p4,1,2);
         MethodsWeapons.moveTarget(p5,2,2);
 
-        furnace.inCozyFireMode(p2.getSquare());
+        furnace.inCozyFireMode(p2.getSquare().toStringCoordinates());
 
         assertEquals(1,p2.getNumberOfDamagePoint());
         assertEquals(1,p3.getNumberOfDamagePoint());
@@ -204,8 +198,6 @@ public class FurnaceTest {
 
         assertFalse(furnace.isLoaded());
 
-
-
     }
-    */
+
 }

@@ -75,75 +75,6 @@ public class Hellion extends WeaponCard
 
 
     /**
-     * First of 3 methods for check the targets for the basic mode.
-     *
-     * @return and hashmap of squares and arraylist of players of possible targets
-     */
-    private HashMap<Square, ArrayList<Player>> checkBasicModeFull()
-    {
-
-        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
-
-        Set<Square> squareList;
-        squareList = MethodsWeapons.squareThatSee(player);
-        squareList.remove(player.getSquare());
-
-        for (Square squareIterate : squareList)
-        {
-            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
-        }
-
-        return hashSquarePlayer;
-
-    }
-
-    /**
-     * Second of 3 methods for check the targets for the basic mode.
-     *
-     * @return a list of string of possible squares target
-     */
-    private List<String> checkBasicModeSquares ()
-    {
-        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
-
-        List<String> squareListCoordinatesAsString = new ArrayList<>();
-
-        for (Square squareIterate : squarePlayersHashMap.keySet())
-            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
-
-        return squareListCoordinatesAsString;
-
-    }
-
-    /**
-     * Third of 3 methods for check the targets for the basic mode.
-     * @param squareTargetCoordinatesAsString is the square target
-     * @return a list of ColorId of possible targets in that square
-     */
-    private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
-    {
-        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
-        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
-
-        Square square = null;
-        List<ColorId> colorIdList = new ArrayList<>();
-
-        try {
-            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-        HashMap<Square, ArrayList<Player>> squarePlayersHashMap = checkBasicModeFull();
-
-        for (Player playerIterate : squarePlayersHashMap.get(square))
-            colorIdList.add(playerIterate.getColor());
-
-        return colorIdList;
-
-    }
-
-    /**
      * Method to check the targets for the basic mode.
      *
      * @return an hashmap of String and lists of ColorId
@@ -156,15 +87,34 @@ public class Hellion extends WeaponCard
 
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
-        List<String> stringListKeys = checkBasicModeSquares();
-        List<ColorId> colorIdListAttributes = new ArrayList<>();
+        //check basic mode for square and players
+        HashMap<Square, List<Player>> hashSquarePlayer = new HashMap<>();
 
-        for (String stringIterate : stringListKeys)
+        Set<Square> squareList;
+        squareList = MethodsWeapons.squareThatSee(player);
+        squareList.remove(player.getSquare());
+
+        for (Square squareIterate : squareList)
         {
-            colorIdListAttributes.clear();
-            colorIdListAttributes = checkBasicModePlayers(stringIterate);
-            hashMapToReturn.put(stringIterate, colorIdListAttributes);
+            if (!squareIterate.getPlayerList().isEmpty())
+                hashSquarePlayer.put(squareIterate,  squareIterate.getPlayerList());
         }
+
+
+        //convert to colorid and strings
+
+
+        for (Square squareIterate : hashSquarePlayer.keySet())
+        {
+            List<ColorId> colorIdList = new ArrayList<>();
+
+            for (Player playerIterate : hashSquarePlayer.get(squareIterate))
+                colorIdList.add(playerIterate.getColor());
+
+            hashMapToReturn.put(squareIterate.toStringCoordinates(), colorIdList);
+
+        }
+
 
         return hashMapToReturn;
 
@@ -193,27 +143,6 @@ public class Hellion extends WeaponCard
 
 
     /**
-     * It checks the targets for the NanoTracerMode
-     *
-     * @return a list of string of square coordinates that are the possible target squares
-     */
-    private List<String> checkNanoTracerModeSquare ()
-    {
-        return checkBasicModeSquares();
-    }
-
-    /**
-     * It checks the targets for the NanoTracerMode
-     *
-     * @param squareTargetCoordinatesAsString is the target square
-     * @return a list of ColorId of possible target players
-     */
-    private List<ColorId>  checkNanoTracerModePlayer (String squareTargetCoordinatesAsString)
-    {
-        return checkBasicModePlayers(squareTargetCoordinatesAsString);
-    }
-
-    /**
      * It is the full implementation to check the targets for the nano tracer mode
      *
      * @return an hashmap of String and lists of ColorId
@@ -223,20 +152,7 @@ public class Hellion extends WeaponCard
         if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità nano-traccianti dell'arma "+name+" non eseguibile.");
 
-
-        HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
-
-        List<String> stringListKeys = checkNanoTracerModeSquare();
-        List<ColorId> colorIdListAttributes = new ArrayList<>();
-
-        for (String stringIterate : stringListKeys)
-        {
-            colorIdListAttributes.clear();
-            colorIdListAttributes = checkNanoTracerModePlayer(stringIterate);
-            hashMapToReturn.put(stringIterate, colorIdListAttributes);
-        }
-
-        return hashMapToReturn;
+        return checkBasicMode();
     }
 
     /**

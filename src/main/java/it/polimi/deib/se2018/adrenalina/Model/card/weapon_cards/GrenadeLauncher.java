@@ -77,7 +77,9 @@ public class GrenadeLauncher extends WeaponCard
 
         playersTarget.remove(player); //Remove the player that has this card
 
-        return (List) playersTarget; //Returns all targets
+        List<Player> playerListToReturn = new ArrayList<>();
+        playerListToReturn.addAll(playersTarget);
+        return playerListToReturn; //Returns all targets
     }
 
     /**
@@ -91,7 +93,7 @@ public class GrenadeLauncher extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<ColorId> colorIdList = new ArrayList<>();
-        List<Player> playerList = checkBasicModePlayers();
+        List<Player> playerList =  checkBasicModePlayers();
 
         for (Player playerIterate : playerList)
         {
