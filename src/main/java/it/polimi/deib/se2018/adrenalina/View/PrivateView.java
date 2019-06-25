@@ -411,7 +411,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     public void updateModelCopy(UpdateModel message)
     {
         terminal.setData(message);
-        terminal.showBoard();
+        //terminal.showBoard();
 
         try  //send at the controller a message to say that the model was update with success
         {

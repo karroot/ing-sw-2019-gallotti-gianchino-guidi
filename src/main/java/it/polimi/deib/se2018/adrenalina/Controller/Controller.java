@@ -116,6 +116,7 @@ public class Controller implements Observer<ResponseInput>
         this.codeArena=codeArena;
         this.skullCounter = skullCounter;
         this.virtualView = virtualView;
+
     }
 
     /**
@@ -231,7 +232,7 @@ public class Controller implements Observer<ResponseInput>
         Player currentPlayer=null;
         List<PowerUpCard> pcList= new LinkedList<>();
         boolean ret=false;
-        for (Player pla : roundPlayer.getSquare().getGameBoard().getAllPlayer() )
+        for (Player pla : g1.getAllPlayer() )
         {
             if(pla.getColor().equals(pg))
                 currentPlayer=pla;
@@ -266,7 +267,8 @@ public class Controller implements Observer<ResponseInput>
      * check if the player is afk
      * @return true if player is afk
      */
-    private boolean checkForAfk(){
+    private boolean checkForAfk()
+    {
         if(msg instanceof Afk )
         {
             roundPlayer.setAfk(true);
@@ -402,13 +404,17 @@ public class Controller implements Observer<ResponseInput>
                 askForPowerUpTagBackGranade();
             }
 
+            updateModel();
+
             virtualView.getResponseWithInputs(player);
 
             messageNet = msg;
+
+
         }
-        updateModel();
+
     // at the end of round
-        for(Player p: roundPlayer.getSquare().getGameBoard().getAllPlayer())
+        for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
         }
@@ -542,7 +548,7 @@ public class Controller implements Observer<ResponseInput>
             boolean vuota = false;
             List<String> powerUpList = new LinkedList<>();
             Player granadeAttackedPlayer = null;
-            for (Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer()) {
+            for (Player p : g1.getAllPlayer()) {
                 if (p.getColor().equals(granadeAttacked))
                     granadeAttackedPlayer = p;
             }
@@ -765,7 +771,7 @@ public class Controller implements Observer<ResponseInput>
             @Override
             public Boolean call() throws Exception {
 
-                try{   virtualView.requestInput(new RequestTeleporter(roundPlayer.getSquare().getGameBoard(), roundPlayer), roundPlayer.getColor());
+                try{   virtualView.requestInput(new RequestTeleporter(g1, roundPlayer), roundPlayer.getColor());
                 virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                 return true;}
@@ -852,7 +858,7 @@ public class Controller implements Observer<ResponseInput>
 
 
         Player target=null;
-        for(Player p : roundPlayer.getSquare().getGameBoard().getAllPlayer())
+        for(Player p : g1.getAllPlayer())
         {
             if (p.getColor().equals(sq.getTarget()))
                 target=p;
@@ -1113,7 +1119,7 @@ public class Controller implements Observer<ResponseInput>
 
         if (index==2) {
             try {
-                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(3,3);
+                resp = g1.getArena().getSquare(3,3);
             } catch (SquareNotInGameBoard squareNotInGameBoard) {
                 System.out.println(squareNotInGameBoard);
             }
@@ -1121,14 +1127,14 @@ public class Controller implements Observer<ResponseInput>
 
         if (index==3) {
             try {
-                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(4,1);
+                resp = g1.getArena().getSquare(4,1);
             } catch (SquareNotInGameBoard squareNotInGameBoard) {
                 System.out.println(squareNotInGameBoard);
             }
         }
         if (index==1) {
             try {
-                resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(1,2);
+                resp = g1.getArena().getSquare(1,2);
             } catch (SquareNotInGameBoard squareNotInGameBoard) {
                 System.out.println(squareNotInGameBoard);
             }
@@ -1153,7 +1159,7 @@ public class Controller implements Observer<ResponseInput>
 
            if (powercard.getColor().equals(Color.BLUE)) {
                try {
-                   resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(3,3);
+                   resp = g1.getArena().getSquare(3,3);
                } catch (SquareNotInGameBoard squareNotInGameBoard) {
                    System.out.println(squareNotInGameBoard);
                }
@@ -1161,20 +1167,21 @@ public class Controller implements Observer<ResponseInput>
 
          if (powercard.getColor().equals(Color.YELLOW)) {
              try {
-                 resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(4,1);
+                 resp = g1.getArena().getSquare(4,1);
              } catch (SquareNotInGameBoard squareNotInGameBoard) {
                  System.out.println(squareNotInGameBoard);
              }
          }
          if (powercard.getColor().equals(Color.RED)) {
              try {
-                 resp = roundPlayer.getSquare().getGameBoard().getArena().getSquare(1,2);
+                 resp = g1.getArena().getSquare(1,2);
              } catch (SquareNotInGameBoard squareNotInGameBoard) {
                  System.out.println(squareNotInGameBoard);
              }
          }
 
          roundPlayer.setSquare(resp);
+         
         if(resp!=null)
              MethodsWeapons.moveTarget(roundPlayer, resp.getX(), resp.getY());
 
@@ -1290,8 +1297,7 @@ public class Controller implements Observer<ResponseInput>
 
 
             ResponseRespawn response = (ResponseRespawn) msg;
-            roundPlayer.usePowerUp(response.getTargetSpawnPoint()); //throw away the chosen power Up
-            spawn(response.getTargetSpawnPoint());
+            spawn(response.getTargetSpawnPoint()-1);
 
             updateModel();
 
@@ -1585,19 +1591,19 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-        if(roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY).isAmmoPoint())
+        if(g1.getArena().getSquare(chosenSquareX,chosenSquareY).isAmmoPoint())
         {
             //  ammo point case
-            AmmoPoint currentSquare = (AmmoPoint) roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY);
+            AmmoPoint currentSquare = (AmmoPoint) g1.getArena().getSquare(chosenSquareX,chosenSquareY);
             AmmoTiles currentAmmoTiles = currentSquare.getAmmoTiles();
             currentAmmoTiles.useAmmoTilesCards(roundPlayer);
         }
 
 
-        if(roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY).isSpawnPoint())
+        if(g1.getArena().getSquare(chosenSquareX,chosenSquareY).isSpawnPoint())
         {
             // spawn point case
-            SpawnPoint currentSquare = (SpawnPoint) roundPlayer.getSquare().getGameBoard().getArena().getSquare(chosenSquareX,chosenSquareY);
+            SpawnPoint currentSquare = (SpawnPoint) g1.getArena().getSquare(chosenSquareX,chosenSquareY);
             List<WeaponCard> currentWeaponList = currentSquare.getWeaponCardList();
             List<String> weaponsName = new LinkedList<>();
             for (WeaponCard wc : currentWeaponList)
@@ -1636,7 +1642,7 @@ public class Controller implements Observer<ResponseInput>
 
             ResponseShootPeople res = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI
 
-            WeaponCard chosenWeapon = currentWeaponList.get(res.getChosenWeapon()); // arma scelta
+            WeaponCard chosenWeapon = currentWeaponList.get(res.getChosenWeapon()-1); // arma scelta
 
             //se hai meno di 3 armi aggiungila e basta
             if(roundPlayer.getWeaponCardList().size()<3) {
@@ -1686,7 +1692,7 @@ public class Controller implements Observer<ResponseInput>
 
                 ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
 
-                WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon()); // arma scelta
+                WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon()-1); // arma scelta
 
                 roundPlayer.changeWeapon(chosenWeapon,weaponToChange.getName());
 

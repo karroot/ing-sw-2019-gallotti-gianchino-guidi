@@ -16,7 +16,7 @@ public class Player
 {
 
     private boolean terminator=false;
-    private boolean afk;
+    private boolean afk = false;
     private boolean frenzy;
 
     private ColorId color;
