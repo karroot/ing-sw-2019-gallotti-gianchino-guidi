@@ -10,10 +10,13 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Updat
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.channels.ClosedChannelException;
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -307,6 +310,7 @@ class AcceptorSocket implements Runnable
             try
             {
                 Socket newSocket = serverSocket.accept();
+                System.out.println();
                 ConnectionSocket connectionSocket = new ConnectionSocket(newSocket,view);
                 view.insertConnection(connectionSocket);
             } catch (Exception e) {
@@ -341,11 +345,15 @@ class AcceptorRMI implements Runnable
         {
             try {
                 Socket newSocket = serverSocket.accept();
-                ObjectInputStream stream = new ObjectInputStream(newSocket.getInputStream());
-                int portNumber = stream.readInt(); //Obtain the number of port of the ServerRMI
+                System.out.println("Accept RMI");
 
-                String lookupName = "//" + newSocket.getInetAddress() + ":" + portNumber + "//networkH";
-                InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) Naming.lookup(lookupName);
+                ObjectInputStream in = new ObjectInputStream(newSocket.getInputStream());
+                int portNumber = in.readInt(); //Obtain the number of port of the ServerRMI
+                InetAddress ip =newSocket.getInetAddress();
+
+                Registry registry = LocateRegistry.getRegistry(ip.getHostAddress(), portNumber);
+
+                InterfaceNetworkHandlerRMI client = (InterfaceNetworkHandlerRMI) registry.lookup("networkH");
                 ConnectionRMI connection = new ConnectionRMI(view,client);
                 newSocket.close();
                 view.insertConnection(connection);

@@ -123,7 +123,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 {
                     try
                     {
-                        wait();
+                        AppClient.syncSetup.wait();
                     }
                     catch (InterruptedException e)
                     {
@@ -191,6 +191,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 terminal.showError("Sei stato disconesso : Turno interroto");
                 terminal.showError(e.getMessage());
                 Thread.currentThread().interrupt();
+                throw new ThreadDeath();
             }
 
             firstTurn = false;
@@ -434,6 +435,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     {
         synchronized (msg)
         {
+            System.out.println("Messaggio Arrivato");
             messageBuffer = message;
             msg.notifyAll();
         }
@@ -453,16 +455,19 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             {
                 try
                 {
+                    System.out.println("Attesa messaggio");
                     msg.wait();
                 }
                 catch (InterruptedException e)
                 {
                     terminal.showError("Sei stato disconesso");
                     Thread.currentThread().interrupt();
+                    throw new ThreadDeath();
                 }
             }
 
             RequestInput message = messageBuffer;
+            System.out.println("Ricevuto:"+message);
             messageBuffer = null;
             return message;
         }
@@ -667,12 +672,10 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             try
             {
                 notify(new AskPowerUPTeleOrNew());//Notify at controller that the player wants to use the powerUps
-                //Se il player ha powerUP(Teleporter or Newton)
+
 
                 RequestInput messageRequest = getMessageFromNetwHandl();//Obtain the request message
                 //to ask which powerUps to use
-                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-
 
                 RequestPowerUp temp = (RequestPowerUp) messageRequest;
 
@@ -681,6 +684,8 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                     terminal.showMessage("Non hai Powerup da usare");
                     return;
                 }
+
+                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
 
                 ResponseInput responseForController = messageRequest.generateResponseMessage();
 

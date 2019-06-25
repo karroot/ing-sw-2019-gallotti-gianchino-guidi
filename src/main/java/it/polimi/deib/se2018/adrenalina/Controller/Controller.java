@@ -331,9 +331,12 @@ public class Controller implements Observer<ResponseInput>
              if(firstRound)
                  askForFirstSpawn();
 
-            try {
+            try
+            {
                 switcher(rp.getColor());
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
 

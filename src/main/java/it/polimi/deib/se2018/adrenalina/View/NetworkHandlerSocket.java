@@ -127,6 +127,8 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
                 {
                     view.showError("Thread che gestisce i messaggi in arrivo ha terminato la sua esecuzione");
                     view.showError("Sei stato disconesso");
+                    System.out.println(e.getMessage());
+                    System.out.println(e.getCause());
                     view.askReconnection();
                 }
 
@@ -180,6 +182,8 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     public void receiveMessageNet() throws Exception //Manca il caso della richiesta delle credenziali
     {
         Object msg = in.readObject();
+
+        System.out.println(msg);
 
         if (msg instanceof RequestStartRound)
         {

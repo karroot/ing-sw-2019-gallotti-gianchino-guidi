@@ -56,4 +56,15 @@ public class WeaponCardImmutable implements Serializable
     public boolean isLoaded() {
         return isLoaded;
     }
+
+    @Override
+    public String toString() {
+        return "WeaponCardImmutable{" +
+                "name='" + name + '\'' +
+                ", redAmmoCost=" + redAmmoCost +
+                ", yellowAmmoCost=" + yellowAmmoCost +
+                ", blueAmmoCost=" + blueAmmoCost +
+                ", isLoaded=" + isLoaded +
+                '}';
+    }
 }

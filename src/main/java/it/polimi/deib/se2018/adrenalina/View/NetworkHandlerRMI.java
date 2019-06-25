@@ -7,11 +7,14 @@ import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_con
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,9 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
     private PrivateView view;
     private static int registryPortNumber = 6000; //Port
+    private Registry registry;
+    Socket  socket;
+    ObjectOutputStream out;
     private MessageNet messageToSend = null;
     private final Object msg = new Object(); //Variable used to synchronize  the methods getResponseMessage and update
 
@@ -88,11 +94,12 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         logicFrenesy = new Thread(codeOfLogicFrenesy);
 
         // Start RMI registry
-        LocateRegistry.createRegistry(registryPortNumber);
+        registry = LocateRegistry.createRegistry(registryPortNumber);
+
         //binding
         try
         {
-            Naming.rebind("//localhost/networkH",this);
+            registry.rebind("networkH",this);
         }
         catch (IOException e)
         {
@@ -100,11 +107,13 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         }
 
 
-        Socket  socket = new Socket(ip,port);
-        socket.getOutputStream().write(registryPortNumber);
+        socket = new Socket(ip,port+1);
 
 
-        socket.close();
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeInt(registryPortNumber);
+        out.flush();
+
 
 
 
@@ -198,7 +207,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         }
         else if(message instanceof AskCredentials)//If the message is a request of credentials
         {
-            view.setColorId(((AskCredentials) msg).getColorId()); //Set the color of the player
+            view.setColorId(((AskCredentials) message).getColorId()); //Set the color of the player
             ResponseCredentials credentials = getCredentials();//Get and Send the credentials of the user
             update(credentials);//Save the credentials
             return;
