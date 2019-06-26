@@ -8,10 +8,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.RequestWhisper;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseWhisper;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
@@ -52,23 +49,23 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
      */
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
-       Set<Player> playerdistance2and1= new HashSet<>();
+        List<Player> playerList = new LinkedList<>();
+
        Set<Player> playerdistance1= new HashSet<>();
 
         if (player == null)
             throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
 
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
         playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
-        playerdistance2and1.addAll(MethodsWeapons.playersReachable(player.getSquare(),2));
-        playerdistance2and1.removeAll(playerdistance1);
-
+        playerList.removeAll(playerdistance1);
 
         availableMethod[0] = false;
 
 
 
 
-        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1 &&  !playerdistance2and1.isEmpty())
+        if (isLoaded() &&  !playerList.isEmpty())
             availableMethod[0] = true;
 
 
@@ -82,26 +79,29 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
      */
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
-        Set<ColorId> playerdistance2and1= new HashSet<>();
-        Set<ColorId> playerdistance1= new HashSet<>();
-        List<ColorId> pl = new LinkedList<>();
+        List<Player> playerList = new LinkedList<>();
+        List<ColorId> colorList = new LinkedList<>();
+
+        Set<Player> playerdistance1= new HashSet<>();
+
         if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
-        for (Player p :MethodsWeapons.playersReachable(player.getSquare(),1) )
+
+
+        playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
+        playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
+        playerList.removeAll(playerdistance1);
+
+        for (Player p :playerList )
         {
-            playerdistance1.add(p.getColor());
-        }
-        for (Player p :MethodsWeapons.playersReachable(player.getSquare(),2) )
-        {
-            playerdistance2and1.add(p.getColor());
+            colorList.add(p.getColor());
         }
 
 
-        playerdistance2and1.removeAll(playerdistance1);
-        pl.addAll(playerdistance2and1);
 
-        return  pl;//Returns all targets
+
+        return  colorList;//Returns all targets
     }
 
     /**

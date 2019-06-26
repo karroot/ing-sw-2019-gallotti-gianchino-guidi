@@ -65,14 +65,16 @@ public class RocketLauncher extends WeaponCard
         }
 
 
-        if (isLoaded() && availableMethod[0] && player.getAmmoBlue() > 0 && checkPhaseGlide().size()>1)
+        if (isLoaded() && player.getAmmoBlue() > 0 && (checkPhaseGlide().size()>0))
         {
-            availableMethod[1] = true;
+            if (availableMethod[0])
+                availableMethod[1] = true;
         }
 
-        if (isLoaded() && availableMethod[0] && player.getAmmoYellow() > 0)
+        if (isLoaded() && player.getAmmoYellow() > 0)
         {
-            availableMethod[2] = true;
+            if (availableMethod[0])
+                availableMethod[2] = true;
         }
 
         return availableMethod;

@@ -320,7 +320,7 @@ public class Controller implements Observer<ResponseInput>
 
     /**
      * this method start the round of a player
-     * @param rp player of the rround
+     * @param rp player of the round
      * @throws InterruptedException 
      * @throws ExecutionException
      */
@@ -1634,8 +1634,7 @@ public class Controller implements Observer<ResponseInput>
         {
             //  ammo point case
             AmmoPoint currentSquare = (AmmoPoint) g1.getArena().getSquare(chosenSquareX,chosenSquareY);
-            AmmoTiles currentAmmoTiles = currentSquare.getAmmoTiles();
-            currentAmmoTiles.useAmmoTilesCards(roundPlayer);
+            currentSquare.useAmmoTiles(roundPlayer);
         }
 
 
@@ -1743,6 +1742,7 @@ public class Controller implements Observer<ResponseInput>
             chosenWeapon.setPlayer(roundPlayer);
 
         }
+
         MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
     }
 
