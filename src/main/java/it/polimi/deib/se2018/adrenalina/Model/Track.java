@@ -32,4 +32,12 @@ public class Track implements Serializable
                 ", Numero punti=" + pointCounter +
                 "}\n";
     }
+
+    public void setPlayer(ColorId player) {
+        this.player = player;
+    }
+
+    public void setPointCounter(int pointCounter) {
+        this.pointCounter = pointCounter;
+    }
 }

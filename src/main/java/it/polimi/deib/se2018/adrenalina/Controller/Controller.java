@@ -170,16 +170,41 @@ public class Controller implements Observer<ResponseInput>
      */
     private void getPointAndRespawn() throws ExecutionException, InterruptedException {
         Map<ColorId,Integer> temppoint;
+        List<ColorId> lastKillerColor= new LinkedList<>();
         //chiedi come fare calcolo punteggi
         for(Player p : g1.getAllPlayer())
         {
             if(p.isDead())
             {
-                int max=0;
-                ColorId colorendp;
-                Player vip=null;
+                //vai a vedere chi è il colore del [10] segnalino
+
+
+
                 if(g1.getSkullCounter()>0)
                     g1.setSkullCounter(g1.getSkullCounter()-1);
+
+
+
+
+                temppoint = p.calculateScoreForEachPlayer();
+                for(Player c : g1.getAllPlayer())
+                {
+                    c.setScore(temppoint.get(c.getColor()));
+                    if(p.getDamageCounter()[10].equals(c.getColor())) {
+
+                        if( lastKillerColor.contains(c.getColor()))
+                            c.setScore(c.getScore()+1);
+                        g1.setKillShotTrack(c.getColor(), 1);
+
+                        if (p.getDamageCounter()[11].equals(c.getColor())) {
+                            g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
+                            c.addMark(p.getColor());
+                        }
+                        lastKillerColor.add(c.getColor());
+                    }
+                }
+
+
 
                 if(g1.getSkullCounter()==0)
                 {
@@ -188,30 +213,15 @@ public class Controller implements Observer<ResponseInput>
                 if(frenzy)
                 {
                     p.setFrenzy(true);
-                }
-                for(Player c : g1.getAllPlayer())
-                {
-                    if(c.getDamageCounter().length==0)
-                        c.setFrenzy(true);
-                }
-
-                temppoint = p.calculateScoreForEachPlayer();
-                for(Player c : g1.getAllPlayer())
-                {
-                    c.setScore(temppoint.get(c.getColor()));
-                }
-                for(Player c : g1.getAllPlayer())
-                {
-                    if(c.getScore()>max) {
-                        max = c.getScore();
-                        vip=c;
+                    for(Player c : g1.getAllPlayer())
+                    {
+                        if(c.getDamageCounter().length==0)
+                            c.setFrenzy(true);
                     }
                 }
-                if(vip!=null)
-                    g1.setKillShotTrack(vip.getColor(),1);
-
                 askForRespawn(p);
             }
+
         }
 
 
@@ -1938,7 +1948,7 @@ public class Controller implements Observer<ResponseInput>
             p.setAmmoBlue(p.getAmmoBlue()-(weaponCard.getBlueAmmoCost()));
             p.setAmmoYellow(p.getAmmoYellow()-(weaponCard.getYellowAmmoCost()));
         }
-        if(weaponCard.getColor().equals(Color.RED)) {
+        if(weaponCard.getColor().equals(Color.YELLOW)) {
             p.setAmmoRed(p.getAmmoRed()-(weaponCard.getRedAmmoCost()));
             p.setAmmoBlue(p.getAmmoBlue()-(weaponCard.getBlueAmmoCost()));
             p.setAmmoYellow(p.getAmmoYellow()-(weaponCard.getYellowAmmoCost()-1));
@@ -1950,7 +1960,16 @@ public class Controller implements Observer<ResponseInput>
 
     public void finalScore ()
     {
-        g1.getKillShotTrack();
+        for(Track t : g1.getKillShotTrack())
+        {
+            for(Player p : g1.getAllPlayer())
+            {
+                if(p.getColor().equals(t.getPlayer())){
+                    p.setScore(p.getScore()+t.getPointCounter());
+                }
+            }
+        }
+
     }
 
 

@@ -94,7 +94,9 @@ oneAndThree.add(3);
         mode = false; //Set the attribute mode
         addDamage=false;
         secondMode=false;
-        if (choice == 4) //If the user choices the basic mode
+        inputBasicMode();//Ask all the information necessary to use the basic mode
+
+        if (choice == 4)
         {
 
             inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
@@ -102,18 +104,17 @@ oneAndThree.add(3);
             mode= true;//Set the attribute mode
             secondMode = true;//Set the attribute second mode
         }
-        else if (choice == 3) //If the user choices the basic mode
+        else if (choice == 3)
         {
             inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
             secondMode = true;//Set the attribute mode
         }
-        else if (choice == 2) //If the user choices the basic mode
+        else if (choice == 2)
         {
             inputAdditionalMode();//Ask all the information necessary to use the alternative mode
             mode = true;//Set the attribute mode
         }
 
-        inputBasicMode();//Ask all the information necessary to use the basic mode
 
 
 
