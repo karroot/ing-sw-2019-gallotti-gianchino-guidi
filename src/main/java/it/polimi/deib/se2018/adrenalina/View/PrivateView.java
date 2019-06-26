@@ -40,6 +40,15 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         this.action_hero_comment = action_hero_comment;
         firstTurn = true;
 
+        if (!gui)
+        {
+            terminal = new CLI();
+        }
+        else
+        {
+            terminal = new GUI();
+        }
+
         if (technology == 1)
         {
             networkHandlerRMI = new NetworkHandlerRMI(this,ip,port);
@@ -58,16 +67,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
             register(networkHandlerSocket);
         }
-
-        if (!gui)
-        {
-            terminal = new CLI();
-        }
-        else
-        {
-            terminal = new GUI();
-        }
-
 
 
 
@@ -257,7 +256,11 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             terminal.showError("Sei stato disconesso : Turno interroto");
             terminal.showError(e.getMessage());
             Thread.currentThread().interrupt();
+            throw new ThreadDeath();
         }
+
+        Thread.currentThread().interrupt();
+        throw new ThreadDeath();
     }
 
     /**

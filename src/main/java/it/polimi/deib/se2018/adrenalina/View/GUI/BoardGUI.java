@@ -383,6 +383,12 @@ public class BoardGUI
         }
     }
 
+    //Flips the player's board for the frenzy mode
+    public void setFlipped(ColorId colorId)
+    {
+        playerBoard.setIcon(new ImageIcon(AppClient.path+"boardF"+colorId+".png"));
+    }
+
 
     //Show all the damage Point on player's board
     public void setDamages(ColorId[] damagesPoints)

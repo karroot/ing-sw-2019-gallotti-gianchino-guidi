@@ -164,6 +164,8 @@ public class GUI implements Terminal
         boardGUI.setAmmoB(String.valueOf(player.getAmmoBlue()));
         boardGUI.setAmmoR(String.valueOf(player.getAmmoRed()));
         boardGUI.setAmmoY(String.valueOf(player.getAmmoYellow()));
+        if (player.isFlipped())
+            boardGUI.setFlipped(player.getColor());
 
         int i = 1;
 
@@ -173,6 +175,13 @@ public class GUI implements Terminal
             i++;
         }
 
+
+        for (;i<=3;i++)
+        {
+            boardGUI.setWeapon(null,i,false);
+        }
+
+
         i = 1;
 
         if (player.getColor().equals(playerOfThisCli))
@@ -181,6 +190,11 @@ public class GUI implements Terminal
             {
                 boardGUI.setPower(t.getIdPU(),i);
                 i++;
+            }
+
+            for (;i<=3;i++)
+            {
+                boardGUI.setPower(0,i);
             }
         }
 

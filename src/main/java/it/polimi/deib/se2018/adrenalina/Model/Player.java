@@ -18,6 +18,7 @@ public class Player
     private boolean terminator=false;
     private boolean afk = false;
     private boolean frenzy;
+    private boolean flipped;
 
     private ColorId color;
 
@@ -96,6 +97,7 @@ public class Player
         scorePoint[4] = 1;
         scorePoint[5] = 1;
         frenzy = false; //In normal condition the player is not frenzy
+        flipped = false;
     }
 
 
@@ -176,6 +178,11 @@ public class Player
     public int getScore()
     {
         return score;
+    }
+
+    public boolean isFlipped()
+    {
+        return flipped;
     }
 
     /**
@@ -764,7 +771,7 @@ public class Player
             scorePoint[4] = 1;
             scorePoint[5] = 1;
         }
-        if (frenzy == true)//If the player is frenzy
+        if (frenzy == true && flipped)//If the player is frenzy
         {
             scorePoint[0] = 2; //Insert the scores of the frenzy mode
             scorePoint[1] = 1;
@@ -797,6 +804,10 @@ public class Player
     private void incrementDeathsCount()
     {
         deathsCounter++;
+        if (frenzy) //If the player is dead during the mode frenzy
+        {
+            flipped = true;//His board are flipped
+        }
         checkState();//check the state of the player
     }
 

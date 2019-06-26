@@ -60,7 +60,7 @@ public class WeaponCardImmutable implements Serializable
 
     @Override
     public String toString() {
-        return "WeaponCardImmutable{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", redAmmoCost=" + redAmmoCost +
                 ", yellowAmmoCost=" + yellowAmmoCost +

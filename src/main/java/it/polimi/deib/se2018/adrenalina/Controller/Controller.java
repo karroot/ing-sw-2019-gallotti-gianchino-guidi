@@ -157,6 +157,7 @@ public class Controller implements Observer<ResponseInput>
                 firstRound=false;
             }
         }
+        //
         finalScore();
     }
 
@@ -1518,7 +1519,7 @@ public class Controller implements Observer<ResponseInput>
 
             ResponseShootPeople response = (ResponseShootPeople) msg;
 
-            WeaponCard weaponChosen = roundPlayer.getWeaponCardList().get(response.getChosenWeapon());
+            WeaponCard weaponChosen = roundPlayer.getWeaponCardList().get(response.getChosenWeapon()-1);
 
             //USA ARMA
 

@@ -16,6 +16,8 @@ public class PlayerImmutable implements Serializable
 {
     private ColorId color;
 
+    boolean flipped;
+
     private int ammoYellow;
 
     //###Location of the player(if x= 0 and y = 0 then the player isn't in a square)
@@ -62,6 +64,8 @@ public class PlayerImmutable implements Serializable
                 .stream().map(PowerUpCard::getCopyImm).collect(Collectors.toList());
         this.weaponCardList = player.getWeaponCardList()
                 .stream().map(WeaponCard::getCopyImm).collect(Collectors.toList());
+
+        this.flipped = player.isFlipped();
 
         if (player.getSquare() == null) //If the player ins't square
         {
@@ -133,6 +137,10 @@ public class PlayerImmutable implements Serializable
 
     public int getY() {
         return y;
+    }
+
+    public boolean isFlipped() {
+        return flipped;
     }
 
     @Override

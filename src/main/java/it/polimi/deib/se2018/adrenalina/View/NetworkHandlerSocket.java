@@ -187,6 +187,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
 
         if (msg instanceof RequestStartRound)
         {
+            logicRound = new Thread(codeOfLogicRound);
             logicRound.start();
             return;
         }
@@ -210,16 +211,19 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         }
         else if (msg instanceof RequestToUseGrenade) //If the message is a request using a grenade
         {
+            logicGrenade = new Thread(codeOfLogicGrenade);
             logicGrenade.start(); //Start the thread that handles the request
             return;
         }
         else if (msg instanceof RequestToRespawn)//If the message is a request of respawn
         {
+            logicRespawn = new Thread(codeOfLogicRespawn);
             logicRespawn.start(); //Start the thread that handles the respawn
             return;
         }
         else if (msg instanceof StartFrenesy)
         {
+            logicFrenesy = new Thread(codeOfLogicFrenesy);
             logicFrenesy.start();
             return;
         }

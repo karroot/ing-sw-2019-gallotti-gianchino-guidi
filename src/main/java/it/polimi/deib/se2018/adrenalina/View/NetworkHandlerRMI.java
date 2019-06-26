@@ -197,6 +197,7 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
     {
         if (message instanceof RequestStartRound) //If the message says to start the turn of player
         {
+            logicRound = new Thread(codeOfLogicRound);
             logicRound.start();
             return;
         }
@@ -214,16 +215,19 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         }
         else if (message instanceof RequestToUseGrenade) //If the message is a request using a grenade
         {
+            logicGrenade = new Thread(codeOfLogicGrenade);
             logicGrenade.start(); //Start the thread that handles the request
             return;
         }
         else if (message instanceof RequestToRespawn)//If the message is a request of respawn
         {
+            logicRespawn = new Thread(codeOfLogicRespawn);
             logicRespawn.start(); //Start the thread that handles the respawn
             return;
         }
         else if (message instanceof StartFrenesy)
         {
+            logicFrenesy = new Thread(codeOfLogicFrenesy);
             logicFrenesy.start();
             return;
         }
