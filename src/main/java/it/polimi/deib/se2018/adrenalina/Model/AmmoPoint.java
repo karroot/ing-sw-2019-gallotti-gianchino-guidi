@@ -33,13 +33,11 @@ public class AmmoPoint extends Square
      * @param player is who will get the ammo and the powerup if present
      * @return the AmmoTiles that is used
      */
-    public AmmoTiles useAmmoTiles (Player player)
+    public void useAmmoTiles (Player player)
     {
-        AmmoTiles tempAmmoTiles = ammoTiles;
         player.getSquare().getGameBoard().getAmmoTilesDiscardStack().addElement(ammoTiles);
         ammoTiles.useAmmoTilesCards(player);
         ammoTiles = null;
-        return tempAmmoTiles;
     }
 
     /**

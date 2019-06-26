@@ -320,7 +320,7 @@ public class Controller implements Observer<ResponseInput>
 
     /**
      * this method start the round of a player
-     * @param rp player of the rround
+     * @param rp player of the round
      * @throws InterruptedException 
      * @throws ExecutionException
      */
