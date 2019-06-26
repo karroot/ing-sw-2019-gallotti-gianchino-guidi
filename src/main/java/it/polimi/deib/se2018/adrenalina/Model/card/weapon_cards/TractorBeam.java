@@ -16,6 +16,7 @@ public class TractorBeam extends WeaponCard
 
     public TractorBeam( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
+        this.name = "Tractor Beam";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 0;

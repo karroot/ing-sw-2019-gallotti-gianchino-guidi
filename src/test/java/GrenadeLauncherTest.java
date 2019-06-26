@@ -76,9 +76,9 @@ public class GrenadeLauncherTest {
         MethodsWeapons.moveTarget(p4,2,2);
 
         List<ColorId> colorIdList = new ArrayList<>();
-        colorIdList.add(p2.getColor());
-        colorIdList.add(p3.getColor());
         colorIdList.add(p4.getColor());
+        colorIdList.add(p3.getColor());
+        colorIdList.add(p2.getColor());
 
         assertEquals(colorIdList, grenadeLauncher.checkBasicMode());
 

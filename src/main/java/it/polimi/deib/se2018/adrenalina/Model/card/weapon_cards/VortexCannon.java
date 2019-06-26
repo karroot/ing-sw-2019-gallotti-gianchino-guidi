@@ -80,8 +80,8 @@ public class VortexCannon extends WeaponCard
         Player playerTemp = new Player(null,null, null, true);
 
         List<Square> squareTarget = new ArrayList<>();
-        List<Player> playersTarget;
-        squareTarget = (ArrayList) MethodsWeapons.squareThatSee(player);
+        List<Player> playersTarget = new ArrayList<>();
+        squareTarget.addAll(MethodsWeapons.squareThatSee(player));
         squareTarget.remove(player.getSquare()); //create squarelist of possible vortex locations
 
         for (Square squareIterate: squareTarget)
@@ -93,7 +93,7 @@ public class VortexCannon extends WeaponCard
                   playersTarget.addAll(squareIterate2.getPlayerList());
                 }
             if (!playersTarget.isEmpty())
-                hashMapreturn.put(squareIterate, (ArrayList) playersTarget);
+                hashMapreturn.put(squareIterate, playersTarget);
         }
 
         return hashMapreturn;
@@ -206,8 +206,38 @@ public class VortexCannon extends WeaponCard
         if (!checkAvailableMode()[1])//check mode
             throw  new IllegalStateException("Modalità black hole dell'arma "+name+" non eseguibile.");
 
-        List<ColorId> colorIdList = checkBasicModePlayers(squareTargetCoordinatesAsString);
+        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
+        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
+
+        Square square = null;
+
+        try {
+            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
+        } catch (SquareNotInGameBoard squareNotInGameBoard) {
+            squareNotInGameBoard.printStackTrace();
+        }
+
+        List<Player> playerList = new ArrayList<>();
+        List<Square> squareList = new ArrayList<>();
+        List<ColorId> colorIdList = new ArrayList<>();
+
+        squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(x, y, 1));
+        squareList.remove(square);
+
+        for (Square squareIterate : squareList)
+        {
+            playerList.addAll(squareIterate.getPlayerList());
+        }
+
+        for (Player playerIterate : playerList)
+        {
+            colorIdList.add(playerIterate.getColor());
+        }
+
         colorIdList.remove(colorPlayerAlreadySelected);
+        colorIdList.remove(player.getColor());
+
+
         if (!colorIdList.isEmpty())
             return colorIdList;
         else return null;

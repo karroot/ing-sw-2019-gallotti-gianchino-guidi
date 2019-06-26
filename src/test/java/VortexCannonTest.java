@@ -5,6 +5,9 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.VortexCannon;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 import static org.junit.Assert.*;
@@ -72,14 +75,82 @@ public class VortexCannonTest
     @Test
     public void checkBasicMode()
     {
+        HashMap<String, List<ColorId>> hashMap = new HashMap<>();
+
+        p3.setSquare(start);
+
+        MethodsWeapons.moveTarget(p2,1,2);
+
+        hashMap = vortexCannon.checkBasicMode();
+
+        assertTrue(hashMap.keySet().contains(p2.getSquare().toStringCoordinates()));
+        assertTrue(hashMap.get(p2.getSquare().toStringCoordinates()).contains(p2.getColor()));
+
+        MethodsWeapons.moveTarget(p3,2,2);
+
+        assertEquals(2, hashMap.get(p2.getSquare().toStringCoordinates()).size());
+
 
     }
 
     @Test
-    public void basicMode() {
+    public void basicMode()
+    {
+        p3.setSquare(start);
+
+        MethodsWeapons.moveTarget(p2,2,1);
+
+        vortexCannon. basicMode(p2.getColor(), "x = 3, y = 1");
+
+        assertEquals(3,p2.getSquare().getX());
+        assertEquals(1, p2.getSquare().getY());
+        assertEquals(2, p2.getNumberOfDamagePoint());
+    }
+
+
+    @Test
+    public void checkWithBlackHoleMode()
+    {
+        List<ColorId> colorIdList = new ArrayList<>();
+
+        p3.setSquare(start);
+
+        MethodsWeapons.moveTarget(p2,2,1);
+        MethodsWeapons.moveTarget(p3,4,1);
+
+        colorIdList = vortexCannon.checkWithBlackHoleMode(p2.getColor(), "x = 3, y = 1");
+
+        assertEquals(1, colorIdList.size());
+        assertTrue(colorIdList.contains(p3.getColor()));
+
+
     }
 
     @Test
-    public void checkWithBlackHoleMode() {
+    public void blackHoleMode()
+    {
+        p3.setSquare(start);
+        p4.setSquare(start);
+        MethodsWeapons.moveTarget(p2,2,1);
+        MethodsWeapons.moveTarget(p3,4,1);
+        MethodsWeapons.moveTarget(p4, 2, 1);
+
+        vortexCannon.blackHoleMode(p2.getColor(), p3.getColor(), "x = 3, y = 1");
+
+        vortexCannon.setLoaded(true);
+        p1.setAmmoRed(1);
+
+        vortexCannon.blackHoleMode(p4.getColor(), null, "x = 3, y = 1");
+
+        assertEquals(3,p2.getSquare().getX());
+        assertEquals(1, p2.getSquare().getY());
+
+        assertEquals(3,p3.getSquare().getX());
+        assertEquals(1, p3.getSquare().getY());
+
+        assertEquals(1, p2.getNumberOfDamagePoint());
+
+        assertEquals(3,p4.getSquare().getX());
+        assertEquals(1, p4.getSquare().getY());
     }
 }

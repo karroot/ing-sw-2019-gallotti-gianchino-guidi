@@ -24,7 +24,6 @@ public class Normal extends StatePlayer
      * When the player is in the normal status he can reach Square to a max distance of 3. This method make the player see all the possible reachable squares.
      *
      * @param player is the player that is looking where to move
-     * @param gameBoard is needed to call the squareReachableNoWall function
      * @return a set of possible reachable squares with max distance 3
      */
     @Override
@@ -42,7 +41,6 @@ public class Normal extends StatePlayer
      * When the player is in the normal status he can reach Square to grab stuffs with a max distance of 1. This method make the player see all the possible reachable squares.
      *
      * @param player is the player that is looking where to move to grab the stuff
-     * @param gameBoard is needed to call the squareReachableNoWall function
      * @return a set of possible reachable squares with max distance 1
      */
     @Override
