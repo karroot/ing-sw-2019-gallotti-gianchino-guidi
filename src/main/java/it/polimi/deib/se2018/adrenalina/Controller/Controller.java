@@ -27,6 +27,7 @@ public class Controller implements Observer<ResponseInput>
     //switch da aggiungere quel che manca
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
+    private boolean frenzy;
     private Setup setup;
     private Player termi; //is the terminator
     private View virtualView;
@@ -135,7 +136,7 @@ public class Controller implements Observer<ResponseInput>
 
         while (!endGame)
         {
-            if(roundPlayer != null && roundPlayer.isFrenzy()) {
+            if(roundPlayer != null && frenzy) {
 
                     endGame = true; //if the last player that have played is now on frenzy this is the last round for everyone
 
@@ -156,6 +157,7 @@ public class Controller implements Observer<ResponseInput>
                 firstRound=false;
             }
         }
+        finalScore();
     }
 
     // AUXILIARY FUNCTIONS
@@ -173,14 +175,40 @@ public class Controller implements Observer<ResponseInput>
         {
             if(p.isDead())
             {
-                if(skullCounter>0)
-                    skullCounter--;
+                int max=0;
+                ColorId colorendp;
+                Player vip=null;
+                if(g1.getSkullCounter()>0)
+                    g1.setSkullCounter(g1.getSkullCounter()-1);
+
+                if(g1.getSkullCounter()==0)
+                {
+                    frenzy=true;
+                }
+                if(frenzy)
+                {
+                    p.setFrenzy(true);
+                }
+                for(Player c : g1.getAllPlayer())
+                {
+                    if(c.getDamageCounter().length==0)
+                        c.setFrenzy(true);
+                }
 
                 temppoint = p.calculateScoreForEachPlayer();
                 for(Player c : g1.getAllPlayer())
                 {
                     c.setScore(temppoint.get(c.getColor()));
                 }
+                for(Player c : g1.getAllPlayer())
+                {
+                    if(c.getScore()>max) {
+                        max = c.getScore();
+                        vip=c;
+                    }
+                }
+                if(vip!=null)
+                    g1.setKillShotTrack(vip.getColor(),1);
 
                 askForRespawn(p);
             }
@@ -1646,8 +1674,10 @@ public class Controller implements Observer<ResponseInput>
 
             //se hai meno di 3 armi aggiungila e basta
             if(roundPlayer.getWeaponCardList().size()<3) {
+                removeAmmoCost(roundPlayer,chosenWeapon);
                 roundPlayer.addWeapon(chosenWeapon);
-            chosenWeapon.setPlayer(roundPlayer);
+                chosenWeapon.setPlayer(roundPlayer);
+                currentSquare.drawWeapon(chosenWeapon);
 
             }
 
@@ -1695,6 +1725,7 @@ public class Controller implements Observer<ResponseInput>
                 WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon()-1); // arma scelta
 
                 roundPlayer.changeWeapon(chosenWeapon,weaponToChange.getName());
+                removeAmmoCost(roundPlayer,chosenWeapon);
 
                 currentSquare.swapWeapon(weaponToChange,chosenWeapon);
             }
@@ -1895,20 +1926,34 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-
+    private void removeAmmoCost(Player p,WeaponCard weaponCard)
+    {
+        if(weaponCard.getColor().equals(Color.BLUE)) {
+            p.setAmmoBlue(p.getAmmoBlue() - (weaponCard.getBlueAmmoCost() - 1));
+            p.setAmmoRed(p.getAmmoRed()-(weaponCard.getRedAmmoCost()));
+            p.setAmmoYellow(p.getAmmoYellow()-(weaponCard.getYellowAmmoCost()));
+        }
+        if(weaponCard.getColor().equals(Color.RED)) {
+            p.setAmmoRed(p.getAmmoRed() - (weaponCard.getRedAmmoCost() - 1));
+            p.setAmmoBlue(p.getAmmoBlue()-(weaponCard.getBlueAmmoCost()));
+            p.setAmmoYellow(p.getAmmoYellow()-(weaponCard.getYellowAmmoCost()));
+        }
+        if(weaponCard.getColor().equals(Color.RED)) {
+            p.setAmmoRed(p.getAmmoRed()-(weaponCard.getRedAmmoCost()));
+            p.setAmmoBlue(p.getAmmoBlue()-(weaponCard.getBlueAmmoCost()));
+            p.setAmmoYellow(p.getAmmoYellow()-(weaponCard.getYellowAmmoCost()-1));
+        }
+    }
 
 
 
 
     public void finalScore ()
     {
-
+        g1.getKillShotTrack();
     }
 
-    public void finalFrenesy ()
-    {
 
-    }
 
     @Override
     public void update(ResponseInput message)
