@@ -25,7 +25,7 @@ public class MachineGun extends WeaponCard
     public MachineGun( Color color, int weaponID, boolean isLoaded)  throws NullPointerException  {
 
         super(color, weaponID, isLoaded);
-        this.name = "MachineGun";
+        this.name = "Mitragliatrice";
         blueAmmoCost = 1;
 
         yellowAmmoCost = 0;

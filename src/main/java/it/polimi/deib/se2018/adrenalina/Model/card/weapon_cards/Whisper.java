@@ -30,7 +30,7 @@ public class Whisper extends WeaponCard
      */
     public Whisper( Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super( color, weaponID, isLoaded);
-        this.name = "Whisper";
+        this.name = "Fucile di Precisione";
         yellowAmmoCost = 1;
         blueAmmoCost = 2;
         redAmmoCost = 0;

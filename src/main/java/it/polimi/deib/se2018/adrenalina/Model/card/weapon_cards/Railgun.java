@@ -27,7 +27,7 @@ public class Railgun extends WeaponCard
         yellowAmmoCost = 2;
         blueAmmoCost = 1;
         redAmmoCost = 0;
-        this.name = "Railgun";
+        this.name = "Fucile Laser";
     }
 
     /**

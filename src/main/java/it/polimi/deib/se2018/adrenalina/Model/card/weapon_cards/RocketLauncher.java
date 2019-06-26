@@ -54,14 +54,18 @@ public class RocketLauncher extends WeaponCard
         availableMethod[2] = false;
         availableMethod[3] = false;
 
-        if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, (List<Square>) MethodsWeapons.squareThatSee(player)))
+        List<Square> squareList = new ArrayList<>();
+
+        squareList.addAll(MethodsWeapons.squareThatSee(player));
+
+
+        if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, squareList))
         {
                 availableMethod[0] = true;
-
         }
 
 
-        if (isLoaded() && availableMethod[0] && player.getAmmoBlue() > 0)
+        if (isLoaded() && availableMethod[0] && player.getAmmoBlue() > 0 && checkPhaseGlide().size()>1)
         {
             availableMethod[1] = true;
         }
@@ -70,9 +74,6 @@ public class RocketLauncher extends WeaponCard
         {
             availableMethod[2] = true;
         }
-
-        if(isLoaded() && (checkPhaseGlide().size()>1))
-            availableMethod[3] = true;
 
         return availableMethod;
 
@@ -196,14 +197,10 @@ public class RocketLauncher extends WeaponCard
      * @return
      * @throws IllegalStateException
      */
-    private Set<Player> checkPhaseGlide() throws IllegalStateException
+    private Set<Player> checkPhaseGlide()
     {
         Set<Player> playerReachable = new HashSet<>();
-        if (!checkAvailableMode()[2]) //check mode
-            throw  new IllegalStateException("Modalità dell'arma: "+name+" non eseguibile");
-        Set<Square> target=player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
-
-
+        Set<Square> target = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
 
         for(Square i : target)
         {

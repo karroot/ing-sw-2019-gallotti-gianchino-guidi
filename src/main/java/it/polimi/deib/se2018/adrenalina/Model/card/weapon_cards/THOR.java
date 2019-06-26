@@ -26,7 +26,7 @@ public class THOR extends WeaponCard
      */
     public THOR( Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super(color, weaponID, isLoaded);
-        this.name = "THOR";
+        this.name = "Torpedine";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 1;

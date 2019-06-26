@@ -23,7 +23,7 @@ public class PowerGlow extends WeaponCard
      */
     public PowerGlow( Color color, int weaponID, boolean isLoaded) {
         super( color, weaponID, isLoaded);
-        this.name = "PowerGlow";
+        this.name = "CyberGuanto";
         yellowAmmoCost = 2;
         blueAmmoCost = 0;
         redAmmoCost = 0;

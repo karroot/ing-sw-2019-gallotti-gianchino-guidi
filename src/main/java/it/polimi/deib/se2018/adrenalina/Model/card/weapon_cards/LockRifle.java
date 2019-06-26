@@ -22,7 +22,7 @@ public class LockRifle extends WeaponCard
     public LockRifle(Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
         super( color, weaponID, isLoaded);
-        this.name = "LockRifle";
+        this.name = "Distruttore";
         blueAmmoCost = 2;
         yellowAmmoCost = 0;
         redAmmoCost = 0;

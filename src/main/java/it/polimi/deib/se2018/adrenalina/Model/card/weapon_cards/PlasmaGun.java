@@ -28,7 +28,7 @@ public class PlasmaGun extends WeaponCard
      */
     public PlasmaGun(Color color, int weaponID, boolean isLoaded) throws NullPointerException {
         super( color, weaponID, isLoaded);
-        this.name = "PlasmaGun";
+        this.name = "Fucile al Plasma";
         redAmmoCost = 0;
         yellowAmmoCost = 1;
         blueAmmoCost = 1;

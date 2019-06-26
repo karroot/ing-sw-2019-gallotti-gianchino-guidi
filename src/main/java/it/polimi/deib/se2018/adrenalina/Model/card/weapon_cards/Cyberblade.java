@@ -28,7 +28,7 @@ public class Cyberblade extends WeaponCard
     public Cyberblade(Color color, int weaponID, boolean isLoaded)
     {
         super(color, weaponID, isLoaded);
-        this.name = "Cyberblade";
+        this.name = "Spada Fotonica";
         yellowAmmoCost = 1;
         blueAmmoCost = 0;
         redAmmoCost = 1;

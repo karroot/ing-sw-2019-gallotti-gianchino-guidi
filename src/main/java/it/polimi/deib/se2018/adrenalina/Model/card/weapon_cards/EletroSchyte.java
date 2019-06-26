@@ -28,7 +28,7 @@ public class EletroSchyte extends WeaponCard
     public EletroSchyte( Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
         super( color, weaponID, isLoaded);
-        this.name = "ElectroSchyte";
+        this.name = "Falce Protonica";
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
         redAmmoCost = 0;

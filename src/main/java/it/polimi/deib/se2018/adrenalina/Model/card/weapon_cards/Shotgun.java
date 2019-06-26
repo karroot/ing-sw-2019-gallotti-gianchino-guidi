@@ -32,7 +32,7 @@ public class Shotgun extends WeaponCard
     public Shotgun(Color color, int weaponID, boolean isLoaded) throws NullPointerException
     {
         super(color, weaponID, isLoaded);
-        this.name = "Shotgun";
+        this.name = "Fucile a Pompa";
         yellowAmmoCost = 2;
         blueAmmoCost = 0;
         redAmmoCost = 0;

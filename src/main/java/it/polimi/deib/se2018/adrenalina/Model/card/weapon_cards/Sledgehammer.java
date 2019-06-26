@@ -27,7 +27,7 @@ public class Sledgehammer extends WeaponCard
      */
     public Sledgehammer(Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
-        this.name = "Sledgehammer";
+        this.name = "Martello Ionico";
         yellowAmmoCost = 1;
         blueAmmoCost = 0;
         redAmmoCost = 0;

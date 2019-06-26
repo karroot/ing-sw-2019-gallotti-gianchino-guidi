@@ -24,7 +24,7 @@ public class Shockwave extends WeaponCard
     public Shockwave( Color color, int weaponID, boolean isLoaded)
     {
         super( color, weaponID, isLoaded);
-        this.name = "Shockwave";
+        this.name = "Onda d'Urto";
         yellowAmmoCost = 1;
         blueAmmoCost = 0;
         redAmmoCost = 0;
