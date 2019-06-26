@@ -30,7 +30,7 @@ public class RocketLauncher extends WeaponCard
      */
     public RocketLauncher( Color color, int weaponID, boolean isLoaded) {
         super(color, weaponID, isLoaded);
-        this.name = "Rocket Launcher";
+        this.name = "Lanciarazzi";
         yellowAmmoCost = 0;
         blueAmmoCost = 0;
         redAmmoCost = 2;

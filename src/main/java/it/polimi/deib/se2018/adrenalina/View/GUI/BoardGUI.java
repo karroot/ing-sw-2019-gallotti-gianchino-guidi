@@ -74,7 +74,7 @@ public class BoardGUI
 
     public BoardGUI(Terminal terminal)
     {
-        //this.terminal = terminal;
+        this.terminal = (GUI) terminal;
 
         //Create the labels for the damage Point
         for (int i = 0;i<damages.length;i++)
@@ -163,20 +163,16 @@ public class BoardGUI
     //Methods to ask the input at the user
     public void addTextForInput(String text)
     {
-        allBoardWindow.setVisible(false);
         textToAsk = new JLabel(text);
         inputWindow.add(textToAsk);
-        allBoardWindow.setVisible(true);
     }
 
     public void addOptionForInput(String text)
     {
-        allBoardWindow.setVisible(false);
         JButton temp = new JButton(text);
         temp.addActionListener(new ClickInput(this)); //Add the action listener
         listOfAllOptions.add(temp);
         inputWindow.add(temp);
-        allBoardWindow.setVisible(true);
     }
 
     public int getInputChoice()

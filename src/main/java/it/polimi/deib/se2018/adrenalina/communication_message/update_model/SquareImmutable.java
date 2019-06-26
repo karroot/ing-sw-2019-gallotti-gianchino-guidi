@@ -53,12 +53,19 @@ public class SquareImmutable implements Serializable
             if (ammoPoint.getAmmoTiles() instanceof JustAmmo)
             {
                 JustAmmo justAmmo = (JustAmmo) ammoPoint.getAmmoTiles();
-                ammoTiles = new JustAmmoImmutable(justAmmo.getAmmoCardID(),justAmmo.getSingleAmmo(),justAmmo.getDoubleAmmo());
+
+                if (justAmmo == null)
+                    ammoTiles = null;
+                else
+                    ammoTiles = new JustAmmoImmutable(justAmmo.getAmmoCardID(),justAmmo.getSingleAmmo(),justAmmo.getDoubleAmmo());
             }
             else
             {
                 PowerAndAmmo powerAndAmmo = (PowerAndAmmo) ammoPoint.getAmmoTiles();
-                ammoTiles = new PowerAndAmmoImmutable(powerAndAmmo.getAmmoCardID(),powerAndAmmo.getSingleAmmo(),powerAndAmmo.getSecondSingleAmmo());
+                if (powerAndAmmo == null)
+                    ammoTiles = null;
+                else
+                    ammoTiles = new PowerAndAmmoImmutable(powerAndAmmo.getAmmoCardID(),powerAndAmmo.getSingleAmmo(),powerAndAmmo.getSecondSingleAmmo());
             }
 
         }
