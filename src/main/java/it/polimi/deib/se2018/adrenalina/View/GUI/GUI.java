@@ -84,6 +84,9 @@ public class GUI implements Terminal
 
         }
 
+        boardGUI.getAllBoardWindow().setVisible(false);
+        boardGUI.getAllBoardWindow().setVisible(true);
+
     }
 
     @Override
@@ -135,7 +138,7 @@ public class GUI implements Terminal
 
             for (PlayerImmutable t:dataOfAllPlayer)
             {
-                if (t.getColor().equals(playerOfThisCli))
+                if (t.getColor().equals(player))
                     showPlayerBoard(t);
             }
         }

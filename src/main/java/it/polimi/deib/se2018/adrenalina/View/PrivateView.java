@@ -171,6 +171,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      */
     public void startRound()
     {
+
         if (firstTurn) //if this is the first turn (The controller before to start the round must give at player two powerUp)
         {
 
@@ -197,11 +198,14 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             firstTurn = false;
         }
 
+
         //#######Player can use a teleporter or a newton###############
 
         powerUpTeleportOrNewton();
 
         //#######Player must choose two actions###############
+
+
 
         cont = 0;
 
@@ -225,10 +229,12 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                     break;
             }
 
+
             //#######Player can use a teleporter or a newton###############
 
             powerUpTeleportOrNewton();
         }
+
 
         //######## Using targeting scope #########
 
@@ -236,9 +242,11 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
 
 
+
         //########Reload weapons###########
 
         reloading();
+
 
         try //notify at the controller that the round is finished
         {
@@ -411,17 +419,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     public void updateModelCopy(UpdateModel message)
     {
         terminal.setData(message);
-        //terminal.showBoard();
-
-        try  //send at the controller a message to say that the model was update with success
-        {
-            notify(new EndUpdateModel());
-        }
-        catch (Exception e)
-        {
-            terminal.showError("Sei stato disconesso : Turno interroto");
-            terminal.showError(e.getMessage());
-        }
+        terminal.showBoard();
     }
 
     /**

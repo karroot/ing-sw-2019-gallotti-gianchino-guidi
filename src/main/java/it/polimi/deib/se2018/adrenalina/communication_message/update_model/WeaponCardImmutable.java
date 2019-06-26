@@ -27,6 +27,7 @@ public class WeaponCardImmutable implements Serializable
         redAmmoCost = weaponCard.getRedAmmoCost();
         yellowAmmoCost = weaponCard.getYellowAmmoCost();
         blueAmmoCost = weaponCard.getBlueAmmoCost();
+        isLoaded = weaponCard.isLoaded();
     }
 
     public String getName() {

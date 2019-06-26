@@ -133,13 +133,6 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
             {   //If the connection is RMI use the method remote update of virtual view
                 //Else use the method "send" of the connection Socket
                 t.send(message);
-                MessageNet receive = t.receive();
-
-                while (!(receive instanceof EndUpdateModel))
-                {
-                    t.send(message);
-                    receive = t.receive();
-                }
             }
             catch (Exception e)
             {

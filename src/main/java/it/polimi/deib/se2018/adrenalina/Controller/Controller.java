@@ -1714,6 +1714,7 @@ public class Controller implements Observer<ResponseInput>
 
         List<WeaponCard> chargableWeapons =  roundPlayer.checkReload(roundPlayer);
         String chargableWeaponName=null;
+
         for (WeaponCard wc : chargableWeapons)
         {
             if(roundPlayer.checkReload(roundPlayer).contains(wc)) // controllo se l'arma è ancora ricaricabile dopo l'azione eseguita dal player
