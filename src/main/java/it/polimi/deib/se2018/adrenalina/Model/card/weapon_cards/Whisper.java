@@ -8,10 +8,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.RequestWhisper;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseWhisper;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;

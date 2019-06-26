@@ -8,13 +8,14 @@ public class StateSpecialMethods
 {
     public static Set<Square> checkValidSquares (Player player, Set<Square> squareSet)
     {
-        for (Square square : squareSet)
+        Set<Square> squareSet1 = squareSet;
+        for (Square square : squareSet1)
         {
             if (square.isAmmoPoint)
             {
                 AmmoPoint ammopoint = (AmmoPoint) square;
                 if ( ammopoint.getAmmoTiles() == null)
-                    squareSet.remove(square);
+                    squareSet1.remove(square);
             }
 
             if (square.isSpawnPoint)
@@ -31,11 +32,11 @@ public class StateSpecialMethods
                     }
                 }
                 if (!validSquare)
-                    squareSet.remove(square);
+                    squareSet1.remove(square);
             }
         }
 
-        return squareSet;
+        return squareSet1;
     }
 
     /**
