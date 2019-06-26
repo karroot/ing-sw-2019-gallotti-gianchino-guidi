@@ -1961,17 +1961,27 @@ public class Controller implements Observer<ResponseInput>
 
     public void finalScore ()
     {
+        HashMap<ColorId,Integer> colorAndPoint=new HashMap<>();
+        List<ColorId> cList=new LinkedList<>();
         for(Track t : g1.getKillShotTrack())
         {
-            for(Player p : g1.getAllPlayer())
+            if(!colorAndPoint.containsKey(t.getPlayer()))
             {
-                if(p.getColor().equals(t.getPlayer())){
-                    p.setScore(p.getScore()+t.getPointCounter());
-                }
+                colorAndPoint.put(t.getPlayer(),t.getPointCounter());
+                cList.add(t.getPlayer());
             }
+            else
+            {
+                colorAndPoint.put(t.getPlayer(), colorAndPoint.get(t.getPlayer())+ t.getPointCounter());
+
+            }
+
+            }
+
+
         }
 
-    }
+
 
 
 
