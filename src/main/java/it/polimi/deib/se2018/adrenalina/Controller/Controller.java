@@ -1954,7 +1954,17 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-    public void finalScore () {
+    public Map<ColorId,Integer>  finalScore () {
+
+        int[] scorePoint = new int[5];
+
+        scorePoint[0] = 8;
+        scorePoint[1] = 6;
+        scorePoint[2] = 4;
+        scorePoint[3] = 2;
+        scorePoint[4] = 1;
+
+
         HashMap<ColorId, Integer> colorAndPoint = new HashMap<>();
         List<ColorId> cList = new LinkedList<>();
         for (Track t : g1.getKillShotTrack()) {
@@ -1967,452 +1977,74 @@ public class Controller implements Observer<ResponseInput>
             }
         }
 
-        LinkedHashMap<ColorId, Integer> sortedMap = colorAndPoint.entrySet().stream()
+        LinkedHashMap<ColorId, Integer> sortedMap = colorAndPoint
+                .entrySet()
+                .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
+        List<Map.Entry<ColorId, Integer>> temp = sortedMap
+                .entrySet()
+                .stream()
+                .collect(Collectors.toList());
 
-        List<ColorId> sortedColorIdListHashMapKeys = new ArrayList<>();
-        List<ColorId> finalOrderedList = new ArrayList<>();
+        Set<ColorId> playSamePoints = new LinkedHashSet<>();
+        int i = 0;
+        Map<ColorId, Integer> fin = new HashMap<>();
 
-        sortedColorIdListHashMapKeys.addAll(sortedMap.keySet());
+        while (i < temp.size())
+        {
+            Map.Entry<ColorId, Integer> z = temp.get(i);
 
-        int numOfPlayers = numberOfPlayer();
-
-        switch (numOfPlayers) {
-
-            case 3: {
-                //insert first
-                if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(1))) {
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                }
-
-                if ((sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) != sortedMap.get(sortedColorIdListHashMapKeys.get(2)))) {
-                    for (ColorId colorIdIterate : cList) {
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                            break;
-                        }
-                    }
-                }
-
-                if ((sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)))) {
-                    for (ColorId colorIdIterate : cList) {
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                            break;
-                        }
-                    }
-                }
-
-                //insert second
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) > sortedMap.get(sortedColorIdListHashMapKeys.get(2))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                    } else {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(2))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    } else {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(1))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    } else {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                //insert third
-
-                if ((finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0))) && (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1)))) {
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                }
-
-
-                if ((finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0))) && (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2)))) {
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                }
-
-                if ((finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1))) && (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2)))) {
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                }
-
-
-            }
-
-            case 4: {
-
-                //insert first element
-                if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(1))) {
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                }
-
-                if ((sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) != sortedMap.get(sortedColorIdListHashMapKeys.get(2)))) {
-                    for (ColorId colorIdIterate : cList) {
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                            break;
-                        }
-                    }
-                }
-
-                if ((sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) != sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                    for (ColorId colorIdIterate : cList) {
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                            break;
-                        }
-                    }
-                }
-
-                if ((sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2))) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) == sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                    for (ColorId colorIdIterate : cList) {
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                            break;
-                        }
-                        if (colorIdIterate == sortedColorIdListHashMapKeys.get(3)) {
-                            finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                            break;
-                        }
-                    }
-                }
-
-                //insert second element
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) > sortedMap.get(sortedColorIdListHashMapKeys.get(2))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) != sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) == sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(2))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) != sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) == sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(1))) {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) != sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(3)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(3))) {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) == sortedMap.get(sortedColorIdListHashMapKeys.get(1)) && (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) == sortedMap.get(sortedColorIdListHashMapKeys.get(2)))) {
-                        for (ColorId colorIdIterate : cList) {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2)) {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
-
+            for (Map.Entry<ColorId, Integer> v : temp) //Check if there are other players with the same damage points
+            {
+                if (z.hashCode() != v.hashCode() && v.getValue().equals(z.getValue())) //If player are different and the damage points are equals
+                {
+                    playSamePoints.add(z.getKey()); //Add the two player to the list
+                    playSamePoints.add(v.getKey());
                 }
             }
 
+            if (!playSamePoints.isEmpty()) //If there are parity to resolve
+            {
+                List<ColorId> playe = resolveParity(playSamePoints, cList); //Calculate the order of the players
 
-            //insert third element
+                playSamePoints.clear();//Clear the list of all player with same points
 
-
-/*
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1)))
+                for (ColorId a : playe) //Add all the player ordered with the correct score
                 {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(2)))
-                    {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    } else {
-                        for (ColorId colorIdIterate : cList)
-                        {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                                break;
-                            }
-                        }
-                    }
+                    fin.putIfAbsent(a, scorePoint[i]);
+                    i++;
                 }
-                */
-
-
-            //insert third element
-/*
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1)))
-                {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(2)) > sortedMap.get(sortedColorIdListHashMapKeys.get(3)))
-                    {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-                    } else {
-                        for (ColorId colorIdIterate : cList)
-                        {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(2))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2)))
-                {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(1)) > sortedMap.get(sortedColorIdListHashMapKeys.get(3)))
-                    {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-                    } else {
-                        for (ColorId colorIdIterate : cList)
-                        {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(1))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(1));
-
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2)))
-                {
-                    if (sortedMap.get(sortedColorIdListHashMapKeys.get(0)) > sortedMap.get(sortedColorIdListHashMapKeys.get(3)))
-                    {
-                        finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-                    } else {
-                        for (ColorId colorIdIterate : cList)
-                        {
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(0))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-
-                                break;
-                            }
-                            if (colorIdIterate == sortedColorIdListHashMapKeys.get(3))
-                            {
-                                finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                // insert 4 element
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1))  && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2)))
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(3));
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(0)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1))  && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(3)))
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(2));
-
-
-                if (finalOrderedList.contains(sortedColorIdListHashMapKeys.get(1)) && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(2))  && finalOrderedList.contains(sortedColorIdListHashMapKeys.get(3)))
-                    finalOrderedList.add(sortedColorIdListHashMapKeys.get(0));
-
-            }*/
-
-            case 5: {
-                //insert first element
-
-
-                //insert second element
-
-
+            } else//Add the score normally
+            {
+                fin.putIfAbsent(z.getKey(), scorePoint[i]);
+                i++;
             }
         }
+
+        return fin;
+    }
+
+
+
+
+
+
+
+    private List<ColorId> resolveParity(Set<ColorId> players, List<ColorId> playersByOccurency)
+    {
+        List<ColorId> playersOrd = new LinkedList<>();//Create the list that will contain the ordered players
+
+
+        for (ColorId colorIdIterate : playersByOccurency) //For each damage points
+        {
+            if (players.contains(colorIdIterate) && !playersOrd.contains(colorIdIterate))//If the player that he did that points isn't in the list
+                playersOrd.add(colorIdIterate); //Add him
+        }
+
+        return playersOrd; //Return the ordered list
+
     }
 
 
