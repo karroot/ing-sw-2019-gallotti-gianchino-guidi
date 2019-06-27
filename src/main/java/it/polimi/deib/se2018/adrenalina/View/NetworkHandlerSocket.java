@@ -159,7 +159,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
      * @param msg message to send
      * @throws IOException if there were problems sending the message
      */
-    public void sendMessageNet(MessageNet msg) throws IOException
+    public synchronized void sendMessageNet(MessageNet msg) throws IOException
     {
         out.writeObject(msg);
         out.flush();

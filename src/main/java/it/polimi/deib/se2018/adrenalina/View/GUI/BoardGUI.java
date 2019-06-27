@@ -179,7 +179,9 @@ public class BoardGUI
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        allBoardWindow.setVisible(false);
         onInput = true;
+        allBoardWindow.setVisible(true);
 
         TimerAFK.startTimer(Thread.currentThread());
         synchronized (choiceSyn)
@@ -655,6 +657,7 @@ class ComboBoxSwitchBoards  implements ActionListener
             switch (choice)
             {
                 case "Tua Plancia":
+                    gui.terminal.changePlayerBoard(null);
                     break;
                 case "Plancia Giocatore:BLUE":
                     gui.terminal.changePlayerBoard(ColorId.BLUE);

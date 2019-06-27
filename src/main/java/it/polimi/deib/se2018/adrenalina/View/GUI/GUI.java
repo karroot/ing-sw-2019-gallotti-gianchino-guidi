@@ -57,7 +57,13 @@ public class GUI implements Terminal
                 boardGUI.setPlayerOnSquare(squareToIndexGui(t.getX(),t.getY()),c);
 
             if (t.isAmmoPoint())
-                boardGUI.setAmmoTilesOnSquare(squareToIndexGui(t.getX(),t.getY()),t.getAmmoTiles().getAmmoCardID());
+            {
+                if (t.getAmmoTiles() == null)
+                    boardGUI.setAmmoTilesOnSquare(squareToIndexGui(t.getX(),t.getY()),0);
+                else
+                    boardGUI.setAmmoTilesOnSquare(squareToIndexGui(t.getX(),t.getY()),t.getAmmoTiles().getAmmoCardID());
+            }
+
         }
 
         //Print the weapons in spawnPoints
@@ -83,6 +89,9 @@ public class GUI implements Terminal
                 boardGUI.setBoardsPossible("Plancia Giocatore:"+t.getColor());
 
         }
+
+        boardGUI.getAllBoardWindow().setVisible(false);
+        boardGUI.getAllBoardWindow().setVisible(true);
 
 
     }
@@ -130,6 +139,8 @@ public class GUI implements Terminal
      */
     public void changePlayerBoard(ColorId player)
     {
+        if (player == null)
+            player = playerOfThisCli;
         try
         {
             List<PlayerImmutable> dataOfAllPlayer = data.getDataOfAllPlayer();
