@@ -82,26 +82,36 @@ public class TractorBeam extends WeaponCard
         List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
         for(Player t: playersReachable( player.getSquare(),3))
         {
-         for (Room reachRoom : roomReachablePlayer)
+            if(!t.equals(this.player))
             {
+                for (Room reachRoom : roomReachablePlayer)
+                {
 
-                for(Square sq : t.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
-                                        .collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
-                                            .collect(Collectors.toList()).get(0).getSquare().getY(),2) ){
+                    for(Square sq : t.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
+                                            .collect(Collectors.toList()).get(0).getSquare().getX(),player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(t.getColor()))
+                                                .collect(Collectors.toList()).get(0).getSquare().getY(),2) ){
 
-                    if (reachRoom.getSquareList().contains(sq)) {
+                        if (reachRoom.getSquareList().contains(sq)) {
 
-                        String coordinates = "x = "+sq.getX()+",y = "+ sq.getY();//Save the coordinates
+                            String coordinates = "x = "+sq.getX()+",y = "+ sq.getY();//Save the coordinates
+                            if(result.get(t.getColor())!=null)
+                            {
+                                List<String> tempList =result.get(t.getColor());
+                                        tempList.add(coordinates);
+                            }
+                            else {
+                                List<String> coordinatesList = new LinkedList<>();
+                                coordinatesList.add(coordinates);
+                                result.put(t.getColor(), coordinatesList); //Add the square with the player at hash map
+                            }
 
-                        result.putIfAbsent(t.getColor(), Collections.singletonList(coordinates)); //Add the square with the player at hash map
 
 
+                        }
+                     }
+                }
 
-
-                    }
-                 }
             }
-
         }
 
         return result;
@@ -119,15 +129,18 @@ public class TractorBeam extends WeaponCard
 
         for(Player p : player.getSquare().getGameBoard().getAllPlayer())
         {
-            for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(),player.getSquare().getY(),2) )
+            if(!p.equals(this.player))
             {
+                for(Square sq : p.getSquare().getGameBoard().getArena().squareReachableNoWall(p.getSquare().getX(),p.getSquare().getY(),2) )
+                {
 
 
 
-                if (this.player.getSquare().equals(sq)) {
-                    listPlayer.add(p.getColor());
+                    if (this.player.getSquare().equals(sq)) {
+                        listPlayer.add(p.getColor());
+                    }
+
                 }
-
             }
         }
 

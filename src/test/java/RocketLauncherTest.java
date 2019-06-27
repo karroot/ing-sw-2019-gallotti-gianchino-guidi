@@ -51,7 +51,7 @@ public class RocketLauncherTest
         assertTrue(rocketLauncher.checkAvailableMode()[0]);
 
         MethodsWeapons.moveTarget(p2,3,3);
-      //  assertTrue(rocketLauncher.checkAvailableMode()[1]);
+        assertTrue(rocketLauncher.checkAvailableMode()[1]);
 
     }
 

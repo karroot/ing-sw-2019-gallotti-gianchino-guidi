@@ -199,15 +199,26 @@ List<ColorId> tempList ;
             {
                 String coordinates = t.toStringCoordinates();//Save the coordinates
 
-                result.putIfAbsent(coordinates,dummie.playerThatSee(dummie.getSquare().getGameBoard()).stream().map(Player::getColor).collect(Collectors.toList())); //Add the square with the player at hash map
-                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(dummie) ){
-                    tempList= result.get(coordinates);
-                    tempList.remove(dummie.getColor());
+                if(result.get(coordinates)!=null)
+                {
+                    List<ColorId> temp =result.get(coordinates);
+                    for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
+                    {
+                        if(!p.getColor().equals(ColorId.DUMMIE) && !p.getColor().equals(this.player.getColor()))
+                            temp.add(p.getColor());
                     }
-                if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).contains(player) ){
-                    tempList= result.get(coordinates);
-                    tempList.remove(player.getColor());
                 }
+                else
+                    {
+                        List<ColorId> colorList = new LinkedList<>();
+                        for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
+                        {
+                            if(!p.getColor().equals(ColorId.DUMMIE) && !p.getColor().equals(this.player.getColor()))
+                                colorList.add(p.getColor());
+                        }
+                        result.put(coordinates, colorList);
+                    }
+
             }
 
         }

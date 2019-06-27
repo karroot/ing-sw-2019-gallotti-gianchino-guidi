@@ -883,10 +883,11 @@ public class TestBlueWeapons {
             reachableSquare= w5.checkPhaseGlide();
             reachableBeforeMovePlayer = w5.checkAllTarget();
             assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
-         //   assertTrue(reachableBeforeMovePlayer.containsValue(enemy.getColor()));
-
-
-            w5.basicMode(getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,3).toStringCoordinates()),enemy),orderEffect,1,3);
+            List<ColorId> templ = reachableBeforeMovePlayer.get(g1.getArena().getSquare(1,3).toStringCoordinates());
+         assertTrue(templ.contains(enemy.getColor()));
+assertTrue(enemy.getNumberOfDamagePoint()==3);
+//getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,3).toStringCoordinates()),enemy)
+            w5.basicMode(enemy.getColor(),orderEffect,1,3);
 
             assertEquals(enemy.getNumberOfDamagePoint(),6);
 
@@ -910,7 +911,7 @@ public class TestBlueWeapons {
 
             reachableBasicPlayer = w5.checkAllTarget();
             reachableBeforeMovePlayer = w5.checkAllTarget();
-            //assertFalse(reachableBasicPlayer.contains(enemy.getColor()));
+
 
             Square squareTest= new SpawnPoint(2,2,g1,null,null);
             String testString = squareTest.toStringCoordinates();
@@ -1031,9 +1032,14 @@ public class TestBlueWeapons {
         Map<ColorId,List<String>> list1 = w2.checkMoveBasicMode();
         List<ColorId> list2 = w2.checkPunisherMode();
 
+        assertFalse(list1.containsKey(test.getColor()));
+        assertTrue(list1.containsKey(enemy.getColor()));
+        assertTrue(list1.containsKey(enemy2.getColor()));
+        assertTrue(list1.containsKey(enemy3.getColor()));
 
-       // RIFAI assertTrue(list1.contains(enemy2.getColor()));
         assertTrue(list2.contains(enemy3.getColor()));
+        assertTrue(list2.contains(enemy.getColor()));
+        assertFalse(list2.contains(enemy2.getColor()));
 
         assertEquals(enemy2.getNumberOfDamagePoint(),0);
         w2.basicMode(enemy2.getColor(),1,3);
