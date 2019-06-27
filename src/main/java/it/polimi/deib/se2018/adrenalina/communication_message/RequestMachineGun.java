@@ -162,6 +162,7 @@ oneAndThree.add(3);
         players = playersAdditionalMode; // siccome l'arma aggiunge danno  ad uno dei primi nemici scelti
         int i = 1;
 
+        terminal.addTextInput("Scegli a chi vuoi aggiungere un danno:");
         for (ColorId t:players)//Ask to user the target
         {
             if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond))
@@ -183,12 +184,7 @@ oneAndThree.add(3);
         int i = 1;
         if (players != null)
         {
-            terminal.addTextInput(" vuoi fare danno a un altro player ? " );
-            terminal.addOptionInput("1 : sì " );
-            terminal.addOptionInput(" 2 : no " );
-            choice = terminal.inputInt(1, 2);
 
-            if(choice==1) {
 
                 terminal.addTextInput(" altro player a cui far danno");
                 for (ColorId t : players)//Ask to user the target
@@ -198,27 +194,30 @@ oneAndThree.add(3);
                 }
                 choice = terminal.inputInt(1, i - 1);
                 targetSecondAdditionalMode = players.get(choice - 1);
-            }
-        }
-        terminal.addTextInput(" vuoi fare danno a un player gia attaccato ? " );
-        terminal.addOptionInput(" 1 : sì " );
-        terminal.addOptionInput(" 2 : no " );
-        choice = terminal.inputInt(1, 2);
 
-        if(choice==1) {
+        }
+        terminal.addTextInput(" player già attaccato a cui far danno");
             players = playersBasicMode;
             i = 1;
             for (ColorId t : players)//Ask to user the target
             {
-                if (!(t.equals(targetAdditionalMode))) {
+                if(targetAdditionalMode!=null)
+                {
+                    if (!(t.equals(targetAdditionalMode))) { // if we are in all mode activated we ask to attack only the player that wasn't in additional mode
+                        terminal.addOptionInput(i + ": " + t);
+                        i++;
+                    }
+                }
+                else
+                    {
                     terminal.addOptionInput(i + ": " + t);
                     i++;
-                }
+                    }
             }
             choice = terminal.inputInt(1, i - 1);
             targetSecondAdditionalModeSecond = players.get(choice - 1);
             addDamage = true;
-        }
+
     }
 
 

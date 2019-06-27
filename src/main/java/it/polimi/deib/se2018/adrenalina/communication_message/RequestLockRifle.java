@@ -85,7 +85,7 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         List<ColorId> players;
         players = playersAdditionalMode;
         int i = 1;
-
+        terminal.addTextInput("Scegli chi altro vuoi marchiare:");
         for (ColorId t:players)//Ask to user the target
         {
             terminal.addOptionInput(i+":"+t);

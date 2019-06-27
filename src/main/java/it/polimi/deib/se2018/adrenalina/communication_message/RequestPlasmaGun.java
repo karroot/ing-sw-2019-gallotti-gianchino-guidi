@@ -152,7 +152,7 @@ public class RequestPlasmaGun extends  RequestInput
       terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 
-      terminal.addOptionInput("1:aggi<ungi danno");
+      terminal.addOptionInput("1:aggiungi danno");
       choice = terminal.inputInt(1, 1);
 
       if (choice == 1) {
