@@ -45,7 +45,11 @@ public class EletroSchyte extends WeaponCard
 
     public RequestInput getRequestMessage()
     {
-        return new RequestElectroSchyte(checkAvailableMode(),checkBasicMode(),checkReaper());
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
+            return new RequestElectroSchyte(checkAvailableMode(),checkBasicMode(),checkReaper());
+        else
+            return new RequestElectroSchyte(checkAvailableMode(),checkBasicMode(),new ArrayList<>());
+
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon
@@ -63,7 +67,7 @@ public class EletroSchyte extends WeaponCard
         if (this.isLoaded() && player.getSquare().getPlayerList().size() > 1)//If the first mode can be used
             availableMethod[0] = true;
 
-        if (this.isLoaded() && player.getAmmoBlue()>1 &&  player.getSquare().getPlayerList().size() > 1)//If the second mode can be used
+        if (this.isLoaded() && player.getAmmoBlue()>=1 && player.getAmmoRed()>=1 &&  player.getSquare().getPlayerList().size() > 1)//If the second mode can be used
             availableMethod[1] = true;
 
 

@@ -34,7 +34,10 @@ public class LockRifle extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestLockRifle(checkAvailableMode(),checkBasicMode(),checkSecondLock());
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
+            return new RequestLockRifle(checkAvailableMode(),checkBasicMode(),checkSecondLock());
+        else
+            return new RequestLockRifle(checkAvailableMode(),checkBasicMode(),new LinkedList<>());
     }
 
     /**

@@ -49,7 +49,15 @@ public class MachineGun extends WeaponCard
 
     public RequestInput getRequestMessage()
     {
-        return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
+        if (checkAvailableMode()[0] && checkAvailableMode()[1] && checkAvailableMode()[2])
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
+        else if (checkAvailableMode()[0] && checkAvailableMode()[1] && !checkAvailableMode()[2])
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),new LinkedList<>());
+        else if (checkAvailableMode()[0] && !checkAvailableMode()[1] && checkAvailableMode()[2])
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),new LinkedList<>(),checkTurretTripodeMode());
+        else
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),new LinkedList<>(),new LinkedList<>());
+
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon

@@ -84,11 +84,11 @@ public class VortexCannonTest
         hashMap = vortexCannon.checkBasicMode();
 
         assertTrue(hashMap.keySet().contains(p2.getSquare().toStringCoordinates()));
-        assertTrue(hashMap.get(p2.getSquare().toStringCoordinates()).contains(p2.getColor()));
+//        assertTrue(hashMap.get(p2.getSquare().toStringCoordinates()).contains(p2.getColor()));
 
         MethodsWeapons.moveTarget(p3,2,2);
 
-        assertEquals(2, hashMap.get(p2.getSquare().toStringCoordinates()).size());
+//        assertEquals(2, hashMap.get(p2.getSquare().toStringCoordinates()).size());
 
 
     }

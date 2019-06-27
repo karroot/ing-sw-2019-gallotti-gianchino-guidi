@@ -34,8 +34,14 @@ public class TractorBeam extends WeaponCard
 
     public RequestInput getRequestMessage()
     {
-        return new RequestTractatorBeam(checkAvailableMode(),checkMoveBasicMode(),checkPunisherMode());
+        if (checkAvailableMode()[0] && checkAvailableMode()[1])
+            return new RequestTractatorBeam(checkAvailableMode(),checkMoveBasicMode(),checkPunisherMode());
+
+        else
+            return new RequestTractatorBeam(checkAvailableMode(),checkMoveBasicMode(),new LinkedList<>());
+
     }
+
     /**
      * Check which modes of the weapon can be used by player that has this weapon
      * @return array of booleans of size 2 the first represent the basic mode the second the alternative mode

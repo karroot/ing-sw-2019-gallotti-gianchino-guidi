@@ -48,7 +48,19 @@ public class THOR extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
-        return new RequestTHOR(checkAvailableMode(),checkBasicMode(),checkChainReaction(),checkHighVoltage());
+        if (checkAvailableMode()[0] && checkAvailableMode()[1] && checkAvailableMode()[2])
+        {
+            return new RequestTHOR(checkAvailableMode(), checkBasicMode(), checkChainReaction(), checkHighVoltage());
+        }
+        else if(checkAvailableMode()[0] && checkAvailableMode()[1] && !checkAvailableMode()[2])
+        {
+            return new RequestTHOR(checkAvailableMode(), checkBasicMode(), checkChainReaction(), new LinkedList<>());
+
+        }
+        else
+            return new RequestTHOR(checkAvailableMode(), checkBasicMode(), new LinkedList<>(), new LinkedList<>());
+
+
     }
     /**
      * Check which modes of the weapon can be used by player that has this weapon

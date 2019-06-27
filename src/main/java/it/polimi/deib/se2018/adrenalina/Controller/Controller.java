@@ -152,7 +152,7 @@ public class Controller implements Observer<ResponseInput>
                     }
                     catch (InterruptedException|ExecutionException e)
                     {
-                        //Do nothing
+                        Thread.currentThread().interrupt();
                     }
                 }
                 firstRound=false;
@@ -634,10 +634,12 @@ public class Controller implements Observer<ResponseInput>
 
 
                 for (String pc : risp.getChosenPowerUpList()) {
-                    if (pc.equals("Granata Venom:BLUE") || pc.equals("Granata Venom:YELLOW") || pc.equals("Granata Venom:RED")) {
-                        askForTagBackGranade(pc,granadeAttackedPlayer);
-                    }
+                    if(granadeAttackedPlayer!=null){
+                        if (pc.equals("Granata Venom:BLUE") || pc.equals("Granata Venom:YELLOW") || pc.equals("Granata Venom:RED")) {
+                            askForTagBackGranade(pc,granadeAttackedPlayer);
+                        }
 
+                    }
                 }
                 // sends end cicle message
 
@@ -1594,35 +1596,30 @@ public class Controller implements Observer<ResponseInput>
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard
-    {
-        Set<Square> squareToChange =roundPlayer.lookForGrabStuff(roundPlayer);
+    public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard {
+        Set<Square> squareToChange = roundPlayer.lookForGrabStuff(roundPlayer);
         List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>()
-        {
+        callableList.add(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-               try {
+                try {
 
-                   virtualView.requestInput(new RequestGrabStuff(changeToList(squareToChange)), roundPlayer.getColor());
-                   virtualView.getResponseWithInputs(roundPlayer.getColor());
+                    virtualView.requestInput(new RequestGrabStuff(changeToList(squareToChange)), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                   return true;
-               }
-               catch (Exception e)
-               {
-                   return false;
-               }
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
             }
         });
 
-       
 
-       boolean s = executor.invokeAny(callableList);
-        if(!s)
+        boolean s = executor.invokeAny(callableList);
+        if (!s)
             return;
-        if(checkForAfk())
-               return;
+        if (checkForAfk())
+            return;
 
         ResponseGrabStuff response = (ResponseGrabStuff) msg; // mi ritorna un colore
 
@@ -1630,30 +1627,25 @@ public class Controller implements Observer<ResponseInput>
         int chosenSquareY = response.getY();
 
 
-
-        if(g1.getArena().getSquare(chosenSquareX,chosenSquareY).isAmmoPoint())
-        {
+        if (g1.getArena().getSquare(chosenSquareX, chosenSquareY).isAmmoPoint()) {
             //  ammo point case
-            AmmoPoint currentSquare = (AmmoPoint) g1.getArena().getSquare(chosenSquareX,chosenSquareY);
+            AmmoPoint currentSquare = (AmmoPoint) g1.getArena().getSquare(chosenSquareX, chosenSquareY);
             currentSquare.useAmmoTiles(roundPlayer);
         }
 
 
-        if(g1.getArena().getSquare(chosenSquareX,chosenSquareY).isSpawnPoint())
-        {
+        if (g1.getArena().getSquare(chosenSquareX, chosenSquareY).isSpawnPoint()) {
             // spawn point case
-            SpawnPoint currentSquare = (SpawnPoint) g1.getArena().getSquare(chosenSquareX,chosenSquareY);
+            SpawnPoint currentSquare = (SpawnPoint) g1.getArena().getSquare(chosenSquareX, chosenSquareY);
             List<WeaponCard> currentWeaponList = currentSquare.getWeaponCardList();
             List<String> weaponsName = new LinkedList<>();
-            for (WeaponCard wc : currentWeaponList)
-            {
-                if(StateSpecialMethods.checkGrabbable(wc,roundPlayer)) // controllo se l'arma è prendibili
+            for (WeaponCard wc : currentWeaponList) {
+                if (StateSpecialMethods.checkGrabbable(wc, roundPlayer)) // controllo se l'arma è prendibili
                     weaponsName.add(wc.getName());
             }
 
             List<Callable<Boolean>> callableListA = new LinkedList<>();
-            callableListA.add(new Callable<Boolean>()
-            {
+            callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
 
@@ -1662,91 +1654,88 @@ public class Controller implements Observer<ResponseInput>
                         virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                         return true;
-                    }
-                    catch (Exception e)
-                    {
-                        return  false;
+                    } catch (Exception e) {
+                        return false;
                     }
                 }
             });
 
-           
 
             Boolean valid = executor.invokeAny(callableListA);
-            if(!valid)
+            if (!valid)
                 return;
-            if(checkForAfk())
-               return;
+            if (checkForAfk())
+                return;
 
 
             ResponseShootPeople res = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI
 
-            WeaponCard chosenWeapon = currentWeaponList.get(res.getChosenWeapon()-1); // arma scelta
-
-            //se hai meno di 3 armi aggiungila e basta
-            if(roundPlayer.getWeaponCardList().size()<3) {
-                removeAmmoCost(roundPlayer,chosenWeapon);
-                roundPlayer.addWeapon(chosenWeapon);
-                chosenWeapon.setPlayer(roundPlayer);
-                currentSquare.drawWeapon(chosenWeapon);
-
-            }
-
-
-            else
-            { //se ha già 3 armi chiedo con quale arma vuole sostituirla
-
-                List<WeaponCard> playerCurrentWeaponList = currentSquare.getWeaponCardList();
-                List<String> playerWeaponsName = new LinkedList<>();
-                for (WeaponCard wc : playerCurrentWeaponList)
-                {
-                    playerWeaponsName.add(wc.getName());
+            WeaponCard chosenWeapon = null;
+            for (WeaponCard wp : currentWeaponList) {
+                if (wp.getName().equals(weaponsName.get(res.getChosenWeapon()))) {
+                    chosenWeapon = wp;
                 }
 
-                List<Callable<Boolean>> callableListS = new LinkedList<>();
-                callableListS.add(new Callable<Boolean>()
-                {
-                    @Override
-                    public Boolean call() throws Exception {
-
-                        try {
-                            virtualView.requestInput(new RequestShootPeople(playerWeaponsName), roundPlayer.getColor());
-                            virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-                            return true;
-                        }
-                        catch (Exception e)
-                        {
-                            return  false;
-                        }
-                    }
-                });
-
-               
-
-                Boolean correct =  executor.invokeAny(callableListS);
-                if(!correct)
-                    return;
-                if(checkForAfk())
-                    return;
-
-
-                ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
-
-                WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon()-1); // arma scelta
-
-                roundPlayer.changeWeapon(chosenWeapon,weaponToChange.getName());
-                removeAmmoCost(roundPlayer,chosenWeapon);
-
-                currentSquare.swapWeapon(weaponToChange,chosenWeapon);
             }
-            chosenWeapon.setPlayer(roundPlayer);
 
+            if (chosenWeapon != null) {
+
+                //se hai meno di 3 armi aggiungila e basta
+                if (roundPlayer.getWeaponCardList().size() < 3) {
+                    removeAmmoCost(roundPlayer, chosenWeapon);
+                    roundPlayer.addWeapon(chosenWeapon);
+                    chosenWeapon.setPlayer(roundPlayer);
+                    currentSquare.drawWeapon(chosenWeapon);
+
+                }
+                else { //se ha già 3 armi chiedo con quale arma vuole sostituirla
+
+                    List<WeaponCard> playerCurrentWeaponList = currentSquare.getWeaponCardList();
+                    List<String> playerWeaponsName = new LinkedList<>();
+                    for (WeaponCard wc : playerCurrentWeaponList) {
+                        playerWeaponsName.add(wc.getName());
+                    }
+
+                    List<Callable<Boolean>> callableListS = new LinkedList<>();
+                    callableListS.add(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+
+                            try {
+                                virtualView.requestInput(new RequestShootPeople(playerWeaponsName), roundPlayer.getColor());
+                                virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                                return true;
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        }
+                    });
+
+
+                    Boolean correct = executor.invokeAny(callableListS);
+                    if (!correct)
+                        return;
+                    if (checkForAfk())
+                        return;
+
+
+                    ResponseShootPeople ris = (ResponseShootPeople) msg; // mi ritorna  l'indice dell'arma scelta, CONTROLLARE SE REQUEST E RESPONSE CONTROLLANO MUNIZIONI (ATTENTO)
+
+                    WeaponCard weaponToChange = roundPlayer.getWeaponCardList().get(ris.getChosenWeapon() - 1); // arma scelta
+
+                    roundPlayer.changeWeapon(chosenWeapon, weaponToChange.getName());
+                    removeAmmoCost(roundPlayer, chosenWeapon);
+
+                    currentSquare.swapWeapon(weaponToChange, chosenWeapon);
+                }
+                chosenWeapon.setPlayer(roundPlayer);
+
+            }
+
+            MethodsWeapons.moveTarget(roundPlayer, chosenSquareX, chosenSquareY);
         }
-
-        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
     }
-
     /**
      * this method ask the player wich weapon he want to reload
      * @throws InterruptedException
