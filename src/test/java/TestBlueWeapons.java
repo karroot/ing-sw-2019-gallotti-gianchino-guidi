@@ -890,6 +890,7 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
             w5.basicMode(enemy.getColor(),orderEffect,1,3);
 
             assertEquals(enemy.getNumberOfDamagePoint(),6);
+            assertTrue(test.getSquare().equals(test.getSquare().getGameBoard().getArena().getSquare(1,3)));
 
          // prova a muoverti e a sparare a un nemico che non  puoi raggiungere da quella posizione ( ma che comunque potevi raggiungere)
 
@@ -991,29 +992,10 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         w2.setPlayer(test);
         w2.setLoaded(true);
         boolean[] availableMethod = w2.checkAvailableMode();
-        assertFalse(availableMethod[0]);
-        assertFalse(availableMethod[1]);
+        assertTrue(availableMethod[0]);
+        assertTrue(availableMethod[1]);
 
-        try
-        {
-            w2.checkMoveBasicMode();
-            fail();
-        }
-        catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
 
-        try
-        {
-            w2.checkPunisherMode();
-            fail();
-        }
-        catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-        assertEquals(enemy2.getNumberOfDamagePoint(),0);
         //tutto disponibile
 
 
@@ -1059,6 +1041,74 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
       {
           System.out.println(e);
       }
+
+        //tutto disponibile test 2
+
+        MethodsWeapons.moveTarget(enemy,1,2);
+        MethodsWeapons.moveTarget(enemy2,1,1);
+        MethodsWeapons.moveTarget(test,3,3);
+        assertEquals(enemy.getNumberOfDamagePoint(),0);
+        assertEquals(enemy2.getNumberOfDamagePoint(),1);
+        w2.setLoaded(true);
+        test.setAmmoBlue(3);
+        test.setAmmoRed(3);
+        test.setAmmoYellow(3);
+        list1 = w2.checkMoveBasicMode();
+       try{
+           list2 = w2.checkPunisherMode();
+           fail();
+       }
+       catch (IllegalStateException e)
+       {
+           System.out.println(e);
+       }
+        boolean[] availableMethods = w2.checkAvailableMode();
+        assertTrue(availableMethods[0]);
+        assertFalse(availableMethods[1]);
+
+
+
+        assertTrue(list1.containsKey(enemy.getColor()));
+        assertTrue(list1.containsKey(enemy2.getColor()));
+        w2.basicMode(enemy.getColor(),1,3);
+        assertEquals(enemy.getNumberOfDamagePoint(),1);
+        assertTrue(enemy.getSquare().equals(enemy.getSquare().getGameBoard().getArena().getSquare(1,3)));
+
+        w2.setLoaded(true);
+        w2.basicMode(enemy2.getColor(),2,2);
+
+        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        assertTrue(enemy2.getSquare().equals(enemy2.getSquare().getGameBoard().getArena().getSquare(2,2)));
+
+
+        //tutto disponibile test 3
+
+        MethodsWeapons.moveTarget(enemy,1,2);
+        MethodsWeapons.moveTarget(enemy2,1,1);
+        MethodsWeapons.moveTarget(test,2,3);
+        assertEquals(enemy.getNumberOfDamagePoint(),1);
+        assertEquals(enemy2.getNumberOfDamagePoint(),2);
+        w2.setLoaded(true);
+        list1 = w2.checkMoveBasicMode();
+        list2 = w2.checkPunisherMode();
+        boolean[] availableMethodss = w2.checkAvailableMode();
+        assertTrue(availableMethodss[0]);
+        assertTrue(availableMethodss[1]);
+
+
+
+        assertTrue(list1.containsKey(enemy.getColor()));
+        assertTrue(list1.containsKey(enemy2.getColor()));
+        assertTrue(list2.contains(enemy.getColor()));
+        w2.basicMode(enemy.getColor(),1,3);
+        assertEquals(enemy.getNumberOfDamagePoint(),2);
+        assertTrue(enemy.getSquare().equals(enemy.getSquare().getGameBoard().getArena().getSquare(1,3)));
+
+        w2.setLoaded(true);
+        w2.basicMode(enemy2.getColor(),2,2);
+
+        assertEquals(enemy2.getNumberOfDamagePoint(),3);
+        assertTrue(enemy2.getSquare().equals(enemy2.getSquare().getGameBoard().getArena().getSquare(2,2)));
 
 
     }
