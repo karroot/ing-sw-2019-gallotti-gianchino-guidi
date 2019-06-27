@@ -1672,7 +1672,7 @@ public class Controller implements Observer<ResponseInput>
 
             WeaponCard chosenWeapon = null;
             for (WeaponCard wp : currentWeaponList) {
-                if (wp.getName().equals(weaponsName.get(res.getChosenWeapon()))) {
+                if (wp.getName().equals(weaponsName.get(res.getChosenWeapon()-1))) {
                     chosenWeapon = wp;
                 }
 

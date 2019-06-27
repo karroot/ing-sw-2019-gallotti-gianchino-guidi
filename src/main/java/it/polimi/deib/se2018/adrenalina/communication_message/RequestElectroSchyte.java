@@ -12,9 +12,7 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
     private List<ColorId> playersBasicMode;//Targets for the basic mode
     private List<ColorId> playersAlternativeMode;//Targets for the basic mode
 
-    //Attribute for the response
-    private List<ColorId> targetBasicMode;//Target chosen for the basic mode
-    private List<ColorId> targetsAlternativeMode = new LinkedList<>();//Targets chosen for the alternative mode
+
 
     /**
      * Create a message of request for the weapon ElectroSchyte
@@ -32,40 +30,12 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
     }
 
     @Override
+    protected void inputBasicMode() {
+
+    }
+
+    @Override
     protected void inputAlternativeMode() {
-
-        int i = 1; //Variable to cycle
-
-
-        List<Integer> intchoice = new LinkedList<>();
-
-        terminal.addTextInput("Scegli bersagli a cui fare danno:");
-
-        for (ColorId t:playersAlternativeMode) //Print the possible choice
-        {
-            terminal.addOptionInput(i + ":" + t);
-            i++;
-        }
-
-        int inputInt;
-
-        int j = 1;
-
-        while (j <= playersAlternativeMode.size())//Player must choose targets not equals
-        {
-            inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a target
-
-            while (intchoice.contains(inputInt)) //if the target was chosen before
-            {
-                inputInt = terminal.inputInt(1, playersAlternativeMode.size());//Ask a new target
-            }
-
-            intchoice.add(inputInt); //Add the target in the list of targets
-            targetsAlternativeMode.add(playersAlternativeMode.get(inputInt-1));
-
-            j++;
-
-        }
 
     }
 
@@ -80,8 +50,8 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
             throw new IllegalStateException("Input non ancora presi");
 
         if (mode)
-            return new ResponseElectroSchyte(targetsAlternativeMode,mode);
+            return new ResponseElectroSchyte(playersAlternativeMode,mode);
 
-        return new ResponseElectroSchyte(targetBasicMode,mode);
+        return new ResponseElectroSchyte(playersBasicMode,mode);
     }
 }
