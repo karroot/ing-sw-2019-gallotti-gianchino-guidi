@@ -179,7 +179,7 @@ public class BoardGUI
         allBoardWindow.setVisible(true);
     }
 
-    public  int getInputChoice()
+    public synchronized int getInputChoice()
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 

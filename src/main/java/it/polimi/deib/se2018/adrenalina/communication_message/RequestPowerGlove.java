@@ -113,8 +113,8 @@ public class RequestPowerGlove extends WeaponWithModeAlternative
             throw new IllegalStateException("Input non ancora presi");
 
         if (mode)
-            return new ResponseZX2(targetsAlternativeMode);
+            return new ResponsePowerGlove(targetsAlternativeMode);
 
-        return new ResponseZX2(targetBasicMode);
+        return new ResponsePowerGlove(targetBasicMode);
     }
 }

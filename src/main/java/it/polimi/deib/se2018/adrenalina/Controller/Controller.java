@@ -1533,8 +1533,10 @@ public class Controller implements Observer<ResponseInput>
                 @Override
                 public Boolean call() throws Exception {
 
-                    try{
-                      virtualView.requestInput(weaponChosen.getRequestMessage(),roundPlayer.getColor());
+                    try
+                    {
+                        RequestInput temp = weaponChosen.getRequestMessage();
+                      virtualView.requestInput(temp,roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                     return true;
@@ -1632,10 +1634,12 @@ public class Controller implements Observer<ResponseInput>
             //  ammo point case
             AmmoPoint currentSquare = (AmmoPoint) g1.getArena().getSquare(chosenSquareX, chosenSquareY);
             currentSquare.useAmmoTiles(roundPlayer);
+            MethodsWeapons.moveTarget(roundPlayer, chosenSquareX, chosenSquareY);
         }
 
 
-        if (g1.getArena().getSquare(chosenSquareX, chosenSquareY).isSpawnPoint()) {
+        if (g1.getArena().getSquare(chosenSquareX, chosenSquareY).isSpawnPoint())
+        {
             // spawn point case
             SpawnPoint currentSquare = (SpawnPoint) g1.getArena().getSquare(chosenSquareX, chosenSquareY);
             List<WeaponCard> currentWeaponList = currentSquare.getWeaponCardList();

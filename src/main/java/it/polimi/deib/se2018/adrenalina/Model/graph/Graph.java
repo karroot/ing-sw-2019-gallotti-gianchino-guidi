@@ -5,6 +5,8 @@ import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 /**
@@ -125,7 +127,7 @@ public class Graph
             return  new HashSet<>(); //Return an empty Set
         }
 
-        Set<Square> squares = new HashSet<>(); //Create a set empty
+        Set<Square> squares = ConcurrentHashMap.newKeySet(); //Create a set empty
 
 
         List<Edge> queue = new LinkedList<>();//List of support

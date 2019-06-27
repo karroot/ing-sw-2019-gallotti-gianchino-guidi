@@ -78,9 +78,9 @@ public class RequestMachineGun extends RequestInput {
         }
 
         int j = 0;
-List<Integer> oneAndThree = new LinkedList<>();
-oneAndThree.add(1);
-oneAndThree.add(3);
+        List<Integer> oneAndThree = new LinkedList<>();
+        oneAndThree.add(1);
+        oneAndThree.add(3);
         //Handle the possible choice of the users asking the correct inputs
         if (availableMethod[0] && availableMethod[1] && availableMethod[2])
             choice = terminal.inputInt(1, 4);

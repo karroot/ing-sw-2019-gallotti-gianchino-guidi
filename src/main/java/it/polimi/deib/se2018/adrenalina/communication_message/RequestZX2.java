@@ -52,12 +52,6 @@ public class RequestZX2 extends WeaponWithModeAlternative
         return new ResponseZX2(targetBasicMode);
     }
 
-    //Ask at the user to choice a target for the basic mode
-    @Override
-    protected void inputBasicMode()
-    {
-
-    }
 
     //Ask at the user to choice three target for the alternative mode if there are
     @Override
