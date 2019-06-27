@@ -274,7 +274,6 @@ public class Setup
 
     public void replenishBoard (GameBoard gameBoard)
     {
-
         for (Room roomIterate : gameBoard.getRoomList())
         {
             for (Square squareIterate : roomIterate.getSquareList())
@@ -300,8 +299,5 @@ public class Setup
                 }
             }
         }
-
     }
-
-
 }
