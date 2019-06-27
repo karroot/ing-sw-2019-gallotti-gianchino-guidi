@@ -161,27 +161,31 @@ public class BoardGUI
     }
 
     //Methods to ask the input at the user
-    public void addTextForInput(String text)
+    public synchronized void addTextForInput(String text)
     {
+        allBoardWindow.setVisible(false);
         textToAsk = new JLabel(text);
         inputWindow.add(textToAsk);
+        allBoardWindow.setVisible(true);
     }
 
-    public void addOptionForInput(String text)
+    public synchronized void addOptionForInput(String text)
     {
+        allBoardWindow.setVisible(false);
         JButton temp = new JButton(text);
         temp.addActionListener(new ClickInput(this)); //Add the action listener
         listOfAllOptions.add(temp);
         inputWindow.add(temp);
+        allBoardWindow.setVisible(true);
     }
 
-    public int getInputChoice()
+    public  int getInputChoice()
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        allBoardWindow.setVisible(false);
-        onInput = true;
         allBoardWindow.setVisible(true);
+
+        onInput = true;
 
         TimerAFK.startTimer(Thread.currentThread());
         synchronized (choiceSyn)

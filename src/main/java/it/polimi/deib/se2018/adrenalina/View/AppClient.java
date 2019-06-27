@@ -14,7 +14,7 @@ import java.util.List;
 public class AppClient
 {
 
-    public static String path = "C:\\Users\\gabri\\IdeaProjects\\ing-sw-2019-gallotti-gianchino-guidi\\src\\main\\java\\it\\polimi\\deib\\se2018\\adrenalina\\View\\Asset\\";
+    public static String path = "C:\\Users\\Cysko7927\\IdeaProjects\\ing-sw-2019-gallotti-gianchino-guidi\\src\\main\\java\\it\\polimi\\deib\\se2018\\adrenalina\\View\\Asset\\";
 
     public static int timerAFK = 600000; //Timer that starts when there is an request input (ms)
 

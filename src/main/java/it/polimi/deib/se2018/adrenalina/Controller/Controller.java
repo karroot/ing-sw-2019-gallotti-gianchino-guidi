@@ -129,6 +129,7 @@ public class Controller implements Observer<ResponseInput>
 
         setup.replenishBoard(g1);
 
+
         if(g1.getAllPlayer().size()<5)
             g1.setTerminatorMode(terminatorMode);
 
