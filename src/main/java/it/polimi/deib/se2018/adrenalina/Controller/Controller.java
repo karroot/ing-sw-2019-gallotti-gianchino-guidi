@@ -62,8 +62,11 @@ public class Controller implements Observer<ResponseInput>
      */
     public int numberOfPlayer()
     {
+
         return virtualView.getConnections().size();
     }
+
+
 
     /**
      * This method returns the hero comment of player represented by an index
@@ -2048,10 +2051,13 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-                @Override
-                public void update (ResponseInput message)
-                {
-                    msg = message;
-                }
+    @Override
+    public void update (ResponseInput message)
+    {
+        msg = message;
+    }
+
+
+
 }
 
