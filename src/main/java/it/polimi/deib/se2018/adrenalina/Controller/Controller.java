@@ -443,10 +443,9 @@ public class Controller implements Observer<ResponseInput>
             {
                 askForPowerUpTeleportOrNewton();
             }
-            else if (messageNet instanceof AskTagBackGranade)
-            {
-                askForPowerUpTagBackGranade();
-            }
+
+
+
 
             updateModel();
 
@@ -456,7 +455,7 @@ public class Controller implements Observer<ResponseInput>
 
 
         }
-
+        askForPowerUpTagBackGranade();
     // at the end of round
         for(Player p: g1.getAllPlayer())
         {
@@ -607,14 +606,38 @@ public class Controller implements Observer<ResponseInput>
             if (powerUpList.isEmpty())
                 vuota = true;
             if (!vuota) {
+//send message to inform view
+                List<Callable<Boolean>> callableIniz = new LinkedList<>();
+                callableIniz.add(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try{
+                            virtualView.requestInput(new RequestToUseGrenade(), granadeAttacked);
+
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return false;
+                        }
+                    }
+                });
+                Boolean si = executor.invokeAny(callableIniz);
+                if(!si)
+                    return;
+                if(checkForAfk())
+                    return;
+
                 List<Callable<Boolean>> callableList = new LinkedList<>();
                 callableList.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
 
                        try{                        
-                           virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-                           virtualView.getResponseWithInputs(roundPlayer.getColor());
+                           virtualView.requestInput(new RequestPowerUp(powerUpList), granadeAttacked);
+                           virtualView.getResponseWithInputs(granadeAttacked);
 
                            return true;
                        }
@@ -669,30 +692,7 @@ public class Controller implements Observer<ResponseInput>
                     return;
 
             }
-            else 
-                {
-                    List<Callable<Boolean>> callableList = new LinkedList<>();
-                    callableList.add(new Callable<Boolean>() {
 
-                    @Override
-                    public Boolean call() throws Exception {
-
-                       try {
-                           virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-                      
-                          return true; }
-                       catch (Exception e)
-                       {
-                           return  false;
-                       }
-                    }
-                });
-
-
-                Boolean s =  executor.invokeAny(callableList);
-                if(!s)
-                    return;
-            }
         }
     }
 
@@ -989,41 +989,14 @@ public class Controller implements Observer<ResponseInput>
             if(pc.powerToString().equals(choice))
                 cardpower=(TagbackGranade) pc;
         }
-        List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>()
-        {
-            @Override
-            public Boolean call() throws Exception
-            {
 
-                try{
-                virtualView.requestInput(new RequestTagbackGranade(roundPlayer.getColor()),tempPlayer.getColor());
-                virtualView.getResponseWithInputs(tempPlayer.getColor());
 
-                return true;}
-                catch (Exception e)
-                {
-                    return  false;
-                }
-            }
-        });
-
-      
-
-        Boolean ric = executor.invokeAny(callableList);
-        if(!ric)
-            return;
-        if(checkForAfk())
-               return;
-
-        ResponseTagbackGranade response = (ResponseTagbackGranade) msg;
-
-        if(response.getTargetBasicMode()!=null && cardpower!=null)
+        if( cardpower!=null)
         {
 
             cardpower.usePowerUp(roundPlayer);
-            //aggiungi a pila scarti
-
+            //aggiungi a pila scarti chiadi a gio
+            tempPlayer.usePowerUp(tempPlayer.getPowerupCardList().indexOf(cardpower));
         }
 
 

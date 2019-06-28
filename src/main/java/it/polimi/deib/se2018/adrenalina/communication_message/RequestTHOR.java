@@ -134,15 +134,17 @@ public class RequestTHOR  extends RequestInput{
     {
         List<ColorId> players;
         players = playersAdditionalMode;
+        List<ColorId> showedPlayers= new LinkedList<>();
         int i = 1;
         terminal.addTextInput("Scegli secondo bersaglio:");
         for (ColorId t:players)//Ask to user the target
         {
             terminal.addOptionInput(i+" : "+t);
+            showedPlayers.add(t);
             i++;
         }
         int choice = terminal.inputInt(1, i - 1);
-        targetAdditionalMode  = players.get(choice-1);
+        targetAdditionalMode  = showedPlayers.get(choice-1);
     }
 
     protected void inputSecondAdditionalMode()

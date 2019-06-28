@@ -7,8 +7,8 @@ import java.util.List;
  * @author gabriele
  */
 public class ResponseLockRifle extends ResponseInput {
-    private ColorId targetBasicMode;//Target for basic mode
-    private ColorId targetsAdditionalMode;//targets for the alternative mode
+    private ColorId targetBasicMode=null;//Target for basic mode
+    private ColorId targetsAdditionalMode=null;//targets for the alternative mode
     boolean mode;//false = player chose the basic mode, true = player chose the alternative mode
 
     /**

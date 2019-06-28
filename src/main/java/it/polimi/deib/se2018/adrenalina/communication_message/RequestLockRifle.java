@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 
+import java.util.LinkedList;
 import java.util.List;
 /**
  * @author gabriele
@@ -74,6 +75,7 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         if (choice==2)
         {
             inputAdditionalMode();
+            mode=true;
         }
 
         responseIsReady = true;
@@ -85,15 +87,19 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
     {
         List<ColorId> players;
         players = playersAdditionalMode;
+        List<ColorId> showedPlayers= new LinkedList<>();
         int i = 1;
         terminal.addTextInput("Scegli chi altro vuoi marchiare:");
         for (ColorId t:players)//Ask to user the target
         {
-            terminal.addOptionInput(i+":"+t);
-            i++;
+            if(!t.equals(targetBasicMode)) {
+                terminal.addOptionInput(i + ":" + t);
+                showedPlayers.add(t);
+                i++;
+            }
         }
         int choice = terminal.inputInt(1, i - 1);
-        targetAdditionalMode  = players.get(choice-1);
+        targetAdditionalMode  = showedPlayers.get(choice-1);
     }
 
 @Override
@@ -105,11 +111,10 @@ protected void inputBasicMode()
 
     for (ColorId t:playersBasicMode)
     {
-        if(!t.equals(targetAdditionalMode))
-        {
+
         terminal.addOptionInput(i + ":" + t);
         i++;
-        }
+
     }
 
     int anInt = terminal.inputInt(1, i - 1);

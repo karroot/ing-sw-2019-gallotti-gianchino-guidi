@@ -54,7 +54,7 @@ public class LockRifle extends WeaponCard
         availableMethod[0] = false;
 
 
-        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
+        if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1 )
             availableMethod[0] = true;
 
         if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>2)
