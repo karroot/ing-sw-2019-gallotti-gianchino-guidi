@@ -165,7 +165,7 @@ public class RequestMachineGun extends RequestInput {
         terminal.addTextInput("Scegli a chi vuoi aggiungere un danno:");
         for (ColorId t:players)//Ask to user the target
         {
-            if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond))
+            if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond)) //targetBasicModeSecond può essere null
             {
                 terminal.addOptionInput(i+" :"+t);
                 i++;
@@ -236,17 +236,18 @@ public class RequestMachineGun extends RequestInput {
         int choice = terminal.inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
 
-        terminal.addTextInput("seleziona il secondo player :");
-        i = 1;
-        for (ColorId t:players)//Ask to user the target
-        {
-            if (!t.equals(targetBasicMode))
-            {
-                terminal.addOptionInput(i+":"+t);
-                i++;
-            }
-        }
-        choice = inputInt(1, i - 1);
-        targetBasicModeSecond  = players.get(choice-1);
+       if(players.size()>1) {
+           terminal.addTextInput("seleziona il secondo player :");
+           i = 1;
+           for (ColorId t : players)//Ask to user the target
+           {
+               if (!t.equals(targetBasicMode)) {
+                   terminal.addOptionInput(i + ":" + t);
+                   i++;
+               }
+           }
+           choice = terminal.inputInt(1, i - 1);
+           targetBasicModeSecond = players.get(choice - 1);
+       }
     }
 }

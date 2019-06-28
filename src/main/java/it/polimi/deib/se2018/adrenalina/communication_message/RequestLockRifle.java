@@ -70,11 +70,12 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         }
         else choice = terminal.inputInt(1, 1);
 
+        inputBasicMode();
         if (choice==2)
         {
             inputAdditionalMode();
         }
-        inputBasicMode();
+
         responseIsReady = true;
     }
 
@@ -95,7 +96,27 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         targetAdditionalMode  = players.get(choice-1);
     }
 
+@Override
+protected void inputBasicMode()
+{
+    int i = 1;
 
+    terminal.addTextInput("Scegli un bersaglio:");
+
+    for (ColorId t:playersBasicMode)
+    {
+        if(!t.equals(targetAdditionalMode))
+        {
+        terminal.addOptionInput(i + ":" + t);
+        i++;
+        }
+    }
+
+    int anInt = terminal.inputInt(1, i - 1);
+
+    targetBasicMode = playersBasicMode.get(anInt -1);
+
+}
 
 }
 

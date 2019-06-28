@@ -146,7 +146,7 @@ public class PlasmaGun extends WeaponCard
 
 
 
-        return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
+        return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());
     }
 
 // dovrebbe essere inutile siccome il controller ti da solo opzioni sensate

@@ -57,7 +57,7 @@ public class LockRifle extends WeaponCard
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             availableMethod[0] = true;
 
-        if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
+        if (isLoaded()&& player.getAmmoRed()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>2)
             availableMethod[1] = true;
 
 
@@ -79,7 +79,8 @@ public class LockRifle extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
-            playerList.add(p.getColor());
+            if(!p.equals(this.player))
+                playerList.add(p.getColor());
         }
 
 
@@ -105,7 +106,12 @@ public class LockRifle extends WeaponCard
             if (!checkAvailableMode()[1])
                 throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
-            markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+            //markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+            for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+            {
+                if(p.getColor().equals(colorPlayer2))
+                    markTarget(p,1);
+            }
 
             this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         }

@@ -2028,7 +2028,7 @@ public class Controller implements Observer<ResponseInput>
         }
 
         return fin;
-    }
+    } // mappa con punti da sommare al player con colorId
 
 
 

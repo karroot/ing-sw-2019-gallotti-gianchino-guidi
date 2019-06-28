@@ -70,27 +70,31 @@ public class RequestTHOR  extends RequestInput{
 
         //Handle the possible choice of the users asking the correct inputs
         if (availableMethod[0] && availableMethod[1] && availableMethod[2])
-            choice = inputInt(1, 3);
+            choice = terminal.inputInt(1, 3);
         if (availableMethod[0] && availableMethod[1] && !availableMethod[2])
-            choice = inputInt(1, 2);
+            choice = terminal.inputInt(1, 2);
         if (availableMethod[0] && !availableMethod[1] && !availableMethod[2])
-            choice = inputInt(1, 1);
+            choice = terminal.inputInt(1, 1);
+
 
         mode = false; //Set the attribute mode
-        if (choice == 3) //If the user choices the basic mode
+        inputBasicMode();//Ask all the information necessary to use the basic mode
+        if (choice == 2) //If the user choices the basic mode
         {
-            inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
+
+            inputAdditionalMode();//Ask all the information necessary to use the alternative mode
+            mode = true;//Set the attribute mode
+
+        }
+        else if (choice == 3) //If the user choices the basic mode
+        {
             inputAdditionalMode();
+            inputSecondAdditionalMode();//Ask all the information necessary to use the alternative mode
             mode= true;//Set the attribute mode
             secondMode = true;//Set the attribute second mode
         }
-        else if (choice == 2) //If the user choices the basic mode
-        {
-            inputAdditionalMode();//Ask all the information necessary to use the alternative mode
-            mode = true;//Set the attribute mode
-        }
 
-        inputBasicMode();//Ask all the information necessary to use the basic mode
+
 
 
 
@@ -137,7 +141,7 @@ public class RequestTHOR  extends RequestInput{
             terminal.addOptionInput(i+" : "+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetAdditionalMode  = players.get(choice-1);
     }
 
@@ -152,7 +156,7 @@ public class RequestTHOR  extends RequestInput{
             terminal.addOptionInput(i+": "+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetSecondAdditionalMode  = players.get(choice-1);
     }
 
@@ -169,7 +173,7 @@ public class RequestTHOR  extends RequestInput{
             terminal.addOptionInput(i+" :"+t);
             i++;
         }
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
 
 

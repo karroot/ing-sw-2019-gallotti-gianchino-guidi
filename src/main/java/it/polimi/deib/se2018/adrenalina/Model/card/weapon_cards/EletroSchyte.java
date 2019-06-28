@@ -106,7 +106,13 @@ public class EletroSchyte extends WeaponCard
     {
 
             for (ColorId p : colorPlayerList) {
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),1);
+                //doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),1);
+                for(Player pla : player.getSquare().getGameBoard().getAllPlayer()){
+                    if(pla.getColor().equals(p))
+                        doDamage(pla,1);
+                }
+
+
             }
         isLoaded = false;
         }
@@ -146,7 +152,10 @@ public class EletroSchyte extends WeaponCard
             throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
 
         for (ColorId p : colorPlayerList) {
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),2);
+           //doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),2);
+            for(Player pla : player.getSquare().getGameBoard().getAllPlayer()){
+                if(pla.getColor().equals(p))
+                    doDamage(pla,2);}
         }
         isLoaded = false;
         this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
@@ -154,3 +163,5 @@ public class EletroSchyte extends WeaponCard
     }
 
 }
+
+

@@ -115,7 +115,8 @@ public class THOR extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
-            playerList.add(p.getColor());
+            if(!p.equals(this.player))
+                playerList.add(p.getColor());
         }
 
 
@@ -192,7 +193,8 @@ public class THOR extends WeaponCard
             {
                 if(!(k.equals(i)))
                 {
-                    listChain.add(k.getColor());
+                    if(!k.equals(this.player))
+                        listChain.add(k.getColor());
                 }
             }
 
@@ -226,7 +228,8 @@ public class THOR extends WeaponCard
                     {
                         if(!(k.equals(i)) && !(k.equals(j)))
                         {
-                            listHighVoltage.add(k.getColor());
+                            if(!k.equals(this.player))
+                                listHighVoltage.add(k.getColor());
                         }
                     }
                 }

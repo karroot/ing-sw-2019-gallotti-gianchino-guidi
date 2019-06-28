@@ -50,7 +50,7 @@ public class RequestWhisper extends RequestInput  {
 
         players = playersBasicMode;
         int i = 1;
-
+        terminal.addTextInput("scegli target:"); //Ask to user the first effect
         for (ColorId t:players)//Ask to user the target
         {
             terminal.addOptionInput(i+":"+t);

@@ -100,7 +100,8 @@ public class MachineGun extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
-            playerList.add(p.getColor());
+            if(!p.equals(this.player))
+                playerList.add(p.getColor());
         }
 
 
@@ -188,6 +189,7 @@ public class MachineGun extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (ColorId p : checkBasicMode() )
         {
+
             playerList.add(p);
         }
 
@@ -212,7 +214,8 @@ public class MachineGun extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
-            playerList.add(p.getColor());
+            if(!p.equals(this.player))
+                playerList.add(p.getColor());
         }
 
 
