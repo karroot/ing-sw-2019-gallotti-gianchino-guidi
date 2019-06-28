@@ -50,7 +50,7 @@ public class TractorBeam extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[1] = false;
         availableMethod[0] = false;
@@ -77,9 +77,9 @@ public class TractorBeam extends WeaponCard
     {
 
         if (!this.isLoaded())
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
         if (this.player==null)
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
         Map<ColorId,List<String>> result = new HashMap<>();
 
         List<Room> roomReachablePlayer = MethodsWeapons.roomsThatIsee(this.player);
@@ -127,7 +127,7 @@ public class TractorBeam extends WeaponCard
     public List<ColorId> checkPunisherMode () throws IllegalStateException
     {
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità punisher dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità punisher dell'arma "+name+" non eseguibile.");
         List<ColorId> listPlayer = new LinkedList<>();
 
 
@@ -159,7 +159,7 @@ public class TractorBeam extends WeaponCard
     {
 
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
         for(Player p: player.getSquare().getGameBoard().getAllPlayer()){
@@ -177,7 +177,7 @@ public class TractorBeam extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
 

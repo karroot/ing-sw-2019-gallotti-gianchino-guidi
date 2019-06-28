@@ -59,7 +59,7 @@ public class EletroSchyte extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong at a player launch exception
 
         availableMethod[1] = false; //I suppose that the modes can't be used
         availableMethod[0] = false;
@@ -83,7 +83,7 @@ public class EletroSchyte extends WeaponCard
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException(" Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
@@ -128,7 +128,7 @@ public class EletroSchyte extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
@@ -149,7 +149,7 @@ public class EletroSchyte extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         for (ColorId p : colorPlayerList) {
            //doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),2);

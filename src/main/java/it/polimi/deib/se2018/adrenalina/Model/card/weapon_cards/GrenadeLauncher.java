@@ -205,9 +205,11 @@ public class GrenadeLauncher extends WeaponCard
             squareNotInGameBoard.printStackTrace();
         }
 
-        for (Player playerIterate : square.getPlayerList())
-        {
-            doDamage(playerIterate, 1);//Do one damage
+        if (square != null) {
+            for (Player playerIterate : square.getPlayerList())
+            {
+                doDamage(playerIterate, 1);//Do one damage
+            }
         }
 
         player.setAmmoRed(player.getAmmoRed() - 1);

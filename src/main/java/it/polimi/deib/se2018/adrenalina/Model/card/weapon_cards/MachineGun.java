@@ -138,23 +138,23 @@ public class MachineGun extends WeaponCard
         if (TurretTripode)
         {
             if (!checkAvailableMode()[2])
-                throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+                throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
             if (colorPlayerGreen==null && !addDamage)
-                throw new IllegalArgumentException("Mode: "+ name + " select at least one between damage player1 or damage player 3");//If this card doesn't belong at a player launch exception
+                throw new IllegalArgumentException("Nella modalità avanzata dell'arma"+ name + "bisogna selezionare almeno un player da danneggiare tra player1, player2 o player3.");//If this card doesn't belong at a player launch exception
 
             if (colorPlayerGreen!=null)
             {
                 if (colorPlayerGreen.equals(colorPlayer2) || colorPlayerGreen.equals(colorPlayer1))
                 {
-                    throw new IllegalArgumentException("player3 must be different from player2 and player1");
+                    throw new IllegalArgumentException("Player3 deve essere diverso da player2 e player1.");
                 }
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerGreen)).collect(Collectors.toList()).get(0),1);
             }
             if (addDamage)
             {
                 if ( (!(colorPlayerdamaged.equals(colorPlayer1)) || (colorPlayerdamaged.equals(colorPlayer2) ) )&& ((colorPlayerdamaged.equals(colorPlayer1)) || !(colorPlayerdamaged.equals(colorPlayer2))))
-                    throw new IllegalArgumentException("Mode: "+ name + " playeradddamage must be player1 or player2");
+                    throw new IllegalArgumentException("Nella mdalità avanzata dell'arma"+ name + "il 'playerAddDamanage' deve essere player1 o player2.");
 
                 if (colorPlayerdamaged.equals(colorPlayer1))
                     doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
@@ -166,10 +166,10 @@ public class MachineGun extends WeaponCard
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         if (colorPlayer1.equals(colorPlayer2))
-            throw new IllegalArgumentException("player1 must be different from player2");
+            throw new IllegalArgumentException("Player 1 deve essere diverso da player2.");
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
         if (colorPlayer2!= null)
             doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
@@ -184,7 +184,7 @@ public class MachineGun extends WeaponCard
     public List<ColorId> checkFocusShotcMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
         for (ColorId p : checkBasicMode() )
@@ -209,7 +209,7 @@ public class MachineGun extends WeaponCard
     public List<ColorId> checkTurretTripodeMode() throws  IllegalStateException
     {
         if (!checkAvailableMode()[2])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )

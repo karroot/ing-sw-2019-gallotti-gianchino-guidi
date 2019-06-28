@@ -188,21 +188,25 @@ public class MethodsWeapons {
      */
     public static Square squareBehindThis(Square squareStart, Square squareTarget) {
 
-        AmmoPoint ammoPointTemp = new AmmoPoint(99, 99, null, null, null);
+        AmmoPoint ammoPointTemp = new AmmoPoint(10, 10, null, null, null);
         Square squareReturn;
 
-        if (squareTarget.getX() == squareStart.getX() && squareTarget.getY() == squareStart.getY() + 1) {
+        if (squareTarget.getX() == squareStart.getX() && squareTarget.getY() == squareStart.getY() + 1)
+        {
 
-            if (squareTarget.getSide()[0] == SideType.DOOR || squareTarget.getSide()[0] == SideType.OPEN) {
+            if (squareTarget.getSide()[0] == SideType.DOOR || squareTarget.getSide()[0] == SideType.OPEN)
+            {
                 ammoPointTemp.setX(squareTarget.getX());
                 ammoPointTemp.setY(squareTarget.getY() + 1);
             }
         }
 
-        if (squareTarget.getX() == squareStart.getX() + 1 && squareTarget.getY() == squareStart.getY()) {
+        if (squareTarget.getX() == squareStart.getX() + 1 && squareTarget.getY() == squareStart.getY())
+        {
             //isE = true;
 
-            if (squareTarget.getSide()[1] == SideType.DOOR || squareTarget.getSide()[1] == SideType.OPEN) {
+            if (squareTarget.getSide()[1] == SideType.DOOR || squareTarget.getSide()[1] == SideType.OPEN)
+            {
                 ammoPointTemp.setX(squareTarget.getX() + 1);
                 ammoPointTemp.setY(squareTarget.getY());
             }
@@ -226,7 +230,7 @@ public class MethodsWeapons {
             }
         }
 
-        if (ammoPointTemp.getX() != 99 && ammoPointTemp.getY() != 99) {
+        if (ammoPointTemp.getX() != 10 && ammoPointTemp.getY() != 10) {
             try {
                 squareReturn = squareStart.getGameBoard().getArena().getSquare(ammoPointTemp.getX(), ammoPointTemp.getY());
                 return squareReturn;

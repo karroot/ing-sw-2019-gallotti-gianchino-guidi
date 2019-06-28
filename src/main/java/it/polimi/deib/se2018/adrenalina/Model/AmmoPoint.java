@@ -79,9 +79,9 @@ public class AmmoPoint extends Square
 
     /**
      *
-     * @param Y
+     * @param y
      */
-    public void setY (int Y)
+    public void setY (int y)
     {
         this.y = y;
     }

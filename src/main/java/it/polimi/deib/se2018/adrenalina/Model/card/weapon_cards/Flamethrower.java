@@ -57,10 +57,11 @@ public class Flamethrower extends WeaponCard
 
 
 
-        if (availableMethod[0] && player.getAmmoYellow()>1)
+        if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player) && player.getAmmoYellow()>1)
         {
                 availableMethod[1] = true;
         }
+
         return availableMethod;
 
     }
@@ -93,6 +94,16 @@ public class Flamethrower extends WeaponCard
         ArrayList<Player>[] playersS = (ArrayList<Player>[]) new ArrayList[2];
         ArrayList<Player>[] playersW = (ArrayList<Player>[]) new ArrayList[2];
 
+        playersN[0] = new ArrayList<Player>();
+        playersN[1] = new ArrayList<Player>();
+        playersE[0] = new ArrayList<Player>();
+        playersE[1] = new ArrayList<Player>();
+        playersS[0] = new ArrayList<Player>();
+        playersS[1] = new ArrayList<Player>();
+        playersW[0] = new ArrayList<Player>();
+        playersW[1] = new ArrayList<Player>();
+
+
        boolean N=false, E=false, S=false, W=false;
 
        playerList = MethodsWeapons.playersAtDistance1(player);
@@ -103,8 +114,9 @@ public class Flamethrower extends WeaponCard
            if (MethodsWeapons.checkSquareNorth(player.getSquare(), squareTemp.getX(), squareTemp.getY())) //caso nord
            {
                playersN1.add(playerIterate);
-               if (MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !N)
+               if (!playersN1.isEmpty() && MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !N)
                {
+                   Square sq = MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp);
                    playersN2.addAll(MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp).getPlayerList());
                    N = true;
                }
@@ -112,14 +124,14 @@ public class Flamethrower extends WeaponCard
            }
            if (MethodsWeapons.checkSquareEast(player.getSquare(), squareTemp.getX(), squareTemp.getY())) {
                playersE1.add(playerIterate);
-               if (MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !E) {
+               if (!playersE1.isEmpty() && MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !E) {
                    playersE2.addAll(MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp).getPlayerList());
                    E = true;
                }
            }
            if(MethodsWeapons.checkSquareSouth(player.getSquare(), squareTemp.getX(), squareTemp.getY())) {
                playersS1.add(playerIterate);
-               if (MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !S) {
+               if (!playersS1.isEmpty() && MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !S) {
                    playersS2.addAll(MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp).getPlayerList());
                    S = true;
                }
@@ -127,7 +139,7 @@ public class Flamethrower extends WeaponCard
            }
            if(MethodsWeapons.checkSquareWest(player.getSquare(), squareTemp.getX(), squareTemp.getY())) {
                playersW1.add(playerIterate);
-               if (MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !W) {
+               if (!playersW1.isEmpty() && MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !W) {
                    playersW2.addAll(MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp).getPlayerList());
                    W = true;
                }
@@ -136,12 +148,12 @@ public class Flamethrower extends WeaponCard
 
         playersN[0].addAll(playersN1);
         playersN[1].addAll(playersN2);
-        playersN[0].addAll(playersN1);
-        playersN[1].addAll(playersN2);
-        playersN[0].addAll(playersN1);
-        playersN[1].addAll(playersN2);
-        playersN[0].addAll(playersN1);
-        playersN[1].addAll(playersN2);
+        playersE[0].addAll(playersE1);
+        playersE[1].addAll(playersE2);
+        playersS[0].addAll(playersS1);
+        playersS[1].addAll(playersS2);
+        playersW[0].addAll(playersW1);
+        playersW[1].addAll(playersW2);
 
        hashMapReturn.put(CardinalDirection.NORTH, playersN);
        hashMapReturn.put(CardinalDirection.EAST, playersE);
@@ -165,17 +177,19 @@ public class Flamethrower extends WeaponCard
         HashMap<CardinalDirection, ArrayList<Player>[]> hashMap = checkBasicModePrivate();
         HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapToReturn = new HashMap<>();
 
-        ArrayList<ColorId> colorIdArrayList = new ArrayList<>();
-        ArrayList<ColorId>[] colorIdVector = new ArrayList[2];
 
         for (CardinalDirection cardinalDirection : hashMap.keySet()) //Iterate cardinalDirections
         {
+            ArrayList<ColorId>[] colorIdVector = new ArrayList[2];
+            colorIdVector[0] = new ArrayList<ColorId>();
+            colorIdVector[1] = new ArrayList<ColorId>();
+
             int i=0;
 
             for (ArrayList<Player> playerArrayList : hashMap.get(cardinalDirection)) //Iterate ArrayList in the vector
             {
 
-                colorIdArrayList.clear();
+                ArrayList<ColorId> colorIdArrayList = new ArrayList<>();
 
                 for (Player player : playerArrayList) //Iterate players
                 {
@@ -183,9 +197,10 @@ public class Flamethrower extends WeaponCard
                 }
 
                 colorIdVector[i].addAll(colorIdArrayList);
-                hashMapToReturn.put(cardinalDirection, colorIdVector);
                 i++;
             }
+
+            hashMapToReturn.put(cardinalDirection, colorIdVector);
         }
 
         return hashMapToReturn;
@@ -216,12 +231,12 @@ public class Flamethrower extends WeaponCard
      * @return an hashmap with CardinalDirection as key and an array of dimension 2 of a List Players
      * @throws IllegalStateException if this weapon doesn not belong to any player
      */
-    public  HashMap<CardinalDirection, ArrayList<Player>[]> checkBarbecueMode()
+    public  HashMap<CardinalDirection, ArrayList<ColorId>[]> checkBarbecueMode()
     {
         if (!checkAvailableMode()[1]) //check mode
             throw  new IllegalStateException("Modalità barbecue dell'arma "+name+" non eseguibile.");
 
-        return checkBasicModePrivate();
+        return checkBasicModeForMessage();
     }
 
     /**

@@ -40,7 +40,7 @@ public class ZX2 extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong at a player launch exception
 
         availableMethod[0] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -65,7 +65,7 @@ public class ZX2 extends WeaponCard
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         Set<Player> target = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
 
@@ -82,7 +82,7 @@ public class ZX2 extends WeaponCard
     public void basicMode(Player player) throws IllegalStateException
     {
         if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player,1);//Do one damage
         markTarget(player,2);//Do two marks
@@ -99,7 +99,7 @@ public class ZX2 extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         Set<Player> playerList = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
 
@@ -116,7 +116,7 @@ public class ZX2 extends WeaponCard
     public void inScannerMode(List<Player> players) throws IllegalStateException
     {
         if (!checkAvailableMode()[1])//Check mode
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         for (Player x:players) //For each player
         {

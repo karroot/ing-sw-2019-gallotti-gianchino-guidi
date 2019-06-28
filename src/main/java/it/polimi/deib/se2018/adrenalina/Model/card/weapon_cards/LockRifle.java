@@ -48,7 +48,7 @@ public class LockRifle extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player==null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[1] = false;
         availableMethod[0] = false;
@@ -75,7 +75,7 @@ public class LockRifle extends WeaponCard
     public List<ColorId> checkBasicMode() throws  IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma LockRifle non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
@@ -99,12 +99,12 @@ public class LockRifle extends WeaponCard
     public void basicMode(ColorId colorPlayer, ColorId colorPlayer2 , boolean SecondLockMode) throws IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         if(SecondLockMode)
         {
             if (!checkAvailableMode()[1])
-                throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+                throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
             //markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
             for(Player p : player.getSquare().getGameBoard().getAllPlayer())
@@ -129,7 +129,7 @@ public class LockRifle extends WeaponCard
     public List<ColorId> checkSecondLock() throws  IllegalStateException
     {
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         return checkBasicMode();
     }

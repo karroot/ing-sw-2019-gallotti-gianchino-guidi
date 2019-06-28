@@ -57,7 +57,7 @@ public class PlasmaGun extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[2] = false;
 
@@ -97,19 +97,19 @@ public class PlasmaGun extends WeaponCard
         int i = 0;
         boolean[] booleans = checkAvailableMode();
         if (!checkAvailableMode()[2])
-            throw  new IllegalStateException("arma scarica");
+            throw  new IllegalStateException("L'arma è scarica");
         while (i < orderEffect.length)
         {
             if (orderEffect[i].equals("basic"))
             {
                 if (!checkAvailableMode()[0])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+                    throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
             }
             if (orderEffect[i].equals("with phase glide") && checkTargetAfterMove(x,y).size()>0) {
                 if (!checkAvailableMode()[2])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+                    throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
                 moveTarget(this.player, x, y);
 
@@ -117,7 +117,7 @@ public class PlasmaGun extends WeaponCard
             if (orderEffect[i].equals("with charged shot") && booleans[2])
             {
                 if (!checkAvailableMode()[1])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+                    throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
@@ -138,7 +138,7 @@ public class PlasmaGun extends WeaponCard
     public List<String> checkPhaseGlide() throws IllegalStateException
     {
         if (!this.isLoaded())
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         Square square = player.getSquare();
 
@@ -185,7 +185,7 @@ public class PlasmaGun extends WeaponCard
     {
         Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
         if (!checkAvailableMode()[2]) //check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 List<ColorId> tempList ;
         Map<String,List<ColorId>> result = new HashMap<>();
         dummie.setSquare(player.getSquare());

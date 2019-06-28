@@ -47,7 +47,7 @@ public class Shotgun extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong at a player launch exception
 
         availableMethod[0] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -76,7 +76,7 @@ public class Shotgun extends WeaponCard
     public List<ColorId> checkBasicMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<Player> playerList = player.getSquare().getPlayerList();//Obtain all the player that they are in same square
 
@@ -93,7 +93,7 @@ public class Shotgun extends WeaponCard
     public List<Square> checkMoveBasicMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         Square square = player.getSquare();
 
@@ -116,7 +116,7 @@ public class Shotgun extends WeaponCard
     public void basicMode(Player player, boolean move, int x,int y) throws SquareNotInGameBoard ,IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player,3);
 
@@ -138,7 +138,7 @@ public class Shotgun extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         Set<Player> playerList = MethodsWeapons.playersReachable(player.getSquare(),1);//Obtain player reachable
 
@@ -155,7 +155,7 @@ public class Shotgun extends WeaponCard
     public void inLongBarrelMode(Player player) throws IllegalStateException
     {
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         doDamage(player,2); //Do two damage at a player
 

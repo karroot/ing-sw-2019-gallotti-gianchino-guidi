@@ -38,7 +38,7 @@ public class Shockwave extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong at a player launch exception
 
         availableMethod[0] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -92,7 +92,8 @@ public class Shockwave extends WeaponCard
     public void basicMode(List<Player> players) throws IllegalStateException
     {
         if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile."
+            );
 
         for (Player x:players)//For each player
         {
@@ -111,7 +112,7 @@ public class Shockwave extends WeaponCard
     public void inTsunamirMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[1])//Check mode
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         Set<Player> players = MethodsWeapons.playersReachable(player.getSquare(), 1);
 

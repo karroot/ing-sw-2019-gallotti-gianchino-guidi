@@ -41,7 +41,7 @@ public class Sledgehammer extends WeaponCard
     public boolean[] checkAvailableMode() throws IllegalStateException
     {
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");//If this card doesn't belong at a player launch exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong at a player launch exception
 
         availableMethod[0] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -65,7 +65,7 @@ public class Sledgehammer extends WeaponCard
     public List<ColorId> checkTargetForModes() throws IllegalStateException
     {
         if (!checkAvailableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<Player> target = player.getSquare().getPlayerList(); //Obtain all players are in same square
 
@@ -82,7 +82,7 @@ public class Sledgehammer extends WeaponCard
     public void basicMode(Player player) throws IllegalStateException
     {
         if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player,2);//Do two damage
 
@@ -99,7 +99,7 @@ public class Sledgehammer extends WeaponCard
     {
 
         if (!checkAvailableMode()[1])
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         //Obtain all square to distance 2
         Set<Square> squares = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
@@ -121,7 +121,7 @@ public class Sledgehammer extends WeaponCard
     public void inPulverizeMode(Player player ,int x,int y) throws IllegalStateException
     {
         if (!checkAvailableMode()[1])//Check mode
-            throw  new IllegalStateException("Modalità avanzata dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         doDamage(player,3);
         moveTarget(player,x,y);

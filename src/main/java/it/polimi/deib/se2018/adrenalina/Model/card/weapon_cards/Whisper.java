@@ -54,7 +54,7 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
        Set<Player> playerdistance1= new HashSet<>();
 
         if (player == null)
-            throw new IllegalStateException("Carta: "+ name + " non appartiene a nessun giocatore");
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
         playerdistance1.addAll(MethodsWeapons.playersReachable(player.getSquare(),1));
@@ -85,7 +85,7 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
         Set<Player> playerdistance1= new HashSet<>();
 
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
 
 
@@ -112,7 +112,7 @@ basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
     public void basicMode(ColorId colorPlayer)  throws  IllegalStateException
     {
         if (!checkAvailableMode()[0])
-            throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
+            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
         markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
