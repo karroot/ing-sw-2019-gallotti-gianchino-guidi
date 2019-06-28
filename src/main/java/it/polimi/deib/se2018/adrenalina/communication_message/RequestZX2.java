@@ -92,4 +92,23 @@ public class RequestZX2 extends WeaponWithModeAlternative
         }
 
     }
+
+    //Ask at the user one target to hit with the weapon
+    protected void inputBasicMode()
+    {
+        int i = 1;
+
+        terminal.addTextInput("Scegli un bersaglio:");
+
+        for (ColorId t:playersBasicMode)
+        {
+            terminal.addOptionInput(i + ":" + t);
+            i++;
+        }
+
+        int anInt = terminal.inputInt(1, i - 1);
+
+        targetBasicMode = playersBasicMode.get(anInt -1);
+
+    }
 }

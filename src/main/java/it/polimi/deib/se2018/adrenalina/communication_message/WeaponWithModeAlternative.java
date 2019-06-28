@@ -54,7 +54,12 @@ public abstract class WeaponWithModeAlternative extends RequestInput
             choice = terminal.inputInt(1, 2);
 
         if (!availableMethod[0] && availableMethod[1])
+        {
             choice = terminal.inputInt(2, 2);
+            if (choice == 1)
+                choice = 2;
+        }
+
         if (availableMethod[0] && !availableMethod[1])
             choice = terminal.inputInt(1, 1);
 

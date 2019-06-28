@@ -635,12 +635,12 @@ public class Controller implements Observer<ResponseInput>
                     @Override
                     public Boolean call() throws Exception {
 
-                       try{                        
-                           virtualView.requestInput(new RequestPowerUp(powerUpList), granadeAttacked);
-                           virtualView.getResponseWithInputs(granadeAttacked);
+                        try{
+                            virtualView.requestInput(new RequestPowerUp(powerUpList), granadeAttacked);
+                            virtualView.getResponseWithInputs(granadeAttacked);
 
-                           return true;
-                       }
+                            return true;
+                        }
                         catch (Exception e)
                         {
                             return false;
@@ -648,7 +648,7 @@ public class Controller implements Observer<ResponseInput>
                     }
                 });
 
-                
+
 
                 Boolean s = executor.invokeAny(callableList);
                 if(!s)
@@ -695,6 +695,7 @@ public class Controller implements Observer<ResponseInput>
 
         }
     }
+
 
     /**
      * check if player have one power up targetting scope and for every card ask if they want to use it and call the method to use it

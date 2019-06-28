@@ -81,6 +81,7 @@ public abstract class Card
 
         for (int i = player.checkMarker(this.player.getColor()); i != 0;i--) //If there are marks
             player.useMark(this.player.getColor());//Use them
+
         addToRoundDamageList(player.getColor(),this.player.getColor());
     }
 

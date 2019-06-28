@@ -274,7 +274,10 @@ public class GUI implements Terminal
     @Override
     public int inputInt(int min, int max)
     {
-        return boardGUI.getInputChoice();
+        int choice = boardGUI.getInputChoice();
+
+        choice = min + (choice -1);
+        return choice;
     }
 
     /**
@@ -469,9 +472,13 @@ public class GUI implements Terminal
      * @return integer that represents the choice of the user
      */
     @Override
-    public int inputInt(List<Integer> acceptedInt)
+    public int inputInt(List<Integer> acceptedInt)//todo chiedere a gabriele se va bene così
     {
-        return boardGUI.getInputChoice();
+        int choice = boardGUI.getInputChoice();
+
+        choice = acceptedInt.get(choice-1);
+
+        return choice;
     }
 
     //Methods Private

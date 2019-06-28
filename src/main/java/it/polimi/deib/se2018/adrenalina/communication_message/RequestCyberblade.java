@@ -67,10 +67,22 @@ public class RequestCyberblade extends RequestInput
     { this.terminal=terminal;
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
 
-        terminal.addOptionInput("1:Colpire");
-        terminal.addOptionInput("2:Spostarti");
+        int choice;
 
-        int choice = terminal.inputInt(1, 2);
+        if (!playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart).isEmpty())
+        {
+            terminal.addOptionInput("1:Colpire");
+            terminal.addOptionInput("2:Spostarti");
+            choice = terminal.inputInt(1, 2);
+        }
+        else
+        {
+            terminal.addOptionInput("2:Spostarti");
+            choice = terminal.inputInt(2, 2);
+        }
+
+
+
 
         if (choice == 1) //Ask the necessary dates to do the effect
         {
@@ -85,6 +97,8 @@ public class RequestCyberblade extends RequestInput
 
         int i = 1;
 
+
+        terminal.addTextInput("Scegli il secondo effetto:");
         for (String t:orderAva) //Ask to the user the second effect
         {
             terminal.addOptionInput(i+":"+orderAva.get(i-1));
@@ -106,6 +120,7 @@ public class RequestCyberblade extends RequestInput
 
         if (!orderAva.isEmpty()) //It there is a third effect possible
         {
+            terminal.addTextInput("Scegli il terzo effetto");
             if (orderAva.get(0).equals("with shadowstep"))//Ask the necessary dates to do the effect
             {
                 choseSquare();
@@ -121,7 +136,7 @@ public class RequestCyberblade extends RequestInput
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
 
         for (int j = 0;j<orderEffect.length;j++)
-            orderEffect[i] = orderTemp.get(i);
+            orderEffect[j] = orderTemp.get(j);
 
         responseIsReady = true;
     }
@@ -145,9 +160,9 @@ public class RequestCyberblade extends RequestInput
         List<ColorId> players;
 
         if (x == 0 & y == 0) //If the player didn't move in an other square
-            players = playersWithSquaresBasicMode.get("x = " + xStart + ",y = " + yStart);//use the starting coordinates
+            players = playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart);//use the starting coordinates
         else//Else
-            players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
+            players = playersWithSquaresBasicMode.get("x = " + x + ", y = " + y);//Use the new coordinates
 
             terminal.addTextInput("Scegli un bersaglio:");
 

@@ -292,12 +292,41 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     }
 
     /**
-     *
+     * Method that handles the use of Tagback Granade
      */
-    public void requestToUseGrenade() //todo completarlo insieme a gabriele
+    public void requestToUseGrenade()
     {
+        try
+        {
 
+            RequestInput messageRequest = getMessageFromNetwHandl();//Obtain the request message
+            //to ask which powerUps to use
+
+            RequestPowerUp temp = (RequestPowerUp) messageRequest;
+
+            if (temp.getPowerUptoChose().isEmpty())//Check if there are powerUps
+            {
+                terminal.showMessage("Non hai Powerup da usare");
+                return;
+            }
+
+            terminal.showMessage("Sei stato colpito decidi se vuoi usare le granate venom");
+
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
+
+            ResponseInput responseForController = messageRequest.generateResponseMessage();
+
+            notify(responseForController);
+
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
+
 
     /**
      * This method show all the powerUp to the user
