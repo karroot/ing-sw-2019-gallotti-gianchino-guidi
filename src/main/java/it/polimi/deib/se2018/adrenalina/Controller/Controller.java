@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.PlasmaGun;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.View.Observer;
@@ -40,7 +41,7 @@ public class Controller implements Observer<ResponseInput>
     private int skullCounter;
     private boolean terminatorMode=false;
     private int codeArena;
-
+    public static boolean first;
     //Controller deve avere un riferimento alla virtual view
     /*
     Quando il controller deve richiedere un input prima crea un thread che
@@ -152,7 +153,12 @@ public class Controller implements Observer<ResponseInput>
                 {
                     try
                     {
-                        startRound(p);
+                        if(frenzy)
+                        {
+                            startRoundFrenzy(p);
+                        }
+                        else
+                         startRound(p);
                     }
                     catch (InterruptedException|ExecutionException e)
                     {
@@ -320,7 +326,109 @@ public class Controller implements Observer<ResponseInput>
         return roundPlayer.isAfk();
     }
 
+    private void startRoundFrenzy(Player rp) throws ExecutionException, InterruptedException {
 
+        for(Player p : g1.getAllPlayer())
+        {
+
+            if (p.equals(rp))
+                roundPlayer=p;
+        }
+
+       if(roundPlayer.isFirst())
+       {
+           first=true;
+       }
+
+        updateModel();
+
+
+        List<Player> allPlayer= g1.getAllPlayer();
+        int indexLastPlayer = allPlayer.size()-1;
+
+
+        if(!first) {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+
+                    try {
+                        virtualView.requestInput(new StartFrenesy(), rp.getColor());
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+
+                }
+            });
+
+            boolean s = executor.invokeAny(callableList);
+
+
+            if (!s)
+                return;
+            if (checkForAfk())
+                return;
+            try
+            {
+                switcherFrenzy(rp.getColor());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            //end of user round
+            if(g1.isTerminatorMode())
+                executeTerminator();
+
+            getPointAndRespawn();
+            setup.replenishBoard(g1);
+        }
+        else
+            {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try {
+                            virtualView.requestInput(new StartFrenesyB(), rp.getColor());
+                            return true;
+                        } catch (Exception e) {
+                            return false;
+                        }
+
+                    }
+                });
+
+                boolean s = executor.invokeAny(callableList);
+
+
+                if (!s)
+                    return;
+                if (checkForAfk())
+                    return;
+
+                try
+                {
+                    switcherFrenzyB(rp.getColor());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                //end of user round
+                if(g1.isTerminatorMode())
+                    executeTerminator();
+
+                getPointAndRespawn();
+                setup.replenishBoard(g1);
+            }
+
+    }
 
 
     /**
@@ -399,6 +507,139 @@ public class Controller implements Observer<ResponseInput>
 
     
 //Switch function
+    /**
+     * the switcher wait for a request from the view and then it execute the called method
+     * @param player color of the player that ask from the virtual view
+     * @throws Exception
+     */
+    private void switcherFrenzy(ColorId player) throws Exception
+    {
+
+
+        virtualView.getResponseWithInputs(player);
+
+        MessageNet messageNet = msg;
+
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
+        {
+            if (messageNet instanceof AskMoveAround)
+            {
+                runAround(false);
+            }
+            else if (messageNet instanceof AskGrab)
+            {
+                grab();
+            }
+            else if (messageNet instanceof AskShoot)
+            {
+                shotEnemy();
+            }
+            else if (messageNet instanceof AskReload)
+            {
+                reload();
+            }
+            else if (messageNet instanceof AskForAllPowerups)
+            {
+                askForAllPowerUp();
+            }
+            else if (messageNet instanceof AskTargetingScope)
+            {
+                askForPowerUpTargettingScope();
+            }
+            else if (messageNet instanceof AskPowerUPTeleOrNew)
+            {
+                askForPowerUpTeleportOrNewton();
+            }
+
+
+
+
+            updateModel();
+
+            virtualView.getResponseWithInputs(player);
+
+            messageNet = msg;
+
+
+        }
+        askForPowerUpTagBackGranade();
+        // at the end of round
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
+
+
+
+    }
+
+
+    /**
+     * the switcher wait for a request from the view and then it execute the called method
+     * @param player color of the player that ask from the virtual view
+     * @throws Exception
+     */
+    private void switcherFrenzyB(ColorId player) throws Exception
+    {
+
+
+        virtualView.getResponseWithInputs(player);
+
+        MessageNet messageNet = msg;
+
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
+        {
+            if (messageNet instanceof AskMoveAround)
+            {
+                runAround(false);
+            }
+            else if (messageNet instanceof AskGrab)
+            {
+                grab();
+            }
+            else if (messageNet instanceof AskShoot)
+            {
+                shotEnemy();
+            }
+            else if (messageNet instanceof AskReload)
+            {
+                reload();
+            }
+            else if (messageNet instanceof AskForAllPowerups)
+            {
+                askForAllPowerUp();
+            }
+            else if (messageNet instanceof AskTargetingScope)
+            {
+                askForPowerUpTargettingScope();
+            }
+            else if (messageNet instanceof AskPowerUPTeleOrNew)
+            {
+                askForPowerUpTeleportOrNewton();
+            }
+
+
+
+
+            updateModel();
+
+            virtualView.getResponseWithInputs(player);
+
+            messageNet = msg;
+
+
+        }
+        askForPowerUpTagBackGranade();
+        // at the end of round
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
+
+
+
+    }
+
 
     /**
      * the switcher wait for a request from the view and then it execute the called method

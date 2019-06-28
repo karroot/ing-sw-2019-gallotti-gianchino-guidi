@@ -139,9 +139,11 @@ public class RequestTHOR  extends RequestInput{
         terminal.addTextInput("Scegli secondo bersaglio:");
         for (ColorId t:players)//Ask to user the target
         {
-            terminal.addOptionInput(i+" : "+t);
-            showedPlayers.add(t);
-            i++;
+            if(!t.equals(targetBasicMode)) {
+                terminal.addOptionInput(i + " : " + t);
+                showedPlayers.add(t);
+                i++;
+            }
         }
         int choice = terminal.inputInt(1, i - 1);
         targetAdditionalMode  = showedPlayers.get(choice-1);
@@ -150,16 +152,21 @@ public class RequestTHOR  extends RequestInput{
     protected void inputSecondAdditionalMode()
     {
         List<ColorId> players;
+        List<ColorId> showedPlayers= new LinkedList<>();
         players = playersSecondAdditionalMode;
         int i = 1;
         terminal.addTextInput("Scegli terzo bersaglio:");
         for (ColorId t:players)//Ask to user the target
         {
+            if(!t.equals(targetBasicMode)&& !t.equals(targetAdditionalMode))
+            {
             terminal.addOptionInput(i+": "+t);
+            showedPlayers.add(t);
             i++;
+            }
         }
         int choice = terminal.inputInt(1, i - 1);
-        targetSecondAdditionalMode  = players.get(choice-1);
+        targetSecondAdditionalMode  = showedPlayers.get(choice-1);
     }
 
 

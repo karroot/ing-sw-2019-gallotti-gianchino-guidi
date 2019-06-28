@@ -39,17 +39,13 @@ public class FRENZY extends StatePlayer
     @Override
     public Set<Square> lookForRunAround(Player player)
     {
-        if (!player.isFirst())
-        {
+
             Set<Square>  squareSet;
             squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 4);
             return squareSet;
 
-        }
-        else
-        {
-           return null; //todo qui non si può chiamare se non primo. Mettere errore?
-        }
+
+
     }
 
     /**

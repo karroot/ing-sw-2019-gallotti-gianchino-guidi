@@ -185,15 +185,19 @@ public class RequestMachineGun extends RequestInput {
         if (players != null)
         {
 
-
+            List<ColorId> showedPlayers= new LinkedList<>();
                 terminal.addTextInput(" altro player a cui far danno");
                 for (ColorId t : players)//Ask to user the target
                 {
+                    if(!t.equals(targetBasicMode)&& !t.equals(targetAdditionalMode))
+                    {
                     terminal.addOptionInput(i + " : " + t);
+                    showedPlayers.add(t);
                     i++;
+                    }
                 }
                 choice = terminal.inputInt(1, i - 1);
-                targetSecondAdditionalMode = players.get(choice - 1);
+                targetSecondAdditionalMode = showedPlayers.get(choice - 1);
 
         }
         terminal.addTextInput(" player già attaccato a cui far danno");
