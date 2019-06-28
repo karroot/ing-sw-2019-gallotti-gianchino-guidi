@@ -90,8 +90,9 @@ public class GUI implements Terminal
 
         }
 
-        boardGUI.getAllBoardWindow().setVisible(false);
-        boardGUI.getAllBoardWindow().setVisible(true);
+        boardGUI.getAllBoardWindow().invalidate();
+        boardGUI.getAllBoardWindow().validate();
+        boardGUI.getAllBoardWindow().repaint();
 
 
     }

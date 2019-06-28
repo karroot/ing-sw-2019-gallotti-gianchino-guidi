@@ -1574,7 +1574,8 @@ public class Controller implements Observer<ResponseInput>
                 @Override
                 public Boolean call() throws Exception {
 
-                    try {
+                    try
+                    {
                         virtualView.requestInput(new RequestShootPeople(chargedWeaponsName), roundPlayer.getColor());
 
                         return true;

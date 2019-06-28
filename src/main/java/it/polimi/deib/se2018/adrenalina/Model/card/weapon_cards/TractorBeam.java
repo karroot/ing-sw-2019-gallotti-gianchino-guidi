@@ -96,7 +96,7 @@ public class TractorBeam extends WeaponCard
 
                         if (reachRoom.getSquareList().contains(sq)) {
 
-                            String coordinates = "x = "+sq.getX()+",y = "+ sq.getY();//Save the coordinates
+                            String coordinates = sq.toStringCoordinates();//Save the coordinates
                             if(result.get(t.getColor())!=null)
                             {
                                 List<String> tempList =result.get(t.getColor());

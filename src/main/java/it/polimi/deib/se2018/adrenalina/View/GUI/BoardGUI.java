@@ -158,32 +158,37 @@ public class BoardGUI
         //
 
         allBoardWindow.setVisible(true);
+
     }
 
     //Methods to ask the input at the user
     public synchronized void addTextForInput(String text)
     {
-        allBoardWindow.setVisible(false);
         textToAsk = new JLabel(text);
         inputWindow.add(textToAsk);
-        allBoardWindow.setVisible(true);
+        allBoardWindow.invalidate();
+        allBoardWindow.validate();
+        allBoardWindow.repaint();
     }
 
     public synchronized void addOptionForInput(String text)
     {
-        allBoardWindow.setVisible(false);
         JButton temp = new JButton(text);
         temp.addActionListener(new ClickInput(this)); //Add the action listener
         listOfAllOptions.add(temp);
         inputWindow.add(temp);
-        allBoardWindow.setVisible(true);
+        allBoardWindow.invalidate();
+        allBoardWindow.validate();
+        allBoardWindow.repaint();
     }
 
     public synchronized int getInputChoice()
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        allBoardWindow.setVisible(true);
+        allBoardWindow.invalidate();
+        allBoardWindow.validate();
+        allBoardWindow.repaint();
 
         onInput = true;
 
@@ -199,9 +204,10 @@ public class BoardGUI
                 catch (InterruptedException e)
                 {
                     onInput = false;
-                    allBoardWindow.setVisible(false);
                     clearWindowInput(); //Clear the input window
-                    allBoardWindow.setVisible(true);
+                    allBoardWindow.invalidate();
+                    allBoardWindow.validate();
+                    allBoardWindow.repaint();
                     allBoardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     JOptionPane.showMessageDialog(allBoardWindow, "Hai impiegato troppo tempo:Turno Saltato");
                     Thread.currentThread().interrupt();
@@ -214,9 +220,10 @@ public class BoardGUI
 
             int temp = choice; //Read the choice of the user
             choice = -1;
-            allBoardWindow.setVisible(false);
             clearWindowInput(); //Clear the input window
-            allBoardWindow.setVisible(true);
+            allBoardWindow.invalidate();
+            allBoardWindow.validate();
+            allBoardWindow.repaint();
             allBoardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             return temp;
         }

@@ -85,8 +85,9 @@ public class RequestTractatorBeam extends WeaponWithModeAlternative {
          anInt = terminal.inputInt(1, i - 1);
 //Save the coordinate
         y = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(11));
-          x = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
+        x = Integer.parseInt(playersBasicMode.get(targetBasicMode).get(anInt -1).substring(4,5));//Works if the coordinates are between 1 and 9
 
+        int l = 0;
     }
     /**
      *Generate the response message for the Electro Schyte with all player's choice
