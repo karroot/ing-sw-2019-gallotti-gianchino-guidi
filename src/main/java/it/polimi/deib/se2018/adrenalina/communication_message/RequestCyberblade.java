@@ -120,17 +120,27 @@ public class RequestCyberblade extends RequestInput
 
         if (!orderAva.isEmpty()) //It there is a third effect possible
         {
-            terminal.addTextInput("Scegli il terzo effetto");
-            if (orderAva.get(0).equals("with shadowstep"))//Ask the necessary dates to do the effect
+            terminal.addTextInput("Scegli il terzo effetto:"); //Ask at the user if he wants to use it
+            terminal.addOptionInput("1:Si");
+            terminal.addOptionInput("2:No");
+
+            int choice1 = terminal.inputInt(1, 2);
+
+            if (choice1 ==1) // if the user said yes
             {
-                choseSquare();
-                orderAva.remove("with shadowstep");
-                orderTemp.add("with shadowstep");
+                if (orderAva.get(0).equals("with shadowstep"))//Ask the necessary dates to do the effect
+                {
+                    choseSquare();
+                    orderAva.remove("with shadowstep");
+                    orderTemp.add("with shadowstep");
+                }
+                else
+                {
+                    choseTarget();
+                }
             }
-            else
-            {
-                choseTarget();
-            }
+
+
         }
 
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
@@ -162,9 +172,19 @@ public class RequestCyberblade extends RequestInput
         if (x == 0 & y == 0) //If the player didn't move in an other square
             players = playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart);//use the starting coordinates
         else//Else
-            players = playersWithSquaresBasicMode.get("x = " + x + ", y = " + y);//Use the new coordinates
+            {
+                players = playersWithSquaresBasicMode.get("x = " + x + ", y = " + y);//Use the new coordinates
+                if (players== null)
+                {
+                    terminal.showMessage("Terzo effetto non utilizzabile");
+                    return;
+                }
+
+            }
+
 
             terminal.addTextInput("Scegli un bersaglio:");
+
 
             int i = 1;
 

@@ -216,20 +216,20 @@ public class Controller implements Observer<ResponseInput>
                 {
                     frenzy=true;
                 }
-                if(frenzy)
-                {
-                    p.setFrenzy(true);
-                    for(Player c : g1.getAllPlayer())
-                    {
-                        if(c.getDamageCounter().length==0)
-                            c.setFrenzy(true);
-                    }
-                }
+
                 askForRespawn(p);
             }
 
         }
 
+
+        if(frenzy)
+        {
+            for(Player c : g1.getAllPlayer())
+            {
+                c.setFrenzy(true);
+            }
+        }
 
     }
 

@@ -270,25 +270,25 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     {
         //(The controller before to start the respawn must give at player a powerUp)
         //Ask at the player which power up to use for the respawn
-        showPowerUp();
 
-        int choice = selectPowerUp();
+        RequestInput messageFromNetwHandl = getMessageFromNetwHandl();
+
+        messageFromNetwHandl.printActionsAndReceiveInput(terminal);
+
+        ResponseInput responseInput = messageFromNetwHandl.generateResponseMessage();
 
         try
         {
-            notify(new AskUsePowerUpRespawn(choice));
+            notify(responseInput);
         }
         catch (Exception e)
         {
             terminal.showError("Sei stato disconesso : Turno interroto");
             terminal.showError(e.getMessage());
             Thread.currentThread().interrupt();
+            throw new ThreadDeath();
         }
 
-        //Chiedi al controller per pescare due powerUp
-        //Mostra i powerUp nuovi(dialog)
-        //Mostra e chiedi quale powerUp usare
-        //Informa il controller su quale powerUp è stato scelto
     }
 
     /**
