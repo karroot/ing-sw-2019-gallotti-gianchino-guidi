@@ -798,8 +798,11 @@ public class Player
 
     }
 
+    public StatePlayer getState() {
+        return state;
+    }
 
-    //  Increments of one the counter that represent the number of death of player
+//  Increments of one the counter that represent the number of death of player
 
     private void incrementDeathsCount()
     {

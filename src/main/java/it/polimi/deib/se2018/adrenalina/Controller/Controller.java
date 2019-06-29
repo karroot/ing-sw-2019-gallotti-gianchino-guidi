@@ -666,6 +666,10 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskShoot)
             {
+                if(roundPlayer.getState() instanceof  Adrenalized2)
+                {
+                    askMove();
+                }
                 shotEnemy();
 
             }
@@ -1624,7 +1628,53 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
 }
+    /**
+     * this method ask the player where he want to move
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    private void askMove() throws InterruptedException, ExecutionException
+    { List<Callable<Boolean>> callableList = new LinkedList<>();
 
+        callableList.add(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception {
+                Set<Square> squareToChange = new HashSet<>();
+
+                    squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 1);
+
+                try {
+                    virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+                catch (Exception e){
+                    return  false;
+                }
+            }
+        });
+
+
+
+        boolean s = executor.invokeAny(callableList);
+        if(!s)
+            return;
+        if(checkForAfk())
+            return;
+
+
+        ResponseRunAround response = (ResponseRunAround) msg;
+
+        int chosenSquareX = response.getX();
+        int chosenSquareY = response.getY();
+
+
+        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+
+
+    }
     /**
      * this method ask the player where he want to move
      * @throws InterruptedException
