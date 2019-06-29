@@ -1,5 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.LinkedList;
@@ -56,7 +57,7 @@ public class FRENZY extends StatePlayer
     @Override
     public Set<Square> lookForGrabStuff(Player player)
     {
-        if (player.isFirst())
+        if (Controller.first)
         {
             Set<Square> squareSet;
             squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);

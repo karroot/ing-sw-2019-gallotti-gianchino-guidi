@@ -3,7 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.PlasmaGun;
+
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.View.Observer;
@@ -16,7 +16,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Updat
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 public class Controller implements Observer<ResponseInput>
 {
@@ -169,7 +169,7 @@ public class Controller implements Observer<ResponseInput>
             }
         }
         //
-        finalScore();
+        calculateFinalScore();
     }
 
     // AUXILIARY FUNCTIONS
@@ -534,10 +534,10 @@ public class Controller implements Observer<ResponseInput>
             {
                 shotEnemy();
             }
-            else if (messageNet instanceof AskReload)
+          /*  else if (messageNet instanceof AskReload)
             {
                 reload();
-            }
+            }*/
             else if (messageNet instanceof AskForAllPowerups)
             {
                 askForAllPowerUp();
@@ -575,7 +575,7 @@ public class Controller implements Observer<ResponseInput>
 
 
     /**
-     * the switcher wait for a request from the view and then it execute the called method
+     * the switcher wait for a request from the view and then it execute the called method, this is frenzy case when first is true
      * @param player color of the player that ask from the virtual view
      * @throws Exception
      */
@@ -589,11 +589,11 @@ public class Controller implements Observer<ResponseInput>
 
         while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
         {
-            if (messageNet instanceof AskMoveAround)
+           /* if (messageNet instanceof AskMoveAround)
             {
-                runAround(false);
-            }
-            else if (messageNet instanceof AskGrab)
+                runAround(false);    in questo caso il giocatore non può usare il runaround
+            }*/
+           if (messageNet instanceof AskGrab)
             {
                 grab();
             }
@@ -601,10 +601,10 @@ public class Controller implements Observer<ResponseInput>
             {
                 shotEnemy();
             }
-            else if (messageNet instanceof AskReload)
+          /*  else if (messageNet instanceof AskReload)
             {
                 reload();
-            }
+            }*/
             else if (messageNet instanceof AskForAllPowerups)
             {
                 askForAllPowerUp();
@@ -1578,16 +1578,16 @@ public class Controller implements Observer<ResponseInput>
 
     }
     /**
-     * this method ask the player where he want to move
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void runAround(boolean terminator) throws InterruptedException, ExecutionException
-    { List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>()
-        {
-            @Override
-            public Boolean call() throws Exception {
+ * this method ask the player where he want to move
+ * @throws InterruptedException
+ * @throws ExecutionException
+ */
+private void runAround(boolean terminator) throws InterruptedException, ExecutionException
+{ List<Callable<Boolean>> callableList = new LinkedList<>();
+    callableList.add(new Callable<Boolean>()
+    {
+        @Override
+        public Boolean call() throws Exception {
             Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
 
             try {
@@ -1599,16 +1599,68 @@ public class Controller implements Observer<ResponseInput>
             catch (Exception e){
                 return  false;
             }
+        }
+    });
+
+
+
+    boolean s = executor.invokeAny(callableList);
+    if(!s)
+        return;
+    if(checkForAfk())
+        return;
+
+
+    ResponseRunAround response = (ResponseRunAround) msg;
+
+    int chosenSquareX = response.getX();
+    int chosenSquareY = response.getY();
+
+    if(terminator)
+        MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
+
+    MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+
+
+}
+
+    /**
+     * this method ask the player where he want to move
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    private void runSingleFrenzy(boolean singolo) throws InterruptedException, ExecutionException
+    { List<Callable<Boolean>> callableList = new LinkedList<>();
+
+        callableList.add(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception {
+                Set<Square> squareToChange = new HashSet<>();
+                if(singolo)
+                   squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 1);
+                else
+                    squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 2);
+
+                try {
+                    virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+                catch (Exception e){
+                    return  false;
+                }
             }
         });
 
-       
 
-       boolean s = executor.invokeAny(callableList);
+
+        boolean s = executor.invokeAny(callableList);
         if(!s)
             return;
         if(checkForAfk())
-               return;
+            return;
 
 
         ResponseRunAround response = (ResponseRunAround) msg;
@@ -1616,8 +1668,6 @@ public class Controller implements Observer<ResponseInput>
         int chosenSquareX = response.getX();
         int chosenSquareY = response.getY();
 
-        if(terminator)
-            MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
 
         MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
 
@@ -1640,59 +1690,78 @@ public class Controller implements Observer<ResponseInput>
                 enemiesColors.add(p.getColor());
             }
 
-                if(roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).size()>1)
-                {
-                    List<Callable<Boolean>> callableList = new LinkedList<>();
-                    callableList.add(new Callable<Boolean>() {
+            if(roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).size()>1)
+            {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
 
-                        @Override
-                        public Boolean call() throws Exception {
+                    @Override
+                    public Boolean call() throws Exception {
 
-                            try {
-                                virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
-                                virtualView.getResponseWithInputs(roundPlayer.getColor());
+                        try {
+                            virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
 
-                                return true;
-                            }
-                            catch (Exception e)
-                            {
-                                return  false;
-                            }
+                            return true;
                         }
-                    });
-
-
-
-                    Boolean resp = executor.invokeAny(callableList);
-                    if(!resp)
-                        return;
-                    if(checkForAfk())
-                        return;
-
-                    ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
-                    roundPlayer.doDamage(response.getTarget());
-                    if(roundPlayer.getDamageCounter().length>3)
-                    {
-                        roundPlayer.addMark(response.getTarget());
+                        catch (Exception e)
+                        {
+                            return  false;
+                        }
                     }
+                });
 
-                }
-                else
+
+
+                Boolean resp = executor.invokeAny(callableList);
+                if(!resp)
+                    return;
+                if(checkForAfk())
+                    return;
+
+                ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
+                roundPlayer.doDamage(response.getTarget());
+                if(roundPlayer.getDamageCounter().length>3)
                 {
-                    roundPlayer.doDamage(enemiesColors.get(0));
-                    if(roundPlayer.getDamageCounter().length>3)
-                    {
-                        roundPlayer.addMark(enemiesColors.get(0));
-                    }
+                    roundPlayer.addMark(response.getTarget());
                 }
+
+            }
+            else
+            {
+                roundPlayer.doDamage(enemiesColors.get(0));
+                if(roundPlayer.getDamageCounter().length>3)
+                {
+                    roundPlayer.addMark(enemiesColors.get(0));
+                }
+            }
         }
     }
+
+
+
+
     /**
      * this method ask the player what weapon he want to use and ask him to use it
      * @throws InterruptedException
      * @throws ExecutionException
      */
     private void shotEnemy() throws InterruptedException, ExecutionException {
+
+        if(frenzy)
+        {
+            if(!first)
+            {
+                runSingleFrenzy(true);
+                reload();
+            }
+            else
+            {
+                runSingleFrenzy(false);
+                reload();
+
+            }
+        }
 
         boolean vuota = false;
         List<WeaponCard> chargedWeapons = new LinkedList<>();
@@ -2266,6 +2335,22 @@ public class Controller implements Observer<ResponseInput>
 
     }
 
+private void calculateFinalScore()
+{
+    Map<ColorId,Integer> mappa = finalScore();
+    for(Player p : g1.getAllPlayer())
+    {
+        p.setScore(p.getScore() + mappa.get(p.getColor()));
+    }
+    List<Score> scores = new ArrayList<Score>();
+    for( Player p : g1.getAllPlayer())
+    {
+        scores.add(new Score(p.getScore(), p.getName()));
+
+    }
+    Collections.sort(scores);
+    //stampa a schermo del vincitore
+}
 
     @Override
     public void update (ResponseInput message)
@@ -2275,5 +2360,20 @@ public class Controller implements Observer<ResponseInput>
 
 
 
+}
+
+class Score implements Comparable<Score> {
+    int score;
+    String name;
+
+    public Score(int score, String name) {
+        this.score = score;
+        this.name = name;
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return score < o.score ? -1 : score > o.score ? 1 : 0;
+    }
 }
 
