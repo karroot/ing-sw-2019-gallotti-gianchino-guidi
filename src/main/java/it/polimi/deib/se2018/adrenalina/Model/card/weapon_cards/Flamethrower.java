@@ -155,10 +155,15 @@ public class Flamethrower extends WeaponCard
         playersW[0].addAll(playersW1);
         playersW[1].addAll(playersW2);
 
-       hashMapReturn.put(CardinalDirection.NORTH, playersN);
-       hashMapReturn.put(CardinalDirection.EAST, playersE);
-       hashMapReturn.put(CardinalDirection.SOUTH, playersS);
-       hashMapReturn.put(CardinalDirection.WEST, playersW);
+        if (!playersN[0].isEmpty())
+            hashMapReturn.put(CardinalDirection.NORTH, playersN);
+        if (!playersE[0].isEmpty())
+            hashMapReturn.put(CardinalDirection.EAST, playersE);
+        if (!playersS[0].isEmpty())
+            hashMapReturn.put(CardinalDirection.SOUTH, playersS);
+        if (!playersW[0].isEmpty())
+            hashMapReturn.put(CardinalDirection.WEST, playersW);
+
 
        return hashMapReturn;
 

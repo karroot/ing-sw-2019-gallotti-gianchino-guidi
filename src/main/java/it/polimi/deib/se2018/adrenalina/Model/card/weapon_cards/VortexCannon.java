@@ -51,6 +51,7 @@ public class VortexCannon extends WeaponCard
         squareList.addAll(MethodsWeapons.squareThatSee(player));
         squareList.remove(player.getSquare());
 
+     //  devo controllare che tutti gli square abbiano almeno 1 player a distanza 1 per il check
         if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, squareList))
         {
                 availableMethod[0] = true;
@@ -292,16 +293,7 @@ public class VortexCannon extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        if (checkAvailableMode()[0] && checkAvailableMode()[1])
-
-            return new RequestShockwave(checkAvailableMode(),checkBasicMode());
-
-        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
-
-            return new RequestShockwave(checkAvailableMode(),checkBasicMode());
-
-        else
-            return new RequestShockwave(checkAvailableMode(),new HashMap<>());
+        return new RequestVortexCannon(checkAvailableMode(),checkBasicMode());
     }
 }
 

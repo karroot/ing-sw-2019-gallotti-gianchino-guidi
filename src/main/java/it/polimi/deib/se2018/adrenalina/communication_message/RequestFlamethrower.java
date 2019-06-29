@@ -54,7 +54,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         int i = 1;
 
         List<CardinalDirection> cardinalDirections = new ArrayList<>();
-        hashMapForModes.keySet().addAll(cardinalDirections);
+        cardinalDirections.addAll(hashMapForModes.keySet());
 
         terminal.addTextInput("Scegli una direzione bersaglio:");
 
@@ -81,7 +81,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         int i = 1;
 
         List<CardinalDirection> cardinalDirections = new ArrayList<>();
-        hashMapForModes.keySet().addAll(cardinalDirections);
+        cardinalDirections.addAll(hashMapForModes.keySet());
 
         terminal.addTextInput("Scegli una direzione bersaglio:");
 

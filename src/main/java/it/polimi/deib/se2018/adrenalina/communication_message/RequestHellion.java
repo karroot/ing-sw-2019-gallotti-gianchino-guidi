@@ -4,6 +4,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,7 +57,9 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<String> stringSquaresList = (List) hashMapBasicMode.keySet();
+        List<String> stringSquaresList = new ArrayList<>();
+
+        stringSquaresList.addAll(hashMapBasicMode.keySet());
 
         terminal.addTextInput("Scegli una stanza bersaglio:");
 
@@ -106,7 +109,9 @@ public class RequestHellion extends WeaponWithModeAlternative
     {
         int i = 1;
 
-        List<String> stringSquaresList = (List) hashMapNanoTracerMode.keySet();
+        List<String> stringSquaresList = new ArrayList<>();
+
+        stringSquaresList.addAll(hashMapNanoTracerMode.keySet());
 
         terminal.addTextInput("Scegli una stanza bersaglio:");
 
