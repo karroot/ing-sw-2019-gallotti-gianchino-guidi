@@ -172,18 +172,18 @@ public class RequestTHOR  extends RequestInput{
 
     protected void inputBasicMode()
     {
-        List<ColorId> players;
+        List<ColorId> playersa;
 
-        players = playersBasicMode;
+        playersa = playersBasicMode;
         int i = 1;
         terminal.addTextInput("Scegli bersaglio:");
-        for (ColorId t:players)//Ask to user the target
+        for (ColorId t:playersa)//Ask to user the target
         {
             terminal.addOptionInput(i+" :"+t);
             i++;
         }
         int choice = terminal.inputInt(1, i - 1);
-        targetBasicMode = players.get(choice-1);
+        targetBasicMode = playersa.get(choice-1);
 
 
     }

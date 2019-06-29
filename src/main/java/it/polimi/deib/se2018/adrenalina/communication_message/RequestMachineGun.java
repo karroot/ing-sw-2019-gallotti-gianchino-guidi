@@ -160,6 +160,7 @@ public class RequestMachineGun extends RequestInput {
     {
         List<ColorId> players;
         players = playersAdditionalMode; // siccome l'arma aggiunge danno  ad uno dei primi nemici scelti
+        List<ColorId> showedPlayers= new LinkedList<>();
         int i = 1;
 
         terminal.addTextInput("Scegli a chi vuoi aggiungere un danno:");
@@ -168,11 +169,12 @@ public class RequestMachineGun extends RequestInput {
             if(t.equals(targetBasicMode) || t.equals(targetBasicModeSecond)) //targetBasicModeSecond può essere null
             {
                 terminal.addOptionInput(i+" :"+t);
+                showedPlayers.add(t);
                 i++;
             }
         }
         int choice = terminal.inputInt(1, i - 1);
-        targetAdditionalMode  = players.get(choice-1);
+        targetAdditionalMode  = showedPlayers.get(choice-1);
 
 
     }
@@ -202,6 +204,7 @@ public class RequestMachineGun extends RequestInput {
         }
         terminal.addTextInput(" player già attaccato a cui far danno");
             players = playersBasicMode;
+        List<ColorId> showedPlayersA= new LinkedList<>();
             i = 1;
             for (ColorId t : players)//Ask to user the target
             {
@@ -209,6 +212,7 @@ public class RequestMachineGun extends RequestInput {
                 {
                     if (!(t.equals(targetAdditionalMode))) { // if we are in all mode activated we ask to attack only the player that wasn't in additional mode
                         terminal.addOptionInput(i + ": " + t);
+                        showedPlayersA.add(t);
                         i++;
                     }
                 }
@@ -219,7 +223,7 @@ public class RequestMachineGun extends RequestInput {
                     }
             }
             choice = terminal.inputInt(1, i - 1);
-            targetSecondAdditionalModeSecond = players.get(choice - 1);
+            targetSecondAdditionalModeSecond = showedPlayersA.get(choice - 1);
             addDamage = true;
 
     }
@@ -231,7 +235,7 @@ public class RequestMachineGun extends RequestInput {
 
         players = playersBasicMode;
         int i = 1;
-        terminal.addTextInput("seleziona il primo player :");
+        terminal.addTextInput("seleziona il primo player  :");
         for (ColorId t:players)//Ask to user the target
         {
             terminal.addOptionInput(i+" :"+t);
@@ -240,7 +244,7 @@ public class RequestMachineGun extends RequestInput {
         int choice = terminal.inputInt(1, i - 1);
         targetBasicMode = players.get(choice-1);
 
-       if(players.size()>1) {
+       if(players.size()>1) { //check se >1 o >2
            terminal.addTextInput("seleziona il secondo player :");
            i = 1;
            for (ColorId t : players)//Ask to user the target

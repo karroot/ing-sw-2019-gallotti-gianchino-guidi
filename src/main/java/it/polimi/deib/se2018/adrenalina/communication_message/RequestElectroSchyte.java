@@ -49,8 +49,6 @@ public class RequestElectroSchyte extends WeaponWithModeAlternative {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 
-        if (mode)
-            return new ResponseElectroSchyte(playersAlternativeMode,mode);
 
         return new ResponseElectroSchyte(playersBasicMode,mode);
     }

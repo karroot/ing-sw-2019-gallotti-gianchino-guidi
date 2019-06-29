@@ -667,6 +667,7 @@ public class Controller implements Observer<ResponseInput>
             else if (messageNet instanceof AskShoot)
             {
                 shotEnemy();
+
             }
             else if (messageNet instanceof AskReload)
             {
@@ -1810,7 +1811,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
             ResponseShootPeople response = (ResponseShootPeople) msg;
 
-            WeaponCard weaponChosen = roundPlayer.getWeaponCardList().get(response.getChosenWeapon()-1);
+            WeaponCard weaponChosen =chargedWeapons.get(response.getChosenWeapon()-1);
 
             //USA ARMA
 
@@ -2021,8 +2022,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                     removeAmmoCost(roundPlayer, chosenWeapon);
 
                     currentSquare.swapWeapon(weaponToChange, chosenWeapon);
+                    chosenWeapon.setPlayer(roundPlayer);
                 }
-                chosenWeapon.setPlayer(roundPlayer);
+
 
             }
 

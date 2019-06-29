@@ -576,6 +576,23 @@ public class TestBlueWeapons {
             System.out.println(e);
         }
 
+        MethodsWeapons.moveTarget(test,2,2);
+        MethodsWeapons.moveTarget(enemy,2,3);
+        MethodsWeapons.moveTarget(enemy2,1,3);
+        MethodsWeapons.moveTarget(enemy3,1,2);
+        test.setAmmoYellow(2);
+        test.setAmmoBlue(2);
+        w3.setLoaded(true);
+        list1 = w3.checkBasicMode();
+        list2 = w3.checkChainReaction();
+        list3 = w3.checkHighVoltage();
+        assertTrue(list1.contains(enemy.getColor()));
+        assertTrue(list2.contains(enemy2.getColor()));
+        assertTrue(list3.contains(enemy3.getColor()));
+        assertFalse(list1.contains(enemy2.getColor()));
+
+
+
     }
 
     @Test
@@ -767,6 +784,8 @@ public class TestBlueWeapons {
         {
             System.out.println(e);
         }
+
+
 
     }
 
