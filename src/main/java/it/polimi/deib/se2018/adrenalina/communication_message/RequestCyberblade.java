@@ -69,7 +69,7 @@ public class RequestCyberblade extends RequestInput
 
         int choice;
 
-        if (!playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart).isEmpty())
+        if (playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart)!= null)
         {
             terminal.addOptionInput("1:Colpire");
             terminal.addOptionInput("2:Spostarti");

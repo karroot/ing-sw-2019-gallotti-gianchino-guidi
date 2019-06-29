@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesy;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesyB;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 
@@ -66,9 +67,20 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
         @Override
         public void run()
         {
-            view.startFrenesy();
+            view.startFrenesy(true);
         }
     };
+
+
+    Runnable codeOfLogicFrenesyB = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startFrenesy(false);
+        }
+    };
+
     Thread logicFrenesy;
 
     /**
@@ -221,10 +233,19 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
             logicRespawn.start(); //Start the thread that handles the respawn
             return;
         }
-        else if (msg instanceof StartFrenesy)
+        else if (msg instanceof StartFrenesy || msg instanceof StartFrenesyB)
         {
-            logicFrenesy = new Thread(codeOfLogicFrenesy);
-            logicFrenesy.start();
+            if (msg instanceof StartFrenesy)
+            {
+                logicFrenesy = new Thread(codeOfLogicFrenesy);
+                logicFrenesy.start();
+            }
+            else
+            {
+                logicFrenesy = new Thread(codeOfLogicFrenesyB);
+                logicFrenesy.start();
+            }
+
             return;
         }
 

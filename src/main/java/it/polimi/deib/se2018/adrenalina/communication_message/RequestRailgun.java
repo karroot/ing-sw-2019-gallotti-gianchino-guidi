@@ -43,6 +43,7 @@ public class RequestRailgun extends WeaponWithModeAlternative
 
         int j = 1;
 
+        terminal.addTextInput("Scegli secondo bersaglio:");
         for (ColorId z:players)
         {
             terminal.addOptionInput(j+":"+z);
@@ -77,6 +78,8 @@ public class RequestRailgun extends WeaponWithModeAlternative
         players = playersWithCardinalDirections.get(choicesDirections.get(choiceDirection - 1));
 
         i = 1;
+
+        terminal.addTextInput("Scegli bersaglio:");
 
         for (ColorId z:players)
         {

@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.View.GUI.GUI;
 import it.polimi.deib.se2018.adrenalina.View.GUI.SetupGui;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PlayerImmutable;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.SquareImmutable;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
@@ -266,7 +267,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     /**
      * This method being called by Network Handler to ask at the user which powerUp to use for the respawn
      */
-    public void startRespawn()//todo chiedere a gabriele se va bene così
+    public void startRespawn()
     {
         //(The controller before to start the respawn must give at player a powerUp)
         //Ask at the player which power up to use for the respawn
@@ -410,10 +411,101 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         return terminal.selectAction();
     }
 
-    public void startFrenesy() //todo
+    public void startFrenesy(boolean firstPlayerNotPassed) //todo
     {
 
+            //#######Player can use a teleporter or a newton###############
+
+            powerUpTeleportOrNewton();
+
+            if (firstPlayerNotPassed)
+            {
+                //#######Player must choose two actions###############
+
+                cont = 0;
+
+
+                while (cont < 2) //The
+                {
+                    //Show the actions
+                    terminal.addTextInput("Scegli un azione per frenesia finale:");
+                    terminal.addOptionInput("1:Muovi,ricarica e se puoi spara");
+                    terminal.addOptionInput("2:Muovi");
+                    terminal.addOptionInput("3:Raccogli");
+
+                    int choice = selectAction(); //Do to selects an action to the player
+
+                    switch (choice)
+                    {
+                        case 1: //if the user chose "Shoot"
+                            shootActionFrenesy();
+                            break;
+                        case 2://if the user chose "Move"
+                            moveAction();
+                            break;
+                        case 3:
+                            grabAction();//If the user chose "Grab"
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                terminal.addTextInput("Scegli un azione per frenesia finale:");
+                terminal.addOptionInput("1:Muovi,ricarica e se puoi spara");
+                terminal.addOptionInput("2:Raccogli");
+
+
+                int choice = terminal.inputInt(1,2); //Do to selects an action to the player
+
+                switch (choice)
+                {
+                    case 1: //if the user chose "Shoot"
+                        shootActionFrenesy();
+                        break;
+                    case 2://if the user chose "Grab"
+                        grabAction();
+                        break;
+                }
+            }
+
+
+
+                //#######Player can use a teleporter or a newton###############
+
+                powerUpTeleportOrNewton();
+
+
+                //######## Using targeting scope #########
+
+                targetingScopeAction();
+
+
+
+
+                //########Reload weapons###########
+
+                reloading();
+
+
+                try //notify at the controller that the round is finished
+                {
+                    notify( new EndRound());
+                }
+                catch (Exception e)
+                {
+                    terminal.showError("Sei stato disconesso : Turno interroto");
+                    terminal.showError(e.getMessage());
+                    Thread.currentThread().interrupt();
+                    throw new ThreadDeath();
+                }
+
+                Thread.currentThread().interrupt();
+                throw new ThreadDeath();
+
+
     }
+
 
     /**
      * Method that show at the user the final scores
@@ -567,9 +659,28 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
                 notify(responseForController);//Send the message at controller with the weapon chosen by player
 
+                //Case: if the player has three weapons##################ààà
+                PlayerImmutable thisPlayer = null;
 
-                //message (RequestShootPeople)
-                //Richiesta sostituzione arma se ce ne sono già 3
+                for (PlayerImmutable t:terminal.getData().getDataOfAllPlayer())
+                {
+                       if (t.getColor().equals(colorId))
+                       {
+                           thisPlayer = t;
+                       }
+                }
+
+                if (thisPlayer != null && thisPlayer.getWeaponCardList().size() == 3)
+                {
+                    messageRequest = getMessageFromNetwHandl(); //Obtain the request message with the weapons to change
+
+                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
+
+                    responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
+
+                    notify(responseForController);//Send the message at controller with the weapon chosen by player
+                }
+
             }
 
 
@@ -652,6 +763,14 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
             Thread.currentThread().interrupt();
         }
     }
+
+    private void shootActionFrenesy()
+    {
+        //1 mando richiesta al Controller per muoversi (Usare richiesta diversa)
+        //2 chiedo al player se vuole ricaricare(Riciclare reloading())
+        //3 mandare richiesta al controller per sparare(Riciclare Shoot())
+    }
+
 
     //Code that handle the action reload
     private void reloading()
