@@ -54,9 +54,9 @@ public class RequestPlasmaGun extends  RequestInput
     /**
      *Ask at the user which effect to use and the targets to hit
      * The user can choice the effect in three possible mode:
-     * 1) to move onto a square and whack 2 people
-     * 2)whack somebody, move, and whack somebody else
-     * 3) or whack 2 people and then move
+     * 1) to move onto a square and shoot
+     * 2)shoot somebody, move, and add damage
+     * 3) or shoot people and then move
      * @param terminal
      */
     @Override
@@ -64,10 +64,22 @@ public class RequestPlasmaGun extends  RequestInput
     { this.terminal=terminal;
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
 
-        terminal.addOptionInput("1:sparare");
-        terminal.addOptionInput("2:Spostarti");
+        int choice;
 
-        int choice = terminal.inputInt(1, 2);
+        if (playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart)!= null)
+        {
+            terminal.addOptionInput("1:Colpire");
+            terminal.addOptionInput("2:Spostarti");
+            choice = terminal.inputInt(1, 2);
+        }
+        else
+        {
+            terminal.addOptionInput("2:Spostarti");
+            choice = terminal.inputInt(2, 2);
+        }
+
+
+
 
         if (choice == 1) //Ask the necessary dates to do the effect
         {
@@ -82,9 +94,11 @@ public class RequestPlasmaGun extends  RequestInput
 
         int i = 1;
 
+
+        terminal.addTextInput("Scegli il secondo effetto:");
         for (String t:orderAva) //Ask to the user the second effect
         {
-            terminal.addOptionInput(i+" : "+orderAva.get(i-1));
+            terminal.addOptionInput(i+":"+orderAva.get(i-1));
             i++;
         }
 
@@ -101,16 +115,38 @@ public class RequestPlasmaGun extends  RequestInput
             choseTarget();
         }
 
+        if (!orderAva.isEmpty()) //It there is a third effect possible
+        {
+            terminal.addTextInput("Scegli il terzo effetto:"); //Ask at the user if he wants to use it
+            terminal.addOptionInput("1:Si");
+            terminal.addOptionInput("2:No");
 
+            int choice1 = terminal.inputInt(1, 2);
+
+            if (choice1 ==1) // if the user said yes
+            {
+                if (orderAva.get(0).equals("with phase glide"))//Ask the necessary dates to do the effect
+                {
+                    choseSquare();
+                    orderAva.remove("with phase glide");
+                    orderTemp.add("with phase glide");
+                }
+                else
+                {
+                    choseTarget();
+                }
+            }
+
+
+        }
 
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
 
-        for (int j = 0; j < orderEffect.length;j++)
-            orderEffect[i] = orderTemp.get(i);
+        for (int j = 0;j<orderEffect.length;j++)
+            orderEffect[j] = orderTemp.get(j);
 
         responseIsReady = true;
     }
-
     /**
      *Generate the response message for the PlasmaGun with all player's choice
      * @return response message
@@ -118,7 +154,10 @@ public class RequestPlasmaGun extends  RequestInput
      */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
-        return null;
+        if (!responseIsReady)
+            throw new IllegalStateException("Input non ancora presi");
+        return new ResponsePlasmaGun(targetBasicEffect, x,  y, orderEffect);
+
     }
 
     //Ask at the user to choice a target to hit

@@ -210,7 +210,7 @@ public class RequestMachineGun extends RequestInput {
             {
                 if(targetAdditionalMode!=null)
                 {
-                    if (!(t.equals(targetAdditionalMode))) { // if we are in all mode activated we ask to attack only the player that wasn't in additional mode
+                    if (!(t.equals(targetAdditionalMode)) && !t.equals(targetBasicMode)) { // if we are in all mode activated we ask to attack only the player that wasn't in additional mode
                         terminal.addOptionInput(i + ": " + t);
                         showedPlayersA.add(t);
                         i++;
@@ -219,6 +219,7 @@ public class RequestMachineGun extends RequestInput {
                 else
                     {
                     terminal.addOptionInput(i + ": " + t);
+                    showedPlayersA.add(t);
                     i++;
                     }
             }

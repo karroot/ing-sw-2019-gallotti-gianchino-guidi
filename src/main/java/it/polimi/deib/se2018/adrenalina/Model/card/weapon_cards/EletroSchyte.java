@@ -37,7 +37,7 @@ public class EletroSchyte extends WeaponCard
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         if(((ResponseElectroSchyte) responseMessage).isMode())
-            basicMode(((ResponseElectroSchyte) responseMessage).getTargetsAlternativeMode());
+            reaper(((ResponseElectroSchyte) responseMessage).getTargetsAlternativeMode());
         else
             basicMode(((ResponseElectroSchyte) responseMessage).getTargetBasicMode());
     }
@@ -131,11 +131,12 @@ public class EletroSchyte extends WeaponCard
             throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
-        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
+        for (Player p : player.getSquare().getPlayerList() )
         {
-            playerList.add(p.getColor());
+            if(!p.equals(this.player))
+                playerList.add(p.getColor());
         }
-        playerList.remove(player.getColor()); //Remove from targets the player that shoot
+
 
         return playerList;//Returns all targets
     }

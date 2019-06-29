@@ -46,6 +46,7 @@ public class PlasmaGun extends WeaponCard
     }
     public RequestInput getRequestMessage()
     {
+
              return new RequestPlasmaGun(checkAvailableMode(),checkAllTarget(),checkPhaseGlide(),player.getSquare().getX(),player.getSquare().getY());
 
     }

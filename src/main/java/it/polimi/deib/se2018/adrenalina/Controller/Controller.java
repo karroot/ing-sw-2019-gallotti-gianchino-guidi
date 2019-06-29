@@ -138,6 +138,12 @@ public class Controller implements Observer<ResponseInput>
         if(g1.getAllPlayer().size()<5)
             g1.setTerminatorMode(terminatorMode);
 
+        if(g1.isTerminatorMode())
+            termi= new Player(ColorId.PURPLE,"teminator","terminator",false);
+
+        //aggiungi terminator in updatemodel
+
+
         g1.setAllPlayerList(setup.createPlayers());
 
         while (!endGame)
@@ -534,10 +540,10 @@ public class Controller implements Observer<ResponseInput>
             {
                 shotEnemy();
             }
-          /*  else if (messageNet instanceof AskReload)
+             else if (messageNet instanceof AskReload)
             {
                 reload();
-            }*/
+            }
             else if (messageNet instanceof AskForAllPowerups)
             {
                 askForAllPowerUp();
@@ -550,7 +556,19 @@ public class Controller implements Observer<ResponseInput>
             {
                 askForPowerUpTeleportOrNewton();
             }
+            else if(messageNet instanceof MoveBeforeShoot)
+            {
+                if(!first)
+                {
+                    runSingleFrenzy(true);
 
+                }
+                else
+                {
+                    runSingleFrenzy(false);
+
+                }
+            }
 
 
 
@@ -601,10 +619,10 @@ public class Controller implements Observer<ResponseInput>
             {
                 shotEnemy();
             }
-          /*  else if (messageNet instanceof AskReload)
+            else if (messageNet instanceof AskReload)
             {
                 reload();
-            }*/
+            }
             else if (messageNet instanceof AskForAllPowerups)
             {
                 askForAllPowerUp();
@@ -617,7 +635,19 @@ public class Controller implements Observer<ResponseInput>
             {
                 askForPowerUpTeleportOrNewton();
             }
+           else if(messageNet instanceof MoveBeforeShoot)
+           {
+               if(!first)
+               {
+                   runSingleFrenzy(true);
 
+               }
+               else
+               {
+                   runSingleFrenzy(false);
+
+               }
+           }
 
 
 
@@ -1589,14 +1619,23 @@ public class Controller implements Observer<ResponseInput>
  */
 private void runAround(boolean terminator) throws InterruptedException, ExecutionException
 { List<Callable<Boolean>> callableList = new LinkedList<>();
+    Set<Square> squareToChange= new HashSet<>();
+
+    if(!g1.isTerminatorMode())
+        squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+    else {
+        squareToChange = termi.getSquare().getGameBoard().getArena().squareReachableNoWall(termi.getSquare().getX(), termi.getSquare().getY(), 1);
+    }
+
+
+    Set<Square> finalSquareToChange = squareToChange;
     callableList.add(new Callable<Boolean>()
     {
         @Override
         public Boolean call() throws Exception {
-            Set<Square> squareToChange = roundPlayer.lookForRunAround(roundPlayer);
 
             try {
-                virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
+                virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
                 virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                 return true;
@@ -1623,8 +1662,8 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
     if(terminator)
         MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
-
-    MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+    else
+        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
 
 
 }
@@ -1682,19 +1721,21 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
      */
     private void runSingleFrenzy(boolean singolo) throws InterruptedException, ExecutionException
     { List<Callable<Boolean>> callableList = new LinkedList<>();
+        Set<Square> squareToChange = new HashSet<>();
+        if(singolo)
+            squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 1);
+        else
+            squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 2);
 
+        Set<Square> finalSquareToChange = squareToChange;
         callableList.add(new Callable<Boolean>()
         {
             @Override
             public Boolean call() throws Exception {
-                Set<Square> squareToChange = new HashSet<>();
-                if(singolo)
-                   squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 1);
-                else
-                    squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 2);
+
 
                 try {
-                    virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
+                    virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                     return true;
@@ -1726,6 +1767,29 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
     }
 
     private void executeTerminator() throws ExecutionException, InterruptedException {
+
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
+
+            @Override
+            public Boolean call() throws Exception {
+
+                try {
+                    virtualView.requestInput(new StartTerminator(), roundPlayer.getColor());
+
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return  false;
+                }
+            }});
+        Boolean resp = executor.invokeAny(callableList);
+        if(!resp)
+            return;
+        if(checkForAfk())
+            return;
         runAround(true);
         shootTerminator();
 
@@ -1734,14 +1798,14 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
     private void shootTerminator() throws InterruptedException, ExecutionException {
         List<ColorId> enemiesColors=new LinkedList<>();
-        if(! (roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).isEmpty()))
+        if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
         {
-            for(Player p: roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()))
+            for(Player p: termi.playerThatSee(termi.getSquare().getGameBoard()))
             {
                 enemiesColors.add(p.getColor());
             }
 
-            if(roundPlayer.playerThatSee(roundPlayer.getSquare().getGameBoard()).size()>1)
+            if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
             {
                 List<Callable<Boolean>> callableList = new LinkedList<>();
                 callableList.add(new Callable<Boolean>() {
@@ -1771,21 +1835,23 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                     return;
 
                 ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
-                roundPlayer.doDamage(response.getTarget());
-                if(roundPlayer.getDamageCounter().length>3)
+                Player target= null;
+                for(Player p : g1.getAllPlayer())
                 {
-                    roundPlayer.addMark(response.getTarget());
-                }
+                    if(p.getColor().equals(response.getTarget()))
+                        target=p;
 
-            }
-            else
-            {
-                roundPlayer.doDamage(enemiesColors.get(0));
-                if(roundPlayer.getDamageCounter().length>3)
-                {
-                    roundPlayer.addMark(enemiesColors.get(0));
+                }
+                if(target!=null) {
+                    target.doDamage(termi.getColor());
+                    if (termi.getNumberOfDamagePoint() >= 6) {
+
+                        target.addMark(termi.getColor());
+                    }
                 }
             }
+
+
         }
     }
 
@@ -1799,20 +1865,6 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
      */
     private void shotEnemy() throws InterruptedException, ExecutionException {
 
-        if(frenzy)
-        {
-            if(!first)
-            {
-                runSingleFrenzy(true);
-                reload();
-            }
-            else
-            {
-                runSingleFrenzy(false);
-                reload();
-
-            }
-        }
 
         boolean vuota = false;
         List<WeaponCard> chargedWeapons = new LinkedList<>();
@@ -2034,7 +2086,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                 }
                 else { //se ha già 3 armi chiedo con quale arma vuole sostituirla
 
-                    List<WeaponCard> playerCurrentWeaponList = currentSquare.getWeaponCardList();
+                    List<WeaponCard> playerCurrentWeaponList = roundPlayer.getWeaponCardList();
                     List<String> playerWeaponsName = new LinkedList<>();
                     for (WeaponCard wc : playerCurrentWeaponList) {
                         playerWeaponsName.add(wc.getName());
