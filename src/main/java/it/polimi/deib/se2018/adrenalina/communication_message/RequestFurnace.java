@@ -50,7 +50,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (ColorRoom colorRoomIterate : colorRoomList) {
-            terminal.addTextInput(i + " " + colorRoomIterate);
+            terminal.addOptionInput(i + " " + colorRoomIterate);
             i++;
         }
 
@@ -67,7 +67,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
         List<String> stringList = squaresAlternativeMode;
 
-        terminal.addTextInput("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli uno square bersaglio:");
 
         for (String squareAsStringIterate : stringList) {
             terminal.addOptionInput(i + " " + squareAsStringIterate);

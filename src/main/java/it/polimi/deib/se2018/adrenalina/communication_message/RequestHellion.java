@@ -17,6 +17,8 @@ public class RequestHellion extends WeaponWithModeAlternative
     private HashMap<String, List<ColorId>> hashMapBasicMode;//Targets for the basic mode
     private HashMap<String, List<ColorId>> hashMapNanoTracerMode;//Targets for the basic mode
 
+    
+
     //Attribute for the response
     private String targetBasicModeSquare;//Target chosen for the basic mode
     private ColorId targetBasicModePlayer;
@@ -61,7 +63,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         stringSquaresList.addAll(hashMapBasicMode.keySet());
 
-        terminal.addTextInput("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli lo square dove si trova il player bersaglio:");
 
         for (String squareAsStringIterate : stringSquaresList)
         {
@@ -113,7 +115,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         stringSquaresList.addAll(hashMapNanoTracerMode.keySet());
 
-        terminal.addTextInput("Scegli una stanza bersaglio:");
+        terminal.addTextInput("Scegli lo square dove si trova il player bersaglio:");
 
         for (String squareAsStringIterate : stringSquaresList)
         {

@@ -93,7 +93,8 @@ public class GrenadeLauncher extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<ColorId> colorIdList = new ArrayList<>();
-        List<Player> playerList =  checkBasicModePlayers();
+        List<Player> playerList =  new ArrayList<>();
+        playerList = checkBasicModePlayers();
 
         for (Player playerIterate : playerList)
         {

@@ -4,10 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -50,22 +47,32 @@ public class Hellion extends WeaponCard
 
         if (isLoaded())
         {
-            Set<Player> playerSet;
-            playerSet = player.playerThatSee(player.getSquare().getGameBoard());
+            List<Player> playerList = new ArrayList<>();
+            playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
 
-            for (Player playerIterate : playerSet)
+            if (!playerList.isEmpty())
             {
-                if (playerIterate.getSquare() == player.getSquare())
-                   playerSet.remove(playerIterate);
+                List<Player> playerTempList = new ArrayList<>();
+                for (Player playerIterate : playerList)
+                {
+                    if (playerIterate.getSquare() == player.getSquare())
+                        playerTempList.add(playerIterate);
+                }
+
+                playerList.removeAll(playerTempList);
+
+                if (!playerList.isEmpty())
+                    availableMethod[0] = true;
+
             }
 
-            if (!playerSet.isEmpty())
-                availableMethod[0] = true;
+
         }
 
 
-        if (isLoaded() && player.getAmmoRed() > 0 && availableMethod[0])
+        if (isLoaded() && player.getAmmoRed() > 0)
         {
+            if (availableMethod[0])
                 availableMethod[1] = true;
         }
 

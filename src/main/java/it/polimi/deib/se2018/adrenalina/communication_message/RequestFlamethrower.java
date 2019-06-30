@@ -63,7 +63,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         targetDirectionBarbecueMode = cardinalDirections.get(choice - 1);
 
         List<ColorId>[] colorIdTargets = hashMapForModes.get(targetDirectionBarbecueMode);
@@ -90,7 +90,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
             i++;
         }
 
-        int choice = inputInt(1, i - 1);
+        int choice = terminal.inputInt(1, i - 1);
         CardinalDirection targetDirectionBasicMode = cardinalDirections.get(choice - 1);
 
         List<ColorId>[] colorIdTargets = hashMapForModes.get(targetDirectionBasicMode);
@@ -100,11 +100,11 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         terminal.addTextInput("Scegli il primo player bersaglio:");
 
         for (ColorId colorIdIterate : colorIdTargets[0]) {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(j + " " + colorIdIterate);
             j++;
         }
 
-        int choice1 = inputInt(1, i - 1);
+        int choice1 = terminal.inputInt(1, j - 1);
 
         targetBasicMode1 = colorIdTargets[0].get(choice - 1);
 
@@ -115,13 +115,13 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
             terminal.addTextInput("Scegli il secondo player bersaglio:");
 
             for (ColorId colorIdIterate : colorIdTargets[1]) {
-                terminal.addOptionInput(i + " " + colorIdIterate);
+                terminal.addOptionInput(k + " " + colorIdIterate);
                 j++;
             }
 
-            int choice2 = inputInt(1, i - 1);
+            int choice2 = terminal.inputInt(1, k - 1);
 
-            targetBasicMode2 = colorIdTargets[0].get(choice - 1);
+            targetBasicMode2 = colorIdTargets[1].get(choice - 1);
 
         }
 

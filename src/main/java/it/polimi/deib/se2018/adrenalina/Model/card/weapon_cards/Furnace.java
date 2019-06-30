@@ -127,24 +127,20 @@ public class Furnace extends WeaponCard
      */
     public List<String> checkInCozyFireMode () {
 
-        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
+        List<String> squareListAsStringToReturn = new ArrayList<>();
+        List<Square> squareList = new ArrayList<>();
 
-        List<String> squareListCoordinatesAsString = new ArrayList<>();
-
-        Set<Square> squareList;
-        squareList = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
+        squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1));
         squareList.remove(player.getSquare());
 
         for (Square squareIterate : squareList)
         {
-            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
+            if (!squareIterate.getPlayerList().isEmpty())
+                squareListAsStringToReturn.add(squareIterate.toStringCoordinates());
         }
 
-        for (Square squareIterate : squareList)
-            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
 
-
-        return squareListCoordinatesAsString;
+        return squareListAsStringToReturn;
 
     }
 

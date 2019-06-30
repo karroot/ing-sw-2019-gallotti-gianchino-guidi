@@ -93,8 +93,6 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     {
         int i = 1;
 
-        List<ColorId> colorIdList = playersBasicMode;
-
         terminal.addTextInput("Scegli un player bersaglio:");
 
         for (ColorId colorIdIterate : playersBasicMode)
