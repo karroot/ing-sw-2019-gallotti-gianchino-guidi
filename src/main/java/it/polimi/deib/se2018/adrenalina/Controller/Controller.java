@@ -479,8 +479,10 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-            if(!s)
-             return;
+            if(!s){
+            salta=true;
+             return;}
+
            if(checkForAfk())
                return;
 
@@ -799,9 +801,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             boolean s = executor.invokeAny(callableList);
-            if(!s)
+            if(!s) {
+                salta=true;
                 return;
-
+            }
             if(checkForAfk())
                return;
 
@@ -837,9 +840,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             Boolean end =  executor.invokeAny(callableListA);
-            if(!end)
+            if(!end) {
+             salta=true;
                 return;
-
+            }
         }
         else
         {
@@ -864,9 +868,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             t  =  executor.invokeAny(callableListA);
-            if(!t)
+            if(!t) {
+             salta=true;
                 return;
-
+            }
         }
     }
 
@@ -883,7 +888,7 @@ public class Controller implements Observer<ResponseInput>
 
         if(attackedPlayers!=null)
             filteredPlayer = attackedPlayers.stream().filter(colorId -> checkPlayerForGranade(colorId)).collect(Collectors.toSet());
-
+if(filteredPlayer!=null){
         for (ColorId granadeAttacked : filteredPlayer) {
             boolean vuota = false;
             List<String> powerUpList = new LinkedList<>();
@@ -922,9 +927,10 @@ public class Controller implements Observer<ResponseInput>
                     }
                 });
                 Boolean si = executor.invokeAny(callableIniz);
-                if(!si)
+                if(!si) {
+                 salta=true;
                     return;
-
+                }
 
                 List<Callable<Boolean>> callableList = new LinkedList<>();
                 callableList.add(new Callable<Boolean>() {
@@ -947,9 +953,10 @@ public class Controller implements Observer<ResponseInput>
 
 
                 Boolean s = executor.invokeAny(callableList);
-                if(!s)
+                if(!s) {
+                 salta=true;
                     return;
-
+                }
 
 
                 ResponsePowerUp risp = (ResponsePowerUp) msg;
@@ -983,12 +990,13 @@ public class Controller implements Observer<ResponseInput>
 
 
                 Boolean end =  executor.invokeAny(callableListA);
-                if(!end)
+                if(!end) {
+                 salta=true;
                     return;
-
+                }
             }
 
-        }
+        }}
     }
 
 
@@ -1033,9 +1041,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             boolean s = executor.invokeAny(callableList);
-            if(!s)
+            if(!s) {
+             salta=true;
                 return;
-
+            }
             if(checkForAfk())
                return;
 
@@ -1069,9 +1078,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             Boolean end =  executor.invokeAny(callableListA);
-            if(!end)
+            if(!end) {
+             salta=true;
                 return;
-
+            }
         }
         else
         {
@@ -1094,9 +1104,10 @@ public class Controller implements Observer<ResponseInput>
 
 
             Boolean s =  executor.invokeAny(callableList);
-            if(!s)
+            if(!s) {
+             salta=true;
                 return;
-
+            }
         }
     }
 
@@ -1127,8 +1138,9 @@ public class Controller implements Observer<ResponseInput>
 
 
          boolean ric = executor.invokeAny(callableList);
-        if(!ric)
-            return;
+        if(!ric){
+            salta=true;
+            return;}
         if(checkForAfk())
             return;
 
@@ -1190,8 +1202,9 @@ public class Controller implements Observer<ResponseInput>
 
 
         Boolean ric =  executor.invokeAny(callableList);
-        if(!ric)
-            return;
+        if(!ric){
+            salta=true;
+            return;}
         if(checkForAfk())
                return;
 
@@ -1255,8 +1268,9 @@ public class Controller implements Observer<ResponseInput>
        
 
         Boolean ric = executor.invokeAny(callableList);
-        if(!ric)
-            return;
+        if(!ric){
+            salta=true;
+            return;}
         if(checkForAfk())
                return;
 
@@ -1338,8 +1352,9 @@ public class Controller implements Observer<ResponseInput>
            
 
            boolean s = executor.invokeAny(callableList);
-            if(!s)
-                return;
+            if(!s){
+                salta=true;
+                return;}
             if(checkForAfk())
                return;
 
@@ -1396,8 +1411,9 @@ public class Controller implements Observer<ResponseInput>
 
 
             Boolean end =  executor.invokeAny(callableListA);
-            if(!end)
-                return;
+            if(!end){
+                salta=true;
+                return;}
 
         }
         else
@@ -1421,8 +1437,9 @@ public class Controller implements Observer<ResponseInput>
 
 
             Boolean s =  executor.invokeAny(callableList);
-            if(!s)
-                return;
+            if(!s){
+                salta=true;
+                return;}
 
         }
     }
@@ -1668,8 +1685,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
     boolean s = executor.invokeAny(callableList);
-    if(!s)
-        return;
+    if(!s){
+        salta=true;
+        return;}
     if(checkForAfk())
         return;
 
@@ -1717,8 +1735,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
         boolean s = executor.invokeAny(callableList);
-        if(!s)
-            return;
+        if(!s){
+            salta=true;
+            return;}
         if(checkForAfk())
             return;
 
@@ -1768,8 +1787,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
         boolean s = executor.invokeAny(callableList);
-        if(!s)
-            return;
+        if(!s){
+            salta=true;
+            return;}
         if(checkForAfk())
             return;
 
@@ -1805,9 +1825,10 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                 }
             }});
         Boolean resp = executor.invokeAny(callableList);
-        if(!resp)
+        if(!resp) {
+         salta=true;
             return;
-        if(checkForAfk())
+        }        if(checkForAfk())
             return;
         runAround(true);
         shootTerminator();
@@ -1848,8 +1869,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
                 Boolean resp = executor.invokeAny(callableList);
-                if(!resp)
-                    return;
+                if(!resp){
+                    salta=true;
+                    return;}
                 if(checkForAfk())
                     return;
 
@@ -1923,8 +1945,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
            
 
            boolean s = executor.invokeAny(callableList);
-            if(!s)
-                return;
+            if(!s){
+                salta=true;
+                return;}
 
             if(checkForAfk())
                return;
@@ -1960,8 +1983,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
            
 
             Boolean resp = executor.invokeAny(callableListA);
-            if(!resp)
-                return;
+            if(!resp){
+                salta=true;
+                return;}
             if(checkForAfk())
                return;
 
@@ -1996,9 +2020,10 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
            
 
            boolean s = executor.invokeAny(callableList);
-           if(!s)
-            return;
-
+           if(!s) {
+            salta=true;
+               return;
+           }
 
 
         }
@@ -2190,8 +2215,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                
 
                boolean s = executor.invokeAny(callableList);
-                if(!s)
-                    return;
+                if(!s){
+                    salta=true;
+                    return;}
               if(checkForAfk())
                return;
 
