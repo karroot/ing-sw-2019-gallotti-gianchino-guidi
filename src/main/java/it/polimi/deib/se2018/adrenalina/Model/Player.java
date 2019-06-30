@@ -19,6 +19,7 @@ public class Player
     private boolean afk = false;
     private boolean frenzy;
     private boolean flipped;
+    private boolean firstRound=true;
 
     private ColorId color;
 
@@ -348,6 +349,14 @@ public class Player
             throw new IllegalStateException("Player ha già tre carte armi");
         }
 
+    }
+
+    public boolean isFirstRound() {
+        return firstRound;
+    }
+
+    public void setFirstRound(boolean firstRound) {
+        this.firstRound = firstRound;
     }
 
     /**

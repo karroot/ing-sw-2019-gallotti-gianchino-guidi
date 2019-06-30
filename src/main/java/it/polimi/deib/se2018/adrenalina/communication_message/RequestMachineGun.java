@@ -71,7 +71,7 @@ public class RequestMachineGun extends RequestInput {
             terminal.addOptionInput("3: modalità base con  " + nameSecondAdditionalmode);
             acceptedInt.add(1);
         }
-        if (availableMethod[2] && availableMethod[1])//Print the possible effects
+        if (availableMethod[3])//Print the possible effects
         {
             terminal.addOptionInput("4: modalità base con  "+ nameAdditionalmode + " e " + nameSecondAdditionalmode);
             acceptedInt.add(1);
@@ -184,14 +184,14 @@ public class RequestMachineGun extends RequestInput {
         int choice;
         players = playerSecondAdditionalMode;
         int i = 1;
-        if (players != null)
+        if (players.size()>2)
         {
 
             List<ColorId> showedPlayers= new LinkedList<>();
                 terminal.addTextInput(" altro player a cui far danno");
                 for (ColorId t : players)//Ask to user the target
                 {
-                    if(!t.equals(targetBasicMode)&& !t.equals(targetAdditionalMode))
+                    if(!t.equals(targetBasicMode)&& !t.equals(targetBasicModeSecond))
                     {
                     terminal.addOptionInput(i + " : " + t);
                     showedPlayers.add(t);

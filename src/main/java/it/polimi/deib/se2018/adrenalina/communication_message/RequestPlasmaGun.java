@@ -47,7 +47,7 @@ public class RequestPlasmaGun extends  RequestInput
         orderAva.add("basic");
         orderAva.add("with phase glide");
 
-        if (availableMethod[2])//If the mode with charged shot can be used
+        if (availableMethod[1])//If the mode with charged shot can be used
             orderAva.add("with charged shot");//Add it in the list of the possible effects
     }
 
@@ -166,10 +166,17 @@ public class RequestPlasmaGun extends  RequestInput
         List<ColorId> players;
 
         if (x == 0 & y == 0) //If the player didn't move in an other square
-            players = playersWithSquaresBasicMode.get("x = " + xStart + ",y = " + yStart);//use the starting coordinates
+            players = playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart);//use the starting coordinates
         else//Else
-            players = playersWithSquaresBasicMode.get("x = " + x + ",y = " + y);//Use the new coordinates
+        {
+            players = playersWithSquaresBasicMode.get("x = " + x + ", y = " + y);//Use the new coordinates
+            if (players== null)
+            {
+                terminal.showMessage("Terzo effetto non utilizzabile");
+                return;
+            }
 
+        }
         terminal.addTextInput("Scegli un bersaglio :");
 
         int i = 1;

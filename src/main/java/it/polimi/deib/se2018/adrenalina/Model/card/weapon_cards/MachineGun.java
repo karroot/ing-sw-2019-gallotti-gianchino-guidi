@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class MachineGun extends WeaponCard
 {
-    private boolean[] availableMethod = new boolean[3];
+    private boolean[] availableMethod = new boolean[4];
 
     /**
      * Create the card ZX2
@@ -72,6 +72,7 @@ public class MachineGun extends WeaponCard
         availableMethod[1] = false;
         availableMethod[0] = false;
         availableMethod[2] = false;
+        availableMethod[3] = false;
 
 
         if (isLoaded() && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
@@ -82,6 +83,9 @@ public class MachineGun extends WeaponCard
             availableMethod[2] = true;
 
         if (isLoaded()&& player.getAmmoYellow()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
+            availableMethod[1] = true;
+
+        if (isLoaded()&& player.getAmmoYellow()>0 && player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>2)
             availableMethod[1] = true;
 
         return availableMethod;
@@ -173,7 +177,7 @@ public class MachineGun extends WeaponCard
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
         if (colorPlayer2!= null)
             doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
-        this.isLoaded = false;
+        isLoaded = false;
     }
 
     /**

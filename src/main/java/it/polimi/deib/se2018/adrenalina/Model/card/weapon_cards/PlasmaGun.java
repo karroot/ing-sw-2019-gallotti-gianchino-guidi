@@ -5,10 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.RequestPlasmaGun;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePlasmaGun;
+import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 
 import java.util.*;
@@ -37,8 +34,10 @@ public class PlasmaGun extends WeaponCard
 
     @Override
     public void useWeapon(ResponseInput responseMessage) {
+        ResponsePlasmaGun msg = (ResponsePlasmaGun) responseMessage;
+
         try {
-            basicMode(((ResponsePlasmaGun) responseMessage).getTargetBasicEffect(),((ResponsePlasmaGun) responseMessage).getOrderEffect(),((ResponsePlasmaGun) responseMessage).getX(),((ResponsePlasmaGun) responseMessage).getY());
+            basicMode(msg.getTargetBasicEffect(),msg.getOrderEffect(),msg.getX(),msg.getY());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

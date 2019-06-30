@@ -30,6 +30,7 @@ public class Controller implements Observer<ResponseInput>
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
     private Model model;
     private boolean frenzy;
+    private boolean salta;
     private Setup setup;
     private Player termi; //is the terminator
     private View virtualView;
@@ -372,8 +373,8 @@ public class Controller implements Observer<ResponseInput>
             boolean s = executor.invokeAny(callableList);
 
 
-            if (!s)
-                return;
+            if (!s){ salta=true;
+                    return;}
             if (checkForAfk())
                 return;
             try
@@ -412,8 +413,8 @@ public class Controller implements Observer<ResponseInput>
                 boolean s = executor.invokeAny(callableList);
 
 
-                if (!s)
-                    return;
+                if (!s){ salta=true;
+                    return;}
                 if (checkForAfk())
                     return;
 
@@ -488,7 +489,7 @@ public class Controller implements Observer<ResponseInput>
 
 // capire se devo controllare il controller se siamo nel caso del primo respawn o no nel caso fai una variabile firstround che termina al primo round per ogni giocatore
 
-             if(firstRound)
+             if(roundPlayer.isFirstRound())
                  askForFirstSpawn();
 
             try
@@ -526,7 +527,7 @@ public class Controller implements Observer<ResponseInput>
 
         MessageNet messageNet = msg;
 
-        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
             if (messageNet instanceof AskMoveAround)
             {
@@ -574,18 +575,23 @@ public class Controller implements Observer<ResponseInput>
 
             updateModel();
 
-            virtualView.getResponseWithInputs(player);
+            if(!roundPlayer.isAfk() && !salta){
+                virtualView.getResponseWithInputs(player);
 
-            messageNet = msg;
-
+                messageNet = msg;}
 
         }
-        askForPowerUpTagBackGranade();
-        // at the end of round
+        if(!roundPlayer.isAfk() && !salta)
+            askForPowerUpTagBackGranade();
+
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
         }
+        msg=null;
+        salta=false;
+        // at the end of round
+
 
 
 
@@ -605,7 +611,7 @@ public class Controller implements Observer<ResponseInput>
 
         MessageNet messageNet = msg;
 
-        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
            /* if (messageNet instanceof AskMoveAround)
             {
@@ -653,19 +659,22 @@ public class Controller implements Observer<ResponseInput>
 
             updateModel();
 
-            virtualView.getResponseWithInputs(player);
+            if(!roundPlayer.isAfk() && !salta){
+                virtualView.getResponseWithInputs(player);
 
-            messageNet = msg;
+                messageNet = msg;}
 
 
         }
-        askForPowerUpTagBackGranade();
-        // at the end of round
+        if(!roundPlayer.isAfk() && !salta)
+            askForPowerUpTagBackGranade();
+
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
         }
-
+        msg=null;
+        salta=false;
 
 
     }
@@ -684,7 +693,7 @@ public class Controller implements Observer<ResponseInput>
 
         MessageNet messageNet = msg;
 
-        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk())
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
             if (messageNet instanceof AskMoveAround)
             {
@@ -725,18 +734,26 @@ public class Controller implements Observer<ResponseInput>
 
             updateModel();
 
-            virtualView.getResponseWithInputs(player);
 
-            messageNet = msg;
+            if(!roundPlayer.isAfk() && !salta){
+                virtualView.getResponseWithInputs(player);
+
+            messageNet = msg;}
 
 
         }
-        askForPowerUpTagBackGranade();
-    // at the end of round
+        if(!roundPlayer.isAfk() && !salta)
+            askForPowerUpTagBackGranade();
+
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
         }
+        msg=null;
+        salta=false;
+
+    // at the end of round
+
 
 
 
@@ -862,7 +879,11 @@ public class Controller implements Observer<ResponseInput>
 
         Set<ColorId> attackedPlayers = new HashSet<>();
         attackedPlayers = roundDamageList.get(roundPlayer.getColor());
-        Set<ColorId> filteredPlayer = attackedPlayers.stream().filter(colorId -> checkPlayerForGranade(colorId)).collect(Collectors.toSet());
+        Set<ColorId> filteredPlayer=null;
+
+        if(attackedPlayers!=null)
+            filteredPlayer = attackedPlayers.stream().filter(colorId -> checkPlayerForGranade(colorId)).collect(Collectors.toSet());
+
         for (ColorId granadeAttacked : filteredPlayer) {
             boolean vuota = false;
             List<String> powerUpList = new LinkedList<>();
@@ -903,8 +924,7 @@ public class Controller implements Observer<ResponseInput>
                 Boolean si = executor.invokeAny(callableIniz);
                 if(!si)
                     return;
-                if(checkForAfk())
-                    return;
+
 
                 List<Callable<Boolean>> callableList = new LinkedList<>();
                 callableList.add(new Callable<Boolean>() {
@@ -929,8 +949,7 @@ public class Controller implements Observer<ResponseInput>
                 Boolean s = executor.invokeAny(callableList);
                 if(!s)
                     return;
-                if(checkForAfk())
-                    return;
+
 
 
                 ResponsePowerUp risp = (ResponsePowerUp) msg;
@@ -1517,8 +1536,8 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-            if (!s)
-                return;
+            if (!s){ salta=true;
+                    return;}
             if (checkForAfk())
                 return;
 
@@ -1549,8 +1568,8 @@ public class Controller implements Observer<ResponseInput>
             });
 
             boolean s = executor.invokeAny(callableList);
-            if (!s)
-                return;
+            if (!s){ salta=true;
+                    return;}
             if (checkForAfk())
                 return;
 
@@ -1586,15 +1605,15 @@ public class Controller implements Observer<ResponseInput>
 
 
             boolean s = executor.invokeAny(callableList);
-            if (!s)
-                return;
+            if (!s){ salta=true;
+                    return;}
             if (checkForAfk())
                 return;
 
 
             ResponseRespawn response = (ResponseRespawn) msg;
             spawn(response.getTargetSpawnPoint()-1);
-
+            roundPlayer.setFirstRound(false);
             updateModel();
 
         }
@@ -2010,8 +2029,8 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
         boolean s = executor.invokeAny(callableList);
-        if (!s)
-            return;
+        if (!s){ salta=true;
+                    return;}
         if (checkForAfk())
             return;
 
