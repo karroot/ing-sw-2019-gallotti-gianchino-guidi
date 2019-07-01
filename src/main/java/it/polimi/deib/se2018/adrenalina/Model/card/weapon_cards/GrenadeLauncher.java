@@ -4,10 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -93,7 +90,7 @@ public class GrenadeLauncher extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<ColorId> colorIdList = new ArrayList<>();
-        List<Player> playerList =  new ArrayList<>();
+        List<Player> playerList;
         playerList = checkBasicModePlayers();
 
         for (Player playerIterate : playerList)
@@ -110,7 +107,7 @@ public class GrenadeLauncher extends WeaponCard
      *
      * @return an hashmap of ColorId and square as strings
      */
-    public HashMap<ColorId, List<String>> checkBasicModeSquares ()
+    private HashMap<ColorId, List<String>> checkBasicModeSquares ()
     {
         HashMap<ColorId, List<String>> hashMapToReturn = new HashMap<>();
         List<ColorId> colorIdList = checkBasicMode();
@@ -169,20 +166,47 @@ public class GrenadeLauncher extends WeaponCard
         if (!checkAvailableMode()[1])//check mode
             throw  new IllegalStateException("Granata extra dell'arma "+name+" non eseguibile.");
 
-        HashMap<Square, ArrayList<Player>> hashSquarePlayer = new HashMap<Square, ArrayList<Player>>();
         List<String> squareListCoordinatesAsString = new ArrayList<>();
 
+
         Set<Square> squaresTarget = MethodsWeapons.squareThatSee(player); //Obtain all squares that player can see
-        squaresTarget.remove(player.getSquare());
 
         for (Square squareIterate : squaresTarget)
-            hashSquarePlayer.put(squareIterate, (ArrayList) squareIterate.getPlayerList());
-
-        for (Square squareIterate : hashSquarePlayer.keySet())
-            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
-
+        {
+            if (!squareIterate.getPlayerList().isEmpty())
+            {
+                if (squareIterate.getPlayerList().contains(player))
+                {
+                    if (squareIterate.getPlayerList().size() >= 2)
+                        squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+                } else {
+                    squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+                }
+            }
+        }
 
         return squareListCoordinatesAsString;//Returns all targets
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<String> checkAllSquaresISee ()
+    {
+        List<String> squareListCoordinatesAsString = new ArrayList<>();
+
+
+        Set<Square> squaresTarget = MethodsWeapons.squareThatSee(player);
+
+
+        for (Square squareIterate : squaresTarget)
+        {
+                squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
+        }
+
+        return squareListCoordinatesAsString;
+
     }
 
     /**
@@ -209,7 +233,8 @@ public class GrenadeLauncher extends WeaponCard
         if (square != null) {
             for (Player playerIterate : square.getPlayerList())
             {
-                doDamage(playerIterate, 1);//Do one damage
+                if (!playerIterate.equals(player))
+                     doDamage(playerIterate, 1);//Do one damage
             }
         }
 
@@ -238,7 +263,7 @@ public class GrenadeLauncher extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        return new RequestGrenadeLauncher(checkAvailableMode(),checkBasicMode(), checkExtraGrenade(), checkBasicModeSquares());
+        return new RequestGrenadeLauncher(checkAvailableMode(),checkBasicMode(), checkExtraGrenade(), checkBasicModeSquares(), checkAllSquaresISee());
     }
 
 

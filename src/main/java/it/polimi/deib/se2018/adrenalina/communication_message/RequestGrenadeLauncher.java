@@ -13,9 +13,10 @@ import java.util.List;
 public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 {
     //Attribute for the request
-    private List<ColorId> playersBasicMode;
+    private List<ColorId> playerBasicMode;
     private List<String> squaresExtraGrenadeAsString;
     private HashMap<ColorId, List<String>> hashMapToMovePlayers;
+    private List<String> allSquaresPlayerSees;
 
     //Attribute for the response
     private ColorId targetBasicMode;
@@ -26,13 +27,14 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
 
-    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers)
+    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers, List<String> allSquaresPlayerSees)
     {
         this.nameAdditionalmode = "modalità granata extra";
         this.availableMethod = availableMethod;
-        this.playersBasicMode = playersBasicMode;
+        this.playerBasicMode = playerBasicMode;
         this.hashMapToMovePlayers = hashMapToMovePlayers;
         this.squaresExtraGrenadeAsString = squaresExtraGrenadeAsString;
+        this.allSquaresPlayerSees = allSquaresPlayerSees;
         responseIsReady = false;
     }
 
@@ -57,7 +59,9 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     }
 
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
+    public void printActionsAndReceiveInput(Terminal terminal)
+    {
+        this.terminal=terminal;
         int choice=0;
 
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
@@ -67,7 +71,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         }
         if (availableMethod[1])//Print the possible effects
         {
-            terminal.addOptionInput("2:attacco base e granata extra");
+            terminal.addOptionInput("2: attacco base e granata extra");
         }
 
         if (availableMethod[1])//Print the possible effects
@@ -137,6 +141,8 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         targetSquareToMoveBasicModeAsString = squaresAsString.get(choice - 1);
 
+        if (!squaresExtraGrenadeAsString.contains(targetSquareToMoveBasicModeAsString) && allSquaresPlayerSees.contains(targetSquareToMoveBasicModeAsString))
+            squaresExtraGrenadeAsString.add(targetSquareToMoveBasicModeAsString);
 
 
     }
