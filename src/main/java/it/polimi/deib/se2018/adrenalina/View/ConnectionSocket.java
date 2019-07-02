@@ -119,6 +119,7 @@ public class ConnectionSocket extends Connection implements Runnable
             socket.close();
             active = false;
             view.checkState();
+            view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
         } catch (IOException e)
         {
             return;
@@ -145,6 +146,7 @@ public class ConnectionSocket extends Connection implements Runnable
             System.out.println(e.getMessage());
             active = false;
             view.checkState();
+            view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
             return false;
         }
 
@@ -154,6 +156,7 @@ public class ConnectionSocket extends Connection implements Runnable
 
         active = false;
         view.checkState();
+        view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
         return false;
 
 

@@ -200,7 +200,7 @@ public class CyberbladeTest
 
         assertEquals(2,pPurple.getNumberOfDamagePoint());
         assertEquals(2,pBlue.getNumberOfDamagePoint());
-        assertEquals(0,pYellow.getAmmoRed());
+        assertEquals(0,pYellow.getAmmoYellow());
         assertEquals(board.getArena().getSquare(4,1),pYellow.getSquare());
     }
 
@@ -220,7 +220,7 @@ public class CyberbladeTest
         weap.basicMode(pBlue,ordf,pGrey,4,2);
 
         assertEquals(2,pGrey.getNumberOfDamagePoint());
-        assertEquals(0,pPurple.getAmmoRed());
+        assertEquals(0,pPurple.getAmmoYellow());
         assertEquals(board.getArena().getSquare(4,2),pPurple.getSquare());
         assertEquals(2,pBlue.getNumberOfDamagePoint());
     }

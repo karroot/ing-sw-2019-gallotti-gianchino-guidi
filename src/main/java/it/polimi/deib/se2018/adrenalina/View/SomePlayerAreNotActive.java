@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.communication_message.GenericMessage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -64,6 +65,7 @@ public class SomePlayerAreNotActive implements StateVirtualView
             view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials(Sending colorId)
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             view.getConnections().add(connection);//Add the new connection to the list
+            view.sendMessageGenericBroadcast(new GenericMessage("Player"+oldConnectionSocket.getPlayer()+" si è riconnesso"));
         }
         else
             {

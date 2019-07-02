@@ -35,7 +35,7 @@ public class Controller implements Observer<ResponseInput>
     private GameBoard g1=null;
     private Player roundPlayer=null;
     private int skullCounter;
-    private boolean terminatorMode=false;
+    private boolean terminatorMode = false;
     private int codeArena;
     public static boolean first;
     //Controller deve avere un riferimento alla virtual view

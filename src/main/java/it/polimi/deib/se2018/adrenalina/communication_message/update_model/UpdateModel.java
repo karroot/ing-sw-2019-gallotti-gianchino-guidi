@@ -34,6 +34,11 @@ public class UpdateModel extends MessageNet
                 .collect(Collectors.toList());
 
         this.dataOfBoard = new BoardImmutable(board);//Obtain the dates of the Game board
+
+        if (board.isTerminatorMode())//If the terminator mode is on
+        {
+            dataOfAllPlayer.add(new PlayerImmutable(board.getTermi()));//Add also the date of terminator
+        }
     }
 
     /**

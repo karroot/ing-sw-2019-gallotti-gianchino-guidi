@@ -76,6 +76,7 @@ public class ConnectionRMI extends Connection implements Runnable
     {
         active = false;
         view.checkState();
+        view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
     }
 
     /**
@@ -98,6 +99,7 @@ public class ConnectionRMI extends Connection implements Runnable
             System.out.println(e.getMessage());
             active = false;
             view.checkState();
+            view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
             return false;
         }
 
@@ -106,6 +108,7 @@ public class ConnectionRMI extends Connection implements Runnable
 
         active = false;
         view.checkState();
+        view.sendMessageGenericBroadcast(new GenericMessage("Player:"+player+" è disconnesso"));
         return false;
 
 
