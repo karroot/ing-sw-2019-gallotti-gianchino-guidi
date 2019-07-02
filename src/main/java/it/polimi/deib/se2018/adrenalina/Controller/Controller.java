@@ -134,9 +134,10 @@ public class Controller implements Observer<ResponseInput>
         if(g1.getAllPlayer().size()<5)
             g1.setTerminatorMode(terminatorMode);
 
-        if(g1.isTerminatorMode())
-            termi= new Player(ColorId.PURPLE,"teminator","terminator",false);
-
+        if(g1.isTerminatorMode()) {
+            termi = new Player(ColorId.PURPLE, "teminator", "terminator", false);
+            g1.setTermi(termi);
+        }
         //aggiungi terminator in updatemodel
 
 
@@ -1735,7 +1736,8 @@ if(filteredPlayer!=null){
             spawnTerminator(response.getTargetSpawnPoint());
         }
         else {
-            drawPowerup(true);
+            if(!firstRound)
+                drawPowerup(true);
 
             updateModel();
 
@@ -1809,7 +1811,10 @@ if(filteredPlayer!=null){
      */
     private void askForFirstSpawn() throws InterruptedException, ExecutionException
     {
-        drawPowerup(false);
+        if(roundPlayer.getPowerupCardList().isEmpty()){
+            drawPowerup(false);
+            drawPowerup(true);
+        }
     
         askForRespawn(roundPlayer);
 
