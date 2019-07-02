@@ -1,9 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
+import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
 public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 {
     //Attribute for the request
-    private List<ColorId> playerBasicMode;
+    private  HashMap<ColorId, String> playerBasicMode;
     private List<String> squaresExtraGrenadeAsString;
     private HashMap<ColorId, List<String>> hashMapToMovePlayers;
     private List<String> allSquaresPlayerSees;
@@ -27,7 +29,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
 
-    public RequestGrenadeLauncher(boolean[] availableMethod, List<ColorId> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers, List<String> allSquaresPlayerSees)
+    public RequestGrenadeLauncher(boolean[] availableMethod,  HashMap<ColorId, String> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers, List<String> allSquaresPlayerSees)
     {
         this.nameAdditionalmode = "modalità granata extra";
         this.availableMethod = availableMethod;
@@ -96,18 +98,20 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     protected void inputBasicMode()
     {
         int i = 1;
+        List<ColorId> colorIdList = new ArrayList<>();
 
         terminal.addTextInput("Scegli un player bersaglio:");
 
-        for (ColorId colorIdIterate : playersBasicMode)
+        for (ColorId colorIdIterate : playerBasicMode.keySet())
         {
             terminal.addOptionInput(i + " " + colorIdIterate);
+            colorIdList.add(colorIdIterate);
             i++;
         }
 
         int choice = terminal.inputInt(1, i - 1);
 
-        targetBasicMode = playersBasicMode.get(choice - 1);
+        targetBasicMode = colorIdList.get(choice - 1);
 
         //Ask if the user wants move the target
         terminal.addTextInput("Vuoi Spostare il bersaglio?");
@@ -129,7 +133,9 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         int w = 1;
 
-        List<String> squaresAsString = hashMapToMovePlayers.get(targetBasicMode);
+        List<String> squaresAsString = new ArrayList<>();
+
+        squaresAsString.addAll(hashMapToMovePlayers.get(targetBasicMode));
 
         for (String squareAsStringIterate : squaresAsString)
         {
@@ -141,8 +147,15 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         targetSquareToMoveBasicModeAsString = squaresAsString.get(choice - 1);
 
+        if (squaresExtraGrenadeAsString.contains(targetSquareToMoveBasicModeAsString))
+            squaresExtraGrenadeAsString.remove(playerBasicMode.get(targetBasicMode));
+
         if (!squaresExtraGrenadeAsString.contains(targetSquareToMoveBasicModeAsString) && allSquaresPlayerSees.contains(targetSquareToMoveBasicModeAsString))
+        {
             squaresExtraGrenadeAsString.add(targetSquareToMoveBasicModeAsString);
+            squaresExtraGrenadeAsString.remove(playerBasicMode.get(targetBasicMode));
+        }
+
 
 
     }

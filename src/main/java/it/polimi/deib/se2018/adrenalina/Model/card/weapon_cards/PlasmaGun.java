@@ -76,10 +76,13 @@ public class PlasmaGun extends WeaponCard
 
         if  (isLoaded()&& player.getAmmoBlue()>0 && player.playerThatSee(player.getSquare().getGameBoard()).size()>1)
             availableMethod[1] = true;
+
         if (isLoaded())
             availableMethod[2] = true;
+
         if(isLoaded() && (checkPhaseGlide().size()>1) )
             availableMethod[3] = true;
+
         return availableMethod;
 
     }

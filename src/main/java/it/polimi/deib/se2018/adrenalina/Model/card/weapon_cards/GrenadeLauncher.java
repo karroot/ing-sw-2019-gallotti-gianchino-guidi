@@ -67,16 +67,21 @@ public class GrenadeLauncher extends WeaponCard
      * @return a list of players as possible targets
      * @throws IllegalStateException if this card doesn't belong at a player
      */
-    private List<Player> checkBasicModePlayers() throws IllegalStateException
+    private HashMap<Player, Square> checkBasicModePlayers() throws IllegalStateException
     {
 
         Set<Player> playersTarget = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
 
         playersTarget.remove(player); //Remove the player that has this card
 
-        List<Player> playerListToReturn = new ArrayList<>();
-        playerListToReturn.addAll(playersTarget);
-        return playerListToReturn; //Returns all targets
+        HashMap<Player, Square> hashMapToReturn = new HashMap<>();
+
+        for (Player playerIterate : playersTarget)
+        {
+            hashMapToReturn.put(playerIterate, playerIterate.getSquare());
+        }
+
+        return hashMapToReturn; //Returns all targets
     }
 
     /**
@@ -84,21 +89,19 @@ public class GrenadeLauncher extends WeaponCard
      *
      * @return a list of ColorId of possible targets
      */
-    public List<ColorId> checkBasicMode()
+    public  HashMap<ColorId, String>checkBasicMode()
     {
-        if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        List<ColorId> colorIdList = new ArrayList<>();
-        List<Player> playerList;
-        playerList = checkBasicModePlayers();
+        HashMap<ColorId, String> colorIdStringHashMap = new HashMap<>();
+        HashMap<Player, Square> playerSquareHashMap;
+        playerSquareHashMap = checkBasicModePlayers();
 
-        for (Player playerIterate : playerList)
+        for (Player playerIterate : playerSquareHashMap.keySet())
         {
-            colorIdList.add(playerIterate.getColor());
+            colorIdStringHashMap.put(playerIterate.getColor(), playerIterate.getSquare().toStringCoordinates());
         }
 
-        return colorIdList; //Returns all targets
+        return colorIdStringHashMap; //Returns all targets
 
     }
 
@@ -110,14 +113,20 @@ public class GrenadeLauncher extends WeaponCard
     private HashMap<ColorId, List<String>> checkBasicModeSquares ()
     {
         HashMap<ColorId, List<String>> hashMapToReturn = new HashMap<>();
-        List<ColorId> colorIdList = checkBasicMode();
+        List<ColorId> colorIdList = new ArrayList<>();
+        colorIdList.addAll(checkBasicMode().keySet());
         List<String> squareAsStringCoordinatesList = new ArrayList<>();
-        Set<Square> squareSet;
+        Set<Square> squareSet = new HashSet<>();
 
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            squareSet = player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
+            squareSet = new HashSet<>();
+            squareAsStringCoordinatesList = new ArrayList<>();
+            squareSet = player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getGameBoard().getArena()
+                    .squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getX(),
+                                            player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getY(),
+                                        1);
 
             for (Square squareIterate : squareSet)
             {
@@ -126,8 +135,6 @@ public class GrenadeLauncher extends WeaponCard
 
             hashMapToReturn.put(colorIdIterate, squareAsStringCoordinatesList);
 
-            squareSet.clear();
-            squareAsStringCoordinatesList.clear();
         }
 
         return hashMapToReturn;
@@ -216,8 +223,6 @@ public class GrenadeLauncher extends WeaponCard
      */
     public void extraGrenade (String squareTargetCoordinatesAsString)
     {
-        if (!checkAvailableMode()[1])//check mode
-            throw  new IllegalStateException("Granata extra dell'arma "+name+" non eseguibile.");
 
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);

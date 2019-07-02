@@ -46,20 +46,25 @@ public class VortexCannon extends WeaponCard
         availableMethod[0] = false;
         availableMethod[1] = false;
 
-        List<Square> squareList = new ArrayList<>();
+        HashMap<Square, List<Player>> hashMapCheck = checkBasicModeFull();
 
-        squareList.addAll(MethodsWeapons.squareThatSee(player));
-        squareList.remove(player.getSquare());
-
-     //  devo controllare che tutti gli square abbiano almeno 1 player a distanza 1 per il check
-        if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, squareList))
+        if (isLoaded())
         {
+            if (!hashMapCheck.keySet().isEmpty())
                 availableMethod[0] = true;
         }
 
-        if (isLoaded && availableMethod[0] &&  player.getAmmoRed() >= 1)
+        if (isLoaded() && availableMethod[0] &&  player.getAmmoRed() >= 1)
         {
-            availableMethod[1] = true;
+            for (Square squareIterate : hashMapCheck.keySet())
+            {
+                if (hashMapCheck.get(squareIterate).size()>1)
+                {
+                    availableMethod[1] = true;
+                    break;
+                }
+            }
+
         }
 
         return availableMethod;
@@ -69,12 +74,9 @@ public class VortexCannon extends WeaponCard
     /**
      *
      * @return
-     * @throws IllegalStateException
      */
-    private HashMap<Square, List<Player>> checkBasicModeFull() throws IllegalStateException
+    private HashMap<Square, List<Player>> checkBasicModeFull()
     {
-        if (!checkAvailableMode()[0])//check mode
-            throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         HashMap<Square, List<Player>> hashMapreturn = new HashMap<>();
 
@@ -82,19 +84,33 @@ public class VortexCannon extends WeaponCard
 
         List<Square> squareTarget = new ArrayList<>();
         List<Player> playersTarget = new ArrayList<>();
+        List<Square> squareDistance1 = new ArrayList<>();
+
+
         squareTarget.addAll(MethodsWeapons.squareThatSee(player));
         squareTarget.remove(player.getSquare()); //create squarelist of possible vortex locations
 
         for (Square squareIterate: squareTarget)
         {
-            playersTarget = new ArrayList<>();
+            List<Player> playerListHashMap = new ArrayList<>();
+            playersTarget.clear();
+            squareDistance1.clear();
             playerTemp.setSquare(squareIterate);
-            for (Square squareIterate2: playerTemp.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1)) //all the square at distance 1 from the possible location of the vortex
+            squareDistance1.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(playerTemp.getSquare().getX(), playerTemp.getSquare().getY(), 1));
+            for (Square squareIterate2: squareDistance1) //all the square at distance 1 from the possible location of the vortex
                 {
                   playersTarget.addAll(squareIterate2.getPlayerList());
+                  if (playersTarget.contains(player))
+                      playersTarget.remove(player);
+                  if (playersTarget.contains(playerTemp))
+                      playersTarget.remove(playerTemp);
                 }
-            if (!playersTarget.isEmpty())
-                hashMapreturn.put(squareIterate, playersTarget);
+
+            playerListHashMap.addAll(playersTarget);
+
+            if (!playerListHashMap.isEmpty())
+                hashMapreturn.put(squareIterate, playerListHashMap);
+
         }
 
         return hashMapreturn;
@@ -106,67 +122,33 @@ public class VortexCannon extends WeaponCard
      *
      * @return
      */
-    private List<String> checkBasicModeSquares ()
-    {
-        HashMap<Square, List<Player>> squarePlayersHashMap = checkBasicModeFull();
-
-        List<String> squareListCoordinatesAsString = new ArrayList<>();
-
-        for (Square squareIterate : squarePlayersHashMap.keySet())
-            squareListCoordinatesAsString.add(squareIterate.toStringCoordinates());
-
-        return squareListCoordinatesAsString;
-
-    }
-
-
-    /**
-     *
-     * @param squareTargetCoordinatesAsString
-     * @return
-     */
-    private List<ColorId> checkBasicModePlayers (String squareTargetCoordinatesAsString)
-    {
-        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
-        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
-
-        Square square = null;
-        List<ColorId> colorIdList = new ArrayList<>();
-
-        try {
-            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-        HashMap<Square, List<Player>> squarePlayersHashMap = checkBasicModeFull();
-
-        for (Player playerIterate : squarePlayersHashMap.get(square))
-            colorIdList.add(playerIterate.getColor());
-
-        return colorIdList;
-
-    }
-
-    /**
-     *
-     * @return
-     */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
         if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
+        HashMap<Square, List<Player>> hashMapFull = checkBasicModeFull();
+
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
-        List<String> stringListKeys = checkBasicModeSquares();
+        List<Player> playerList = new ArrayList<>();
+
+
         List<ColorId> colorIdListAttributes = new ArrayList<>();
 
-        for (String stringIterate : stringListKeys)
+        for (Square squareIterate : hashMapFull.keySet())
         {
-            colorIdListAttributes.clear();
-            colorIdListAttributes = checkBasicModePlayers(stringIterate);
-            hashMapToReturn.put(stringIterate, colorIdListAttributes);
+            colorIdListAttributes = new ArrayList<>();
+            playerList.clear();
+
+            playerList.addAll(hashMapFull.get(squareIterate));
+
+            for (Player playerIterate : playerList)
+            {
+                colorIdListAttributes.add(playerIterate.getColor());
+            }
+
+            hashMapToReturn.put(squareIterate.toStringCoordinates(), colorIdListAttributes);
         }
 
         return hashMapToReturn;
@@ -189,60 +171,13 @@ public class VortexCannon extends WeaponCard
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
 
+
         MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
 
         isLoaded = false;
     }
 
 
-    /**
-     *
-     * @param colorPlayerAlreadySelected
-     * @param squareTargetCoordinatesAsString
-     * @return
-     * @throws IllegalStateException
-     */
-    public List<ColorId> checkWithBlackHoleMode(ColorId colorPlayerAlreadySelected, String squareTargetCoordinatesAsString) throws IllegalStateException
-    {
-        if (!checkAvailableMode()[1])//check mode
-            throw  new IllegalStateException("Modalità black hole dell'arma "+name+" non eseguibile.");
-
-        int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
-        int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
-
-        Square square = null;
-
-        try {
-            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
-
-        List<Player> playerList = new ArrayList<>();
-        List<Square> squareList = new ArrayList<>();
-        List<ColorId> colorIdList = new ArrayList<>();
-
-        squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(x, y, 1));
-        squareList.remove(square);
-
-        for (Square squareIterate : squareList)
-        {
-            playerList.addAll(squareIterate.getPlayerList());
-        }
-
-        for (Player playerIterate : playerList)
-        {
-            colorIdList.add(playerIterate.getColor());
-        }
-
-        colorIdList.remove(colorPlayerAlreadySelected);
-        colorIdList.remove(player.getColor());
-
-
-        if (!colorIdList.isEmpty())
-            return colorIdList;
-        else return null;
-    }
 
     /**
      *
@@ -252,8 +187,6 @@ public class VortexCannon extends WeaponCard
      */
     public void blackHoleMode (ColorId playerTarget1, ColorId playerTarget2, String vortexSquareAsString)
     {
-        if (!checkAvailableMode()[1])//check mode
-            throw  new IllegalStateException("Modalità black hole dell'arma "+name+" non eseguibile.");
 
         int x = MethodsWeapons.getXFromString(vortexSquareAsString);
         int y = MethodsWeapons.getYFromString(vortexSquareAsString);
@@ -280,9 +213,10 @@ public class VortexCannon extends WeaponCard
     public void useWeapon(ResponseInput responseMessage)
     {
         if (((ResponseVortexCannon) responseMessage).isMode())
-
+        {
+            basicMode(((ResponseVortexCannon) responseMessage).getTargetPlayerBasicMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
             blackHoleMode(((ResponseVortexCannon) responseMessage).getTarget1BlackHoleMode(), ((ResponseVortexCannon) responseMessage).getTarget2BlackHoleMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
-        else
+        } else
             basicMode(((ResponseVortexCannon) responseMessage).getTargetPlayerBasicMode(), ((ResponseVortexCannon) responseMessage).getTargetVortexSquareAsString());
     }
 

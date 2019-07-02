@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class VortexCannonTest
 {
 
-    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),1,8,new Stack<>());
+    GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
     Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
     Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
@@ -55,7 +55,7 @@ public class VortexCannonTest
     @Test
     public void checkAvailableMode()
     {
-        assertFalse(vortexCannon.checkAvailableMode()[0]);
+        assertTrue(vortexCannon.checkAvailableMode()[0]);
         assertFalse(vortexCannon.checkAvailableMode()[1]);
 
         p3.setSquare(start);
@@ -79,16 +79,13 @@ public class VortexCannonTest
 
         p3.setSquare(start);
 
-        MethodsWeapons.moveTarget(p2,1,2);
+        MethodsWeapons.moveTarget(p1,1,2);
+        MethodsWeapons.moveTarget(p2,2,3);
+        MethodsWeapons.moveTarget(p3,3,1);
 
         hashMap = vortexCannon.checkBasicMode();
 
-        assertTrue(hashMap.keySet().contains(p2.getSquare().toStringCoordinates()));
-//        assertTrue(hashMap.get(p2.getSquare().toStringCoordinates()).contains(p2.getColor()));
-
-        MethodsWeapons.moveTarget(p3,2,2);
-
-//        assertEquals(2, hashMap.get(p2.getSquare().toStringCoordinates()).size());
+        assertFalse(hashMap.keySet().contains(p2.getSquare().toStringCoordinates()));
 
 
     }
@@ -108,23 +105,6 @@ public class VortexCannonTest
     }
 
 
-    @Test
-    public void checkWithBlackHoleMode()
-    {
-        List<ColorId> colorIdList = new ArrayList<>();
-
-        p3.setSquare(start);
-
-        MethodsWeapons.moveTarget(p2,2,1);
-        MethodsWeapons.moveTarget(p3,4,1);
-
-        colorIdList = vortexCannon.checkWithBlackHoleMode(p2.getColor(), "x = 3, y = 1");
-
-        assertEquals(1, colorIdList.size());
-        assertTrue(colorIdList.contains(p3.getColor()));
-
-
-    }
 
     @Test
     public void blackHoleMode()

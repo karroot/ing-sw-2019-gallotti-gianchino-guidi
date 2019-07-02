@@ -19,7 +19,7 @@ public class RequestPlasmaGun extends  RequestInput
 
     //Attribute for the response
     private ColorId targetBasicEffect = null;//Target chosen for the basic mode
-   private int x =0;//Coordinates for the square chosen by user in the phase glide effect
+    private int x =0;//Coordinates for the square chosen by user in the phase glide effect
     private int y = 0;
     private String[] orderEffect;//array that represent the order of the effect chosen by user
 

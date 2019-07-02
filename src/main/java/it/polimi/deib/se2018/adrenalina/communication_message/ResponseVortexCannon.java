@@ -20,6 +20,7 @@ public class ResponseVortexCannon extends ResponseInput
         if (targetPlayerBasicMode != null && targetVortexSquareAsString != null)
         {
             this.targetPlayerBasicMode = targetPlayerBasicMode;
+            this.targetVortexSquareAsString = targetVortexSquareAsString;
             mode = false;
         }
 

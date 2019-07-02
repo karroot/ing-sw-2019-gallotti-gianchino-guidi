@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 public class RocketLauncher extends WeaponCard
 {
 
-    private boolean[] availableMethod = new boolean[4];
-    private Player dummie = new Player(ColorId.BLUE,"a","a",false);
+    private boolean[] availableMethod = new boolean[3];
+
 
     /**
      * It is the public constructor for the class.
@@ -52,11 +52,11 @@ public class RocketLauncher extends WeaponCard
         availableMethod[0] = false;//I suppose that the modes can't be used
         availableMethod[1] = false;
         availableMethod[2] = false;
-        availableMethod[3] = false;
 
         List<Square> squareList = new ArrayList<>();
 
         squareList.addAll(MethodsWeapons.squareThatSee(player));
+        squareList.remove(player.getSquare());
 
 
         if (isLoaded() && MethodsWeapons.areSquareISeeNotMineNotEmpty(player, squareList))
@@ -65,7 +65,7 @@ public class RocketLauncher extends WeaponCard
         }
 
 
-        if (isLoaded() && player.getAmmoBlue() > 0 && (checkPhaseGlide().size()>0))
+        if (isLoaded() && player.getAmmoBlue() > 0 && (!checkRocketJumpColors().isEmpty()))
         {
             if (availableMethod[0])
                 availableMethod[1] = true;
@@ -81,116 +81,152 @@ public class RocketLauncher extends WeaponCard
 
     }
 
-    /**
-     * It checks the target for the basic mode
-     *
-     * @return a list of ColorId of possible targets
-     * @throws IllegalStateException if the mode is not available
-     */
-    public List<ColorId> checkBasicMode() throws IllegalStateException
+    public List<String> allSquaresNoMove ()
     {
-        if (!checkAvailableMode()[0]) //check mode
-            throw  new IllegalStateException("Modalità xxx dell'arma: "+name+" non eseguibile");
+        List<Square> squareList = new ArrayList<>();
+        List<String> stringList = new ArrayList<>();
 
-        Set<Player> playersTarget = player.playerThatSee(player.getSquare().getGameBoard()); //Obtain all players that can be seen
-        List<ColorId> colorIdList = new ArrayList<>();
+        squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2));
 
-        playersTarget.remove(player);
+        for (Square square : squareList)
+            stringList.add(square.toStringCoordinates());
 
-        for (Player playerIterate : playersTarget)
-            colorIdList.add(playerIterate.getColor());
+        return stringList;
 
-        return colorIdList;//Returns all targets
     }
+
 
     /**
      *
      * @param colorPlayerTarget
-     * @param orderEffect
      * @param squareCoordinatesAsStringPlayertoMove
      * @param squareCoordinatesAsStringTargetToMove
      * @throws IllegalStateException
      */
-    public void basicMode (ColorId colorPlayerTarget , String[] orderEffect, String squareCoordinatesAsStringPlayertoMove, String squareCoordinatesAsStringTargetToMove) throws IllegalStateException {
-        if (!checkAvailableMode()[0]) //check mode
-            throw new IllegalStateException("Modalità xxx dell'arma: " + name + " non eseguibile");
-
-        int xplayer = MethodsWeapons.getXFromString(squareCoordinatesAsStringPlayertoMove);
-        int yplayer = MethodsWeapons.getYFromString(squareCoordinatesAsStringPlayertoMove);
-        int xtarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
-        int ytarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
-
-
-        int i = 0;
-        boolean[] booleans = checkAvailableMode();
+    public void basicMode (ColorId colorPlayerTarget , String squareCoordinatesAsStringPlayertoMove, String squareCoordinatesAsStringTargetToMove, boolean withFragWar) throws IllegalStateException
+    {
         boolean rememberToMoveTarget = false;
-        while (i < orderEffect.length)
+
+        int xplayer = 0;
+        int yplayer = 0;
+
+        int xtarget = 0;
+        int ytarget = 0;
+
+
+        if (squareCoordinatesAsStringPlayertoMove != null)
         {
-            if (orderEffect[i].equals("basic"))
-            {
-                if (!checkAvailableMode()[0])
-                    throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
+             xplayer = MethodsWeapons.getXFromString(squareCoordinatesAsStringPlayertoMove);
+             yplayer = MethodsWeapons.getYFromString(squareCoordinatesAsStringPlayertoMove);
+        }
 
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
-                rememberToMoveTarget = true;
-            }
-            if (orderEffect[i].equals("with rocket jump:") && booleans[1]) {
-                if (!checkAvailableMode()[2])
-                    throw  new IllegalStateException("Modalità xx dell'arma: "+name+" non eseguibile");
+        if (squareCoordinatesAsStringTargetToMove != null)
+        {
+            xtarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
+            ytarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
+        }
 
-                moveTarget(this.player, xplayer, yplayer);
-                player.setAmmoBlue(this.player.getAmmoBlue() - 1);
-            }
-            if (orderEffect[i].equals("with fragmenting warhead") && booleans[2])
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
+
+        if (squareCoordinatesAsStringTargetToMove != null)
+            rememberToMoveTarget = true;
+
+        if (withFragWar)
+            for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
             {
-                if (!checkAvailableMode()[1])
-                    throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
-                for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
-                {
-                    doDamage(playerIterate,1);
-                }
+                doDamage(playerIterate, 1);
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
-            i++;
 
-            if (rememberToMoveTarget)
-                moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0), xtarget, ytarget);
+        if (squareCoordinatesAsStringPlayertoMove != null)
+        {
+            moveTarget(this.player, xplayer, yplayer);
+            player.setAmmoBlue(this.player.getAmmoBlue() - 1);
+        }
+
+        if (rememberToMoveTarget)
+        {
+            moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0), xplayer, yplayer);
         }
 
         this.isLoaded = false;
+
     }
 
+
+
+
+    public HashMap<ColorId, List<String>> checkSquareToMoveBasicMode ()
+    {
+        HashMap<ColorId, List<String>> hashMapToReturn = new HashMap<>();
+
+        List<String> stringList = new ArrayList<>();
+        List<Square> squareList = new ArrayList<>();
+
+        for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer())
+        {
+            stringList = new ArrayList<>();
+            squareList = new ArrayList<>();
+
+            squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(playerIterate.getSquare().getX() , playerIterate.getSquare().getY(),1));
+
+            for (Square squareIterate : squareList)
+            {
+                stringList.add(squareIterate.toStringCoordinates());
+            }
+
+            hashMapToReturn.put(playerIterate.getColor(), stringList);
+        }
+
+        return hashMapToReturn;
+
+    }
 
     /**
      *
      * @return
      */
-    public List<ColorId> checkPlayersWithRocketJump ()
+    public boolean checkWithFragmentingWarhead ()
     {
-        Set<Player> playerSet = checkPhaseGlide();
-        List<ColorId> colorIdList = new ArrayList<>();
-        for (Player playerIterate : playerSet)
-            colorIdList.add(playerIterate.getColor());
+        List<Player> players = new ArrayList<>();
 
-        return colorIdList;
+        for (Player playerIterate : player.playerThatSee(player.getSquare().getGameBoard()))
+        {
+            if (playerIterate.getSquare() != player.getSquare())
+                players.add(playerIterate);
+        }
+
+        for (Player playerIterate : players)
+        {
+            if (playerIterate.getSquare().getPlayerList().size()>1)
+                return true;
+        }
+
+        return false;
     }
 
-
-    /**
-     *
-     * @return
-     */
-    public List<ColorId> checkWithFragmentingWarhead ()
+    public boolean checkWithFragmentingWarheadRocketJump ()
     {
-        List<Player> playersTargetList;
-        List<ColorId> colorIdList = new ArrayList<>();
-        playersTargetList = player.getSquare().getPlayerList();
-        playersTargetList.remove(player);
+        Map<Square, List<Player>> squarePlayerListMap = checkRocketJump();
+        List<Player> playerList = new ArrayList<>();
 
-        for (Player playerIterate : playersTargetList)
-            colorIdList.add(playerIterate.getColor());
+        for (Square squareIterate : squarePlayerListMap.keySet())
+        {
 
-        return colorIdList;
+            for (Player playerIterate : squarePlayerListMap.get(squareIterate))
+            {
+                playerList = new ArrayList<>();
+
+                playerList.addAll(playerIterate.getSquare().getPlayerList());
+                playerList.remove(player);
+
+                if (playerList.size()>1)
+                    return true;
+
+            }
+        }
+
+        return false;
     }
 
 
@@ -199,20 +235,68 @@ public class RocketLauncher extends WeaponCard
      * @return
      * @throws IllegalStateException
      */
-    private Set<Player> checkPhaseGlide()
+    private Map<Square, List<Player>> checkRocketJump()
     {
-        Set<Player> playerReachable = new HashSet<>();
-        Set<Square> target = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2); //Obtain all players that can be targets
+        Player dummie = new Player(null,null,null,false);
 
-        for(Square i : target)
+        Map<Square, List<Player>> squareColorIdListHashMap = new HashMap<>();
+        List<Player> playersSeen = new ArrayList<>();
+        List<Player> playersSeenCopy = new ArrayList<>();
+
+        List<Square> targetSquares = new ArrayList<>();
+        targetSquares.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX() , player.getSquare().getY(),2)); //Obtain all players that can be targets
+        targetSquares.remove(player.getSquare());
+
+        for(Square squareIterate : targetSquares)
         {
-            dummie.setSquare(i);
-            if  (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 0)
-                playerReachable.addAll(dummie.playerThatSee(dummie.getSquare().getGameBoard()));
+            playersSeen = new ArrayList<>();
+            playersSeenCopy = new ArrayList<>();
+            dummie.setSquare(squareIterate);
+
+            playersSeen.addAll(dummie.playerThatSee(player.getSquare().getGameBoard()));
+            playersSeen.remove(dummie);
+            playersSeen.remove(player);
+
+            playersSeenCopy.addAll(playersSeen);
+
+            for (Player playerIterate : playersSeen)
+            {
+                if (playerIterate.getSquare() == dummie.getSquare())
+                    playersSeenCopy.remove(playerIterate);
+            }
+
+            if (!playersSeenCopy.isEmpty())
+            {
+                squareColorIdListHashMap.put(squareIterate, playersSeenCopy);
+            }
         }
-        return playerReachable;//Returns all targets
+
+        return squareColorIdListHashMap; //Returns all targets
 
     }
+
+    public HashMap<String, List<ColorId>> checkRocketJumpColors ()
+    {
+        Map<Square, List<Player>> mapRocket = checkRocketJump();
+        HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
+        List<ColorId> colorIdList = new ArrayList<>();
+
+        for (Square squareIterate : mapRocket.keySet())
+        {
+            colorIdList = new ArrayList<>();
+
+            for (Player playerIterate : mapRocket.get(squareIterate))
+            {
+                colorIdList.add(playerIterate.getColor());
+            }
+
+            hashMapToReturn.put(squareIterate.toStringCoordinates(), colorIdList);
+        }
+
+        return hashMapToReturn;
+
+    }
+
 
     /**
      *
@@ -222,11 +306,16 @@ public class RocketLauncher extends WeaponCard
     public List<String> checkSquaresToMove() throws IllegalStateException
     {
 
+        List<String> stringList = new ArrayList<>();
         Square square = player.getSquare();
 
         Set<Square> squares = square.getGameBoard().getArena().squareReachableNoWall(square.getX(),square.getY(),2);//Obtain all the reachable square
+        for (Square squareIterate : squares)
+        {
+            stringList.add(squareIterate.toStringCoordinates());
+        }
 
-        return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());//Returns squares as a list of string);
+        return stringList;
     }
 
 
@@ -255,7 +344,7 @@ public class RocketLauncher extends WeaponCard
     @Override
     public void useWeapon(ResponseInput responseMessage)
     {
-        basicMode(((ResponseRocketLauncher) responseMessage).getTargetPlayerBasicMode(),((ResponseRocketLauncher) responseMessage).getOrderEffect(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringPlayerToMove(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringTargetToMove() ) ;
+        basicMode(((ResponseRocketLauncher) responseMessage).getTargetPlayerBasicMode(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringPlayerToMove(), ((ResponseRocketLauncher) responseMessage).getTargetSquareCoordinatesAsStringTargetToMove(), ((ResponseRocketLauncher) responseMessage).isWithFragWarhead() ) ;
     }
 
 
@@ -266,7 +355,7 @@ public class RocketLauncher extends WeaponCard
     @Override
     public RequestInput getRequestMessage()
     {
-        return new RequestRocketLauncher(checkAvailableMode(), checkPlayersBasicMode(), checkWithFragmentingWarhead(), player.getSquare().getX(), player.getSquare().getY(), checkSquaresToMove(), checkPlayersWithRocketJump());
+        return new RequestRocketLauncher(checkAvailableMode(), checkPlayersBasicMode(), checkRocketJumpColors(), checkSquareToMoveBasicMode(), allSquaresNoMove());
 
     }
 

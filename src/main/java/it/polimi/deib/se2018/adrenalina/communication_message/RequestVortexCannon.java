@@ -16,15 +16,13 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 {
     //Attribute for the request
     private HashMap<String, List<ColorId>> hashMapBasicMode;
-    private List<ColorId> playersBasicMode;
-    private List<String> squaresListBasicMode;
-    private List<ColorId> playersBlackHoleMode;
 
     //Attribute for the response
     private ColorId targetPlayerBasicMode;
     private String targetVortexSquareAsString;
     private ColorId target1BlackHoleMode;
     private ColorId target2BlackHoleMode = null;
+    private boolean mode = false;
 
     public RequestVortexCannon(boolean[] availableMethod, HashMap<String, List<ColorId>> hashMapBasicMode)
     {
@@ -42,9 +40,8 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         if (mode)
         {
             return new ResponseVortexCannon(targetPlayerBasicMode , targetVortexSquareAsString, target1BlackHoleMode, target2BlackHoleMode);
-        }
-
-        return new ResponseVortexCannon(targetPlayerBasicMode, targetVortexSquareAsString, null,null);
+        } else
+            return new ResponseVortexCannon(targetPlayerBasicMode, targetVortexSquareAsString, null,null);
 
     }
 
@@ -68,10 +65,14 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         }
         else choice = terminal.inputInt(1, 1);
 
-        inputBasicMode();
+        if (choice==1)
+        {
+            inputBasicMode();
+        }
 
         if (choice==2)
         {
+            mode = true;
             inputAdditionalMode();
         }
 
@@ -83,6 +84,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     protected void inputBasicMode() {
 
         int i = 1;
+        int j = 1;
 
         List<String> squaresPossiblesForVortexAsString = new ArrayList<>();
         squaresPossiblesForVortexAsString.addAll(hashMapBasicMode.keySet());
@@ -105,11 +107,11 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
         for (ColorId colorIdIterate : playersSelectedSquareAsList)
         {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(j + " " + colorIdIterate);
             i++;
         }
 
-        choice = terminal.inputInt(1, i - 1);
+        choice = terminal.inputInt(1, j - 1);
 
        targetPlayerBasicMode = playersSelectedSquareAsList.get(choice - 1);
 
@@ -120,37 +122,69 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     protected void inputAdditionalMode() {
 
         int i = 1;
+        int j = 1;
 
-        List<ColorId> colorIdList = new ArrayList<>();
-        colorIdList.addAll(hashMapBasicMode.get(targetVortexSquareAsString));
-        colorIdList.remove(targetPlayerBasicMode);
+        List<String> squaresPossiblesForVortexAsString = new ArrayList<>();
 
-        terminal.addTextInput("Scegli un bersaglio per la modalità black hole:");
+        for (String squareStringIterate : hashMapBasicMode.keySet()) {
+            if (hashMapBasicMode.get(squareStringIterate).size() > 1)
+                squaresPossiblesForVortexAsString.add(squareStringIterate);
+        }
 
-        for (ColorId colorIdIterate : colorIdList) {
-            terminal.addOptionInput(i + " " + colorIdList);
+        terminal.addTextInput("Scegli uno square bersaglio dove aprire il vortice:");
+
+        for (String squareAsStringIterate : squaresPossiblesForVortexAsString) {
+            terminal.addOptionInput(i + " " + squareAsStringIterate);
             i++;
         }
 
         int choice = terminal.inputInt(1, i - 1);
 
-        target1BlackHoleMode = colorIdList.get(choice - 1);
+        targetVortexSquareAsString = squaresPossiblesForVortexAsString.get(choice - 1);
+        terminal.addTextInput("Scegli il player bersaglio per la modalità base:");
 
-        colorIdList.remove(choice - 1);
+        List<ColorId> playersSelectedSquareAsList = new ArrayList<>();
+        playersSelectedSquareAsList.addAll(hashMapBasicMode.get(targetVortexSquareAsString));
 
-        if (!colorIdList.isEmpty()) {
+        for (ColorId colorIdIterate : playersSelectedSquareAsList) {
+            terminal.addOptionInput(j + " " + colorIdIterate);
+            i++;
+        }
 
-            i = 1;
+        choice = terminal.inputInt(1, j - 1);
+
+        targetPlayerBasicMode = playersSelectedSquareAsList.get(choice - 1);
+
+        playersSelectedSquareAsList.remove(targetPlayerBasicMode);
+
+        terminal.addTextInput("Scegli un bersaglio per la modalità buco nero:");
+
+        int k = 1;
+
+        for (ColorId colorIdIterate : playersSelectedSquareAsList) {
+            terminal.addOptionInput(k + " " + colorIdIterate);
+            k++;
+        }
+
+        int choice1 = terminal.inputInt(1, k - 1);
+
+        target1BlackHoleMode = playersSelectedSquareAsList.get(choice1 - 1);
+
+        playersSelectedSquareAsList.remove(target1BlackHoleMode);
+
+        if (!playersSelectedSquareAsList.isEmpty()) {
+
+            int l = 1;
 
             terminal.addTextInput("Scegli un secondo bersaglio per la modalità buco nero:");
 
-            for (ColorId colorIdIterate : colorIdList) {
-                terminal.addOptionInput(i + " " + colorIdList);
-                i++;
+            for (ColorId colorIdIterate : playersSelectedSquareAsList) {
+                terminal.addOptionInput(i + " " + colorIdIterate);
+                l++;
             }
 
-            choice = terminal.inputInt(1, i - 1);
-            target2BlackHoleMode = colorIdList.get(choice - 1);
+            int choice2 = terminal.inputInt(1, l - 1);
+            target2BlackHoleMode = playersSelectedSquareAsList.get(choice2 - 1);
         }
     }
 

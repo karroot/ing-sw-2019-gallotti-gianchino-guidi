@@ -12,13 +12,14 @@ public class ResponseRocketLauncher extends ResponseInput
     private ColorId targetPlayerBasicMode;
     private String targetSquareCoordinatesAsStringPlayerToMove;
     private String targetSquareCoordinatesAsStringTargetToMove;
-    private String[] orderEffect;
+    private boolean withFragWarhead;
 
-    public ResponseRocketLauncher (ColorId targetBasicEffect, String targetSquareCoordinatesAsStringPlayerToMove, String targetSquareCoordinatesAsStringTargetToMove, String[] orderEffect) {
+    public ResponseRocketLauncher (ColorId targetBasicEffect, String targetSquareCoordinatesAsStringPlayerToMove, String targetSquareCoordinatesAsStringTargetToMove, boolean withFragWarhead)
+    {
         this.targetPlayerBasicMode = targetBasicEffect;
         this.targetSquareCoordinatesAsStringPlayerToMove = targetSquareCoordinatesAsStringPlayerToMove;
         this.targetSquareCoordinatesAsStringTargetToMove = targetSquareCoordinatesAsStringTargetToMove;
-        this.orderEffect = orderEffect;
+        this.withFragWarhead = withFragWarhead;
     }
 
     public ColorId getTargetPlayerBasicMode() {
@@ -33,7 +34,8 @@ public class ResponseRocketLauncher extends ResponseInput
         return targetSquareCoordinatesAsStringTargetToMove;
     }
 
-    public String[] getOrderEffect() {
-        return orderEffect;
+
+    public boolean isWithFragWarhead() {
+        return withFragWarhead;
     }
 }

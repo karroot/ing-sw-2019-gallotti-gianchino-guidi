@@ -124,21 +124,8 @@ public class HellionTest {
         assertEquals(1, p2.checkMarker(p1.getColor()));
         assertEquals(1, p3.checkMarker(p1.getColor()));
 
-        try {
-            hellion.basicMode(p5.getColor());
-            fail();
-        } catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
 
-        try {
-            hellion.basicMode(p2.getColor());
-            fail();
-        } catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
+
 
         hellion.setLoaded(true);
         hellion.basicMode(p2.getColor()); //si resetta mark??!
@@ -183,22 +170,6 @@ public class HellionTest {
         assertEquals(0, p3.getNumberOfDamagePoint());
         assertEquals(2, p2.checkMarker(p1.getColor()));
         assertEquals(2, p3.checkMarker(p1.getColor()));
-
-        try {
-            hellion.basicMode(p5.getColor());
-            fail();
-        } catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
-
-        try {
-            hellion.basicMode(p2.getColor());
-            fail();
-        } catch (IllegalStateException e)
-        {
-            System.out.println(e);
-        }
 
     }
 
