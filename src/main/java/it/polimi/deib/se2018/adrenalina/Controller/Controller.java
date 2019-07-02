@@ -1739,6 +1739,30 @@ if(filteredPlayer!=null){
 
             updateModel();
 
+
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+
+                    try
+                    { virtualView.requestInput(new RequestToRespawn(), p.getColor());
+                        virtualView.getResponseWithInputs(p.getColor());
+
+                        return true;}
+                    catch (Exception e){
+                        return false;
+                    }
+                }
+            });
+
+            boolean an = executor.invokeAny(callableListA);
+            if (!an){ salta=true;
+                return;}
+            if (checkForAfk())
+                return;
+
+
             List<Color> powerList = new LinkedList<>();
             for (PowerUpCard pc : roundPlayer.getPowerupCardList()) {
                 powerList.add(pc.getColor());
