@@ -1746,10 +1746,11 @@ if(filteredPlayer!=null){
                 public Boolean call() throws Exception {
 
                     try
-                    { virtualView.requestInput(new RequestToRespawn(), p.getColor());
-                        virtualView.getResponseWithInputs(p.getColor());
+                    {
+                        virtualView.requestInput(new RequestToRespawn(), p.getColor());
 
-                        return true;}
+                        return true;
+                    }
                     catch (Exception e){
                         return false;
                     }

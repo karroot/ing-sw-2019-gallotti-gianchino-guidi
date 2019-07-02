@@ -29,8 +29,8 @@ public class SomePlayerAreNotActive implements StateVirtualView
     @Override
     public void insertConnection(Connection connection)
     {
-        view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials
 
+        view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials
         while (true) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
         {
             try
@@ -60,10 +60,10 @@ public class SomePlayerAreNotActive implements StateVirtualView
 
         if (oldConnectionSocket != null)//If the player was connected before
         {
-            view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             connection.setPlayer(oldConnectionSocket.getPlayer()); //Add the color of the player
+            view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials(Sending colorId)
+            view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             view.getConnections().add(connection);//Add the new connection to the list
-            connection.setPlayer(oldConnectionSocket.getPlayer());
         }
         else
             {

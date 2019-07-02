@@ -18,6 +18,8 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 import static java.lang.Thread.sleep;
 
 /**
+ * This class implements the server and the virtual View
  * @author Cysko7927
  */
 public class View extends Observable<ResponseInput> implements Observer<UpdateModel>,Runnable
@@ -40,7 +43,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     protected Thread timer;
     protected int lenghtTimer;
     private ExecutorService executor = Executors.newFixedThreadPool(10);
-    private List<Connection> connections = new ArrayList<>();
+    private List<Connection> connections = new LinkedList<>();
     protected  boolean creationIsFinished;
     protected boolean gameIsStarted;
     private StateVirtualView state;
@@ -65,6 +68,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         state = new StartLogin(this);
         controller = new Controller(AppServer.terinator,AppServer.codeArena,AppServer.skullCounter,this);
         register(controller);
+        connections = Collections.synchronizedList(connections);
     }
 
     /**
@@ -135,6 +139,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
             catch (Exception e)
             {
                 System.out.println("Messaggio: non mandato al player:"+z.getPlayer());
+                z.closeConnection();
             }
         }
     }
@@ -158,6 +163,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
             catch (Exception e)
             {
                 System.out.println("Copia model: non mandata al player:"+t.getPlayer());
+                t.closeConnection();
             }
         }
 
