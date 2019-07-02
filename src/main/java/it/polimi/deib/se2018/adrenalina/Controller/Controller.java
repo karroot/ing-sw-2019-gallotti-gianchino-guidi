@@ -378,6 +378,7 @@ public class Controller implements Observer<ResponseInput>
         if(msg instanceof Afk )
         {
             roundPlayer.setAfk(true);
+            virtualView.sendMessageGenericBroadcast(new GenericMessage(roundPlayer.getName() + " is afk"));
         }
         return roundPlayer.isAfk();
     }
@@ -761,11 +762,13 @@ public class Controller implements Observer<ResponseInput>
      */
     private void switcher(ColorId player) throws Exception
     {
+        MessageNet messageNet = null;
 
+try{virtualView.getResponseWithInputs(player);
 
-        virtualView.getResponseWithInputs(player);
-
-        MessageNet messageNet = msg;
+     messageNet = msg;
+}
+catch (Exception e){}
 
         while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
@@ -812,9 +815,11 @@ public class Controller implements Observer<ResponseInput>
 
             if(!roundPlayer.isAfk() && !salta)
             {
-                virtualView.getResponseWithInputs(player);
+                try{virtualView.getResponseWithInputs(player);
 
-                messageNet = msg;
+                    messageNet = msg;
+                }
+                catch (Exception e){}
             }
 
 
