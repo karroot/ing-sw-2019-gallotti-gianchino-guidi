@@ -19,7 +19,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     private ColorId colorId;
 
     Terminal terminal;
-    private boolean firstTurn;
     private final Object msg = new Object();
     private int cont;
     private RequestInput messageBuffer;
@@ -39,7 +38,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
         this.name = name;
         this.action_hero_comment = action_hero_comment;
-        firstTurn = true;
 
         if (!gui)
         {
@@ -156,10 +154,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
     /**
      * Methods that create a new game
      */
-    public void newGame()
-    {
-        firstTurn = true;
-    }
 
     public void showBoard()
     {
@@ -171,33 +165,6 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      */
     public void startRound()
     {
-
-        if (firstTurn) //if this is the first turn (The controller before to start the round must give at player two powerUp)
-        {
-
-            //Ask at the player which power up to use for the respawn
-
-            RequestInput messageFromNetwHandl = getMessageFromNetwHandl();
-
-            messageFromNetwHandl.printActionsAndReceiveInput(terminal);
-
-            ResponseInput responseInput = messageFromNetwHandl.generateResponseMessage();
-
-            try
-            {
-                notify(responseInput);
-            }
-            catch (Exception e)
-            {
-                terminal.showError("Sei stato disconesso : Turno interroto");
-                terminal.showError(e.getMessage());
-                Thread.currentThread().interrupt();
-                throw new ThreadDeath();
-            }
-
-            firstTurn = false;
-        }
-
 
         //#######Player can use a teleporter or a newton###############
 
@@ -762,6 +729,18 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                     //with all power ups that the player chose to increase his ammo
 
                     notify(responseForController);//Send the message at controller
+
+                    messageRequest = getMessageFromNetwHandl();//Obtain the request message
+
+                    while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
+                    {
+                        messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
+                        responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
+                        //with the response (yes or no) and the inputs needed
+                        notify(responseForController);//Send the message of response at controller
+                        messageRequest = getMessageFromNetwHandl();//Obtain the request message
+                    }
+                    //If the message is an "End" then there aren't more powerUps to ask
                 }
             }
 

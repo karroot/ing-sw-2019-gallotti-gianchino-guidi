@@ -46,6 +46,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     private StateVirtualView state;
     private UpdateModel lastModelUpdated; //This variable saves the last version of the model updated
     private Controller controller;
+    private Thread mainThread;//Thread that executes the logic of the match on controller
 
 
     /**
@@ -290,7 +291,17 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
             gameIsStarted = true;
             System.out.println("Partita Iniziata");
-            controller.startGame();//Method that starts the MATCH
+            Runnable code = new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    controller.startGame();
+                }
+            };
+
+            mainThread = new Thread(code);
+            mainThread.start();//This thread starts the match
         }
 
 

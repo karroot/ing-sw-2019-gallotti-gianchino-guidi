@@ -559,6 +559,8 @@ public class Controller implements Observer<ResponseInput>
              if(roundPlayer.isFirstRound())
                  askForFirstSpawn();
 
+
+
             try
             {
                 switcher(rp.getColor());
@@ -1458,11 +1460,11 @@ if(filteredPlayer!=null){
                 }
                 if (pc.contains("RED"))
                 {
-                    roundPlayer.setAmmoBlue(roundPlayer.getAmmoRed()+1);
+                    roundPlayer.setAmmoRed(roundPlayer.getAmmoRed()+1);
                 }
                 if (pc.contains("YELLOW"))
                 {
-                    roundPlayer.setAmmoBlue(roundPlayer.getAmmoYellow()+1);
+                    roundPlayer.setAmmoYellow(roundPlayer.getAmmoYellow()+1);
                 }
 
 
