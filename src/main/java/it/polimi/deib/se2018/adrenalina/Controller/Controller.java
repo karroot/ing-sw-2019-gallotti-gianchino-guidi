@@ -190,7 +190,7 @@ public class Controller implements Observer<ResponseInput>
         {
             if(p.isDead())
             {
-                //vai a vedere chi è il colore del [10] segnalino
+
 
 
 
@@ -216,6 +216,20 @@ public class Controller implements Observer<ResponseInput>
                         }
                         lastKillerColor.add(c.getColor());
                     }
+                    //if terminator mode is active
+                    if(g1.isTerminatorMode())
+                    {
+                        termi.setScore(temppoint.get(termi.getColor()));
+                        if(p.getDamageCounter()[10].equals(termi.getColor())) {
+
+                            if( lastKillerColor.contains(termi.getColor()))
+                                termi.setScore(termi.getScore()+1);
+                            g1.setKillShotTrack(termi.getColor(), 1);
+
+
+                            lastKillerColor.add(termi.getColor());
+                        }
+                    }
                 }
 
 
@@ -228,6 +242,46 @@ public class Controller implements Observer<ResponseInput>
                 askForRespawn(p);
             }
 
+        }
+
+        if(g1.isTerminatorMode())
+        {
+            if(termi.isDead())
+            {
+                if(g1.getSkullCounter()>0)
+                    g1.setSkullCounter(g1.getSkullCounter()-1);
+
+
+
+
+                temppoint = termi.calculateScoreForEachPlayer();
+                for(Player c : g1.getAllPlayer())
+                {
+                    c.setScore(temppoint.get(c.getColor()));
+                    if(termi.getDamageCounter()[10].equals(c.getColor())) {
+
+                        if( lastKillerColor.contains(c.getColor()))
+                            c.setScore(c.getScore()+1);
+                        g1.setKillShotTrack(c.getColor(), 1);
+
+                        if (termi.getDamageCounter()[11].equals(c.getColor())) {
+                            g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
+                            c.addMark(termi.getColor());
+                        }
+                        lastKillerColor.add(c.getColor());
+                    }
+                }
+
+
+
+                if(g1.getSkullCounter()==0)
+                {
+                    frenzy=true;
+                }
+
+                askForRespawn(termi);
+
+            }
         }
 
 
@@ -1622,6 +1676,33 @@ if(filteredPlayer!=null){
 
         if (g1.isTerminatorMode() && p.equals(termi))
         {
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception
+                {
+
+                    try
+                    {
+                        virtualView.requestInput(new RespawnTerminator(), p.getColor());
+
+
+                        return true;}
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
+                }
+            });
+            boolean an = executor.invokeAny(callableListA);
+
+
+
+            if (!an){ salta=true;
+                return;}
+            if (checkForAfk())
+                return;
+
             List<Callable<Boolean>> callableList = new LinkedList<>();
             callableList.add(new Callable<Boolean>() {
                 @Override
