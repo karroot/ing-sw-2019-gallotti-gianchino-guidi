@@ -39,6 +39,8 @@ public class GameBoard {
 
     private int code;
 
+    private Player termi;
+
 
 
     /**
@@ -182,8 +184,16 @@ public class GameBoard {
         return new ArrayList<>(killShotTrack);
     }
 
+    public Player getTermi() {
+        return termi;
+    }
+
     //Setter
     //-----------------------------
+
+    public void setTermi(Player termi) {
+        this.termi = termi;
+    }
 
     /**
      * It set the PowerUp card stack when it gets empty
