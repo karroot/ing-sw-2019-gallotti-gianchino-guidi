@@ -134,7 +134,8 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         {
             try
             {
-                z.send(message);
+                if (z.isActive())
+                    z.send(message);
             }
             catch (Exception e)
             {

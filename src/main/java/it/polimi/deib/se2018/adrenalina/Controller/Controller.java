@@ -6,6 +6,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
+import it.polimi.deib.se2018.adrenalina.View.Connection;
 import it.polimi.deib.se2018.adrenalina.View.Observer;
 import it.polimi.deib.se2018.adrenalina.View.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
@@ -63,6 +64,23 @@ public class Controller implements Observer<ResponseInput>
         return virtualView.getConnections().size();
     }
 
+
+    /**
+     * This method say how many players are connected and active(online)
+     * Hint: using when the phase of login is completed
+     * @return number of player connected and active
+     */
+    public int numberOfPlayerActive()
+    {
+
+        int cont = 0;
+        for (Connection t:virtualView.getConnections())
+        {
+            if (t.isActive())
+                cont++;
+        }
+        return cont;
+    }
 
 
     /**
