@@ -2,10 +2,7 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesy;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesyB;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 
@@ -82,6 +79,17 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
     };
 
     Thread logicFrenesy;
+
+    Runnable codeOfLogicTerminator = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startTerminator();
+        }
+    };
+
+    Thread logicTerminator;
 
     /**
      * Create a network Handler that handles the connection between the client and the server
@@ -246,6 +254,12 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
                 logicFrenesy.start();
             }
 
+            return;
+        }
+        else if (msg instanceof StartTerminator)
+        {
+            logicTerminator = new Thread(codeOfLogicTerminator);
+            logicTerminator.start(); //Start the thread that handles the respawn
             return;
         }
 

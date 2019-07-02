@@ -5,7 +5,11 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * This is a general class that will implements a request of input
+ * for a weapon with an additional mode
+ * @author Cysko7927
+ */
 public abstract class WeaponWithOneAdditionalEffects extends RequestInput
 {
     //Attribute for the request
@@ -21,6 +25,10 @@ public abstract class WeaponWithOneAdditionalEffects extends RequestInput
     //Attribute for the response
     protected boolean mode; //Represent if the user choices the basic mode(false) or the alternative mode(true)
 
+    /**
+     * Method that handles the inputs for the use of a weapon with an additional mode
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     { this.terminal=terminal;

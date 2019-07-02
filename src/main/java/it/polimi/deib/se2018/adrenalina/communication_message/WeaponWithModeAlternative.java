@@ -6,6 +6,8 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 import java.util.List;
 
 /**
+ * This is a general class that will implements a request of input
+ * for a weapon with two alternative mode
  * @author Cysko7927
  */
 public abstract class WeaponWithModeAlternative extends RequestInput
@@ -27,7 +29,7 @@ public abstract class WeaponWithModeAlternative extends RequestInput
 
     /**
      * Method that handles the inputs for the use of a weapon with two alternative mode
-     * @param terminal
+     * @param terminal terminal that will print the text and the option input at the user
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)

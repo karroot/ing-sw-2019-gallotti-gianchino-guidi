@@ -14,9 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.logging.Logger;
 
+/**
+ * This class implements the jframe that is the window with all the images and the information of the match
+ * to show at the user
+ */
 public class BoardGUI
 {
 
@@ -72,6 +74,10 @@ public class BoardGUI
     private int choice = -1; //represent the choice made by user(Default = -1 => The user didn't click on a button)
     private final Object choiceSyn = new Object(); //Variable to sync the read of input after that the user clicked
 
+    /**
+     * Create The gui for the match and it shows at the user
+     * @param terminal object terminal of the private view
+     */
     public BoardGUI(Terminal terminal)
     {
         this.terminal = (GUI) terminal;
@@ -161,7 +167,12 @@ public class BoardGUI
 
     }
 
-    //Methods to ask the input at the user
+
+    /**
+     * Method that inserted a text on input window to explain at the user
+     * the choice
+     * @param text text to print
+     */
     public synchronized void addTextForInput(String text)
     {
         textToAsk = new JLabel(text);
@@ -171,6 +182,10 @@ public class BoardGUI
         allBoardWindow.repaint();
     }
 
+    /**
+     * Method that inserted an option on input window through a bottom to click
+     * @param text text to print on the bottom
+     */
     public synchronized void addOptionForInput(String text)
     {
         JButton temp = new JButton(text);
@@ -182,6 +197,11 @@ public class BoardGUI
         allBoardWindow.repaint();
     }
 
+    /**
+     * Method that handle the request of input
+     * The bottom become clickable and the user can choose an option
+     * @return the integer that represent which bottom clicked the user
+     */
     public synchronized int getInputChoice()
     {
         allBoardWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -230,55 +250,91 @@ public class BoardGUI
 
     }
 
-    //Methods that shows the weapon that are in the spawn Points
+    /**
+     * Methods that shows the weapon that are in the spawn Points Yellow
+     * @param text text with the name of all the weapons that are in the spawn Points Yellow
+     */
     public void setWeaponPointY(String text)
     {
         weaponYPoint.setText("Armi nello spawn Point Giallo:"+text);
     }
 
+    /**
+     * Methods that shows the weapon that are in the spawn Points Red
+     * @param text text with the name of all the weapons that are in the spawn Points Red
+     */
     public void setWeaponPointR(String text)
     {
         weaponRPoint.setText("Armi nello spawn Point Rosso:"+text);
     }
 
+    /**
+     * Methods that shows the weapon that are in the spawn Points Blue
+     * @param text text with the name of all the weapons that are in the spawn Points Blue
+     */
     public void setWeaponPointB(String text)
     {
         weaponBPoint.setText("Armi nello spawn Point Blu:"+text);
     }
 
-    //Methods that shows the ammo of the player
+
+    /**
+     * Methods that shows the ammo yellow of the player on the gui
+     * @param text ammo yellow of the player
+     */
     public void setAmmoY(String text)
     {
         ammoYellow.setText("Munizioni Gialle:"+text);
     }
 
+    /**
+     * Methods that shows the ammo blue of the player on the gui
+     * @param text ammo blue of the player
+     */
     public void setAmmoB(String text)
     {
         ammoBlue.setText("Munizioni Blu:"+text);
     }
 
+    /**
+     * Methods that shows the ammo red of the player on the gui
+     * @param text ammo red of the player
+     */
     public void setAmmoR(String text)
     {
         ammoRed.setText("Munizioni Rosse:"+text);
     }
 
+    /**
+     * Method that add an option on the list of all the boards that the user can see
+     * @param player color of the player to add at the list
+     */
     public void setBoardsPossible(String player)
     {
         chosenBoard.addItem(player);
     }
 
+    /**
+     * Remove all the options on the list of all the boards that the user can see
+     */
     public void clearBoardsPossible()
     {
         chosenBoard.removeAllItems();
     }
 
-    //Methods that handles the player and the ammoTiles on Square
+    /**
+     * Add the figure of a player on a square
+     * @param indexOfSquare index that represents the square where to put the player
+     * @param player colorId that represents the player to put
+     */
     public void setPlayerOnSquare(int indexOfSquare,ColorId player)
     {
         allSquares[indexOfSquare].addPlayer(player);
     }
 
-    //Methods that clears all the square on the Arena : All the player and the ammotiles icon will reset
+    /**
+     * Methods that clears all the square on the Arena : All the player and the ammotiles icon will reset
+     */
     public void clearAllSquares()
     {
         for (SquareComponentGui t:allSquares)
@@ -287,12 +343,22 @@ public class BoardGUI
         }
     }
 
+    /**
+     * Add the figure of a ammo tile on a square
+     * @param indexOfSquare index that represents the square where to put the ammo tile
+     * @param code code that represents the ammo tile to put
+     */
     public void setAmmoTilesOnSquare(int indexOfSquare,int code)
     {
         allSquares[indexOfSquare].addAmmoTiles(code);
     }
 
-    //Method that handles the weapon showed
+    /**
+     * Add the figure of a weapon card on the player's board
+     * @param nameWeapon name of the weapon to add(If it is null the figure will not add)
+     * @param index index where to put the weapon(0-2)
+     * @param reloaded the weapon is loaded or not
+     */
     public void setWeapon(String nameWeapon,int index,boolean reloaded)
     {
         ImageIcon imageIcon;
@@ -322,7 +388,11 @@ public class BoardGUI
         }
     }
 
-    //Method that handles the powerUp showed
+    /**
+     * Add the figure of a power up on the player's board
+     * @param Pdu code that represents the power up (if Pdu is 0 the figure will not add)
+     * @param index index where to put the power up(0-2)
+     */
     public void setPower(int Pdu,int index)
     {
         ImageIcon imageIcon;
@@ -353,7 +423,10 @@ public class BoardGUI
         }
     }
 
-    //Method that shows the player's board
+    /**
+     * Set the image of the player's board and it shows it at the user
+     * @param colorId color of player's board
+     */
     public void setPlayerBoard(ColorId colorId)
     {
         ImageIcon imageIcon = new ImageIcon((AppClient.path+"board"+colorId+".PNG"));
@@ -361,25 +434,39 @@ public class BoardGUI
 
     }
 
-    //Method that shows the player's score
+    /**
+     * Method that shows the player's score on the windows
+     * @param score player's score
+     */
     public void setScore(int score)
     {
         panelScore.setText("Punteggio:"+score);
     }
 
-    //Show the mark that the player has too
+    /**
+     * Show the mark that the player has too
+     * @param text string with all the marks
+     */
     public void setTextMarker(String text)
     {
         textMarker.setText("Marchi che hai:"+text);
     }
 
-    //Show the arena represented by the code
+
+    /**
+     * Show the arena represented by the code
+     * @param codeArena code of the arena
+     */
     public void setArena(int codeArena)
     {
         arena.setIcon(new ImageIcon(AppClient.path+codeArena+".png"));
     }
 
-    //Show the skull on the player's Board
+
+    /**
+     * Show the skull on the player's Board
+     * @param deaths number of deaths during the match
+     */
     public void setSkullForScore(int deaths)
     {
         ImageIcon im;
@@ -392,14 +479,21 @@ public class BoardGUI
         }
     }
 
-    //Flips the player's board for the frenzy mode
+
+    /**
+     * Flips the player's board for the frenzy mode
+     * @param colorId color of player's board to flip
+     */
     public void setFlipped(ColorId colorId)
     {
         playerBoard.setIcon(new ImageIcon(AppClient.path+"boardF"+colorId+".png"));
     }
 
 
-    //Show all the damage Point on player's board
+    /**
+     * Show all the damage Point on player's board
+     * @param damagesPoints number of damage points
+     */
     public void setDamages(ColorId[] damagesPoints)
     {
         ImageIcon im;
@@ -416,7 +510,12 @@ public class BoardGUI
         }
 
     }
-    //Show the points on Skulls Track
+
+    /**
+     * Show the points on Skulls Track
+     * @param SkullCounter number of Skull counter
+     * @param tracks list of all the tracks on kill shoot track
+     */
     public void setPanelSkulls(int SkullCounter, List<Track> tracks)
     {
         int j=0;
@@ -428,16 +527,30 @@ public class BoardGUI
     }
 
     //GETTER and SETTER
+
+    /**
+     * Getter for all the input's button on input window
+     * @return lis of all the input's button on input window
+     */
     public List<JButton> getListOfAllOptions()
     {
         return new ArrayList<>(listOfAllOptions);
     }
 
+    /**
+     * Say if the input window is ready to receive an input(clicking button)
+     * @return true if the input window is ready to receive an input
+     */
     public boolean isOnInput()
     {
         return onInput;
     }
 
+    /**
+     * Method that it being used by class clickInput to set the integer that represents
+     * which button clicked the player
+     * @param choice integer that represents which button clicked the player
+     */
     public void setChoice(int choice)
     {
         synchronized (choiceSyn)
@@ -447,6 +560,10 @@ public class BoardGUI
         }
     }
 
+    /**
+     * Getter for the Jframe of the main window
+     * @return Jframe of the main window
+     */
     public JFrame getAllBoardWindow() {
         return allBoardWindow;
     }
@@ -604,6 +721,10 @@ class ClickInput implements ActionListener
 
     private BoardGUI boardGUI;
 
+    /**
+     * Constructor for this event handler
+     * @param boardGUI boardGui where there is the Jframe with all the information
+     */
     public ClickInput(BoardGUI boardGUI)
     {
         this.boardGUI = boardGUI;
@@ -649,15 +770,28 @@ class ClickInput implements ActionListener
     }
 }
 
-class ComboBoxSwitchBoards  implements ActionListener
+/**
+ * @author Cysko7927
+ * This class implement an Event handler for the Combo box that permits
+ * to switch between the various players' boards
+ */
+class ComboBoxSwitchBoards implements ActionListener
 {
 
     BoardGUI gui;
+    /**
+     * Constructor for this event handler
+     * @param gui boardGui where there is the Jframe with all the information
+     */
     public ComboBoxSwitchBoards(BoardGUI gui)
     {
         this.gui = gui;
     }
 
+    /**
+     * Invoked when the user click on the combo box to chose a different player's board to see
+     * @param e ActionEvent
+     */
     public void actionPerformed(ActionEvent e)
     {
         JComboBox cb = (JComboBox)e.getSource();

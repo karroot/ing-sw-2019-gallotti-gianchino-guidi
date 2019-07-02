@@ -2,5 +2,11 @@ package it.polimi.deib.se2018.adrenalina.communication_message.message_asking_co
 
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
-public class EndRound extends ResponseInput {
+/**
+ * This class being used by Controller to warn the view that a normal Round is finished
+ * @author Cysko7927
+ */
+public class EndRound extends ResponseInput
+{
+
 }

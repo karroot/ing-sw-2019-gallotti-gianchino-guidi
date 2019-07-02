@@ -1,10 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToRespawn;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.RequestToUseGrenade;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesy;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.StartFrenesyB;
+import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
@@ -88,6 +85,17 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
     Thread logicFrenesy;
 
+    Runnable codeOfLogicTerminator = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.startTerminator();
+        }
+    };
+
+    Thread logicTerminator;
+
     /**
      * Create a network handler tha handle the communication between the client and server
      * using RMI
@@ -131,7 +139,6 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
         register(view);
 
-        //todo bisogna richiedere le informazioni sul server(colore)
     }
 
     /**
@@ -237,9 +244,9 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
             logicRespawn.start(); //Start the thread that handles the respawn
             return;
         }
-        else if (msg instanceof StartFrenesy || msg instanceof StartFrenesyB)
+        else if (message instanceof StartFrenesy || msg instanceof StartFrenesyB)
         {
-            if (msg instanceof StartFrenesy)
+            if (message instanceof StartFrenesy)
             {
                 logicFrenesy = new Thread(codeOfLogicFrenesy);
                 logicFrenesy.start();
@@ -250,6 +257,12 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
                 logicFrenesy.start();
             }
 
+            return;
+        }
+        else if (message instanceof StartTerminator)
+        {
+            logicTerminator = new Thread(codeOfLogicTerminator);
+            logicTerminator.start(); //Start the thread that handles the respawn
             return;
         }
 

@@ -1,13 +1,14 @@
 package it.polimi.deib.se2018.adrenalina.View.GUI;
 
-import it.polimi.deib.se2018.adrenalina.Controller.Setup;
 import it.polimi.deib.se2018.adrenalina.View.AppClient;
-import sun.security.krb5.internal.APOptions;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class implements a frame to ask at the user the inputs to connect at the server
+ * and start the match
+ */
 public class SetupGui
 {
     //Main Window
@@ -36,14 +37,9 @@ public class SetupGui
 
     boolean ready;
 
-    //Information inserted
-    String nameW;
-    String heroEffectW;
-    String ipW;
-    String portW;
-    boolean guiW;
-    String commW;
-
+    /**
+     * Create the Gui for the  setup initial and it shows at the user
+     */
     public SetupGui()
     {
         ready = false;
@@ -97,6 +93,11 @@ public class SetupGui
         setupWindow.setVisible(true);
     }
 
+    /**
+     * Create the Gui to ask the reconnection and it shows at the user
+     * @param nameS name used by user during the match
+     * @param heroEffectS hero comment used by user during the match
+     */
     public SetupGui(String nameS,String heroEffectS)
     {
         ready = false;
@@ -150,40 +151,72 @@ public class SetupGui
     //Getter
 
 
+    /**
+     * Getter for the jframe of the window
+     * @return jframe of the window
+     */
     public JFrame getSetupWindow() {
         return setupWindow;
     }
 
+    /**
+     * Getter for the name inserted by user
+     * @return name inserted by user
+     */
     public String getName()
     {
         return name.getText();
     }
 
+    /**
+     * Getter for the hero comment inserted by user
+     * @return hero comment inserted by user
+     */
     public String getHeroEffect()
     {
         return heroEffect.getText();
     }
 
+    /**
+     * Getter for the ip address inserted by user
+     * @return ip address inserted by user
+     */
     public String getIP()
     {
         return ip.getText();
     }
 
+    /**
+     * Getter for the port TCP inserted by user
+     * @return port TCP inserted by user
+     */
     public int getPort()
     {
         return Integer.parseInt(port.getText());
     }
 
+    /**
+     * Say if the user chose to use the gui or not
+     * @return true if the user chose to use the gui
+     */
     public boolean getGui()
     {
         return gui.isSelected();
     }
 
+    /**
+     * Getter for technology communication chosen by user
+     * @return technology communication chosen by user
+     */
     public int getTechnology()
     {
         return commList.getSelectedIndex();
     }
 
+    /**
+     * Say if the information was inserted and are correct
+     * @return true if the information was inserted and are correct
+     */
     public boolean isReady()
     {
         return ready;
@@ -203,7 +236,7 @@ class ClickOk implements ActionListener
     /**
      * Invoked when an action occurs.
      *
-     * @param e
+     * @param e action event
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -253,6 +286,12 @@ class ClickOk implements ActionListener
 
     }
 
+    /**
+     * Method that check if in the string there is written
+     * an address IPv4
+     * @param ip string to check
+     * @return true if the string is an address IPv4
+     */
     public  boolean validIP (String ip) {
         try {
             if ( ip == null || ip.isEmpty() ) {
@@ -280,6 +319,12 @@ class ClickOk implements ActionListener
         }
     }
 
+    /**
+     * Method that check if in the string there is written
+     * an number
+     * @param str string to check
+     * @return true if the string is number
+     */
     public  boolean isNumeric(String str)
     {
         if (str.equals(""))

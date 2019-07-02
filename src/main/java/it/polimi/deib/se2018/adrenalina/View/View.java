@@ -5,7 +5,6 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
-import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.EndUpdateModel;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
@@ -267,10 +266,10 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
         if (creationIsFinished && !gameIsStarted)
         {
-            //Si deve chiamare il metodo dal controller che avvia la logica della partita todo
+
             gameIsStarted = true;
             System.out.println("Partita Iniziata");
-            controller.startGame();
+            controller.startGame();//Method that starts the MATCH
         }
 
 

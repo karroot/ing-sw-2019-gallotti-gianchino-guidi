@@ -11,6 +11,10 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements the CLI with all the method needed to handle it
+ * @author Cysko7927
+ */
 public class CLI implements Terminal
 {
     private ColorId playerOfThisCli;

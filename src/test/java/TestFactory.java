@@ -27,6 +27,9 @@ public class TestFactory
 
     }
 
+    /*
+    This method tests if the creation with a illegal code for the arena launches an exception
+     */
     @Test
     public void TestcreateArenaFail()
     {

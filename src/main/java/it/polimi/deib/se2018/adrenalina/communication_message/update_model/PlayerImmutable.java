@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * This class represent a copy Immutable of a Player with all his information coming from the model
+ * It will be send at the private view and being used by CLI or GUI
  * @author Cysko7927
  */
 public class PlayerImmutable implements Serializable
@@ -47,6 +49,10 @@ public class PlayerImmutable implements Serializable
 
     private List<WeaponCardImmutable> weaponCardList; //Array of weapons
 
+    /**
+     * Create the copy immutable of the player
+     * @param player object player from the model
+     */
     public PlayerImmutable(Player player)
     {
         this.color = player.getColor();
@@ -79,70 +85,138 @@ public class PlayerImmutable implements Serializable
         }
     }
 
+    /**
+     * Getter for the player's color
+     * @return player's color
+     */
     public ColorId getColor() {
         return color;
     }
 
+    /**
+     * Getter for the number of Yellow Ammo
+     * @return number of Yellow Ammo
+     */
     public int getAmmoYellow() {
         return ammoYellow;
     }
 
+    /**
+     * Getter for the number of Red Ammo
+     * @return number of Red Ammo
+     */
     public int getAmmoRed() {
         return ammoRed;
     }
 
+    /**
+     * Getter for the number of Blue Ammo
+     * @return number of Blue Ammo
+     */
     public int getAmmoBlue() {
         return ammoBlue;
     }
 
+    /**
+     * Getter for the player's name
+     * @return player's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for the player's hero comment
+     * @return player's hero comment
+     */
     public String getAction_hero_comment() {
         return action_hero_comment;
     }
 
+    /**
+     * Getter for the player's damage counter
+     * @return player's damage counter
+     */
     public ColorId[] getDamageCounter() {
         return damageCounter;
     }
 
+    /**
+     * Getter for the number of damage Points
+     * @return number of damage Points
+     */
     public int getLast() {
         return last;
     }
 
+    /**
+     * Getter for all markers that the player has too
+     * @return list of all markers
+     */
     public List<ColorId> getMarkCounter() {
         return markCounter;
     }
 
+    /**
+     * Getter for the number of deaths
+     * @return number of deaths
+     */
     public int getDeathsCounter() {
         return deathsCounter;
     }
 
+    /**
+     * Getter for the player's score
+     * @return player's score
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Getter for the all player's powerUp cards
+     * @return list of all player's powerUp cards
+     */
     public List<PowerUpCardImmutable> getPowerupCardList() {
         return powerupCardList;
     }
 
+    /**
+     * Getter for the all player's Weapons cards
+     * @return list of all player's Weapons cards
+     */
     public List<WeaponCardImmutable> getWeaponCardList() {
         return weaponCardList;
     }
 
+    /**
+     * Getter for coordinate x of the square where is located the player
+     * @return coordinate x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Getter for the coordinate y of the square where is located the player
+     * @return coordinate y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Say if the player's board is flipped for the FRENZY mode
+     * @return player's board is flipped or not
+     */
     public boolean isFlipped() {
         return flipped;
     }
 
+    /**
+     * This method will be used by Cli to print all the player's information
+     * @return string to print
+     */
     @Override
     public String toString()
     {

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * This class represent a copy Immutable of a Square  coming from the model
+ * It will be send at the private view and being used by CLI or GUI
  * @author Cysko7927
  */
 public class SquareImmutable implements Serializable
@@ -31,7 +33,10 @@ public class SquareImmutable implements Serializable
     private AmmoTilesImmutable ammoTiles = null;
 
 
-
+    /**
+     * Create the copy immutable of a square
+     * @param square square from the model
+     */
     public SquareImmutable(Square square)
     {
         this.x = square.getX();
@@ -71,34 +76,66 @@ public class SquareImmutable implements Serializable
         }
     }
 
+    /**
+     * Getter for coordinate x
+     * @return coordinate x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Getter for coordinate y
+     * @return coordinate y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Says if the square is ammo point or not
+     * @return the square is ammo point or not
+     */
     public boolean isAmmoPoint() {
         return isAmmoPoint;
     }
 
+    /**
+     * Says if the square is Spawn point or not
+     * @return the square is Spawn point or not
+     */
     public boolean isSpawnPoint() {
         return isSpawnPoint;
     }
 
+    /**
+     * Getter for the color of room
+     * @return color of room
+     */
     public ColorRoom getColor() {
         return color;
     }
 
+    /**
+     * Getter for the List of all players in the square(Only color)
+     * @return List of all players in the square(Only color)
+     */
     public List<ColorId> getPlayerList() {
         return playerList;
     }
 
+    /**
+     * Getter for the List of all WeaponCards in the square(Only name)
+     * @return List of all WeaponCards in the square(Only name)
+     */
     public List<String> getWeaponCardList() {
         return weaponCardList;
     }
 
+    /**
+     * Getter for the copy immutable of ammo tiles in the square
+     * @return copy immutable of ammo tiles in the square
+     */
     public AmmoTilesImmutable getAmmoTiles() {
         return ammoTiles;
     }

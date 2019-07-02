@@ -737,13 +737,16 @@ public class Controller implements Observer<ResponseInput>
             updateModel();
 
 
-            if(!roundPlayer.isAfk() && !salta){
+            if(!roundPlayer.isAfk() && !salta)
+            {
                 virtualView.getResponseWithInputs(player);
 
-            messageNet = msg;}
+                messageNet = msg;
+            }
 
 
         }
+
         if(!roundPlayer.isAfk() && !salta)
             askForPowerUpTagBackGranade();
 
@@ -751,6 +754,7 @@ public class Controller implements Observer<ResponseInput>
         {
             p.setAfk(false);
         }
+
         msg=null;
         salta=false;
 

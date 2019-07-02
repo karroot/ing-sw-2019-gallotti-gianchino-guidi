@@ -482,6 +482,8 @@ public class GUI implements Terminal
     }
 
     //Methods Private
+    //Do a translation from coordinates of the square to index of the square on main window
+    //of the gui
     private int squareToIndexGui(int x,int y)
     {
         if (x == 1 && y == 1)

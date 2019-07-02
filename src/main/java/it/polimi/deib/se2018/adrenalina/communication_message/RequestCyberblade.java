@@ -120,7 +120,7 @@ public class RequestCyberblade extends RequestInput
 
         if (!orderAva.isEmpty()) //It there is a third effect possible
         {
-            terminal.addTextInput("Scegli il terzo effetto:"); //Ask at the user if he wants to use it
+            terminal.addTextInput("Vuoi usare il terzo effetto:"); //Ask at the user if he wants to use it
             terminal.addOptionInput("1:Si");
             terminal.addOptionInput("2:No");
 

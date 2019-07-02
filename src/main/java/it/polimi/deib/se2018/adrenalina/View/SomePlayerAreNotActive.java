@@ -5,6 +5,8 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * This class implement the logic of the server about the insertion of new connection
+ * in case of some player are disconnected
  * @author Cysko7927
  */
 public class SomePlayerAreNotActive implements StateVirtualView
@@ -61,6 +63,7 @@ public class SomePlayerAreNotActive implements StateVirtualView
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             connection.setPlayer(oldConnectionSocket.getPlayer()); //Add the color of the player
             view.getConnections().add(connection);//Add the new connection to the list
+            connection.setPlayer(oldConnectionSocket.getPlayer());
         }
         else
             {

@@ -154,7 +154,7 @@ public class Cyberblade extends WeaponCard
             if (orderEffect[i].equals("with slice and dice") && booleans[2])
             {
                 doDamage(player2,2);
-                this.player.setAmmoRed(this.player.getAmmoRed() - 1);
+                this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
 
             i++;

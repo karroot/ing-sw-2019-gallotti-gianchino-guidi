@@ -8,14 +8,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * This class is a container that contains a copy immutable of all the model
+ * It will be send at the private view and being used by CLI or GUI
  * @author Cysko7927
  */
 public class UpdateModel extends MessageNet
 {
-    List<PlayerImmutable> dataOfAllPlayer;
-    List<SquareImmutable> dataOfAllSquare;
-    BoardImmutable dataOfBoard;
+    private List<PlayerImmutable> dataOfAllPlayer;
+    private List<SquareImmutable> dataOfAllSquare;
+    private BoardImmutable dataOfBoard;
 
+    /**
+     * Create the object that contains all the model
+     * @param board board of the model
+     */
     public UpdateModel(GameBoard board)
     {
         this.dataOfAllPlayer = board.getAllPlayer().stream() //obtain the dates of all player
@@ -30,16 +36,28 @@ public class UpdateModel extends MessageNet
         this.dataOfBoard = new BoardImmutable(board);//Obtain the dates of the Game board
     }
 
+    /**
+     * Getter for the list of all the players
+     * @return the list of all the players
+     */
     public List<PlayerImmutable> getDataOfAllPlayer()
     {
         return new ArrayList<>(dataOfAllPlayer);
     }
 
+    /**
+     * Getter for the list of all the squares
+     * @return the list of all the squares
+     */
     public List<SquareImmutable> getDataOfAllSquare()
     {
         return new ArrayList<>(dataOfAllSquare);
     }
 
+    /**
+     * Getter for the copy immutable of all the game board
+     * @return copy immutable of all the game board
+     */
     public BoardImmutable getDataOfBoard()
     {
         return dataOfBoard;
