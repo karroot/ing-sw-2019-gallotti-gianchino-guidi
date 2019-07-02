@@ -386,6 +386,12 @@ public class Controller implements Observer<ResponseInput>
             if(g1.isTerminatorMode())
                 executeTerminator();
 
+            for(Player p: g1.getAllPlayer())
+            {
+                p.setAfk(false);
+            }
+
+            msg=null;
             getPointAndRespawn();
             setup.replenishBoard(g1);
         }
@@ -427,6 +433,12 @@ public class Controller implements Observer<ResponseInput>
                 if(g1.isTerminatorMode())
                     executeTerminator();
 
+                for(Player p: g1.getAllPlayer())
+                {
+                    p.setAfk(false);
+                }
+
+                msg=null;
                 getPointAndRespawn();
                 setup.replenishBoard(g1);
             }
@@ -507,7 +519,12 @@ public class Controller implements Observer<ResponseInput>
        if(g1.isTerminatorMode())
            executeTerminator();
 
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
 
+        msg=null;
         getPointAndRespawn();
         setup.replenishBoard(g1);
 
@@ -1549,8 +1566,9 @@ if(filteredPlayer!=null){
                 {
 
                     try
-                    {virtualView.requestInput(new RespawnTerminator(), p.getColor());
-                        virtualView.getResponseWithInputs(p.getColor());
+                    {
+                        virtualView.requestInput(new RespawnTerminator(), p.getColor());
+
 
                         return true;}
                     catch(Exception e)
@@ -1602,7 +1620,7 @@ if(filteredPlayer!=null){
 
 
 
-        if (g1.isTerminatorMode() && p.isTerminator())
+        if (g1.isTerminatorMode() && p.equals(termi))
         {
             List<Callable<Boolean>> callableList = new LinkedList<>();
             callableList.add(new Callable<Boolean>() {
@@ -1873,12 +1891,18 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
         if(!resp) {
          salta=true;
             return;
-        }        if(checkForAfk())
+        }
+        if(checkForAfk())
             return;
         runAround(true);
         shootTerminator();
+        checkForAfk();
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
 
-
+        msg=null;
     }
 
     private void shootTerminator() throws InterruptedException, ExecutionException {
@@ -1936,6 +1960,29 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                     }
                 }
             }
+
+            else
+                {
+                    List<Callable<Boolean>> callableList = new LinkedList<>();
+                    callableList.add(new Callable<Boolean>() {
+
+                        @Override
+                        public Boolean call() throws Exception {
+
+                            try {
+                                virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
+
+
+                                return true;
+                            }
+                            catch (Exception e)
+                            {
+                                return  false;
+                            }
+                        }
+                    });
+
+                }
 
 
         }

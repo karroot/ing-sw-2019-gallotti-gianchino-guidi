@@ -29,6 +29,12 @@ public class RequestShootTerminator extends  RequestInput {
 
         return new ResponseShootPeopleTerminator(target);
     }
+
+
+    public List<ColorId> getEnemies() {
+        return enemies;
+    }
+
     protected void inputBasicMode()
     {
         int i = 1;
