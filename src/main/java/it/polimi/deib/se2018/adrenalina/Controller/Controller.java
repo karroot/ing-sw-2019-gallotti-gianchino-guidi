@@ -21,14 +21,9 @@ import java.util.stream.Collectors;
 public class Controller implements Observer<ResponseInput>
 {
 
-    //logica gestione passaggio di turno
-    //
-    //FAI METODO che dopo inizializzazione prende giocatori con l'ordine pattuito
-    // per ogni giocatore chiama il metodo starRound che non fa altro che mandare un messaggio che avvisa che inizia il turno del giocatore
-    //e nel metodo start round ci sarà la chiamata allo switch
-    //switch da aggiungere quel che manca
+
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
-    private Model model;
+
     private boolean frenzy;
     private boolean salta;
     private Setup setup;
@@ -333,6 +328,7 @@ public class Controller implements Observer<ResponseInput>
         return roundPlayer.isAfk();
     }
 
+    //this method start round only for frenzy
     private void startRoundFrenzy(Player rp) throws ExecutionException, InterruptedException {
 
         for(Player p : g1.getAllPlayer())
@@ -483,13 +479,16 @@ public class Controller implements Observer<ResponseInput>
             salta=true;
              return;}
 
-           if(checkForAfk())
-               return;
+           checkForAfk();
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
+        msg=null;
 
 
 
 
-// capire se devo controllare il controller se siamo nel caso del primo respawn o no nel caso fai una variabile firstround che termina al primo round per ogni giocatore
 
              if(roundPlayer.isFirstRound())
                  askForFirstSpawn();
@@ -504,8 +503,10 @@ public class Controller implements Observer<ResponseInput>
             }
 
        //end of user round
+
        if(g1.isTerminatorMode())
            executeTerminator();
+
 
         getPointAndRespawn();
         setup.replenishBoard(g1);
@@ -735,6 +736,7 @@ public class Controller implements Observer<ResponseInput>
 
 
             updateModel();
+            checkForAfk();
 
 
             if(!roundPlayer.isAfk() && !salta)
@@ -1448,6 +1450,10 @@ if(filteredPlayer!=null){
         }
     }
 
+    /**
+     * this method is used to spawn the terminator
+     * @param index index of the power up to use for spawn
+     */
     private void spawnTerminator(int index)
     {
 
@@ -1476,9 +1482,9 @@ if(filteredPlayer!=null){
             }
         }
 
-        roundPlayer.setSquare(resp);
+        termi.setSquare(resp);
         if(resp!=null)
-            MethodsWeapons.moveTarget(roundPlayer, resp.getX(), resp.getY());
+            MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());
 
 
     }
@@ -1536,6 +1542,32 @@ if(filteredPlayer!=null){
         //if first round and firstplayer he have to spawn terminator
         if (p.isFirst() && firstRound && g1.isTerminatorMode())
         {
+            List<Callable<Boolean>> callableListA = new LinkedList<>();
+            callableListA.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception
+                {
+
+                    try
+                    {virtualView.requestInput(new RespawnTerminator(), p.getColor());
+                        virtualView.getResponseWithInputs(p.getColor());
+
+                        return true;}
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
+                }
+            });
+            boolean an = executor.invokeAny(callableListA);
+
+
+
+            if (!an){ salta=true;
+                return;}
+            if (checkForAfk())
+                return;
+
             List<Callable<Boolean>> callableList = new LinkedList<>();
             callableList.add(new Callable<Boolean>() {
                 @Override
@@ -1612,7 +1644,8 @@ if(filteredPlayer!=null){
                 @Override
                 public Boolean call() throws Exception {
 
-                   try{ virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
+                   try
+                   { virtualView.requestInput(new RequestRespawn(powerList), p.getColor());
                     virtualView.getResponseWithInputs(p.getColor());
 
                     return true;}
@@ -1651,6 +1684,9 @@ if(filteredPlayer!=null){
     
         askForRespawn(roundPlayer);
 
+
+
+
     }
     /**
  * this method ask the player where he want to move
@@ -1661,7 +1697,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 { List<Callable<Boolean>> callableList = new LinkedList<>();
     Set<Square> squareToChange= new HashSet<>();
 
-    if(!g1.isTerminatorMode())
+    if(!g1.isTerminatorMode() && !roundPlayer.equals(termi))
         squareToChange = roundPlayer.lookForRunAround(roundPlayer);
     else {
         squareToChange = termi.getSquare().getGameBoard().getArena().squareReachableNoWall(termi.getSquare().getX(), termi.getSquare().getY(), 1);
@@ -1809,6 +1845,11 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
     }
 
+    /**
+     * this method
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private void executeTerminator() throws ExecutionException, InterruptedException {
 
         List<Callable<Boolean>> callableList = new LinkedList<>();
@@ -2265,101 +2306,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
 
-    public void inizialization()
-    {
-        // creare weapon stack
-        //creare poweup stack
-        // passare codice arena ( preso da menu)
-        // passare skull counter ( preso da menu)
-        // creare stac ammo tiles
-        // creare player ( presi da menu)
-        // creare listaplayer
-        // passare lista player a gameboard
-        // creare la gameboard
-        // modificare costruttore gameboard con lista player
-        // fai unpadate model
-    }
 
-
-
-    public void executeRound() throws InterruptedException, ExecutionException {
-
-
-
-        // OGNI AZIONE FAI UPDATE MODEL
-
-        // se primo turno fai respawnare
-
-
-
-        //chiedere se vuole usare powerup ( tra ogni azione teleport) come loop (ovvero chiedo ogni volta)
-
-
-
-        // chiedere se vuole saltare come loop (ovvero chiedo ogni volta) ragiona con ragazzi su come fare
-
-
-        // chiede prima azione
-        // a seconda della risposta fai check stato del player e fai stato.azione
-
-
-       // logica azioni
-
-        /*se sceglie spara :
-        1) fai tutti i check delle armi
-        2) mostra le armi che hanno almeno la modalità base disponibile
-        3) prendi scelta arms giocatore
-        4) mostra modalità disponibili per l'arma
-        5) prendi scelta modalità e parametri da giocatore
-        6) chiama  use weapon dell'arma coi parametri dati dal player
-        */
-
-        /* se sceglie run around
-        1) mostra quadrati dove puoi muoverti
-        2) prendi scelta giocatore
-        3) sposta player a seconda dei parametri passati col moveTarget
-        */
-
-        /* se sceglie grab
-           1) controlla se è un ammo point o uno spwanpoint
-           A) ammopoint
-                1) aggiungi l'ammo point al player (eventualmente powerup) ( toglie in automatico dallo stack)
-           B) spawn point
-                1) mostra armi disponibili nello spawnpoint ( attenzione che si vedono sempre tutte sulla gameboard però)
-                2)se giocatore ha 3 armi
-                3) scegli quale arma cambiare ( altrimenti aggiungi e basta)
-
-         */
-
-
-        /*
-        * powerup/salta
-        * azione/salta
-        * powerup/salta
-        * azione/salta
-        * powerup/salta
-        * ricarica
-        * */
-/* azione ricarica
-
-    1) chiama check for reload  che ti dice quali armi puoi ricaricare
-    2) chiede al giocatore quale arma vuole ricaricare
-    3) se ne rimangono disponibili continua a chiedere quale arma vuole ricaricare
-
- */
-
-/* fine turno
-  1) calcolo punti ( calcola quanti danni hai fatto a un player morto e sistema la killshoot track e lo skullcounter di conseguenza)
-  2)fai spawnare chi è morto ( passa temporaneamente al giocatore che deve respawnare)
-  3) riempi la board con le munizioni o le armi dove mancano
-*/
-
-
-
-
-
-
-    }
 
 
 
@@ -2519,7 +2466,7 @@ class Score implements Comparable<Score> {
     int score;
     String name;
 
-    public Score(int score, String name) {
+    protected Score(int score, String name) {
         this.score = score;
         this.name = name;
     }
