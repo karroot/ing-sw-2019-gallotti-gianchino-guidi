@@ -517,6 +517,8 @@ public class Controller implements Observer<ResponseInput>
                 roundPlayer=p;
         }
         updateModel();
+        if(roundPlayer.isFirstRound())
+            askForFirstSpawn();
 
         List<Callable<Boolean>> callableList = new LinkedList<>();
         callableList.add(new Callable<Boolean>()
@@ -557,8 +559,6 @@ public class Controller implements Observer<ResponseInput>
 
 
 
-             if(roundPlayer.isFirstRound())
-                 askForFirstSpawn();
 
 
 
@@ -766,11 +766,10 @@ public class Controller implements Observer<ResponseInput>
     {
         MessageNet messageNet = null;
 
-try{virtualView.getResponseWithInputs(player);
+virtualView.getResponseWithInputs(player);
 
      messageNet = msg;
-}
-catch (Exception e){}
+
 
         while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
@@ -817,11 +816,10 @@ catch (Exception e){}
 
             if(!roundPlayer.isAfk() && !salta)
             {
-                try{virtualView.getResponseWithInputs(player);
+               virtualView.getResponseWithInputs(player);
 
                     messageNet = msg;
-                }
-                catch (Exception e){}
+
             }
 
 
