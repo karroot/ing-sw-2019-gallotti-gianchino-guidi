@@ -207,14 +207,16 @@ public class Controller implements Observer<ResponseInput>
                     c.setScore(temppoint.get(c.getColor()));
                     if(p.getDamageCounter()[10].equals(c.getColor())) {
 
-                        if( lastKillerColor.contains(c.getColor()))
-                            c.setScore(c.getScore()+1);
+                        if (lastKillerColor.contains(c.getColor()))
+                            c.setScore(c.getScore() + 1);
                         g1.setKillShotTrack(c.getColor(), 1);
 
+                        if(p.getDamageCounter()[11]!=null){
                         if (p.getDamageCounter()[11].equals(c.getColor())) {
                             g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
                             c.addMark(p.getColor());
                         }
+                    }
                         lastKillerColor.add(c.getColor());
                     }
                     //if terminator mode is active
@@ -508,33 +510,28 @@ public class Controller implements Observer<ResponseInput>
      * @throws InterruptedException 
      * @throws ExecutionException
      */
-    private void startRound(Player rp) throws InterruptedException, ExecutionException
-    {
+    private void startRound(Player rp) throws InterruptedException, ExecutionException {
 
-        for(Player p : g1.getAllPlayer())
-        {
+        for (Player p : g1.getAllPlayer()) {
 
             if (p.equals(rp))
-                roundPlayer=p;
+                roundPlayer = p;
         }
         updateModel();
-        if(roundPlayer.isFirstRound())
+        if (roundPlayer.isFirstRound()) {
             askForFirstSpawn();
 
-        List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>()
-        {
+        }
+        if (!roundPlayer.isAfk()){
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
             @Override
-            public Boolean call() throws Exception
-            {
+            public Boolean call() throws Exception {
 
-                try
-                {
-                    virtualView.requestInput(new RequestStartRound(),rp.getColor());
+                try {
+                    virtualView.requestInput(new RequestStartRound(), rp.getColor());
                     return true;
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return false;
                 }
 
@@ -544,48 +541,42 @@ public class Controller implements Observer<ResponseInput>
         boolean s = executor.invokeAny(callableList);
 
 
+        if (!s) {
+            salta = true;
+            return;
+        }
 
-            if(!s){
-            salta=true;
-             return;}
-
-           checkForAfk();
-        for(Player p: g1.getAllPlayer())
-        {
+        checkForAfk();
+        for (Player p : g1.getAllPlayer()) {
             p.setAfk(false);
         }
-        msg=null;
+        msg = null;
 
 
+        try {
+            switcher(rp.getColor());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        //end of user round
 
+        if (g1.isTerminatorMode())
+            executeTerminator();
 
-
-
-
-            try
-            {
-                switcher(rp.getColor());
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-       //end of user round
-
-       if(g1.isTerminatorMode())
-           executeTerminator();
-
-        for(Player p: g1.getAllPlayer())
-        {
+        for (Player p : g1.getAllPlayer()) {
             p.setAfk(false);
         }
 
-        msg=null;
+        msg = null;
         getPointAndRespawn();
         setup.replenishBoard(g1);
-
+    }
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
+        msg=null;
     }
 
 
@@ -1736,7 +1727,7 @@ if(filteredPlayer!=null){
             spawnTerminator(response.getTargetSpawnPoint());
         }
         else {
-            if(!firstRound)
+            if(!roundPlayer.isFirstRound())
                 drawPowerup(true);
 
             updateModel();
