@@ -96,6 +96,17 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
 
     Thread logicTerminator;
 
+    Runnable codeOfLogicRespawnTerminator = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.respawnTerminator();
+        }
+    };
+
+    Thread logicRespawnTerminator;
+
     /**
      * Create a network handler tha handle the communication between the client and server
      * using RMI
@@ -263,6 +274,17 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
         {
             logicTerminator = new Thread(codeOfLogicTerminator);
             logicTerminator.start(); //Start the thread that handles the respawn
+            return;
+        }
+        else if (message instanceof RespawnTerminator)
+        {
+            logicRespawnTerminator = new Thread(codeOfLogicRespawnTerminator);
+            logicRespawnTerminator.start(); //Start the thread that handles the respawn
+            return;
+        }
+        else if (msg instanceof GenericMessage)
+        {
+            view.showMessage(((GenericMessage) msg).getText());
             return;
         }
 

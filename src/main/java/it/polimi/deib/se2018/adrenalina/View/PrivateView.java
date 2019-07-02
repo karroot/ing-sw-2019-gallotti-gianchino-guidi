@@ -285,9 +285,68 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
     }
 
+    /**
+     * This method handles the logic of respawn for the terminator
+     */
     public void startTerminator()
     {
+        try
+        {
+            //Move the terminator
+            RequestInput messageFromNetwHandl = getMessageFromNetwHandl();
 
+            messageFromNetwHandl.printActionsAndReceiveInput(terminal);//Ask at the user where to move the terminator
+
+            ResponseInput responseInput = messageFromNetwHandl.generateResponseMessage(); //Generate and send the response message
+
+            notify(responseInput);
+
+            RequestShootTerminator messageRequest =(RequestShootTerminator) getMessageFromNetwHandl();
+
+
+            if (messageRequest.getEnemies().size() == 0)
+            {
+                showMessage("Il terminator non ha bersagli non può sparare");
+                return;
+            }
+            messageFromNetwHandl.printActionsAndReceiveInput(terminal);//Ask at the user where to move the terminator
+
+            responseInput = messageFromNetwHandl.generateResponseMessage(); //Generate and send the response message
+
+            notify(responseInput);
+
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+            Thread.currentThread().interrupt();
+            throw new ThreadDeath();
+        }
+    }
+
+    /**
+     * This method handles the logic of respawn for the terminator
+     */
+    public void respawnTerminator()
+    {
+        try
+        {
+            RequestInput messageFromNetwHandl = getMessageFromNetwHandl();
+
+            messageFromNetwHandl.printActionsAndReceiveInput(terminal);
+
+            ResponseInput responseInput = messageFromNetwHandl.generateResponseMessage();
+
+            notify(responseInput);
+        }
+        catch (Exception e)
+        {
+            terminal.showError("Sei stato disconesso : Turno interroto");
+            terminal.showError(e.getMessage());
+            Thread.currentThread().interrupt();
+            throw new ThreadDeath();
+        }
     }
 
     /**

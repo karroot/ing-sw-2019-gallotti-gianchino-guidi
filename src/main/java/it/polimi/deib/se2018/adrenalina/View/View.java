@@ -2,6 +2,7 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.communication_message.GenericMessage;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
@@ -117,6 +118,27 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
     }
 
     /**
+     * This method being used by controller
+     * to send a message in broadcast at all the player(Used in case of Afk for a player or disconnection)
+     * @param message message to send
+     */
+    public void sendMessageGenericBroadcast(GenericMessage message)
+    {
+        //Send a message generic in broadcast at all active player
+        for (Connection z: connections)
+        {
+            try
+            {
+                z.send(message);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Messaggio: non mandato al player:"+z.getPlayer());
+            }
+        }
+    }
+
+    /**
      * If there were changes in the model the controller use this method to send the model updated at all player active
      * The method continues to send the message until the client doesn't respond with a message of correct reception
      * About the connections that are no active the message will not send
@@ -129,8 +151,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         for (Connection t: connections)
         {
             try
-            {   //If the connection is RMI use the method remote update of virtual view
-                //Else use the method "send" of the connection Socket
+            {
                 t.send(message);
             }
             catch (Exception e)

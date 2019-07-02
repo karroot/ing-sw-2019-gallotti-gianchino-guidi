@@ -91,6 +91,17 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
 
     Thread logicTerminator;
 
+    Runnable codeOfLogicRespawnTerminator = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            view.respawnTerminator();
+        }
+    };
+
+    Thread logicRespawnTerminator;
+
     /**
      * Create a network Handler that handles the connection between the client and the server
      * @param ip IPV4 address of the server
@@ -262,6 +273,18 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
             logicTerminator.start(); //Start the thread that handles the respawn
             return;
         }
+        else if (msg instanceof RespawnTerminator)
+        {
+            logicRespawnTerminator = new Thread(codeOfLogicRespawnTerminator);
+            logicRespawnTerminator.start(); //Start the thread that handles the respawn
+            return;
+        }
+        else if (msg instanceof GenericMessage)
+        {
+            view.showMessage(((GenericMessage) msg).getText());
+            return;
+        }
+
 
         notify((RequestInput) msg); //notifies the privateView with the request of the server
 

@@ -1986,7 +1986,8 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
         msg=null;
     }
 
-    private void shootTerminator() throws InterruptedException, ExecutionException {
+    private void shootTerminator() throws InterruptedException, ExecutionException
+    {
         List<ColorId> enemiesColors=new LinkedList<>();
         if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
         {
@@ -2033,9 +2034,11 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
                         target=p;
 
                 }
-                if(target!=null) {
+                if(target!=null)
+                {
                     target.doDamage(termi.getColor());
-                    if (termi.getNumberOfDamagePoint() >= 6) {
+                    if (termi.getNumberOfDamagePoint() >= 6)
+                    {
 
                         target.addMark(termi.getColor());
                     }
