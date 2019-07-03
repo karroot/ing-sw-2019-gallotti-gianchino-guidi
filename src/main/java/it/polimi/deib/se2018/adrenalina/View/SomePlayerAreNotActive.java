@@ -32,6 +32,14 @@ public class SomePlayerAreNotActive implements StateVirtualView
     {
 
         view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials
+        try
+        {
+            Thread.sleep(400);
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println(e);
+        }
         while (true) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
         {
             try
@@ -63,6 +71,14 @@ public class SomePlayerAreNotActive implements StateVirtualView
         {
             connection.setPlayer(oldConnectionSocket.getPlayer()); //Add the color of the player
             view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials(Sending colorId)
+            try
+            {
+                Thread.sleep(400);
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println(e);
+            }
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             view.getConnections().add(connection);//Add the new connection to the list
             view.sendMessageGenericBroadcast(new GenericMessage("Player"+oldConnectionSocket.getPlayer()+" si è riconnesso"));

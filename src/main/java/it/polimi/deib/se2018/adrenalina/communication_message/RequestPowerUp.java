@@ -38,7 +38,7 @@ public class RequestPowerUp extends RequestInput {
         int anInt=0;
         for (String t:powerUptoChose)
         {
-        terminal.addTextInput("vuoi usare il poweup: " + t + " ?");
+            terminal.addTextInput("vuoi usare il poweup: " + t + " ?");
 
 
             terminal.addOptionInput("1 : sì");

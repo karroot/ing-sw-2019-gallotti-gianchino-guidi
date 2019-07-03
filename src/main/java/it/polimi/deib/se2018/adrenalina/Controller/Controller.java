@@ -163,18 +163,18 @@ public class Controller implements Observer<ResponseInput>
 
         while (!endGame && numberOfPlayerActive()>2)
         {
-            if(roundPlayer != null && frenzy) {
-
-                    endGame = true; //if the last player that have played is now on frenzy this is the last round for everyone
-
+            if(roundPlayer != null && frenzy)
+            {
+                endGame = true; //if the last player that have played is now on frenzy this is the last round for everyone
             }
+
             if(g1!= null)
             {
                 for (Player p : g1.getAllPlayer())
                 {
                     try
                     {
-                        salta=false;
+                        salta = false;
                         if(frenzy)
                         {
                             if(!(p.equals(firstFrenzy)))

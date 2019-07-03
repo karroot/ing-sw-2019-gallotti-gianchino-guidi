@@ -57,6 +57,14 @@ public class StartLogin implements StateVirtualView
         view.getConnections().add(connection);//Add the connection to the list
         view.getExecutor().submit(new Thread(connection));//Run a thread to get the credentials of the player
 
+        try
+        {
+            Thread.sleep(400);
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println(e);
+        }
 
         try
         {
