@@ -161,7 +161,7 @@ public class Controller implements Observer<ResponseInput>
 
         g1.setAllPlayerList(setup.createPlayers());
 
-        while (!endGame)
+        while (!endGame && numberOfPlayerActive()>2)
         {
             if(roundPlayer != null && frenzy) {
 
@@ -174,6 +174,7 @@ public class Controller implements Observer<ResponseInput>
                 {
                     try
                     {
+                        salta=false;
                         if(frenzy)
                         {
                             startRoundFrenzy(p);
@@ -190,7 +191,12 @@ public class Controller implements Observer<ResponseInput>
             }
         }
         //
-        calculateFinalScore();
+        if(numberOfPlayerActive()>2)
+            calculateFinalScore();
+        else{
+            calculateRapidScore();
+        }
+
     }
 
     // AUXILIARY FUNCTIONS
@@ -220,35 +226,35 @@ public class Controller implements Observer<ResponseInput>
 
 
                 temppoint = p.calculateScoreForEachPlayer();
-                for(Player c : g1.getAllPlayer())
-                {
-                    c.setScore(temppoint.get(c.getColor()));
-                    if(p.getDamageCounter()[10].equals(c.getColor())) {
+                for(Player c : g1.getAllPlayer()) {
+                    if (c.getColor()!=null && temppoint.get(c.getColor())!= null){
+                            c.setScore(c.getScore() + temppoint.get(c.getColor()));
+                        if (p.getDamageCounter()[10].equals(c.getColor())) {
 
-                        if (lastKillerColor.contains(c.getColor()))
-                            c.setScore(c.getScore() + 1);
-                        g1.setKillShotTrack(c.getColor(), 1);
+                            if (lastKillerColor.contains(c.getColor()))
+                                c.setScore(c.getScore() + 1);
+                            g1.setKillShotTrack(c.getColor(), 1);
 
-                        if(p.getDamageCounter()[11]!=null){
-                        if (p.getDamageCounter()[11].equals(c.getColor())) {
-                            g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
-                            c.addMark(p.getColor());
+                            if (p.getDamageCounter()[11] != null) {
+                                if (p.getDamageCounter()[11].equals(c.getColor())) {
+                                    g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
+                                    c.addMark(p.getColor());
+                                }
+                            }
+                            lastKillerColor.add(c.getColor());
                         }
-                    }
-                        lastKillerColor.add(c.getColor());
-                    }
-                    //if terminator mode is active
-                    if(g1.isTerminatorMode())
-                    {
-                        termi.setScore(temppoint.get(termi.getColor()));
-                        if(p.getDamageCounter()[10].equals(termi.getColor())) {
+                        //if terminator mode is active
+                        if (g1.isTerminatorMode()) {
+                            termi.setScore(termi.getScore() + temppoint.get(termi.getColor()));
+                            if (p.getDamageCounter()[10].equals(termi.getColor())) {
 
-                            if( lastKillerColor.contains(termi.getColor()))
-                                termi.setScore(termi.getScore()+1);
-                            g1.setKillShotTrack(termi.getColor(), 1);
+                                if (lastKillerColor.contains(termi.getColor()))
+                                    termi.setScore(termi.getScore() + 1);
+                                g1.setKillShotTrack(termi.getColor(), 1);
 
 
-                            lastKillerColor.add(termi.getColor());
+                                lastKillerColor.add(termi.getColor());
+                            }
                         }
                     }
                 }
@@ -399,7 +405,7 @@ public class Controller implements Observer<ResponseInput>
         if(msg instanceof Afk )
         {
             roundPlayer.setAfk(true);
-            virtualView.sendMessageGenericBroadcast(new GenericMessage(roundPlayer.getName() + " is afk"));
+            virtualView.sendMessageGenericBroadcast(new GenericMessage(roundPlayer.getName() + " " + roundPlayer.getColor() + " è afk"));
         }
         return roundPlayer.isAfk();
     }
@@ -2474,7 +2480,24 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
     }
 
 
+    private void calculateRapidScore()
+    {
+        List<Score> scores = new ArrayList<Score>();
+        List<String> printableScore=new LinkedList<>();
+        for( Player p : g1.getAllPlayer())
+        {
+            scores.add(new Score(p.getScore(), p.getName()));
 
+        }
+        Collections.sort(scores);
+        for(Score sc : scores )
+        {
+            String point = Integer.toString(sc.score);
+            printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
+        }
+        virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
+
+    }
 
 
 
@@ -2613,6 +2636,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 private void calculateFinalScore()
 {
     Map<ColorId,Integer> mappa = finalScore();
+    List<String> printableScore = new LinkedList<>();
     for(Player p : g1.getAllPlayer())
     {
         p.setScore(p.getScore() + mappa.get(p.getColor()));
@@ -2624,7 +2648,13 @@ private void calculateFinalScore()
 
     }
     Collections.sort(scores);
-    //stampa a schermo del vincitore
+
+    for(Score sc : scores )
+    {
+        String point = Integer.toString(sc.score);
+        printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
+    }
+    virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
 }
 
     @Override

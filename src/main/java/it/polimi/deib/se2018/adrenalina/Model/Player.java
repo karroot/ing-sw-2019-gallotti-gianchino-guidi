@@ -52,7 +52,7 @@ public class Player
 
     private int[] scorePoint; //Represent the the scores in player's board
 
-    private int score; //Score of the player
+    private int score=0; //Score of the player
 
     private boolean overKill;
 
