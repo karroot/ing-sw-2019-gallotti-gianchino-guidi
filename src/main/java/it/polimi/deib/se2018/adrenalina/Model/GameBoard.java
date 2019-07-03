@@ -145,11 +145,12 @@ public class GameBoard {
             {
                 for (PowerUpCard powerUpCardIterate : powerUpCardDiscardStack)
                  {
-                 powerUpCardStack.addElement(powerUpCardIterate);
-                 powerUpCardDiscardStack.remove(powerUpCardIterate);
+                   powerUpCardStack.addElement(powerUpCardIterate);
 
-                Collections.shuffle(powerUpCardStack);
+                   Collections.shuffle(powerUpCardStack);
                  }
+
+                powerUpCardDiscardStack.clear();
 
                 PowerUpCard pop = powerUpCardStack.pop();
                 powerUpCardDiscardStack.addElement(pop);
@@ -238,6 +239,7 @@ public class GameBoard {
         }
         else this.skullCounter = skullCounter;
     }
+
     /**
      * It set the weapon card stack when it gets empty
      * @param weaponCardStack The new deck that fill the stack
@@ -258,14 +260,5 @@ public class GameBoard {
 
         this.killShotTrack.add(new Track(player,counter));
     }
-
-//---------------------------
-
-
-
-
-
-
-
 
 }

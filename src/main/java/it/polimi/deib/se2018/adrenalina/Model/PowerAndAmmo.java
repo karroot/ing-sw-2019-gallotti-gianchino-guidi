@@ -11,16 +11,6 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 
 public class PowerAndAmmo implements AmmoTiles
 {
-    /*
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     */
     private int ammoCardID;
     private Color singleAmmo;
     private Color secondSingleAmmo;
@@ -55,17 +45,14 @@ public class PowerAndAmmo implements AmmoTiles
         // If it matches I will ++ the same color attribute the the player ammostack.
         if (singleAmmo == Color.RED)
         {
-            if(player.getAmmoRed()<3)
                 player.setAmmoRed(player.getAmmoRed()+1);
         }
         else if (singleAmmo == Color.YELLOW)
         {
-            if(player.getAmmoYellow()<3)
                 player.setAmmoYellow(player.getAmmoYellow()+1);
         }
         else if (singleAmmo == Color.BLUE)
         {
-            if(player.getAmmoBlue()<3)
                 player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
@@ -73,17 +60,14 @@ public class PowerAndAmmo implements AmmoTiles
 
         if (secondSingleAmmo == Color.RED)
         {
-            if(player.getAmmoRed()<3)
                 player.setAmmoRed(player.getAmmoRed()+1);
         }
         else if (secondSingleAmmo == Color.YELLOW)
         {
-            if(player.getAmmoYellow()<3)
                 player.setAmmoYellow(player.getAmmoYellow()+1);
         }
         else if (secondSingleAmmo == Color.BLUE)
         {
-            if(player.getAmmoBlue()<3)
                 player.setAmmoBlue(player.getAmmoBlue()+1);
         }
 
@@ -111,24 +95,5 @@ public class PowerAndAmmo implements AmmoTiles
         return powerUpCard;
     }
 
-    /*
-        new JustAmmo = JustAmmo (0420, YELLOW, YELLOW);
-        new JustAmmo = JustAmmo (0421, RED, RED);
-        new JustAmmo = JustAmmo (0422, BLUE, BLUE);
-        new JustAmmo = JustAmmo (0423, YELLOW, RED);
-        new JustAmmo = JustAmmo (0424, YELLOW, BLUE);
-        new JustAmmo = JustAmmo (0425, RED, BLUE);
-        new JustAmmo = JustAmmo (0426, YELLOW, RED);
-        new JustAmmo = JustAmmo (0427, YELLOW, BLUE);
-        new JustAmmo = JustAmmo (0428, RED, BLUE);
-        new JustAmmo = JustAmmo (0429, YELLOW, YELLOW);
-        new JustAmmo = JustAmmo (0430, RED, RED);
-        new JustAmmo = JustAmmo (0431, BLUE, BLUE);
-        new JustAmmo = JustAmmo (0432, YELLOW, RED);
-        new JustAmmo = JustAmmo (0433, YELLOW, BLUE);
-        new JustAmmo = JustAmmo (0434, RED, BLUE);
-        new JustAmmo = JustAmmo (0435, YELLOW, RED);
-        new JustAmmo = JustAmmo (0436, YELLOW, BLUE);
-        new JustAmmo = JustAmmo (0437, RED, BLUE);
-     */
+
 }

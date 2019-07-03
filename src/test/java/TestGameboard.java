@@ -4,6 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TargettingScop
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Flamethrower;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Furnace;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.RocketLauncher;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import java.util.Stack;
 
@@ -92,25 +93,6 @@ public class TestGameboard {
         }
 
     }
-    /*
-    @Test
-    public void InizializePowerUpStack() {
-
-            for (int i=0; i < 1 ; i++)
-            {
-                test.drawPowerUpCard();
-            }
-        assertFalse(test.getPowerUpCardStack().isEmpty());
-            test.drawPowerUpCard();
-        assertTrue(test.getPowerUpCardStack().isEmpty());
-        try
-        {   test.drawPowerUpCard();
-            fail();
-        } catch (NullPointerException e) {
-            System.out.println("PowerUpStackOK");
-        }
-    }
-    */
 
 @Test
     public void InizializeWeaponStack() {
@@ -128,5 +110,18 @@ public class TestGameboard {
         } catch (NullPointerException e) {
             System.out.println("WeaponStackOK");
         }
+    }
+
+    @Test
+    public void weaponCardTest ()
+    {
+        WeaponCard weaponCard = new RocketLauncher(Color.RED,211, true);
+
+        assertEquals("Lanciarazzi", weaponCard.getName());
+        assertEquals(211, weaponCard.getWeaponID());
+        assertEquals(2, weaponCard.getRedAmmoCost());
+        assertEquals(0, weaponCard.getBlueAmmoCost());
+        assertEquals(0, weaponCard.getYellowAmmoCost());
+        assertEquals(Color.RED, weaponCard.getColor());
     }
 }

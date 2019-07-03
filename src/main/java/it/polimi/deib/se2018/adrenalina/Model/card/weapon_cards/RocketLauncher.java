@@ -165,17 +165,19 @@ public class RocketLauncher extends WeaponCard
 
         for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer())
         {
-            stringList = new ArrayList<>();
-            squareList = new ArrayList<>();
-
-            squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(playerIterate.getSquare().getX() , playerIterate.getSquare().getY(),1));
-
-            for (Square squareIterate : squareList)
+            if (playerIterate.getSquare() != null)
             {
-                stringList.add(squareIterate.toStringCoordinates());
-            }
+                stringList = new ArrayList<>();
+                squareList = new ArrayList<>();
 
-            hashMapToReturn.put(playerIterate.getColor(), stringList);
+                squareList.addAll(player.getSquare().getGameBoard().getArena().squareReachableNoWall(playerIterate.getSquare().getX(), playerIterate.getSquare().getY(), 1));
+
+                for (Square squareIterate : squareList) {
+                    stringList.add(squareIterate.toStringCoordinates());
+                }
+
+                hashMapToReturn.put(playerIterate.getColor(), stringList);
+            }
         }
 
         return hashMapToReturn;
@@ -296,28 +298,6 @@ public class RocketLauncher extends WeaponCard
         return hashMapToReturn;
 
     }
-
-
-    /**
-     *
-     * @return
-     * @throws IllegalStateException
-     */
-    public List<String> checkSquaresToMove() throws IllegalStateException
-    {
-
-        List<String> stringList = new ArrayList<>();
-        Square square = player.getSquare();
-
-        Set<Square> squares = square.getGameBoard().getArena().squareReachableNoWall(square.getX(),square.getY(),2);//Obtain all the reachable square
-        for (Square squareIterate : squares)
-        {
-            stringList.add(squareIterate.toStringCoordinates());
-        }
-
-        return stringList;
-    }
-
 
     /**
      *

@@ -110,7 +110,7 @@ public class GrenadeLauncher extends WeaponCard
      *
      * @return an hashmap of ColorId and square as strings
      */
-    private HashMap<ColorId, List<String>> checkBasicModeSquares ()
+    public HashMap<ColorId, List<String>> checkBasicModeSquares ()
     {
         HashMap<ColorId, List<String>> hashMapToReturn = new HashMap<>();
         List<ColorId> colorIdList = new ArrayList<>();

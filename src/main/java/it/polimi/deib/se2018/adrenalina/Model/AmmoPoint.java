@@ -46,14 +46,14 @@ public class AmmoPoint extends Square
      */
     public void replaceAmmoTiles ()
     {
-        if (getGameBoard().getAmmoTilesStack().isEmpty())
-            for (AmmoTiles ammoTilesIterate : getGameBoard().getAmmoTilesDiscardStack())
-            {
+        if (getGameBoard().getAmmoTilesStack().isEmpty()) {
+            for (AmmoTiles ammoTilesIterate : getGameBoard().getAmmoTilesDiscardStack()) {
                 getGameBoard().getAmmoTilesStack().addElement(ammoTilesIterate);
-                getGameBoard().getAmmoTilesDiscardStack().remove(ammoTilesIterate);
-
                 Collections.shuffle(getGameBoard().getAmmoTilesStack());
             }
+
+            getGameBoard().getAmmoTilesDiscardStack().clear();
+        }
 
         ammoTiles = getGameBoard().getAmmoTilesStack().pop();
 

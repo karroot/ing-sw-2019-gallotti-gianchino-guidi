@@ -4,12 +4,14 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.List;
 import java.util.Set;
+/**
+ * This class implements the death status of a player.
+ *
+ * @author giovanni
+ */
+
 
 public class Death extends StatePlayer {
-
-
-    public void calculateScore() {
-    }
 
 
     public Death()

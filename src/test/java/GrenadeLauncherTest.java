@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -128,6 +129,34 @@ public class GrenadeLauncherTest {
 
         assertFalse(grenadeLauncher.isLoaded());
 
+
+    }
+
+    @Test
+    public void checkBasicModeSquares()
+    {
+        MethodsWeapons.moveTarget(p1,2,1);
+        MethodsWeapons.moveTarget(p2,3,1);
+
+       HashMap<ColorId, String> colorIdStringHashMap = grenadeLauncher.checkBasicMode();
+       HashMap<ColorId, List<String>> colorIdListHashMap = grenadeLauncher.checkBasicModeSquares();
+
+       List<String> stringList = new ArrayList<>();
+       stringList.addAll(colorIdListHashMap.get(p2.getColor()));
+
+       assertEquals(3, stringList.size());
+    }
+
+    @Test
+    public void checkAllSquaresISee()
+    {
+        List<String> stringList = new ArrayList<>();
+
+        MethodsWeapons.moveTarget(p1,2,1);
+
+        stringList = grenadeLauncher.checkAllSquaresISee();
+
+        assertEquals(5, stringList.size());
 
     }
 

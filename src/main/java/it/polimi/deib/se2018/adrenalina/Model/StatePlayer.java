@@ -2,10 +2,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class StatePlayer {
 
@@ -21,8 +18,6 @@ public abstract class StatePlayer {
      * @param player is the player looking for shoot
      * @return a list of player the player called this method can see
      */
-
-    // invocare metodo useweapon su arma scelta da player ( risposta.useweapon)
     public List<Player> lookForShootPeople(Player player)
     {
         List<Player> playerList = new LinkedList<>();
@@ -46,6 +41,14 @@ public abstract class StatePlayer {
             }
 
         }
+
+        Set<Player> playerSet = new HashSet<>();
+        playerSet.addAll(playerList);
+
+        playerList.clear();
+
+        playerList.addAll(playerSet);
+        playerList.remove(player);
 
 
         return playerList;

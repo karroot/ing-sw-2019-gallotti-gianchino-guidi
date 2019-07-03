@@ -32,7 +32,7 @@ public class Setup
 
     public void resetPlayer (ColorId player)
     {
-        //resetta i danni
+
     }
 
     public void initialize ()
