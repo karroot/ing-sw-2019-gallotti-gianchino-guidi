@@ -1592,9 +1592,14 @@ if(filteredPlayer!=null){
             }
         }
 
-        termi.setSquare(resp);
-        if(resp!=null)
+        if(termi.getSquare()!=null)
+            termi.respawn((SpawnPoint) resp);
+        else
+        {
+            if (resp != null)
+                termi.setSquare(resp);
             MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());
+        }
 
 
     }
@@ -1632,12 +1637,14 @@ if(filteredPlayer!=null){
              }
          }
 
-
-         p.respawn((SpawnPoint) resp);
-         
-        if(resp!=null)
-             MethodsWeapons.moveTarget(p, resp.getX(), resp.getY());
-
+        if(p.getSquare()!=null)
+            p.respawn((SpawnPoint) resp);
+         else
+         {
+            if (resp != null)
+                p.setSquare(resp);
+                MethodsWeapons.moveTarget(p, resp.getX(), resp.getY());
+         }
 
 
         }
@@ -1830,10 +1837,11 @@ if(filteredPlayer!=null){
                 return;
 
 
-            ResponseRespawn response = (ResponseRespawn) msg;
-            spawn(response.getTargetSpawnPoint()-1,p);
-            p.setFirstRound(false);//forse roundplayer
-            updateModel();
+                ResponseRespawn response = (ResponseRespawn) msg;
+                spawn(response.getTargetSpawnPoint() - 1, p);
+                p.setFirstRound(false);//forse roundplayer
+                updateModel();
+
 
         }
     }
@@ -1865,10 +1873,11 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 { List<Callable<Boolean>> callableList = new LinkedList<>();
     Set<Square> squareToChange= new HashSet<>();
 
-    if(!g1.isTerminatorMode() && !roundPlayer.equals(termi))
-        squareToChange = roundPlayer.lookForRunAround(roundPlayer);
-    else {
+    if(g1.isTerminatorMode() && terminator)
         squareToChange = termi.getSquare().getGameBoard().getArena().squareReachableNoWall(termi.getSquare().getX(), termi.getSquare().getY(), 1);
+    else {
+    squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+
     }
 
 
