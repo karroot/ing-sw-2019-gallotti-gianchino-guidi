@@ -131,7 +131,15 @@ public class PlasmaGun extends WeaponCard
                     throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+                if(this.player.getSquare().getGameBoard().isTerminatorMode())
+                {
+                    if(colorPlayer.equals(ColorId.PURPLE))
+                    {
+                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
+                    }
+
+                }
                 this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
             }
         i++;

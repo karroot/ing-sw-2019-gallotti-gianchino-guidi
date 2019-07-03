@@ -169,10 +169,28 @@ public class TractorBeam extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+        {
+            if(colorPlayer.equals(ColorId.PURPLE))
+            {
+                doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+            }
+
+        }
         for(Player p: player.getSquare().getGameBoard().getAllPlayer()){
             if(p.getColor().equals(colorPlayer))
                 moveTarget(p,x,y);//Move the target
              }
+        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+        {
+            if(colorPlayer.equals(ColorId.PURPLE))
+            {
+                moveTarget(player.getSquare().getGameBoard().getTermi(),x,y);
+
+            }
+
+        }
         this.isLoaded = false;
     }
 
@@ -187,12 +205,28 @@ public class TractorBeam extends WeaponCard
             throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+        {
+            if(colorPlayer.equals(ColorId.PURPLE))
+            {
+                doDamage(player.getSquare().getGameBoard().getTermi(),3);
 
+            }
+
+        }
         for(Player p: player.getSquare().getGameBoard().getAllPlayer()){
             if(p.getColor().equals(colorPlayer))
                 moveTarget(p,player.getSquare().getX(),player.getSquare().getY());//Move the target
         }
+        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+        {
+            if(colorPlayer.equals(ColorId.PURPLE))
+            {
+                moveTarget(player.getSquare().getGameBoard().getTermi(),player.getSquare().getX(),player.getSquare().getY());
 
+            }
+
+        }
         this.isLoaded = false;
         this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);

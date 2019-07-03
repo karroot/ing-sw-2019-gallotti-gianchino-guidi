@@ -144,8 +144,19 @@ public class MachineGun extends WeaponCard
                     throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
+
+                if(this.player.getSquare().getGameBoard().isTerminatorMode())
+                {
+                    if(colorPlayer3.equals(ColorId.PURPLE))
+                    {
+                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+                    }
+
+                }
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
+
         if (TurretTripode)
         {
             if (!checkAvailableMode()[2])
@@ -161,6 +172,15 @@ public class MachineGun extends WeaponCard
                     throw new IllegalArgumentException("Player3 deve essere diverso da player2 e player1.");
                 }
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerGreen)).collect(Collectors.toList()).get(0),1);
+                if(this.player.getSquare().getGameBoard().isTerminatorMode())
+                {
+                    if(colorPlayerGreen.equals(ColorId.PURPLE))
+                    {
+                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+                    }
+
+                }
             }
             if (addDamage)
             {
@@ -171,7 +191,15 @@ public class MachineGun extends WeaponCard
                     doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
                 if (colorPlayerdamaged.equals(colorPlayer2))
                     doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+                if(this.player.getSquare().getGameBoard().isTerminatorMode())
+                {
+                    if(colorPlayerdamaged.equals(ColorId.PURPLE))
+                    {
+                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
+                    }
+
+                }
             }
 
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
@@ -182,10 +210,41 @@ public class MachineGun extends WeaponCard
         if (colorPlayer1.equals(colorPlayer2))
             throw new IllegalArgumentException("Player 1 deve essere diverso da player2.");
         doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
-        if (colorPlayer2!= null)
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+        {
+            if(colorPlayer1.equals(ColorId.PURPLE))
+            {
+                doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+            }
+
+        }
+        if (colorPlayer2!= null) {
+
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0), 1);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode())
+            {
+                if(colorPlayer2.equals(ColorId.PURPLE))
+                {
+                    doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+                }
+
+            }
+        }
         isLoaded = false;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Return the list of all target available for using the focus shoot mode of this weapon
