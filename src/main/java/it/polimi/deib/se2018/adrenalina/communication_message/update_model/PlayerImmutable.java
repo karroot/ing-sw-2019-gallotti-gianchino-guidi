@@ -226,7 +226,7 @@ public class PlayerImmutable implements Serializable
             location = "Il PLAYER: " +name + "\nNon è in alcuno square";
         else
             location = "Il PLAYER: " +name +
-                    "\n è nel quadrato con cordinate\n" +
+                    "\n è nel quadrato con coordinate\n" +
                     "x = " + x +
                     "\ny = " + y + "\n";
 

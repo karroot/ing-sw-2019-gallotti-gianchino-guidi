@@ -13,7 +13,7 @@ public abstract class Square
 
     int x; //Coordinate x of square
 
-    int y; //Cordinate y of square
+    int y; //Coordinate y of square
 
     private GameBoard gameBoard;
 

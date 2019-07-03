@@ -118,7 +118,6 @@ public class TestSpawnPoint
 
     }
 
-/* //todo
     @Test
     public void testAddNewWeapon ()
     {
@@ -133,11 +132,8 @@ public class TestSpawnPoint
 
         spawnPointTest.addNewWeapon();
 
-        assertTrue(weaponCardList.contains(weaponCard1));
+        assertTrue(spawnPointTest.getWeaponCardList().contains(weaponCard1));
 
     }
-
-*/
-
 
 }

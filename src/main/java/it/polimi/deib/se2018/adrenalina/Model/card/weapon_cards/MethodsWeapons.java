@@ -250,6 +250,10 @@ public class MethodsWeapons {
 
     public static void moveTarget(Player player, int x, int y) throws IllegalArgumentException, NullPointerException {
 
+        operationToMove(player, x, y);
+    }
+
+    public static void operationToMove(Player player, int x, int y) {
         if (player == null)
             throw new NullPointerException("Parametro player o arena nullo");
 
@@ -262,7 +266,7 @@ public class MethodsWeapons {
         {
             System.out.println(e);
 
-            throw new IllegalArgumentException("Cordinate non valide");//Launch exceptions
+            throw new IllegalArgumentException("Coordinate non valide");//Launch exceptions
         }
 
         player.getSquare().getRoom().removePlayerFromRoomList(player); //Remove player from room

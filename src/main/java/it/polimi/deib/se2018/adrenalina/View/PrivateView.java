@@ -208,6 +208,11 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         reloading();
 
 
+        sendEndRound();
+        return;
+    }
+
+    private void sendEndRound() {
         try //notify at the controller that the round is finished
         {
             notify( new EndRound());
@@ -505,20 +510,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 targetingScopeAction();
 
 
-                try //notify at the controller that the round is finished
-                {
-                    notify( new EndRound());
-                }
-                catch (Exception e)
-                {
-                    terminal.showError("Sei stato disconesso : Turno interroto");
-                    terminal.showError(e.getMessage());
-                    Thread.currentThread().interrupt();
-                    throw new ThreadDeath();
-                }
-
-                Thread.currentThread().interrupt();
-                throw new ThreadDeath();
+        sendEndRound();
 
 
     }
@@ -724,22 +716,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 }
                 else
                 {
-                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the inputs asked by controller
-                    ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with the weapon chosen
-                    //with all power ups that the player chose to increase his ammo
-
-                    notify(responseForController);//Send the message at controller
-
-                    messageRequest = getMessageFromNetwHandl();//Obtain the request message
-
-                    while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
-                    {
-                        messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-                        responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
-                        //with the response (yes or no) and the inputs needed
-                        notify(responseForController);//Send the message of response at controller
-                        messageRequest = getMessageFromNetwHandl();//Obtain the request message
-                    }
+                    useUntilEnd(messageRequest);
                     //If the message is an "End" then there aren't more powerUps to ask
                 }
             }
@@ -956,23 +933,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                     return;
                 }
 
-                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-
-                ResponseInput responseForController = messageRequest.generateResponseMessage();
-
-                notify(responseForController);
-
-
-                messageRequest = getMessageFromNetwHandl();//Obtain the request message
-
-                while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
-                {
-                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-                    responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
-                    //with the response (yes or no) and the inputs needed
-                    notify(responseForController);//Send the message of response at controller
-                    messageRequest = getMessageFromNetwHandl();//Obtain the request message
-                }
+                useUntilEnd(messageRequest);
                 //If the message is an "End" then there aren't more powerUps to ask
             }
             catch (Exception e)
@@ -996,6 +957,26 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
     }
 
+    private void useUntilEnd(RequestInput messageRequest) throws Exception {
+        messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
+
+        ResponseInput responseForController = messageRequest.generateResponseMessage();
+
+        notify(responseForController);
+
+
+        messageRequest = getMessageFromNetwHandl();//Obtain the request message
+
+        while (! (messageRequest instanceof End)) //if the message contains a request to use the powerUp
+        {
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
+            responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
+            //with the response (yes or no) and the inputs needed
+            notify(responseForController);//Send the message of response at controller
+            messageRequest = getMessageFromNetwHandl();//Obtain the request message
+        }
+    }
+
     //Code that handles using of power ups targeting scope
     private void targetingScopeAction()
     {
@@ -1016,22 +997,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 }
 
 
-                messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-                ResponseInput responseForController = messageRequest.generateResponseMessage();//Obtain the response Message
-                //with the targeting scope that the player chose to use
-
-                notify(responseForController);//Send the message at controller
-
-                messageRequest = getMessageFromNetwHandl();//Obtain the request message
-
-                while (! (messageRequest instanceof End)) //if the message contains a request to use the targeting scope
-                {
-                    messageRequest.printActionsAndReceiveInput(terminal);//Ask the input asked by controller
-                    responseForController = messageRequest.generateResponseMessage();//Obtain the response Message with
-                    //with the response and the inputs needed
-                    notify(responseForController);//Send the message of response at controller
-                    messageRequest = getMessageFromNetwHandl();//Obtain the request message
-                }
+                useUntilEnd(messageRequest);
                 //If the message is an "End" then there aren't more targeting scope to use
 
 

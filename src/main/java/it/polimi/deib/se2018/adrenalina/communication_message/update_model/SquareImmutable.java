@@ -16,7 +16,7 @@ public class SquareImmutable implements Serializable
 {
     private int x; //Coordinate x of square
 
-    private int y; //Cordinate y of square
+    private int y; //Coordinate y of square
 
     protected boolean isAmmoPoint;
 

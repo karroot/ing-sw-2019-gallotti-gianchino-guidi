@@ -116,7 +116,6 @@ public class Flamethrower extends WeaponCard
                playersN1.add(playerIterate);
                if (!playersN1.isEmpty() && MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp) != null && !N)
                {
-                   Square sq = MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp);
                    playersN2.addAll(MethodsWeapons.squareBehindThis(player.getSquare(), squareTemp).getPlayerList());
                    N = true;
                }

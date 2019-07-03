@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForGrab2;
+import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForRunAround3;
+
 /**
  * This class implements the adrenalized2 status of a player.
  *
@@ -30,9 +33,7 @@ public class Adrenalized2 extends StatePlayer
     @Override
     public Set<Square> lookForRunAround(Player player)
     {
-        Set<Square>  squareSet;
-        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
-        return squareSet;
+        return lookForRunAround3(player);
     }
 
     /**
@@ -44,10 +45,7 @@ public class Adrenalized2 extends StatePlayer
     @Override
     public Set<Square> lookForGrabStuff(Player player)
     {
-        Set<Square> squareSet;
-        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
-        return StateSpecialMethods.checkValidSquares(player, squareSet);
-
+        return lookForGrab2(player);
     }
 
 

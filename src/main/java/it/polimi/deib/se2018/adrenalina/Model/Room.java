@@ -52,15 +52,6 @@ public class Room
         return new ArrayList<>(playerRoomList);
     }
 
-    /**
-     * //todo
-     * @return
-     */
-    public List<ColorId> getPlayerRoomListColor ()
-    {
-        return new ArrayList<>(playerRoomList.stream().map(Player::getColor).collect(Collectors.toList()));
-    }
-
 
     /**
      * //todo

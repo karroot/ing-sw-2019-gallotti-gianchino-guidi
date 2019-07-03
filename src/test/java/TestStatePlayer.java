@@ -20,8 +20,9 @@ public class TestStatePlayer {
     Player pYellow = new Player(ColorId.YELLOW, "caso", "ciao", true);
     Player pGrey = new Player(ColorId.GREY, "caso", "ciao", false);
     Player pGreen = new Player(ColorId.GREEN, "caso", "ciao", false);
-    Player pPurple = new Player(ColorId.PURPLE, "caso", "ciao", false);
+    Player pTerminator = new Player(ColorId.PURPLE, "caso", "ciao", false);
     Player pBlue = new Player(ColorId.BLUE, "caso", "ciao", false);
+
 
     Square start;
 
@@ -35,7 +36,7 @@ public class TestStatePlayer {
         board.setAllPlayer(pYellow);
         board.setAllPlayer(pGrey);
         board.setAllPlayer(pGreen);
-        board.setAllPlayer(pPurple);
+        board.setAllPlayer(pTerminator);
         board.setAllPlayer(pBlue);
 
         pYellow.setSquare(start);

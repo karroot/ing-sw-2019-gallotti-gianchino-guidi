@@ -60,4 +60,19 @@ public class StateSpecialMethods
     }
 
 
+    public static Set<Square> lookForRunAround3(Player player)
+    {
+        Set<Square>  squareSet;
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
+        return squareSet;
+    }
+
+    public static Set<Square> lookForGrab2(Player player)
+    {
+        Set<Square> squareSet;
+        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
+        return StateSpecialMethods.checkValidSquares(player, squareSet);
+    }
+
+
 }

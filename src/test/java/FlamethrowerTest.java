@@ -96,6 +96,19 @@ public class FlamethrowerTest
         assertEquals(colorIdList, hashMap.get(CardinalDirection.NORTH)[0]);
 
 
+        MethodsWeapons.moveTarget(p1,2,3);
+        MethodsWeapons.moveTarget(p2,2,2);
+        MethodsWeapons.moveTarget(p3,2,1);
+        MethodsWeapons.moveTarget(p4,1,3);
+        MethodsWeapons.moveTarget(p5,1,3);
+
+        hashMap = new HashMap<>();
+        hashMap = flamethrower.checkBasicModeForMessage();
+
+        assertTrue(hashMap.keySet().contains(CardinalDirection.SOUTH));
+        assertTrue(hashMap.keySet().contains(CardinalDirection.WEST));
+
+
     }
 
     @Test

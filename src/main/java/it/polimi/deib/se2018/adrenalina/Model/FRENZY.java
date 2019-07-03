@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForGrab2;
+
 /**
  * This class implements the FRENZY status of a player.
  *
@@ -54,9 +56,7 @@ public class FRENZY extends StatePlayer
         }
         else
         {
-            Set<Square> squareSet;
-            squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
-            return squareSet;
+            return lookForGrab2(player);
         }
 
     }

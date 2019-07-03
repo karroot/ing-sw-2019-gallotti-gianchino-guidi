@@ -508,7 +508,7 @@ public class GUI implements Terminal
         if (x == 4 && y == 3)
             return 11;
 
-        throw new IllegalArgumentException("Cordinate square inesistenti");
+        throw new IllegalArgumentException("Coordinate square inesistenti");
 
     }
 }

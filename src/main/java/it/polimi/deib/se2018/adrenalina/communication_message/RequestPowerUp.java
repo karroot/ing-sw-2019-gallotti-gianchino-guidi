@@ -27,7 +27,7 @@ public class RequestPowerUp extends RequestInput {
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
+            throw new IllegalStateException("Input non ancora presi.");
 
         return new ResponsePowerUp(chosenPowerUp);
     }
@@ -38,11 +38,11 @@ public class RequestPowerUp extends RequestInput {
         int anInt=0;
         for (String t:powerUptoChose)
         {
-            terminal.addTextInput("vuoi usare il poweup: " + t + " ?");
+        terminal.addTextInput("Vuoi usare il powerUp: " + t + " ?");
 
 
-            terminal.addOptionInput("1 : sì");
-            terminal.addOptionInput("2 : no");
+            terminal.addOptionInput("1: sì");
+            terminal.addOptionInput("2: no");
 
              anInt = terminal.inputInt(1,2);
              if(anInt==1)

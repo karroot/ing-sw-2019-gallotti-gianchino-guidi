@@ -224,10 +224,10 @@ public class GrenadeLauncher extends WeaponCard
     public void extraGrenade (String squareTargetCoordinatesAsString)
     {
 
+        Square square = null;
+
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
-
-        Square square = null;
 
         try {
             square = player.getSquare().getGameBoard().getArena().getSquare(x, y);

@@ -4,6 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.*;
 
+import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForGrab2;
+import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForRunAround3;
+
 /**
  * This class implements the adrenalized1 status of a player.
  *
@@ -28,9 +31,7 @@ public class Adrenalized1 extends StatePlayer
     @Override
     public Set<Square> lookForRunAround(Player player)
     {
-        Set<Square>  squareSet;
-        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
-        return squareSet;
+        return lookForRunAround3(player);
     }
 
     /**
@@ -42,9 +43,7 @@ public class Adrenalized1 extends StatePlayer
     @Override
     public Set<Square> lookForGrabStuff(Player player)
     {
-        Set<Square> squareSet;
-        squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
-        return StateSpecialMethods.checkValidSquares(player, squareSet);
+        return lookForGrab2(player);
 
     }
 

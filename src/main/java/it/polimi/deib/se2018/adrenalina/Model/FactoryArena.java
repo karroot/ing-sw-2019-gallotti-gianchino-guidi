@@ -81,17 +81,7 @@ public class FactoryArena
         {
             case 1: //Is 1 you create the room list of arena 1
             {
-                squares.add(s5);
-                squares.add(s9);
-
-                temp = new Room(board,squares,ColorRoom.RED);
-
-                rooms.add(temp);
-
-                squares = new LinkedList<>();
-
-                squares.add(s1);
-                squares.add(s2);
+                squares = addElements1(board, rooms, squares, s5, s9, s1, s2);
                 squares.add(s3);
 
                 temp = new Room(board,squares,ColorRoom.WHITE);
@@ -147,16 +137,7 @@ public class FactoryArena
                 squares = new LinkedList<>();
 
                 squares.add(s5);
-                squares.add(s6);
-                squares.add(s7);
-
-                temp = new Room(board,squares,ColorRoom.RED);
-
-                rooms.add(temp);
-                squares = new LinkedList<>();
-
-                squares.add(s9);
-                squares.add(s10);
+                squares = addElements1(board, rooms, squares, s6, s7, s9, s10);
                 squares.add(s11);
 
                 temp = new Room(board,squares,ColorRoom.BLUE);
@@ -274,6 +255,22 @@ public class FactoryArena
                 //Stop
         }
 
+    }
+
+    private static List<Square> addElements1(GameBoard board, List<Room> rooms, List<Square> squares, Square s5, Square s9, Square s1, Square s2) {
+        Room temp;
+        squares.add(s5);
+        squares.add(s9);
+
+        temp = new Room(board,squares, ColorRoom.RED);
+
+        rooms.add(temp);
+
+        squares = new LinkedList<>();
+
+        squares.add(s1);
+        squares.add(s2);
+        return squares;
     }
 
 
