@@ -2054,7 +2054,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
         if(checkForAfk())
             return;
         runAround(true);
+        updateModel();
         shootTerminator();
+
         checkForAfk();
         for(Player p: g1.getAllPlayer())
         {
@@ -2071,7 +2073,8 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
         {
             for(Player p: termi.playerThatSee(termi.getSquare().getGameBoard()))
             {
-                enemiesColors.add(p.getColor());
+                if(!p.equals(termi))
+                    enemiesColors.add(p.getColor());
             }
 
             if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
@@ -2670,7 +2673,17 @@ private void calculateFinalScore()
         if(map.get(p.getColor())!=null)
             p.setScore(p.getScore() + map.get(p.getColor()));
     }
+
+    if(g1.isTerminatorMode())
+    {
+        termi.setScore(termi.getScore() + map.get(termi.getColor())); //todo chiedere a gio se in final score c'è terminator
+    }
+
     List<Score> scores = new ArrayList<Score>();
+    if(g1.isTerminatorMode())
+    {
+        scores.add(new Score(termi.getScore(),termi.getName()));
+    }
     for( Player p : g1.getAllPlayer())
     {
         scores.add(new Score(p.getScore(), p.getName()));
