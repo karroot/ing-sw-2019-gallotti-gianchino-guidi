@@ -2135,7 +2135,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    private void shotEnemy() throws InterruptedException, ExecutionException {
+    private void shotEnemy() throws Exception {
 
 
         boolean vuota = false;

@@ -221,7 +221,7 @@ public class GrenadeLauncher extends WeaponCard
      *
      * @param squareTargetCoordinatesAsString is the square target
      */
-    public void extraGrenade (String squareTargetCoordinatesAsString)
+    public void extraGrenade (String squareTargetCoordinatesAsString) throws Exception
     {
 
         Square square = null;
@@ -229,11 +229,9 @@ public class GrenadeLauncher extends WeaponCard
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
 
-        try {
-            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
+
+        square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
+
 
         if (square != null) {
             for (Player playerIterate : square.getPlayerList())
@@ -253,7 +251,8 @@ public class GrenadeLauncher extends WeaponCard
      * @param responseInput
      */
     @Override
-    public void useWeapon(ResponseInput responseInput) {
+    public void useWeapon(ResponseInput responseInput) throws Exception
+    {
         basicMode(((ResponseGrenadeLauncher) responseInput).getTargetBasicMode(), ((ResponseGrenadeLauncher) responseInput).getTargetSquareToMoveBasicModeAsString());
         if (((ResponseGrenadeLauncher) responseInput).isExtraEffect())
             extraGrenade(((ResponseGrenadeLauncher) responseInput).getTargetSquareExtraGrenadeAsString());

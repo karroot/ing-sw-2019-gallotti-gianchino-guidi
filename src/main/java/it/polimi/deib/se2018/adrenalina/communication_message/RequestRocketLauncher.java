@@ -102,9 +102,9 @@ public class RequestRocketLauncher extends RequestInput
 
         List<ColorId> players = colorIdListBasicMode;
 
-        terminal.addTextInput("Scegli un bersaglio :");
-
         int i = 1;
+
+        terminal.addTextInput("Scegli un bersaglio :");
 
         for (ColorId colorIdIterate : players)//Ask to user the target
         {
@@ -113,9 +113,11 @@ public class RequestRocketLauncher extends RequestInput
         }
 
         int choice = terminal.inputInt(1, i - 1);
+        terminal.addTextInput("Vuoi spostare il bersaglio?");
+
         targetPlayerBasicMode = players.get(choice - 1);
 
-        terminal.addTextInput("Vuoi spostare il bersaglio?");
+
 
         terminal.addOptionInput("1: sì");
         terminal.addOptionInput("2: no");
@@ -124,21 +126,13 @@ public class RequestRocketLauncher extends RequestInput
 
         if (choice1 == 1)
         {
+            terminal.addTextInput("Dove vuoi spostare il bersaglio?");
+
             List<String> stringList = new ArrayList<>();
 
             int j = 1;
 
-            terminal.addTextInput("Dove vuoi spostare il bersaglio?");
-
-            for (String stringIterate : hashToMovePlayerBasicMode.get(targetPlayerBasicMode))
-            {
-                terminal.addOptionInput(j + " : " + stringIterate);
-                stringList.add(stringIterate);
-                j++;
-            }
-
-            int choice2 = terminal.inputInt(1, j - 1);
-            targetSquareCoordinatesAsStringTargetToMove = stringList.get(choice2 - 1);
+            selectSquareToMoveTarget(stringList, j);
         }
 
 
@@ -158,12 +152,29 @@ public class RequestRocketLauncher extends RequestInput
         }
     }
 
+    private void selectSquareToMoveTarget(List<String> stringList, int j) {
+        for (String stringIterate : hashToMovePlayerBasicMode.get(targetPlayerBasicMode))
+        {
+            terminal.addOptionInput(j + " : " + stringIterate);
+            stringList.add(stringIterate);
+            j++;
+        }
+
+        int choice2 = terminal.inputInt(1, j - 1);
+        targetSquareCoordinatesAsStringTargetToMove = stringList.get(choice2 - 1);
+    }
+
     protected void chooseSquare()
     {
         List<String> squares = new ArrayList<>();
 
         squares.addAll(squaresAndTargetsRocketJump.keySet());
 
+        selectSquareToMove(squares);
+
+    }
+
+    private void selectSquareToMove(List<String> squares) {
         terminal.addTextInput("Scegli un quadrato dove spostarti: ");
 
         int i = 1;
@@ -177,7 +188,6 @@ public class RequestRocketLauncher extends RequestInput
         int choice = terminal.inputInt(1, i - 1);
 
         targetSquareCoordinatesAsStringPlayerToMove = squares.get(choice - 1);
-
     }
 
     protected void chooseTargetAfterMove ()
@@ -214,15 +224,7 @@ public class RequestRocketLauncher extends RequestInput
 
             terminal.addTextInput("Dove vuoi spostare il bersaglio?");
 
-            for (String stringIterate : hashToMovePlayerBasicMode.get(targetPlayerBasicMode))
-            {
-                terminal.addOptionInput(j + " : " + stringIterate);
-                stringList.add(stringIterate);
-                j++;
-            }
-
-            int choice2 = terminal.inputInt(1, j - 1);
-            targetSquareCoordinatesAsStringTargetToMove = stringList.get(choice2 - 1);
+            selectSquareToMoveTarget(stringList, j);
         }
 
 
@@ -249,19 +251,7 @@ public class RequestRocketLauncher extends RequestInput
         List<String> stringList = new ArrayList<>();
         stringList.addAll(allSquaresNoMove);
 
-        terminal.addTextInput("Scegli un quadrato dove spostarti: ");
-
-        int i = 1;
-
-        for (String t : stringList)//Ask the square at the user
-        {
-            terminal.addOptionInput(i+" : "+t);
-            i++;
-        }
-
-        int choice = terminal.inputInt(1, i - 1);
-
-        targetSquareCoordinatesAsStringPlayerToMove = stringList.get(choice - 1);
+        selectSquareToMove(stringList);
     }
 
 }

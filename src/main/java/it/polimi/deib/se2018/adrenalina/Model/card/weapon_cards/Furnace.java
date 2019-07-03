@@ -148,7 +148,7 @@ public class Furnace extends WeaponCard
      * This method implements the alternative mode of the weapon.
      * @param squareTargetCoordinatesAsString is the target square
      */
-    public void inCozyFireMode (String squareTargetCoordinatesAsString)
+    public void inCozyFireMode (String squareTargetCoordinatesAsString) throws Exception
     {
         if (!checkAvailableMode()[1])//check mode
             throw  new IllegalStateException("Modalità fuoco confortevole dell'arma "+name+" non eseguibile.");
@@ -158,11 +158,7 @@ public class Furnace extends WeaponCard
 
         Square square = null;
 
-        try {
-            square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
-        } catch (SquareNotInGameBoard squareNotInGameBoard) {
-            squareNotInGameBoard.printStackTrace();
-        }
+        square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
 
         if (square != null)
         {
@@ -186,7 +182,7 @@ public class Furnace extends WeaponCard
      * @param responseInput
      */
     @Override
-    public void useWeapon(ResponseInput responseInput)
+    public void useWeapon(ResponseInput responseInput) throws Exception
     {
         if (((ResponseFurnace) responseInput).isMode())
         {

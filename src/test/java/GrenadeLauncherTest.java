@@ -117,8 +117,7 @@ public class GrenadeLauncherTest {
     }
 
     @Test
-    public void extraGrenade()
-    {
+    public void extraGrenade() throws Exception {
         MethodsWeapons.moveTarget(p2,3,1);
         p3.setSquare(start);
         MethodsWeapons.moveTarget(p3,4,1);

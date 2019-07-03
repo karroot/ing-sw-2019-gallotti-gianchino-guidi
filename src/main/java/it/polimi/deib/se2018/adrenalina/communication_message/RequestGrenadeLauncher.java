@@ -64,7 +64,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     public void printActionsAndReceiveInput(Terminal terminal)
     {
         this.terminal=terminal;
-        int choice=0;
+        int choiceOfPlayer=0;
 
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
         if (availableMethod[0])//Print the possible effects
@@ -76,15 +76,19 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
             terminal.addOptionInput("2: attacco base e granata extra");
         }
 
+
+
         if (availableMethod[1])//Print the possible effects
         {
-            choice = terminal.inputInt(1, 2);
+            choiceOfPlayer = terminal.inputInt(1, 2);//the player can choose both options
         }
-        else choice = terminal.inputInt(1, 1);
+        else choiceOfPlayer = terminal.inputInt(1, 1);
 
-        inputBasicMode();
+        inputBasicMode();//will get the input for the BasicMode
 
-        if (choice==2)
+        int l = 0;
+
+        if (choiceOfPlayer==2)
         {
             inputAdditionalMode();
             mode = true;
