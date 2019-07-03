@@ -97,10 +97,6 @@ public class GUI implements Terminal
 
     }
 
-    @Override
-    public void showMenu() {
-
-    }
 
     /**
      * Show at the user a window with all the scores of the players
@@ -160,7 +156,8 @@ public class GUI implements Terminal
     }
 
     /**
-     * Updates the gui with all the statistic of the player
+     * Updates the gui with all the statistic of the player.
+     * It Shows the all player's board
      * @param player player to show
      */
     @Override

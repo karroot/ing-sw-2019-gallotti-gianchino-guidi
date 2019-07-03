@@ -218,6 +218,18 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
      * of the user
      * 4)If the type of message is "RequestInput":  the network handler calls the method update (using notify) of the
      * privateView so it receives the request of the server
+     * 5)If the type of message is "RequestToUseGrenade": the network handler starts a thread that executes the
+     * method "requestToUseGrenade" of the privateView
+     * 6)If the type of message is "RequestToRespawn": the network handler starts a thread that executes the
+     * method "startRespawn" of the privateView
+     * 7)If the type of message is "StartFrenesy" of "StartFrenesyB": the network handler starts a thread that executes the
+     * method "startFrenesy" of the privateView
+     * 8)If the type of message is "StartTerminator": the network handler starts a thread that executes the
+     * method "startTerminator" of the privateView
+     * 9)If the type of message is "RespawnTerminator": the network handler starts a thread that executes the
+     * method "respawnTerminator" of the privateView
+     * 10)If the type of message is "GenericMessage": the network handler using the gui or cli to print
+     * the string inside the genericMessage
      * @param message message passed by server calling in remote this method
      * @throws RemoteException if there were problems with RMI
      * @throws Exception if there were problems with RMI
@@ -282,9 +294,9 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
             logicRespawnTerminator.start(); //Start the thread that handles the respawn
             return;
         }
-        else if (msg instanceof GenericMessage)
+        else if (message instanceof GenericMessage)
         {
-            view.showMessage(((GenericMessage) msg).getText());
+            view.showMessage(((GenericMessage) message).getText());
             return;
         }
 

@@ -208,6 +208,18 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
      * of the user
      * 5)If the type of message is "RequestInput":  the network handler calls the method update of the
      * privateView so it receives the request of the server
+     * 6)If the type of message is "RequestToUseGrenade": the network handler starts a thread that executes the
+     * method "requestToUseGrenade" of the privateView
+     * 7)If the type of message is "RequestToRespawn": the network handler starts a thread that executes the
+     * method "startRespawn" of the privateView
+     * 8)If the type of message is "StartFrenesy" of "StartFrenesyB": the network handler starts a thread that executes the
+     * method "startFrenesy" of the privateView
+     * 9)If the type of message is "StartTerminator": the network handler starts a thread that executes the
+     * method "startTerminator" of the privateView
+     * 10)If the type of message is "RespawnTerminator": the network handler starts a thread that executes the
+     * method "respawnTerminator" of the privateView
+     * 11)If the type of message is "GenericMessage": the network handler using the gui or cli to print
+     * the string inside the genericMessage
      * @throws Exception if there were problems reading the message
      */
     public void receiveMessageNet() throws Exception //Manca il caso della richiesta delle credenziali

@@ -159,7 +159,8 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
         {
             try
             {
-                t.send(message);
+                if (t.isActive())
+                    t.send(message);
             }
             catch (Exception e)
             {

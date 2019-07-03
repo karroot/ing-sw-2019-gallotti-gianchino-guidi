@@ -145,11 +145,6 @@ public class CLI implements Terminal
         System.out.println("+---------------------------------------------------------------------------------+");
     }
 
-    @Override
-    public void showMenu()
-    {
-
-    }
 
     /**
      * Print to terminal the three action of a Round

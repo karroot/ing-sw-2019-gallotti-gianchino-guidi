@@ -66,6 +66,7 @@ public class SomePlayerAreNotActive implements StateVirtualView
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             view.getConnections().add(connection);//Add the new connection to the list
             view.sendMessageGenericBroadcast(new GenericMessage("Player"+oldConnectionSocket.getPlayer()+" si è riconnesso"));
+            System.out.println("Player:"+ oldConnectionSocket.getPlayer()+"si è riconesso");
         }
         else
             {
