@@ -145,7 +145,7 @@ public class Controller implements Observer<ResponseInput>
     public void startGame()
     {
         g1= new GameBoard(setup.createWeaponCardStack(),setup.createPowerUpStack(),codeArena,skullCounter,setup.createAmmoTilesStack());
-
+        Player firstFrenzy = null;
         setup.replenishBoard(g1);
 
 
@@ -177,7 +177,12 @@ public class Controller implements Observer<ResponseInput>
                         salta=false;
                         if(frenzy)
                         {
+                            if(!(p.equals(firstFrenzy)))
+                            {
                             startRoundFrenzy(p);
+                            if(firstFrenzy==null)
+                                firstFrenzy=p;
+                            }
                         }
                         else
                          startRound(p);
