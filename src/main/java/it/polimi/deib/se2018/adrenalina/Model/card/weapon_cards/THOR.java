@@ -32,6 +32,10 @@ public class THOR extends WeaponCard
         redAmmoCost = 1;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         if(((ResponseTHOR) responseMessage).getTargetSecondAdditionalMode() == null && ((ResponseTHOR) responseMessage).getTargetAdditionalMode() == null )
@@ -46,6 +50,10 @@ public class THOR extends WeaponCard
             basicMode(((ResponseTHOR) responseMessage).getTargetBasicMode(), ((ResponseTHOR) responseMessage).getTargetAdditionalMode(),((ResponseTHOR) responseMessage).getTargetSecondAdditionalMode(),true,true);
 
     }
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1] && checkAvailableMode()[2])

@@ -484,6 +484,10 @@ public class Player
         checkState(); //Check the state of the player
     }
 
+    /**
+     * this method is used to set the frenzy attribute
+     * @param frenzy value of frenzy
+     */
     public void setFrenzy(boolean frenzy)
     {
         this.frenzy = frenzy;

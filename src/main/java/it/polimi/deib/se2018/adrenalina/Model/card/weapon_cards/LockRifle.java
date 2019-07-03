@@ -28,10 +28,19 @@ public class LockRifle extends WeaponCard
         redAmmoCost = 0;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         basicMode(((ResponseLockRifle) responseMessage).getTargetBasicMode(),((ResponseLockRifle) responseMessage).getTargetsAdditionalMode(),((ResponseLockRifle) responseMessage).isMode());
     }
+
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1])

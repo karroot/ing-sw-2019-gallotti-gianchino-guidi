@@ -33,6 +33,10 @@ public class MachineGun extends WeaponCard
         redAmmoCost = 1;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         basicMode(((ResponseMachineGun) responseMessage).getTargetBasicMode(),
@@ -46,7 +50,10 @@ public class MachineGun extends WeaponCard
                 );
 
     }
-
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1] && checkAvailableMode()[2])

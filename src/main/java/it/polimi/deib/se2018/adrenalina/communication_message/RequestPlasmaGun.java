@@ -26,7 +26,7 @@ public class RequestPlasmaGun extends  RequestInput
     //Others attributes
     private List<String> orderAva = new LinkedList<>();//List of support
     private List<String> orderTemp = new LinkedList<>();//Second List of support
-
+    private List<String> printItalian=new LinkedList<>();// list to print in italian language
     /**
      * Create a message of Request of input for weapon Shotgun
      * @param availableMethod Represent the possible mode that can be used with this weapon
@@ -93,12 +93,19 @@ public class RequestPlasmaGun extends  RequestInput
         }
 
         int i = 1;
-
+        for(String s : orderAva)
+        {
+            if(s.equals("with phase glide"))
+                printItalian.add("slittamento di fase");
+            if(s.equals("with charged shot"))
+                printItalian.add("colpo caricato");
+        }
 
         terminal.addTextInput("Scegli il secondo effetto:");
-        for (String t:orderAva) //Ask to the user the second effect
+
+        for (String t:printItalian) //Ask to the user the second effect
         {
-            terminal.addOptionInput(i+":"+orderAva.get(i-1));
+            terminal.addOptionInput(i+":"+printItalian.get(i-1));
             i++;
         }
 
@@ -199,7 +206,8 @@ public class RequestPlasmaGun extends  RequestInput
 
 
       terminal.addOptionInput("1:aggiungi danno");
-      choice = terminal.inputInt(1, 1);
+      terminal.addOptionInput("2: non aggiungere danno");
+      choice = terminal.inputInt(1, 2);
 
       if (choice == 1) {
           orderAva.remove("with charged shot");

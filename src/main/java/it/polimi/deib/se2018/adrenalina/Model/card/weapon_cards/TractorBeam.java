@@ -22,6 +22,10 @@ public class TractorBeam extends WeaponCard
         redAmmoCost = 0;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
 
@@ -31,7 +35,10 @@ public class TractorBeam extends WeaponCard
         else
             basicMode(((ResponseTractatorBeam) responseMessage).getTargetBasicMode(), ((ResponseTractatorBeam) responseMessage).getX() ,((ResponseTractatorBeam) responseMessage).getY());
     }
-
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1])

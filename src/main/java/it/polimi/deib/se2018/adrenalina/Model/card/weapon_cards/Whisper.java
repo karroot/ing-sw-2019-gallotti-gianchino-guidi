@@ -33,11 +33,20 @@ public class Whisper extends WeaponCard
         redAmmoCost = 0;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
 
-basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
+    basicMode(((ResponseWhisper) responseMessage).getTargetBasicMode());
     }
+
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         return new RequestWhisper(checkAvailableMode(),checkBasicMode());

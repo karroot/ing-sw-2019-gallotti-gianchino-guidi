@@ -32,6 +32,10 @@ public class PlasmaGun extends WeaponCard
 
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         ResponsePlasmaGun msg = (ResponsePlasmaGun) responseMessage;
@@ -43,6 +47,10 @@ public class PlasmaGun extends WeaponCard
         }
 
     }
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
 
@@ -162,7 +170,7 @@ public class PlasmaGun extends WeaponCard
     private List<ColorId> checkTargetAfterMove(int x,int y)
     {
 
-        Player dummie2 = new Player(ColorId.BLUE,"a","a",false);
+        Player dummie2 = new Player(null,"a","a",false);
         List<ColorId> ListPlayerReach = new LinkedList();
         Set<ColorId> playerReachable = new HashSet<>();
         try {
@@ -186,7 +194,7 @@ public class PlasmaGun extends WeaponCard
 
     public  Map<String,List<ColorId>> checkAllTarget()
     {
-        Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
+        Player dummie = new Player(null,"a","a",false);
         if (!checkAvailableMode()[2]) //check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 List<ColorId> tempList ;
@@ -207,7 +215,7 @@ List<ColorId> tempList ;
                     List<ColorId> temp =result.get(coordinates);
                     for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
                     {
-                        if(!p.getColor().equals(ColorId.DUMMIE) && !p.getColor().equals(this.player.getColor()))
+                        if(p.getColor()!=null && !p.getColor().equals(this.player.getColor()))
                             temp.add(p.getColor());
                     }
                 }
@@ -216,7 +224,7 @@ List<ColorId> tempList ;
                         List<ColorId> colorList = new LinkedList<>();
                         for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
                         {
-                            if(!p.getColor().equals(ColorId.DUMMIE) && !p.getColor().equals(this.player.getColor()))
+                            if(p.getColor()!=null && !p.getColor().equals(this.player.getColor()))
                                 colorList.add(p.getColor());
                         }
                         result.put(coordinates, colorList);

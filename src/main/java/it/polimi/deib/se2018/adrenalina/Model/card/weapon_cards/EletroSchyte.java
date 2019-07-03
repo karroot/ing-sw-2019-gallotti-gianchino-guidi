@@ -34,6 +34,10 @@ public class EletroSchyte extends WeaponCard
         redAmmoCost = 0;
     }
 
+    /**
+     * this method is used to use the weapon
+     * @param responseMessage response message specified for the weapon
+     */
     @Override
     public void useWeapon(ResponseInput responseMessage) {
         if(((ResponseElectroSchyte) responseMessage).isMode())
@@ -42,7 +46,10 @@ public class EletroSchyte extends WeaponCard
             basicMode(((ResponseElectroSchyte) responseMessage).getTargetBasicMode());
     }
 
-
+    /**
+     * method used to return the reqeuest message
+     * @return the asked request input
+     */
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1])
