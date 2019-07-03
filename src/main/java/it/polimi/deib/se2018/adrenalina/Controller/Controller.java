@@ -183,6 +183,8 @@ public class Controller implements Observer<ResponseInput>
                             if(firstFrenzy==null)
                                 firstFrenzy=p;
                             }
+                            else //i have complete the frenzy cycle
+                                break;
                         }
                         else
                          startRound(p);
@@ -221,9 +223,6 @@ public class Controller implements Observer<ResponseInput>
             if(p.isDead())
             {
 
-
-
-
                 if(g1.getSkullCounter()>0)
                     g1.setSkullCounter(g1.getSkullCounter()-1);
 
@@ -232,11 +231,13 @@ public class Controller implements Observer<ResponseInput>
 
                 temppoint = p.calculateScoreForEachPlayer();
                 for(Player c : g1.getAllPlayer()) {
-                    if (c.getColor()!=null && temppoint.get(c.getColor())!= null){
-                            c.setScore(c.getScore() + temppoint.get(c.getColor()));
+                    if (c.getColor()!=null && temppoint.get(c.getColor())!= null)
+                    {
+                        c.setScore(c.getScore() + temppoint.get(c.getColor()));
+
                         if (p.getDamageCounter()[10].equals(c.getColor())) {
 
-                            if (lastKillerColor.contains(c.getColor()))
+                            if (lastKillerColor.contains(c.getColor())) // calculate additional point for double kill
                                 c.setScore(c.getScore() + 1);
                             g1.setKillShotTrack(c.getColor(), 1);
 
@@ -387,6 +388,7 @@ public class Controller implements Observer<ResponseInput>
         return ret;
     }
 
+    //drawpowerup for roundplayer
     private void drawPowerup(boolean respawn){
         PowerUpCard pc= g1.drawPowerUpCard();
 
@@ -396,7 +398,15 @@ public class Controller implements Observer<ResponseInput>
             roundPlayer.addPowerUp(pc);
         pc.setPlayer(roundPlayer);
     }
+    private void drawPowerup(boolean respawn,Player p){
+        PowerUpCard pc= g1.drawPowerUpCard();
 
+        if(respawn)
+            p.addPowerUpRespawn(pc);
+        else
+            p.addPowerUp(pc);
+        pc.setPlayer(p);
+    }
 
     // END OF AUXILIARY FUNCTIONS
 
@@ -633,6 +643,8 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskGrab)
             {
+
+
                 grab();
             }
             else if (messageNet instanceof AskShoot)
@@ -679,6 +691,7 @@ public class Controller implements Observer<ResponseInput>
                 messageNet = msg;}
 
         }
+        updateModel();
         if(!roundPlayer.isAfk() && !salta)
             askForPowerUpTagBackGranade();
 
@@ -1589,11 +1602,11 @@ if(filteredPlayer!=null){
      * this method spawn the player
      * @param index of the power up to use for spawn
      */
-    public void spawn(int index)
+    public void spawn(int index,Player p)
     {
 
 
-    PowerUpCard powercard = roundPlayer.usePowerUp(index);
+    PowerUpCard powercard = p.usePowerUp(index);
     Square resp = null;
 
            if (powercard.getColor().equals(Color.BLUE)) {
@@ -1619,10 +1632,11 @@ if(filteredPlayer!=null){
              }
          }
 
-         roundPlayer.setSquare(resp);
+
+         p.respawn((SpawnPoint) resp);
          
         if(resp!=null)
-             MethodsWeapons.moveTarget(roundPlayer, resp.getX(), resp.getY());
+             MethodsWeapons.moveTarget(p, resp.getX(), resp.getY());
 
 
 
@@ -1756,7 +1770,7 @@ if(filteredPlayer!=null){
             spawnTerminator(response.getTargetSpawnPoint());
         }
         else {
-            if(!roundPlayer.isFirstRound())
+            if(!p.isFirstRound())//forse roundplayer
                 drawPowerup(true);
 
             updateModel();
@@ -1787,7 +1801,7 @@ if(filteredPlayer!=null){
 
 
             List<Color> powerList = new LinkedList<>();
-            for (PowerUpCard pc : roundPlayer.getPowerupCardList()) {
+            for (PowerUpCard pc : p.getPowerupCardList()) {
                 powerList.add(pc.getColor());
             }
             List<Callable<Boolean>> callableList = new LinkedList<>();
@@ -1817,8 +1831,8 @@ if(filteredPlayer!=null){
 
 
             ResponseRespawn response = (ResponseRespawn) msg;
-            spawn(response.getTargetSpawnPoint()-1);
-            roundPlayer.setFirstRound(false);
+            spawn(response.getTargetSpawnPoint()-1,p);
+            p.setFirstRound(false);//forse roundplayer
             updateModel();
 
         }
@@ -2640,11 +2654,12 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 private void calculateFinalScore()
 {
-    Map<ColorId,Integer> mappa = finalScore();
+    Map<ColorId,Integer> map = finalScore(); //map of final score
     List<String> printableScore = new LinkedList<>();
     for(Player p : g1.getAllPlayer())
     {
-        p.setScore(p.getScore() + mappa.get(p.getColor()));
+        if(map.get(p.getColor())!=null)
+            p.setScore(p.getScore() + map.get(p.getColor()));
     }
     List<Score> scores = new ArrayList<Score>();
     for( Player p : g1.getAllPlayer())

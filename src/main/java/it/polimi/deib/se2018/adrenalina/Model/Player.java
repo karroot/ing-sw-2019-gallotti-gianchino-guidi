@@ -542,7 +542,7 @@ public class Player
     {
         if (square == null) //Chech exceptions
             throw new NullPointerException("Parametro null");
-        if (last >=0 && last <=10)
+        if (last >0 && last <=10)
             throw new IllegalStateException("Impossibile fare il respawn player vivo");
 
         last = 0; //There aren't more damage points
