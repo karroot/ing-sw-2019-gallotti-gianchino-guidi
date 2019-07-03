@@ -790,6 +790,9 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
 
             notify(responseForController);//Send the message at controller
 
+            //######## Using targeting scope #########
+            targetingScopeAction();
+
             cont++;
         }
         catch (Exception e)
