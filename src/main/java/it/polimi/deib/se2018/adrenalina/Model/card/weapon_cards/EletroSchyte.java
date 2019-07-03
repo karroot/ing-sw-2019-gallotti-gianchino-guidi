@@ -118,7 +118,14 @@ public class EletroSchyte extends WeaponCard
                     if(pla.getColor().equals(p))
                         doDamage(pla,1);
                 }
+                if(this.player.getSquare().getGameBoard().isTerminatorMode())
+                {
+                    if(colorPlayerList.contains(ColorId.PURPLE))
+                    {
+                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
+                    }
 
+                }
 
             }
         isLoaded = false;
