@@ -168,7 +168,8 @@ public class EletroSchyte extends WeaponCard
 
         for (ColorId p : colorPlayerList) {
            //doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(p)).collect(Collectors.toList()).get(0),2);
-            for(Player pla : player.getSquare().getGameBoard().getAllPlayer()){
+            for(Player pla : player.getSquare().getGameBoard().getAllPlayer())
+            {
                 if(pla.getColor().equals(p))
                     doDamage(pla,2);}
         }

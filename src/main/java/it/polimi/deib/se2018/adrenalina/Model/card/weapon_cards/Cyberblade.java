@@ -170,6 +170,7 @@ public class Cyberblade extends WeaponCard
         ResponseCyberblade msg = (ResponseCyberblade) responseMessage;
         Player player = MethodsWeapons
                 .ColorToPlayer(msg.getTargetBasicEffect(),this.player.getSquare().getGameBoard());
+
         Player player2;
 
         if (msg.getTargetForSliceEffect() == null)

@@ -2,6 +2,9 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
+/**
+ *
+ */
 public class RequestRespawnTerminator extends  RequestInput {
     private int targetSpawnPoint;
     @Override
@@ -20,18 +23,14 @@ public class RequestRespawnTerminator extends  RequestInput {
 
     protected void inputBasicMode()
     {
-        int i = 1;
-
-        terminal.addTextInput("Scegli il colore dello square dove spawnare:");
+        terminal.addTextInput("Scegli il colore dello square dove spawnare il terminator:");
 
 
-            terminal.addOptionInput("1: rosso");
-            terminal.addOptionInput("2: blu");
-            terminal.addOptionInput("3: giallo");
+        terminal.addOptionInput("1: rosso");
+        terminal.addOptionInput("2: blu");
+        terminal.addOptionInput("3: giallo");
 
-        targetSpawnPoint  = inputInt(1, i - 1);
-
-
+        targetSpawnPoint  = terminal.inputInt(1, 3);
 
     }
 }

@@ -47,9 +47,9 @@ public class RequestShootTerminator extends  RequestInput {
             i++;
         }
 
-        int anInt = inputInt(1, i - 1);
+        int anInt = terminal.inputInt(1, i - 1);
 
-        target= enemies.get(anInt);
+        target= enemies.get(anInt-1);
 
     }
 }

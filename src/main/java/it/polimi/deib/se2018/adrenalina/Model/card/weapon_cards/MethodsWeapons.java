@@ -303,12 +303,19 @@ public class MethodsWeapons {
     {
         if (colorId == null || board == null)
             throw new NullPointerException("Parametri con valore nullo");
-        return board
-            .getAllPlayer()
-            .stream()
-            .filter(p -> p.getColor().equals(colorId))
-            .collect(Collectors.toList())
-            .get(0);
+
+
+        if (board.isTerminatorMode() && colorId.equals(ColorId.PURPLE))
+            return board.getTermi();
+
+
+            return board
+                    .getAllPlayer()
+                    .stream()
+                    .filter(p -> p.getColor().equals(colorId))
+                    .collect(Collectors.toList())
+                    .get(0);
+
     }
 
     /**
@@ -325,11 +332,23 @@ public class MethodsWeapons {
         if (colorId == null || board == null)
             throw new NullPointerException("Parametri con valore nullo");
 
-        return board
-                .getAllPlayer()
-                .stream()
-                .filter(p -> colorId.contains(p.getColor()))
-                .collect(Collectors.toList());
+        List<Player> temp = new ArrayList<>();
+
+        for (Player p : board.getAllPlayer())
+        {
+            if (colorId.contains(p.getColor()))
+            {
+                temp.add(p);
+            }
+
+        }
+
+        if (board.isTerminatorMode() && colorId.contains(ColorId.PURPLE))
+        {
+            temp.add(board.getTermi());
+        }
+
+        return temp;
     }
 }
 

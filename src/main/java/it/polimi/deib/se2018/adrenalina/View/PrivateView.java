@@ -281,9 +281,9 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
                 showMessage("Il terminator non ha bersagli non può sparare");
                 return;
             }
-            messageFromNetwHandl.printActionsAndReceiveInput(terminal);//Ask at the user where to move the terminator
+            messageRequest.printActionsAndReceiveInput(terminal);//Ask at the user where to move the terminator
 
-            responseInput = messageFromNetwHandl.generateResponseMessage(); //Generate and send the response message
+            responseInput = messageRequest.generateResponseMessage(); //Generate and send the response message
 
             notify(responseInput);
 
