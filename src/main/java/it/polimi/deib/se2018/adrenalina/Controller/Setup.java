@@ -1,4 +1,4 @@
-package it.polimi.deib.se2018.adrenalina.Controller;//package it.polimi.deib.se2018.adrenalina.Controller;
+package it.polimi.deib.se2018.adrenalina.Controller;
 
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
@@ -24,21 +24,6 @@ public class Setup
 
     }
 
-    public void spawn (ColorId player, Color PointOfSpawn)
-    {
-
-    }
-
-
-    public void resetPlayer (ColorId player)
-    {
-
-    }
-
-    public void initialize ()
-    {
-
-    }
 
     public Stack<WeaponCard> createWeaponCardStack ()
     {
