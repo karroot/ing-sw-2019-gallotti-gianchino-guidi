@@ -2,9 +2,6 @@ package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.Afk;
 
-import java.io.IOException;
-import java.util.TimerTask;
-
 import static java.lang.Thread.sleep;
 
 /**

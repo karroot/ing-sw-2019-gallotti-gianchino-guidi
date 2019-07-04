@@ -1,13 +1,11 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import org.junit.After;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
+import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.SpawnPoint;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
-import java.util.Stack;
+import static org.junit.Assert.*;
 
 //Note
 //Bisognerebbe testare anche il metodo playerthatsee quando avrò metodi per aggiungere player alle room e allo square

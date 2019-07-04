@@ -1,8 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
-import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
 
-import java.util.*;
+import java.util.List;
 
 
 /**

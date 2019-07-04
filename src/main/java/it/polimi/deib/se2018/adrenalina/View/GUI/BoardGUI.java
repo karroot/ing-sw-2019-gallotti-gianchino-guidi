@@ -2,17 +2,16 @@ package it.polimi.deib.se2018.adrenalina.View.GUI;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Track;
-import it.polimi.deib.se2018.adrenalina.View.AppClient;
 import it.polimi.deib.se2018.adrenalina.View.GUI.square_components.SquareComponentGui;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 import it.polimi.deib.se2018.adrenalina.View.TimerAFK;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**

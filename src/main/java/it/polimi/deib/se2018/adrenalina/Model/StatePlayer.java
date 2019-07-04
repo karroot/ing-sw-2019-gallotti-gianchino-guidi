@@ -1,8 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This abstract class implements the status of a player.

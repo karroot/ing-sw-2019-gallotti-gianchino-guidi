@@ -1,6 +1,5 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Sledgehammer;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseSledgehammer;
 import org.junit.Before;

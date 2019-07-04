@@ -1,14 +1,9 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import org.junit.After;
-import org.junit.Before;
+import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.Stack;
+
+import static org.junit.Assert.fail;
 
 public class TestFactory
 {

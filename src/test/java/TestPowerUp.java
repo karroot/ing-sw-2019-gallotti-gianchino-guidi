@@ -1,5 +1,9 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
+import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
+import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
+import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TargettingScope;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import org.junit.After;

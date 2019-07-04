@@ -1,7 +1,6 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.CardinalDirection;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Flamethrower;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.GrenadeLauncher;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import org.junit.Before;
 import org.junit.Test;

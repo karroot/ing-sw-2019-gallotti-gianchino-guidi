@@ -5,7 +5,6 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

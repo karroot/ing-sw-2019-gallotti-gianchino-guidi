@@ -3,8 +3,6 @@ package it.polimi.deib.se2018.adrenalina.View;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 
-import java.io.IOException;
-
 /**
  * @author Cysko7927
  * This class represent a connection between the client and the server and can be implemented in different ways

@@ -1,11 +1,8 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Furnace;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.HeatSeeker;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 
 import java.util.Stack;
 

@@ -1,22 +1,16 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Track;
-import it.polimi.deib.se2018.adrenalina.View.GUI.BoardGUI;
 import it.polimi.deib.se2018.adrenalina.View.GUI.SetupGui;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class AppClient
 {
 
-    public static String path = "C:\\Users\\Cysko7927\\IdeaProjects\\ing-sw-2019-gallotti-gianchino-guidi\\src\\main\\java\\it\\polimi\\deib\\se2018\\adrenalina\\View\\Asset\\";
+    public static String path ="/Users/giovanni/IdeaProjects/ing_sw_2019_gallotti_gianchino_guidi/src/main/java/it/polimi/deib/se2018/adrenalina/View/Asset/";
 
-    public static int timerAFK = 600000; //Timer that starts when there is an request input (ms)
+    public static int timerAFK = 500000000; //Timer that starts when there is an request input (ms)
 
     public final static Object syncSetup = new Object(); //Object used to synchronize the phase of setup to obtain the options of the client
 

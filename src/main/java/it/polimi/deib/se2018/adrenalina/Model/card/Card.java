@@ -1,15 +1,13 @@
 package it.polimi.deib.se2018.adrenalina.Model.card;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Controller;
-import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TagbackGranade;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Cysko7927

@@ -8,8 +8,9 @@ import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseElectroSchyte;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Karroot

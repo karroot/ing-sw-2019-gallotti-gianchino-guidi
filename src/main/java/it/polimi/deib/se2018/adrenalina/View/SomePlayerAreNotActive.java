@@ -1,6 +1,5 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.GenericMessage;
 
 import java.util.concurrent.TimeUnit;

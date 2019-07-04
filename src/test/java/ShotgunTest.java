@@ -1,7 +1,6 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.ZX2;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShotgun;
 import org.junit.Before;

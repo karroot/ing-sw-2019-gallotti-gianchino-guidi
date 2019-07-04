@@ -8,9 +8,10 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.ZX2;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.util.Stack;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestUpdateModel
 {

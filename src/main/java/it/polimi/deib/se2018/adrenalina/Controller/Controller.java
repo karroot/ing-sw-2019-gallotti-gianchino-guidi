@@ -4,19 +4,20 @@ import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.View.Connection;
 import it.polimi.deib.se2018.adrenalina.View.Observer;
 import it.polimi.deib.se2018.adrenalina.View.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
-
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**

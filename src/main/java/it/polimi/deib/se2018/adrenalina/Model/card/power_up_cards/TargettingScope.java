@@ -1,8 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards;
+
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
-import it.polimi.deib.se2018.adrenalina.communication_message.RequestInput;
 
 import java.util.LinkedList;
 import java.util.List;

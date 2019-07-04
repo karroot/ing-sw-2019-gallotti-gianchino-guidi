@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.View.GUI;
 
 import it.polimi.deib.se2018.adrenalina.View.AppClient;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

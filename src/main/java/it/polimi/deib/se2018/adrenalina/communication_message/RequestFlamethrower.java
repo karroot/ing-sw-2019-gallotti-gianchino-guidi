@@ -1,16 +1,12 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 
-import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
-import it.polimi.deib.se2018.adrenalina.Model.Player;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.CardinalDirection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author giovanni

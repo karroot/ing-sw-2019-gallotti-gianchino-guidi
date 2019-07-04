@@ -1,8 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
-
-import java.util.*;
+import java.util.Set;
 
 import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForGrab2;
 import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForRunAround3;

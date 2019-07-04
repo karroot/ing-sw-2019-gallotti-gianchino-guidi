@@ -1,7 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.communication_message.update_model;
 
 import it.polimi.deib.se2018.adrenalina.Model.Color;
-import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 
 import java.io.Serializable;
 /**

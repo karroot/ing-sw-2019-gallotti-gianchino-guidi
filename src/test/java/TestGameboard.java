@@ -1,4 +1,7 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.AmmoTiles;
+import it.polimi.deib.se2018.adrenalina.Model.Color;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.TargettingScope;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
@@ -6,10 +9,11 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Flamethrower;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Furnace;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.RocketLauncher;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
-import java.util.Stack;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Stack;
+
 import static org.junit.Assert.*;
 
 

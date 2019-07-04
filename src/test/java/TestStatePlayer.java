@@ -1,11 +1,15 @@
 import it.polimi.deib.se2018.adrenalina.Controller.Controller;
-import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
-import jdk.nashorn.internal.runtime.ECMAException;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
+import it.polimi.deib.se2018.adrenalina.Model.Player;
+import it.polimi.deib.se2018.adrenalina.Model.Square;
+import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 

@@ -1,10 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import it.polimi.deib.se2018.adrenalina.Controller.Controller;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookForGrab2;

@@ -5,10 +5,10 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class TestWeaponPowerupInPlayer
 {

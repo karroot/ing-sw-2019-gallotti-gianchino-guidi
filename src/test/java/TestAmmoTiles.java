@@ -3,7 +3,8 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class is a case test for the AmmoTile.

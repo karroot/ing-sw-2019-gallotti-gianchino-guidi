@@ -8,13 +8,10 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.TractorBeam;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRunAround;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShootPeople;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseTargettingScope;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestPlayerActions
 {

@@ -1,8 +1,6 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.ZX2;
-import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseZX2;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 

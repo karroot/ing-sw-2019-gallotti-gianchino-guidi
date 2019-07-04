@@ -1,7 +1,6 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
 import java.util.Collections;
-import java.util.Objects;
 
 /**
  * This class implements an ammopoint: a square where there is an AmmoTile to grab.

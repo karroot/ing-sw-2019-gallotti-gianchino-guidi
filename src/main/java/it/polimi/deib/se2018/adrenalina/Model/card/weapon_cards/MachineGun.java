@@ -8,7 +8,8 @@ import it.polimi.deib.se2018.adrenalina.communication_message.RequestMachineGun;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 /**
  * @author Karroot

@@ -1,8 +1,6 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shockwave;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Shotgun;
-import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRailgun;
 import it.polimi.deib.se2018.adrenalina.communication_message.ResponseShockwave;
 import org.junit.Before;
 import org.junit.Test;

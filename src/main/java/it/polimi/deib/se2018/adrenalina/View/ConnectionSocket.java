@@ -1,11 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
-import java.io.*;
-import java.net.Socket;
-import java.util.concurrent.*;
-
-import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 /**
  * @author Cysko7927

@@ -1,4 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.deib.se2018.adrenalina.Model.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;

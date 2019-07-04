@@ -3,8 +3,6 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
-import java.util.List;
-
 public class ResponseTargettingScope extends ResponseInput
 {
     private ColorId targetBasicMode;//Target for basic mode

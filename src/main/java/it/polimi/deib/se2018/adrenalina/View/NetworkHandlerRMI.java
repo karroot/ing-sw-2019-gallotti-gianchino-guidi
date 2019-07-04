@@ -5,7 +5,6 @@ import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_con
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;

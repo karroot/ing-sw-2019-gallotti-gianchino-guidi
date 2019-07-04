@@ -1,13 +1,14 @@
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.graph.Graph;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import it.polimi.deib.se2018.adrenalina.Model.graph.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import static org.junit.Assert.*;
 
 
 //Test with the gameBoard that it is in the second and third page of the manual

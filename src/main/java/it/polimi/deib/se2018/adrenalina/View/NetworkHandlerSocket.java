@@ -1,10 +1,8 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
-import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 import it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
-import java.util.concurrent.Callable;
 
 /**
  * @author Cysko7927

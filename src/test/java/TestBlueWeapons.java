@@ -1,23 +1,14 @@
-
- import it.polimi.deib.se2018.adrenalina.Model.Player;
-
 import it.polimi.deib.se2018.adrenalina.Model.*;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.EletroSchyte;
-import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.LockRifle;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
-import it.polimi.deib.se2018.adrenalina.Model.Square;
-import java.util.*;
-
- import org.junit.After;
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Map;
 
 import static org.junit.Assert.*;
 

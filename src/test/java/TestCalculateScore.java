@@ -1,9 +1,11 @@
-import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.ColorId;
+import it.polimi.deib.se2018.adrenalina.Model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestCalculateScore
 {

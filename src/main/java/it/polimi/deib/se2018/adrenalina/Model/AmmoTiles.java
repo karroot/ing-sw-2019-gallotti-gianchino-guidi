@@ -1,7 +1,5 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import java.util.*;
-
 /**
  * This interface will be extended by the classes JustAmmo and PowerAndAmmo.
  *
