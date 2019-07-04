@@ -18,32 +18,34 @@ import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookFor
 public class FRENZY extends StatePlayer
 {
 
+    /**
+     * This is the public constructor of the class.
+     *
+     */
     public FRENZY()
     {
 
     }
 
     /**
+     * This method checks the possible square to move into (distance 4)
      *
-     * @param player
-     * @return
+     * @param player is the player invoking the method.
+     * @return a set of square reachable
      */
     @Override
     public Set<Square> lookForRunAround(Player player)
     {
-
             Set<Square>  squareSet;
             squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 4);
             return squareSet;
-
-
-
     }
 
     /**
+     * This method checks the squares to grab from in the FRENZY status.
      *
-     * @param player
-     * @return
+     * @param player is the player invoking the method
+     * @return a set of valid squares
      */
     @Override
     public Set<Square> lookForGrabStuff(Player player)
@@ -60,6 +62,5 @@ public class FRENZY extends StatePlayer
         }
 
     }
-
 
 }

@@ -4,19 +4,17 @@ import java.util.Collections;
 import java.util.Objects;
 
 /**
- * This class implements a Square where there is an AmmoTile.
+ * This class implements an ammopoint: a square where there is an AmmoTile to grab.
+ *
  * @author giovanni
  */
 public class AmmoPoint extends Square
 {
-    /*
-     * @attribute ammotiles is the  AmmoTile to grab.
-     */
     private AmmoTiles ammoTiles;
 
 
     /**
-     * This method is a public getter for the ammoTiles.
+     * This method is a public getter for the ammoTiles attribute.
      *
      * @return the ammoTiles card
      */
@@ -30,8 +28,7 @@ public class AmmoPoint extends Square
     /**
      * This method draws and uses the AmmoTiles card that is on the point, and it sets the ammoTiles of the point to null
      *
-     * @param player is who will get the ammo and the powerup if present
-     * @return the AmmoTiles that is used
+     * @param player is who will use the ammotiles card
      */
     public void useAmmoTiles (Player player)
     {
@@ -42,16 +39,17 @@ public class AmmoPoint extends Square
 
     /**
      * This method replaces the ammoTiles card on this square.
-     * It supposes a Player called the getAmmoTile before.
+     * If the ammotiles stack if empty, it will also recreate the stack from the discard ammotiles stack.
      */
     public void replaceAmmoTiles ()
     {
         if (getGameBoard().getAmmoTilesStack().isEmpty()) {
-            for (AmmoTiles ammoTilesIterate : getGameBoard().getAmmoTilesDiscardStack()) {
+            for (AmmoTiles ammoTilesIterate : getGameBoard().getAmmoTilesDiscardStack())
+            {
                 getGameBoard().getAmmoTilesStack().addElement(ammoTilesIterate);
-                Collections.shuffle(getGameBoard().getAmmoTilesStack());
             }
 
+            Collections.shuffle(getGameBoard().getAmmoTilesStack());
             getGameBoard().getAmmoTilesDiscardStack().clear();
         }
 
@@ -60,8 +58,9 @@ public class AmmoPoint extends Square
     }
 
     /**
+     * This is a public setter for the attribute ammotile.
      *
-     * @param ammoTiles
+     * @param ammoTiles is the ammotiles that will be set.
      */
     public void setAmmoTiles (AmmoTiles ammoTiles)
     {
@@ -69,8 +68,9 @@ public class AmmoPoint extends Square
     }
 
     /**
+     * This is a public setter for the x coordinate of the class.
      *
-     * @param x
+     * @param x is the x coordinate to set
      */
     public void setX (int x)
     {
@@ -78,8 +78,9 @@ public class AmmoPoint extends Square
     }
 
     /**
+     * This is a public setter for the x coordinate of the class.
      *
-     * @param y
+     * @param y is the y coordinate to set
      */
     public void setY (int y)
     {

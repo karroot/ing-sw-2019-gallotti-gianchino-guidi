@@ -9,8 +9,11 @@ import java.util.stream.Collectors;
 
 
 /**
+ * This class implements the weapon Vortex Cannon.
+ *
  * @author giovanni
  */
+
 
 
 public class VortexCannon extends WeaponCard
@@ -34,11 +37,11 @@ public class VortexCannon extends WeaponCard
 
 
     /**
-     * It checks which modes of the weapon can be used
+     * It checks which modes of the weapon can be used.
+     *
      * @return an array of boolean of which modes are available to the players
-     * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvailableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode()
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
@@ -48,9 +51,8 @@ public class VortexCannon extends WeaponCard
 
         HashMap<Square, List<Player>> hashMapCheck = checkBasicModeFull();
 
-        if (isLoaded())
+        if (isLoaded() && !hashMapCheck.keySet().isEmpty())
         {
-            if (!hashMapCheck.keySet().isEmpty())
                 availableMethod[0] = true;
         }
 
@@ -72,13 +74,14 @@ public class VortexCannon extends WeaponCard
     }
 
     /**
+     * This method check all the target for the basic mode.
      *
-     * @return
+     * @return an hashmap of target squares as keys and a list of target players in each square as values.
      */
     private HashMap<Square, List<Player>> checkBasicModeFull()
     {
 
-        HashMap<Square, List<Player>> hashMapreturn = new HashMap<>();
+        HashMap<Square, List<Player>> hashMapReturn = new HashMap<>();
 
         Player playerTemp = new Player(null,null, null, true);
 
@@ -100,27 +103,26 @@ public class VortexCannon extends WeaponCard
             for (Square squareIterate2: squareDistance1) //all the square at distance 1 from the possible location of the vortex
                 {
                   playersTarget.addAll(squareIterate2.getPlayerList());
-                  if (playersTarget.contains(player))
-                      playersTarget.remove(player);
-                  if (playersTarget.contains(playerTemp))
-                      playersTarget.remove(playerTemp);
+                  playersTarget.remove(player);
+                  playersTarget.remove(playerTemp);
                 }
 
             playerListHashMap.addAll(playersTarget);
 
             if (!playerListHashMap.isEmpty())
-                hashMapreturn.put(squareIterate, playerListHashMap);
+                hashMapReturn.put(squareIterate, playerListHashMap);
 
         }
 
-        return hashMapreturn;
+        return hashMapReturn;
 
     }
 
 
     /**
+     * This method covert the targets into string and colorId.
      *
-     * @return
+     * @return an hashMap of targets as String as keys and list of ColorID as targets
      */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
@@ -134,7 +136,7 @@ public class VortexCannon extends WeaponCard
         List<Player> playerList = new ArrayList<>();
 
 
-        List<ColorId> colorIdListAttributes = new ArrayList<>();
+        List<ColorId> colorIdListAttributes;
 
         for (Square squareIterate : hashMapFull.keySet())
         {
@@ -157,9 +159,10 @@ public class VortexCannon extends WeaponCard
 
 
     /**
+     * This method implements the basic mode of the weapon.
      *
-     * @param colorPlayer
-     * @param squareToMoveCoordinatesAsString
+     * @param colorPlayer is the target player colorId
+     * @param squareToMoveCoordinatesAsString is the square location of the vortex
      */
     public void basicMode (ColorId colorPlayer, String squareToMoveCoordinatesAsString)
     {
@@ -186,10 +189,11 @@ public class VortexCannon extends WeaponCard
 
 
     /**
+     * This method implements the black hole mode of the weapon.
      *
-     * @param playerTarget1
-     * @param playerTarget2
-     * @param vortexSquareAsString
+     * @param playerTarget1 is the additional target1 for the black hole mode.
+     * @param playerTarget2 is the additional target2 for the black hole mode.
+     * @param vortexSquareAsString id the location of the opened vortex.
      */
     public void blackHoleMode (ColorId playerTarget1, ColorId playerTarget2, String vortexSquareAsString)
     {
@@ -209,21 +213,29 @@ public class VortexCannon extends WeaponCard
 
     }
 
-    private void doDamageAndMoveTarget(ColorId playerTarget2, int x, int y) {
-        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget2.equals(ColorId.PURPLE))
+    /**
+     * This method will deal 1 damage to the target and move it to the square with coordinates x and y.
+     *
+     * @param playerTarget is the target to be damaged
+     * @param x is the x coordinate of the square to move him
+     * @param y is the y coordinate of the square to move him
+     */
+    private void doDamageAndMoveTarget(ColorId playerTarget, int x, int y) {
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget.equals(ColorId.PURPLE))
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
         else
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0),1);
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget)).collect(Collectors.toList()).get(0),1);
 
-        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget2.equals(ColorId.PURPLE))
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget.equals(ColorId.PURPLE))
             MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getTermi(), x, y);
         else
-            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0), x, y);
+            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget)).collect(Collectors.toList()).get(0), x, y);
     }
 
     /**
+     * This method extracts the targets for the modes of the weapon.
      *
-     * @param responseMessage response message specified for the weapon
+     * @param responseMessage is the response generated for the weapon.
      */
     @Override
     public void useWeapon(ResponseInput responseMessage)
@@ -237,8 +249,9 @@ public class VortexCannon extends WeaponCard
     }
 
     /**
+     * This method will create a request message for this weapon.
      *
-     * @return
+     * @return the new request
      */
     @Override
     public RequestInput getRequestMessage()

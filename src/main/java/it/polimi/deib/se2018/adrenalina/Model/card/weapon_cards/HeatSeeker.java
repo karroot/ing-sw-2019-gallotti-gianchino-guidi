@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 
 /**
+ * This class implements the weapon Heatseeker.
+ *
  * @author giovanni
  */
 
@@ -121,8 +123,9 @@ public class HeatSeeker extends WeaponCard
     }
 
     /**
+     * This method extracts the targets for the modes of the weapon.
      *
-     * @param responseInput
+     * @param responseInput is the response generated for the weapon.
      */
     @Override
     public void useWeapon(ResponseInput responseInput)
@@ -133,8 +136,9 @@ public class HeatSeeker extends WeaponCard
 
 
     /**
+     * This method will create a request message for this weapon.
      *
-     * @return
+     * @return the new request
      */
     @Override
     public RequestInput getRequestMessage()

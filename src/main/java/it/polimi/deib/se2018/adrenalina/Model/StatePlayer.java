@@ -4,6 +4,12 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 
 import java.util.*;
 
+/**
+ * This abstract class implements the status of a player.
+ *
+ * @author giovanni
+ */
+
 public abstract class StatePlayer {
 
     public abstract Set<Square> lookForRunAround(Player player);
@@ -55,10 +61,12 @@ public abstract class StatePlayer {
     }
 
 
+
+
     /**
      * This method will check all the reloadable weapons of a player. After i choose to reload a weapon i must reiterate this method.
      *
-     * @param player is the player checking is weapon
+     * @param player is the player checking his weapons
      * @return a list of reloadable weapons
      */
     public List<WeaponCard> checkReload(Player player)

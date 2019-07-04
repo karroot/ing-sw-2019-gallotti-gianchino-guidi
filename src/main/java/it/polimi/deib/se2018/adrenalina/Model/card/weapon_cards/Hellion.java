@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 
 /**
+ * This class implements the weapon Hellion.
+ *
  * @author giovanni
  */
 
@@ -20,6 +22,7 @@ public class Hellion extends WeaponCard
 
     /**
      * It is the public constructor for the class.
+     *
      * @param color is the color of the card
      * @param weaponID is the unique id to identify the card
      * @param isLoaded to indicate if the weapon is loaded
@@ -33,11 +36,11 @@ public class Hellion extends WeaponCard
     }
 
     /**
-     * It checks which modes of the weapon can be used
+     * It checks which modes of the weapon can be used.
+     *
      * @return an array of boolean of which modes are available to the players
-     * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvailableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode()
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
@@ -45,7 +48,7 @@ public class Hellion extends WeaponCard
         availableMethod[0] = false;//I suppose that the modes can't be used
         availableMethod[1] = false;
 
-        if (isLoaded())
+        if (isLoaded()) //the basic mode requires that the player sees a target with a minimum distance of 1 square (the square must be different than the weapon owner's one)
         {
             List<Player> playerList = new ArrayList<>();
             playerList.addAll(player.playerThatSee(player.getSquare().getGameBoard()));
@@ -63,18 +66,11 @@ public class Hellion extends WeaponCard
 
                 if (!playerList.isEmpty())
                     availableMethod[0] = true;
-
             }
-
-
         }
 
-
-        if (isLoaded() && player.getAmmoRed() > 0)
-        {
-            if (availableMethod[0])
-                availableMethod[1] = true;
-        }
+        if (isLoaded() && player.getAmmoRed() > 0 && availableMethod[0])
+            availableMethod[1] = true;
 
         return availableMethod;
 
@@ -88,8 +84,6 @@ public class Hellion extends WeaponCard
      */
     public HashMap<String, List<ColorId>> checkBasicMode ()
     {
-
-
         HashMap<String, List<ColorId>> hashMapToReturn = new HashMap<>();
 
         //check basic mode for square and players
@@ -107,8 +101,6 @@ public class Hellion extends WeaponCard
 
 
         //convert to colorid and strings
-
-
         for (Square squareIterate : hashSquarePlayer.keySet())
         {
             List<ColorId> colorIdList = new ArrayList<>();
@@ -120,20 +112,17 @@ public class Hellion extends WeaponCard
 
         }
 
-
         return hashMapToReturn;
 
     }
 
     /**
-     *Method for the basic mode of this weapon
+     * Method that implements the basic mode of this weapon.
      *
      * @param colorPlayer is the target
-     * @throws IllegalStateException if the mode is not available
      */
-    public void basicMode(ColorId colorPlayer) throws IllegalStateException
+    public void basicMode(ColorId colorPlayer)
     {
-
         if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
         else
@@ -152,25 +141,22 @@ public class Hellion extends WeaponCard
 
 
     /**
-     * It is the full implementation to check the targets for the nano tracer mode
+     * It is the full implementation to check the targets for the nano tracer mode. It will use the same logic of the basic mode check.
      *
      * @return an hashmap of String and lists of ColorId
      */
     public HashMap<String, List<ColorId>> checkNanoTracerMode ()
     {
-
         return checkBasicMode();
     }
 
     /**
-     * It implements the alternative mode for the weapon
+     * It implements the alternative mode for the weapon.
      *
-     * @param colorPlayer is the target player
-     * @throws IllegalStateException if the mode is not available
+     * @param colorPlayer is the target player (1 damage to the target and 2 marks to the target and each one in that square)
      */
-    public void nanoTracerMode(ColorId colorPlayer) throws IllegalStateException
+    public void nanoTracerMode(ColorId colorPlayer)
     {
-
         if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
         else
@@ -190,8 +176,9 @@ public class Hellion extends WeaponCard
     }
 
     /**
+     * This method extracts the targets for the modes of the weapon.
      *
-     * @param responseMessage response message specified for the weapon
+     * @param responseMessage is the response generated for the weapon.
      */
     @Override
     public void useWeapon(ResponseInput responseMessage)
@@ -207,8 +194,9 @@ public class Hellion extends WeaponCard
 
 
     /**
+     * This method will create a request message for this weapon.
      *
-     * @return
+     * @return the new request
      */
     @Override
     public RequestInput getRequestMessage()

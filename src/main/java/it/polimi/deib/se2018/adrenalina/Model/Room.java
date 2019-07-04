@@ -12,16 +12,6 @@ import java.util.stream.Collectors;
  */
 public class Room
 {
-    /*
-     * We have 3 private attributes:
-     * @attribute gameBoard to have a reference to the gameBoard
-     * @attribute squareList is a list of the square in the room
-     * @attribute playerRoomList is a list of the player in the room. Useful for certain weapons.
-     * @attribute color is the color the of room
-     *
-     * We need to observe that squareList is set by the gameBoard, instead playerRoomList can change during the game
-     */
-
     private ColorRoom color;
     private GameBoard gameBoard;
     private List<Square> squareList;
@@ -44,8 +34,9 @@ public class Room
 
 
     /**
+     * This method is the public getter of the playerRoomList
      *
-     * @return
+     * @return the playerRoomList attribute
      */
     public List<Player> getPlayerRoomList ()
     {
@@ -54,8 +45,9 @@ public class Room
 
 
     /**
-     * /
-     * @param player
+     * This method will remove the player from the playerRoomList
+     *
+     * @param player is the player that has to be removed
      */
     public void removePlayerFromRoomList (Player player)
     {
@@ -64,7 +56,8 @@ public class Room
 
     /**
      * This method is the public getter of the board
-     * @return
+     *
+     * @return the gameboard attribute
      */
     public GameBoard getGameBoard()
     {
@@ -72,8 +65,9 @@ public class Room
     }
 
     /**
-     * This method is the public getter if the squareList
-     * @return
+     * This method is the public getter of the squareList
+     *
+     * @return the squareList attribute
      */
     public List<Square> getSquareList()
     {

@@ -6,6 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author giovanni and Cysko7927
+ *
+ * This class implements a point where the player can spawn from
+ */
 public abstract class Square
 {
 
@@ -19,18 +24,19 @@ public abstract class Square
 
     protected ColorRoom color;
 
-    protected SideType[] side;
+    private SideType[] side;
 
     protected  Room room;
 
-    protected boolean isAmmoPoint;
+    boolean isAmmoPoint;
 
-    protected boolean isSpawnPoint;
+    boolean isSpawnPoint;
 
 
 
     /**
      * Create a square with its parameters
+     *
      * @param x coordinate x of the square
      * @param y coordinate y of the square
      * @param gameBoard Game board that contains the square
@@ -48,53 +54,109 @@ public abstract class Square
     }
 
 
+    /**
+     * This is the public getter for the x coordinate attribute
+     *
+     * @return the x coordinate attribute of the class
+     */
     public int getX()
     {
         return x;
     }
 
+    /**
+     * This is the public getter for the y coordinate attribute
+     *
+     * @return the y coordinate attribute of the class
+     */
     public int getY()
     {
         return y;
     }
 
+    /**
+     * This method will convert the coordinates of the square into a string
+     *
+     * @return a string with the coordinates of the square
+     */
     public String toStringCoordinates()
     {
         return "x = "+ x +", y = " + y;
     }
 
+    /**
+     * This method checks if the room is a ammopoint
+     *
+     * @return a true boolean if the square is an ammopoint
+     */
     public boolean isAmmoPoint() {
         return isAmmoPoint;
     }
 
+    /**
+     * This method checks if the room is a spawnpoint
+     *
+     * @return a true boolean if the square is a spawnpoint
+     */
     public boolean isSpawnPoint() {
         return isSpawnPoint;
     }
 
+    /**
+     * This is the public getter for the room attribute
+     *
+     * @return the room attribute of the class
+     */
     public Room getRoom() {
         return room;
     }
 
+
+    /**
+     * This is the public getter for the playerList attribute
+     *
+     * @return the playerList attribute of the class
+     */
     public List<Player> getPlayerList()
     {
         return new ArrayList<>(playerList);
     }
 
+    /**
+     * This method will covert the playerList attribute into a list of the colorId of the player
+     *
+     * @return a list of colorId of the players in the square
+     */
     public List<ColorId> getPlayerListColor ()
     {
         return new ArrayList<>(playerList.stream().map(Player::getColor).collect(Collectors.toList()));
     }
 
+    /**
+     * This is the public getter for the gameboard attribute
+     *
+     * @return the gameboard attribute of the class
+     */
     public GameBoard getGameBoard()
     {
         return gameBoard;
     }
 
+    /**
+     * This is the public getter for the ColorRoom attribute
+     *
+     * @return the ColorRoom attribute of the class
+     */
     public ColorRoom getColor()
     {
         return color;
     }
 
+    /**
+     * This is the public getter for the side attribute
+     *
+     * @return the side attribute of the class
+     */
     public SideType[] getSide()
     {
         return side.clone();
@@ -103,6 +165,7 @@ public abstract class Square
 
     /**
      * It add a player to the square if he is not already present
+     *
      * @param player player that gets into the square
      */
     public void addPlayer(Player player)
@@ -113,24 +176,24 @@ public abstract class Square
 
     /**
      * It remove a player to the square if he is present
+     *
      * @param player player that exits to the square
      */
     public void removePlayer(Player player)
     {
-        if (playerList.contains(player)) //If player there is in the players' list
-            playerList.remove(player);//Remove player in players' list
+            playerList.remove(player);//Remove player from the players list
     }
 
     /**
-     * Insert this square in a room passed like parameter
-     * @param room room where will insert the square
+     * This is the public setter for the room attribute
+     *
+     * @param room is the attribute that will be set
      */
     public void setRoom(Room room)
     {
         this.room = room;
     }
 
-    //AF
 
     @Override
     public String toString()

@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 
 /**
+ * This class implements the weapon Furnace.
+ *
  * @author giovanni
  */
 
@@ -23,6 +25,7 @@ public class Furnace extends WeaponCard
 
     /**
      * It is the public constructor for the class.
+     *
      * @param color is the color of the card
      * @param weaponID is the unique id to identify the card
      * @param isLoaded to indicate if the weapon is loaded
@@ -37,11 +40,12 @@ public class Furnace extends WeaponCard
 
 
     /**
-     * It checks which modes of the weapon can be used
+     * It checks which modes of the weapon can be used.
+     *
      * @return an array of boolean of which modes are available to the players
      * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvailableMode () throws IllegalStateException
+    public boolean[] checkAvailableMode ()
     {
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
@@ -50,7 +54,9 @@ public class Furnace extends WeaponCard
         availableMethod[0] = false;//I suppose that the modes can't be used
         availableMethod[1] = false;
 
-        if (isLoaded()) {
+        //to check the basic mode there is to be at least 1 room that the player sees tha is not empty
+        if (isLoaded())
+        {
             List<Room> roomList = new ArrayList<>();
 
             roomList = MethodsWeapons.roomsThatIsee(player);
@@ -64,7 +70,9 @@ public class Furnace extends WeaponCard
             }
         }
 
-        if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player)) {
+        //checks if there is a target at distance 1 for the alternative method
+        if (isLoaded() && MethodsWeapons.isThereAPlayerAtDistance1(player))
+        {
             availableMethod[1] = true;
         }
 
@@ -73,24 +81,30 @@ public class Furnace extends WeaponCard
 
 
     /**
-     * This method checks the target for the basic mode.
-     * @return a list of the possible rooms to target
+     * This method checks the targets for the basic mode.
+     *
+     * @return a list of the possible target rooms
      */
     public List<ColorRoom> checkBasicMode ()
     {
         if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        HashMap<Room, ArrayList<Player>> hashRoomPlayer = new HashMap<Room, ArrayList<Player>>();
+        HashMap<Room, ArrayList<Player>> hashRoomPlayer = new HashMap<>();
         List<ColorRoom> colorRoomList = new ArrayList<>();
 
         List<Room> roomList;
 
         roomList = MethodsWeapons.roomsThatIsee(player);
         roomList.remove(player.getSquare().getRoom()); //remove my room from the roomList
-        for (Room roomIterate : roomList) {
+        for (Room roomIterate : roomList)
+        {
             if (!roomIterate.getPlayerRoomList().isEmpty())
-                hashRoomPlayer.put(roomIterate, (ArrayList) roomIterate.getPlayerRoomList());
+            {
+                ArrayList<Player> playerList = new ArrayList<>();
+                playerList.addAll(roomIterate.getPlayerRoomList());
+                hashRoomPlayer.put(roomIterate, playerList);
+            }
         }
 
         for (Room roomIterate : hashRoomPlayer.keySet())
@@ -101,7 +115,8 @@ public class Furnace extends WeaponCard
     }
 
     /**
-     *  This method is for the basic mode of the weapon.
+     * This method implements the basic mode of the weapon.
+     *
      * @param roomColor is the color of the room to fire
      */
     public void basicMode (ColorRoom roomColor)
@@ -125,7 +140,8 @@ public class Furnace extends WeaponCard
 
 
     /**
-     * Checks the target for the second mode of the weapon
+     * Checks the target for the alternative mode of the weapon.
+     *
      * @return a list of String of coordinate of the possible squares to target
      */
     public List<String> checkInCozyFireMode () {
@@ -149,6 +165,7 @@ public class Furnace extends WeaponCard
 
     /**
      * This method implements the alternative mode of the weapon.
+     *
      * @param squareTargetCoordinatesAsString is the target square
      */
     public void inCozyFireMode (String squareTargetCoordinatesAsString) throws Exception
@@ -159,7 +176,7 @@ public class Furnace extends WeaponCard
         int x = MethodsWeapons.getXFromString(squareTargetCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareTargetCoordinatesAsString);
 
-        Square square = null;
+        Square square;
 
         square = player.getSquare().getGameBoard().getArena().getSquare(x, y);
 
@@ -188,8 +205,9 @@ public class Furnace extends WeaponCard
 
 
     /**
+     * This method extracts the targets for the modes of the weapon.
      *
-     * @param responseInput
+     * @param responseInput is the response generated for the weapon.
      */
     @Override
     public void useWeapon(ResponseInput responseInput) throws Exception
@@ -206,8 +224,9 @@ public class Furnace extends WeaponCard
 
 
     /**
+     * This method will create a request message for this weapon.
      *
-     * @return
+     * @return the new request
      */
     @Override
     public RequestInput getRequestMessage()

@@ -7,29 +7,22 @@ import java.util.List;
 
 /**
  * @author giovanni
+ *
  * This class implements a point where the player can spawn from
  */
 
 public class SpawnPoint extends Square
 {
-
-    /*
-     * @attribute weaponCardList is the 3 weapon list to choose from
-     *
-     */
-
     private List<WeaponCard> weaponCardList;
 
-
-
     /**
-     * This is the public constructor for the class
+     * This is the public constructor of this class.
      *
-     * @param x
-     * @param y
-     * @param gameBoard
-     * @param color
-     * @param side
+     * @param x is the x coordinate of the square
+     * @param y is the y coordinate of the square
+     * @param gameBoard is the refence to the gameboard
+     * @param color is the color of the room
+     * @param side is the array that defines the side types of this square
      */
     public SpawnPoint(int x, int y, GameBoard gameBoard, ColorRoom color, SideType[] side)
     {
@@ -39,16 +32,19 @@ public class SpawnPoint extends Square
         weaponCardList = new LinkedList<>();
     }
 
+
     /**
+     * This is the public setter for the weaponCardList attribute
      *
-     * @param weaponCardList
+     * @param weaponCardList is the list that will be set
      */
     public void setWeaponCardList(List<WeaponCard> weaponCardList) {
         this.weaponCardList = weaponCardList;
     }
 
     /**
-     * This is the getter for the WeaponCardList
+     * This is the public getter for the WeaponCardList
+     *
      * @return the list of weapons
      */
     public List<WeaponCard> getWeaponCardList()
@@ -58,9 +54,9 @@ public class SpawnPoint extends Square
 
 
     /**
-     * It removes the chosenweapon from the weaponCardList and it returns it
+     * It removes the weapon from the weaponCardList and it returns it
      *
-     * @param chosenWeapon is the weapon we will get
+     * @param chosenWeapon is the weapon to be removed from the point
      * @return the weapon we have just drawn
      */
     public WeaponCard drawWeapon (WeaponCard chosenWeapon)
@@ -72,7 +68,7 @@ public class SpawnPoint extends Square
 
     /**
      * Swap the selected weapon the player has with a new one.
-     * It returns the new weapon chosen.
+     *
      * @param chosenNewWeapon is the weapon we will get
      * @param chosenOldWeapon is the weapon we will drop on the board
      * @return the weapon we will get
@@ -88,6 +84,7 @@ public class SpawnPoint extends Square
 
     /**
      * This method pops a new weapon from the gameboard weapon stack and add it to the list of this spawn
+     *
      */
     public void addNewWeapon ()
     {

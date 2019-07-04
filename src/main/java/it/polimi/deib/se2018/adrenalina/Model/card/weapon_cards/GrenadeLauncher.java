@@ -9,8 +9,11 @@ import java.util.stream.Collectors;
 
 
 /**
+ * This class implements the weapon Grenade Launcher.
+ *
  * @author giovanni
  */
+
 
 public class GrenadeLauncher extends WeaponCard
 {
@@ -20,6 +23,7 @@ public class GrenadeLauncher extends WeaponCard
 
     /**
      * It is the public constructor for the class.
+     *
      * @param color is the color of the card
      * @param weaponID is the unique id to identify the card
      * @param isLoaded to indicate if the weapon is loaded
@@ -33,14 +37,14 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
-     * It checks which modes of the weapon can be used
+     * It checks which modes of the weapon can be used.
+     *
      * @return an array of boolean of which modes are available to the players
-     * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvailableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode()
     {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, there is a runtime exception
 
 
         availableMethod[0] = false; //I suppose that the modes can't be used
@@ -123,6 +127,8 @@ public class GrenadeLauncher extends WeaponCard
         {
             squareSet = new HashSet<>();
             squareAsStringCoordinatesList = new ArrayList<>();
+
+            //This lambda will get all the squares at distance 1 for the player, intended as colorId
             squareSet = player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getGameBoard().getArena()
                     .squareReachableNoWall(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getX(),
                                             player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorIdIterate)).collect(Collectors.toList()).get(0).getSquare().getY(),
@@ -133,7 +139,8 @@ public class GrenadeLauncher extends WeaponCard
                 squareAsStringCoordinatesList.add(squareIterate.toStringCoordinates());
             }
 
-            hashMapToReturn.put(colorIdIterate, squareAsStringCoordinatesList);
+
+            hashMapToReturn.put(colorIdIterate, squareAsStringCoordinatesList); //prepare the hashmap to return
 
         }
 
@@ -146,21 +153,28 @@ public class GrenadeLauncher extends WeaponCard
      *
      * @param colorPlayer is the target player
      * @param squareToMoveCoordinatesAsString is the square where the player has to be moved
-     * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public void basicMode(ColorId colorPlayer, String squareToMoveCoordinatesAsString) throws IllegalStateException
+    public void basicMode(ColorId colorPlayer, String squareToMoveCoordinatesAsString)
     {
         if (!checkAvailableMode()[0])//check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
-        int y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsString);
+        int x = 0;
+        int y = 0;
 
+        if (squareToMoveCoordinatesAsString != null)
+        {
+             x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
+             y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsString);
+        }
+
+        //do 1 damage to the target
         if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
         else
             doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
+        //if the target has to be moved, it will
         if (squareToMoveCoordinatesAsString != null)
         {
             if (this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
@@ -205,8 +219,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
+     * This method checks all the squares that the player who call the method sees.
      *
-     * @return
+     * @return a list of string of coordinates of all the squares that the player sees.
      */
     public List<String> checkAllSquaresISee ()
     {
@@ -226,9 +241,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
-     * It implements the extra Granade for this weapon.
+     * It implements the extra grenade effect for this weapon.
      *
-     * @param squareTargetCoordinatesAsString is the square target
+     * @param squareTargetCoordinatesAsString is the square target where I will deal 1 damage
      */
     public void extraGrenade (String squareTargetCoordinatesAsString) throws Exception
     {
@@ -260,8 +275,9 @@ public class GrenadeLauncher extends WeaponCard
     }
 
     /**
+     * This method extracts the targets for the modes of the weapon.
      *
-     * @param responseInput
+     * @param responseInput is the response generated for the weapon.
      */
     @Override
     public void useWeapon(ResponseInput responseInput) throws Exception
@@ -274,8 +290,9 @@ public class GrenadeLauncher extends WeaponCard
 
 
     /**
+     * This method will create a request message for this weapon.
      *
-     * @return
+     * @return the new request
      */
     @Override
     public RequestInput getRequestMessage()

@@ -4,12 +4,34 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
 
 import java.util.Set;
 
+/**
+ * This class implements some methods used in many status related classes.
+ *
+ * @author giovanni
+ */
+
 public class StateSpecialMethods
 {
-    public static Set<Square> checkValidSquares (Player player, Set<Square> squareSet)
+
+    /**
+     * This is a private constructor for the class.
+     *
+     */
+    private StateSpecialMethods () { }
+
+
+    /**
+     * This method will check the valid squares to grab from. This means the square must contain an ammoTile (!= null) or it has avaiable weapons to grab.
+     *
+     * @param player is the player invoking the method
+     * @param squareSet is the set of squares to check the validity
+     * @return a set of valid squares to grab from
+     */
+    static Set<Square> checkValidSquares(Player player, Set<Square> squareSet)
     {
         Set<Square> squareSet1 = squareSet;
-        for (Square square : squareSet1)
+
+        for (Square square : squareSet)
         {
             if (square.isAmmoPoint)
             {
@@ -40,10 +62,11 @@ public class StateSpecialMethods
     }
 
     /**
-     * check if player can grab a weapon
+     * Check if player can grab a weapon
+     *
      * @param player player to check
      * @param weaponCard weapon to check if can be grab
-     * @return true if it can be grab, false if not
+     * @return true if the weapon can be grab, false if not
      */
     public static boolean checkGrabbable( WeaponCard weaponCard, Player player)
     {
@@ -60,19 +83,30 @@ public class StateSpecialMethods
     }
 
 
-    public static Set<Square> lookForRunAround3(Player player)
+    /**
+     * This method checks the squares to move at distance 3.
+     *
+     * @param player is the player invoking the method
+     * @return a set of reachable squares
+     */
+    static Set<Square> lookForRunAround3(Player player)
     {
         Set<Square>  squareSet;
         squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 3);
         return squareSet;
     }
 
-    public static Set<Square> lookForGrab2(Player player)
+
+    /**
+     * This method checks the squares to grab from at distance 2.
+     *
+     * @param player is the player invoking the method
+     * @return a set of squares to grab from
+     */
+    static Set<Square> lookForGrab2(Player player)
     {
         Set<Square> squareSet;
         squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
         return StateSpecialMethods.checkValidSquares(player, squareSet);
     }
-
-
 }

@@ -13,12 +13,16 @@ import java.util.Set;
 
 public class Death extends StatePlayer {
 
-
+    /**
+     * This is the public constructor of the class.
+     *
+     */
     public Death()
     {
 
     }
 
+    //All the methods return null because the player as dead is not able to perform any action
     @Override
     public Set<Square> lookForRunAround(Player player) {
         return null;

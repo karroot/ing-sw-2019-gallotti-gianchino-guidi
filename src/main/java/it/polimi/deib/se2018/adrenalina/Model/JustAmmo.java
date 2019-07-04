@@ -1,10 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
-import java.util.Set;
-
 public class JustAmmo implements AmmoTiles
 {
-// nella funzione che genera gameboard chiami costruttore 36 volte con id diverso
 
     private int ammoCardID;
     private Color singleAmmo;
@@ -12,22 +9,21 @@ public class JustAmmo implements AmmoTiles
 
     /**
      * Create a card with its parameters
+     *
      * @param ammoCardID is the unique int that identifies a single card. We will use the same ID that are in the file containings the images of the cards
      * @param singleAmmo indicates the first ammo drawn
-     * @param doubleAmmo indicates the color of the 2 same ammo drawn
+     * @param doubleAmmo indicates the color of the 2 same colored ammo drawn
      */
     public JustAmmo(int ammoCardID, Color singleAmmo, Color doubleAmmo)
     {
         this.ammoCardID=ammoCardID;
         this.singleAmmo=singleAmmo;
         this.doubleAmmo=doubleAmmo;
-
-
     }
 
     /**
-     * This method will be implemented in the classes JustAmmo and PowerAndAmmo.
      * It will add the ammos and the powerup card to the player.
+     *
      * @param player is the player that will use the AmmoTile card
      */
     @Override
@@ -65,15 +61,33 @@ public class JustAmmo implements AmmoTiles
         }
     }
 
-    public int getAmmoCardID() {
+    /**
+     * This is the public getter for the attribute ammoCardID
+     *
+     * @return the ammoCardID attribute
+     */
+    public int getAmmoCardID()
+    {
         return ammoCardID;
     }
 
-    public Color getSingleAmmo() {
+    /**
+     * This is the public getter for the attribute singleAmmo
+     *
+     * @return the singleAmmo attribute
+     */
+    public Color getSingleAmmo()
+    {
         return singleAmmo;
     }
 
-    public Color getDoubleAmmo() {
+    /**
+     * This is the public getter for the attribute doubleAmmo
+     *
+     * @return the doubleAmmo attribute
+     */
+    public Color getDoubleAmmo()
+    {
         return doubleAmmo;
     }
 

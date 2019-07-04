@@ -5,7 +5,6 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 /**
  * This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
  *
- *
  * @author giovanni
  */
 
@@ -14,12 +13,10 @@ public class PowerAndAmmo implements AmmoTiles
     private int ammoCardID;
     private Color singleAmmo;
     private Color secondSingleAmmo;
-    private PowerUpCard powerUpCard;
-    //private PowerUpCard powerUpCard; NB we do not use this but we must draw a powerup card when we draw this card
-
 
     /**
      * Create a card with its parameters
+     *
      * @param ammoCardID is the unique int that identifies a single card. We will use the same ID that are in the file containings the images of the cards
      * @param singleAmmo indicates the first ammo drawn
      * @param secondSingleAmmo indicates the second ammo drawn
@@ -33,8 +30,8 @@ public class PowerAndAmmo implements AmmoTiles
 
     }
 
+
     /**
-     * This methos will be implemented in the classes JustAmmo and PowerAndAmmo.
      * It will add the ammos and the powerup card to the player.
      *
      * @param player is the player that will use the AmmoTile card
@@ -79,21 +76,28 @@ public class PowerAndAmmo implements AmmoTiles
         }
     }
 
+    /**
+     * This is the public getter for the attribute ammoCardID
+     * @return the ammoCardID attribute
+     */
     public int getAmmoCardID() {
         return ammoCardID;
     }
 
+    /**
+     * This is the public getter for the attribute singleAmmo
+     * @return the singleAmmo attribute
+     */
     public Color getSingleAmmo() {
         return singleAmmo;
     }
 
+    /**
+     * This is the public getter for the attribute secondSingleAmmo
+     * @return the secondSingleAmmo attribute
+     */
     public Color getSecondSingleAmmo() {
         return secondSingleAmmo;
     }
-
-    public PowerUpCard getPowerUpCard() {
-        return powerUpCard;
-    }
-
 
 }

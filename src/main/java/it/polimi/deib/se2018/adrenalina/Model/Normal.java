@@ -13,9 +13,14 @@ import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookFor
 public class Normal extends StatePlayer {
 
 
+    /**
+     * This is the public constructor of the class.
+     *
+     */
     public Normal() {
 
     }
+
 
     /**
      * When the player is in the normal status he can reach Square to a max distance of 3. This method make the player see all the possible reachable squares.
@@ -27,6 +32,7 @@ public class Normal extends StatePlayer {
     public Set<Square> lookForRunAround(Player player) {
         return lookForRunAround3(player);
     }
+
 
 
     /**
