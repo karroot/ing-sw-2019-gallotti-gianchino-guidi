@@ -116,31 +116,35 @@ public class LockRifle extends WeaponCard
                 throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
 
-            for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer2.equals(ColorId.PURPLE))
             {
-                if(p.getColor().equals(colorPlayer2))
-                    markTarget(p,1);
-            }
-            if(this.player.getSquare().getGameBoard().isTerminatorMode())
-            {
-                if(colorPlayer2.equals(ColorId.PURPLE))
-                {
+
                     markTarget(player.getSquare().getGameBoard().getTermi(),1);
-                }
+
 
             }
+            else
+                {
+                    for(Player p : player.getSquare().getGameBoard().getAllPlayer())
+                    {
+                        if(p.getColor().equals(colorPlayer2))
+                            markTarget(p,1);
+                    }
+                }
             this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         }
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
-        markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
-        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
         {
-            if(colorPlayer.equals(ColorId.PURPLE))
-            {
+
                 doDamage(player.getSquare().getGameBoard().getTermi(),2);
                 markTarget(player.getSquare().getGameBoard().getTermi(),1);
-            }
 
+        }
+        else{
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
+            markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
         }
 
         this.isLoaded = false;

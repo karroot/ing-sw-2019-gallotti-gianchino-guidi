@@ -172,41 +172,35 @@ public class THOR extends WeaponCard
 
 
                 this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),2);
-                if(this.player.getSquare().getGameBoard().isTerminatorMode())
-                {
-                    if(colorPlayer3.equals(ColorId.PURPLE))
-                    {
-                        doDamage(player.getSquare().getGameBoard().getTermi(),2);
 
-                    }
-
-                }
+                checkDoDamageTerminatorDouble(colorPlayer3);
             }
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
-            if(this.player.getSquare().getGameBoard().isTerminatorMode())
-            {
-                if(colorPlayer2.equals(ColorId.PURPLE))
-                {
-                    doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
-                }
-
-            }
-            this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
-        }
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),2);
-        if(this.player.getSquare().getGameBoard().isTerminatorMode())
-        {
-            if(colorPlayer1.equals(ColorId.PURPLE))
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer2.equals(ColorId.PURPLE))
             {
+
                 doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
             }
-
+            else
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
+            this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
+
+        checkDoDamageTerminatorDouble(colorPlayer1);
         this.isLoaded = false;
         }
+
+    private void checkDoDamageTerminatorDouble(ColorId colorPlayer1) {
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer1.equals(ColorId.PURPLE))
+        {
+
+            doDamage(player.getSquare().getGameBoard().getTermi(),2);
+
+        }
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),2);
+    }
 
     /**
      * Return the list of all target available for using the alternative mode of this weapon

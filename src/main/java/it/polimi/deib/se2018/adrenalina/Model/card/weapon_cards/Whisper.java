@@ -123,17 +123,19 @@ public class Whisper extends WeaponCard
         if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
-        markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
-        if(this.player.getSquare().getGameBoard().isTerminatorMode())
+
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
         {
-            if(colorPlayer.equals(ColorId.PURPLE))
-            {
+
                 doDamage(player.getSquare().getGameBoard().getTermi(),3);
                 markTarget(player.getSquare().getGameBoard().getTermi(),1);
-            }
 
+
+        }
+        else{
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),3);
+            markTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
         }
         this.isLoaded = false;
     }

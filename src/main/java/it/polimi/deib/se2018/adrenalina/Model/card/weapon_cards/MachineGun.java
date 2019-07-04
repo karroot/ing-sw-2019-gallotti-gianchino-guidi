@@ -143,17 +143,8 @@ public class MachineGun extends WeaponCard
                 if (!checkAvailableMode()[1])
                     throw new IllegalStateException("Modalità avanzata dell'arma: " + name + " non eseguibile");
 
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer3)).collect(Collectors.toList()).get(0),1);
 
-                if(this.player.getSquare().getGameBoard().isTerminatorMode())
-                {
-                    if(colorPlayer3.equals(ColorId.PURPLE))
-                    {
-                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
-
-                    }
-
-                }
+                checkDoDamageTerminator(colorPlayer3);
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
 
@@ -171,16 +162,8 @@ public class MachineGun extends WeaponCard
                 {
                     throw new IllegalArgumentException("Player3 deve essere diverso da player2 e player1.");
                 }
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerGreen)).collect(Collectors.toList()).get(0),1);
-                if(this.player.getSquare().getGameBoard().isTerminatorMode())
-                {
-                    if(colorPlayerGreen.equals(ColorId.PURPLE))
-                    {
-                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
-                    }
-
-                }
+                checkDoDamageTerminator(colorPlayerGreen);
             }
             if (addDamage)
             {
@@ -188,18 +171,14 @@ public class MachineGun extends WeaponCard
                     throw new IllegalArgumentException("Nella mdalità avanzata dell'arma"+ name + "il 'playerAddDamanage' deve essere player1 o player2.");
 
                 if (colorPlayerdamaged.equals(colorPlayer1))
-                    doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
-                if (colorPlayerdamaged.equals(colorPlayer2))
-                    doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
-                if(this.player.getSquare().getGameBoard().isTerminatorMode())
                 {
-                    if(colorPlayerdamaged.equals(ColorId.PURPLE))
-                    {
-                        doDamage(player.getSquare().getGameBoard().getTermi(),1);
-
-                    }
-
+                    checkDoDamageTerminator(colorPlayer1);
                 }
+                if (colorPlayerdamaged.equals(colorPlayer2))
+                {
+                    checkDoDamageTerminator(colorPlayer2);
+                }
+
             }
 
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
@@ -209,41 +188,26 @@ public class MachineGun extends WeaponCard
 
         if (colorPlayer1.equals(colorPlayer2))
             throw new IllegalArgumentException("Player 1 deve essere diverso da player2.");
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),1);
-        if(this.player.getSquare().getGameBoard().isTerminatorMode())
-        {
-            if(colorPlayer1.equals(ColorId.PURPLE))
-            {
-                doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
-            }
 
-        }
+
         if (colorPlayer2!= null) {
+            checkDoDamageTerminator(colorPlayer2);
 
-                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0), 1);
-            if(this.player.getSquare().getGameBoard().isTerminatorMode())
-            {
-                if(colorPlayer2.equals(ColorId.PURPLE))
-                {
-                    doDamage(player.getSquare().getGameBoard().getTermi(),1);
-
-                }
-
-            }
         }
         isLoaded = false;
     }
 
+    private void checkDoDamageTerminator(ColorId colorPlayerCheck) {
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerCheck.equals(ColorId.PURPLE))
+        {
 
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
-
-
-
-
-
-
-
+        }
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerCheck)).collect(Collectors.toList()).get(0),1);
+    }
 
 
     /**
