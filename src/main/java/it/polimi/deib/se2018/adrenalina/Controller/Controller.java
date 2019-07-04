@@ -19,14 +19,14 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
- * This class is uded to communicate with the view using different type of request and use the response to interact with model
+ * This class is used to communicate with the view using different type of request and use the response to interact with model
  * @author giovanni
  */
 public class Controller implements Observer<ResponseInput>
 {
 
 
-    public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>(); // lista dei giocatori che ho attaccato io sono il giocatore dato dal ColorId chiave
+    public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>();
 
     private boolean frenzy;
     private boolean salta;
@@ -44,7 +44,7 @@ public class Controller implements Observer<ResponseInput>
     public static boolean first;
 
 
-    private ExecutorService executor = Executors.newFixedThreadPool(1); //numero max thread contemporanei
+    private ExecutorService executor = Executors.newFixedThreadPool(1); //max number of concurrent thread
 
 
     /**
@@ -1163,10 +1163,20 @@ if(filteredPlayer!=null){
 
 
         Player target=null;
-        for(Player p : g1.getAllPlayer())
+        if(this.roundPlayer.getSquare().getGameBoard().isTerminatorMode() && sq.getTarget().equals(ColorId.PURPLE))
         {
-            if (p.getColor().equals(sq.getTarget()))
-                target=p;
+
+            target = termi;
+
+
+        }
+        else
+        {
+            for (Player p : g1.getAllPlayer())
+            {
+                if (p.getColor().equals(sq.getTarget()))
+                    target = p;
+            }
         }
         roundPlayer.usePowerUp(index);
         if(card!=null)
@@ -1916,8 +1926,8 @@ if(filteredPlayer!=null){
 
     /**
      * this method ask the player where he want to move to grab
-     * @throws InterruptedException
-     * @throws ExecutionException
+     * @throws InterruptedException if executor.invokeAny fail
+     * @throws ExecutionException if executor.invokeAny fail
      * @throws SquareNotInGameBoard if square is not in gameboard
      */
     public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard {
@@ -2385,7 +2395,7 @@ if(filteredPlayer!=null){
 
         if(g1.isTerminatorMode())
         {
-            termi.setScore(termi.getScore() + map.get(termi.getColor())); //todo chiedere a gio se in final score c'è terminator
+            termi.setScore(termi.getScore() + map.get(termi.getColor()));
         }
 
         List<Score> scores = new ArrayList<Score>();
@@ -2447,10 +2457,146 @@ if(filteredPlayer!=null){
         {
             p.setAfk(false);
         }
-
+        askForPowerUpTagBackGranadeTerminator();
+        updateModel();
         msg=null;
     }
 
+    private void  askForPowerUpTagBackGranadeTerminator() throws ExecutionException, InterruptedException {
+    Set<ColorId> attackedPlayers = new HashSet<>();
+    attackedPlayers = roundDamageList.get(roundPlayer.getColor());
+    Set<ColorId> filteredPlayer=null;
+
+    if(attackedPlayers!=null)
+        filteredPlayer = attackedPlayers.stream().filter(colorId -> checkPlayerForGranade(colorId)).collect(Collectors.toSet());
+    if(filteredPlayer!=null){
+        for (ColorId granadeAttacked : filteredPlayer) {
+            boolean vuota = false;
+            List<String> powerUpList = new LinkedList<>();
+            Player granadeAttackedPlayer = null;
+            for (Player p : g1.getAllPlayer()) {
+                if (p.getColor().equals(granadeAttacked))
+                    granadeAttackedPlayer = p;
+            }
+            if(granadeAttackedPlayer!= null)
+            {
+                for (PowerUpCard pc : granadeAttackedPlayer.getPowerupCardList())
+                {
+                    if (pc.getName().equals("Granata Venom"))
+                        powerUpList.add(pc.powerToString());
+                }
+            }
+            if (powerUpList.isEmpty())
+                vuota = true;
+            if (!vuota) {
+//send message to inform view
+                List<Callable<Boolean>> callableIniz = new LinkedList<>();
+                callableIniz.add(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try{
+                            virtualView.requestInput(new RequestToUseGrenade(), granadeAttacked);
+
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return false;
+                        }
+                    }
+                });
+                Boolean si = executor.invokeAny(callableIniz);
+                if(!si) {
+                    salta=true;
+                    return;
+                }
+
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try{
+                            virtualView.requestInput(new RequestPowerUp(powerUpList), granadeAttacked);
+                            virtualView.getResponseWithInputs(granadeAttacked);
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return false;
+                        }
+                    }
+                });
+
+
+
+                Boolean s = executor.invokeAny(callableList);
+                if(!s) {
+                    salta=true;
+                    return;
+                }
+
+
+                ResponsePowerUp risp = (ResponsePowerUp) msg;
+
+
+                for (String pc : risp.getChosenPowerUpList()) {
+                    if(granadeAttackedPlayer!=null){
+                        if (pc.equals("Granata Venom:BLUE") || pc.equals("Granata Venom:YELLOW") || pc.equals("Granata Venom:RED")) {
+                            askForTagBackGranadeTerminator(pc,granadeAttackedPlayer);
+                        }
+
+                    }
+                }
+                // sends end cicle message
+
+                List<Callable<Boolean>> callableListA = new LinkedList<>();
+                callableListA.add(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        try {
+                            virtualView.requestInput(new End(), roundPlayer.getColor());
+                            return true;
+                        }
+                        catch(Exception e)
+                        {
+                            return false;
+                        }
+                    }
+                });
+
+
+
+                Boolean end =  executor.invokeAny(callableListA);
+                if(!end) {
+                    salta=true;
+                    return;
+                }
+            }
+
+        }}
+}
+    private void askForTagBackGranadeTerminator(String choice, Player tempPlayer)
+    {
+        TagbackGranade cardpower=null;
+        for(PowerUpCard pc : tempPlayer.getPowerupCardList())
+        {
+            if(pc.powerToString().equals(choice))
+                cardpower=(TagbackGranade) pc;
+        }
+
+
+        if( cardpower!=null)
+        {
+
+            cardpower.usePowerUp(termi);
+            //aggiungi a pila scarti chiadi a gio
+            tempPlayer.usePowerUp(tempPlayer.getPowerupCardList().indexOf(cardpower));
+        }
+    }
     private void shootTerminator() throws InterruptedException, ExecutionException // this method is used when the terminator can shoot
     {
         List<ColorId> enemiesColors=new LinkedList<>();

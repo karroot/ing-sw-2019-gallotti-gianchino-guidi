@@ -43,23 +43,35 @@ public class TargettingScope extends PowerUpCard
         if (ammoColor.equals(BLUE)) {
             if (getPlayer().getAmmoBlue() < 1)
                 throw new IllegalStateException("non hai abbastanza munizioni");
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+            checkTerminator(colorPlayer);
 
             this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);
         }
         if (ammoColor.equals(RED)){
             if(this.player.getAmmoRed()<1)
                 throw new IllegalStateException("non hai abbastanza munizioni");
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+            checkTerminator(colorPlayer);
 
             this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         }
         if (ammoColor.equals(YELLOW)){
             if(this.player.getAmmoYellow()<1)
                 throw new IllegalStateException("non hai abbastanza munizioni");
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+            checkTerminator(colorPlayer);
 
             this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
         }
+    }
+
+    private void checkTerminator(ColorId colorPlayer) {
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+        {
+
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+
+
+        }
+        else{
+        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);}
     }
 }

@@ -109,7 +109,7 @@ public class GameBoard {
 
     /**
      *It Return the first card of the weaponCard deck and remove it from the deck
-     * @return
+     * @return a weapon card
      */
     public WeaponCard drawWeaponCard() throws NullPointerException {
         if (!weaponCardStack.isEmpty()) {
@@ -131,7 +131,7 @@ public class GameBoard {
 
     /**
      *It Return the first card of the powerUpCard deck and remove it from the deck
-     * @return
+     * @return a power up card
      */
     public PowerUpCard drawPowerUpCard()
     {
@@ -209,10 +209,7 @@ public class GameBoard {
         this.terminatorMode = terminatorMode;
     }
 
-    /**
-     * //todo
-     * @param ammoTilesStack
-     */
+
     public void setAmmoTilesStack(Stack<AmmoTiles> ammoTilesStack)
     {
         this.ammoTilesStack = ammoTilesStack;
@@ -230,7 +227,7 @@ public class GameBoard {
 
     /**
      * it reduce the counter of skull when a player die
-     * @param skullCounter
+     * @param skullCounter is the number of skull to be set
      */
 
     public void setSkullCounter(int skullCounter) throws IllegalArgumentException{
