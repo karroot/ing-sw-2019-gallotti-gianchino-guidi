@@ -13,7 +13,11 @@ import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
 
-
+/**
+ * @author Karroot
+ * It represents the card Whisper
+* it uses one method to check if the weapon can be used checkBasicMode()
+ */
 public class Whisper extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[1];

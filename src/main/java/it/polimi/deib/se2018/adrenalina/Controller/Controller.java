@@ -18,7 +18,10 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class is uded to communicate with the view using different type of request and use the response to interact with model
+ * @author giovanni
+ */
 public class Controller implements Observer<ResponseInput>
 {
 
@@ -70,7 +73,7 @@ public class Controller implements Observer<ResponseInput>
      * Hint: using when the phase of login is completed
      * @return number of player connected and active
      */
-    public int numberOfPlayerActive()
+    private int numberOfPlayerActive()
     {
 
         int cont = 0;
@@ -712,7 +715,7 @@ public class Controller implements Observer<ResponseInput>
     /**
      * the switcher wait for a request from the view and then it execute the called method, this is frenzy case when first is true
      * @param player color of the player that ask from the virtual view
-     * @throws Exception
+     * @throws Exception if the connection fail in frenzy mode
      */
     private void switcherFrenzyB(ColorId player) throws Exception
     {
@@ -794,7 +797,7 @@ public class Controller implements Observer<ResponseInput>
     /**
      * the switcher wait for a request from the view and then it execute the called method
      * @param player color of the player that ask from the virtual view
-     * @throws Exception
+     * @throws Exception if the connection fail
      */
     private void switcher(ColorId player) throws Exception
     {
@@ -1641,9 +1644,9 @@ if(filteredPlayer!=null){
             p.respawn((SpawnPoint) resp);
          else
          {
-            if (resp != null)
+            if (resp != null){
                 p.setSquare(resp);
-                MethodsWeapons.moveTarget(p, resp.getX(), resp.getY());
+                MethodsWeapons.moveTarget(p, resp.getX(), resp.getY());}
          }
 
 

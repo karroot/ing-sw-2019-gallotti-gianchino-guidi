@@ -10,13 +10,17 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseMachineGun
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * @author Karroot
+ * It represents the card MachineGun
+ * it uses three method for the three different modality checkBasicMode(),checkFocusShotMode() and checkTurretTripodeMode()
+ */
 public class MachineGun extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[4];
 
     /**
-     * Create the card ZX2
+     * Create the card MachineGun
      * @param color color of weapon
      * @param weaponID Id of the card
      * @param isLoaded Indicates if the weapon is loaded or not
@@ -57,9 +61,9 @@ public class MachineGun extends WeaponCard
     public RequestInput getRequestMessage()
     {
         if (checkAvailableMode()[0] && checkAvailableMode()[1] && checkAvailableMode()[2])
-            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),checkTurretTripodeMode());
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(), checkFocusShotMode(),checkTurretTripodeMode());
         else if (checkAvailableMode()[0] && checkAvailableMode()[1] && !checkAvailableMode()[2])
-            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),checkFocusShotcMode(),new LinkedList<>());
+            return new RequestMachineGun(checkAvailableMode(),checkBasicMode(), checkFocusShotMode(),new LinkedList<>());
         else if (checkAvailableMode()[0] && !checkAvailableMode()[1] && checkAvailableMode()[2])
             return new RequestMachineGun(checkAvailableMode(),checkBasicMode(),new LinkedList<>(),checkTurretTripodeMode());
         else
@@ -218,7 +222,7 @@ public class MachineGun extends WeaponCard
      * @return all player that can be affected with the lock rifle in focus shoot mode
      * @exception IllegalStateException if the alternative mode can't be used
      */
-    public List<ColorId> checkFocusShotcMode() throws IllegalStateException
+    public List<ColorId> checkFocusShotMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");

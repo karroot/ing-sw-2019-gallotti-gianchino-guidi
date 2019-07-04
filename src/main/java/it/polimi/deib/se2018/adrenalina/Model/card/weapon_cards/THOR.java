@@ -8,7 +8,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * @author Karroot
+ * It represents the card Thor
+ * it uses three method for the three alternative modality checkBasicMode(),checkChainReaction() and checkHighVoltage()
+ */
 public class THOR extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[3];
@@ -18,7 +22,7 @@ public class THOR extends WeaponCard
     private int reach2=0;
 
     /**
-     * Create the card ZX2
+     * Create the card THOR
      * @param color color of weapon
      * @param weaponID Id of the card
      * @param isLoaded Indicates if the weapon is loaded or not

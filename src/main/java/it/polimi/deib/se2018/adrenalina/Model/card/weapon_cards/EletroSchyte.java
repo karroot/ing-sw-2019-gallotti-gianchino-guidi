@@ -11,7 +11,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * @author Karroot
+ * It represents the card ElectroSchyte
+ * it uses two method for the two alternative modality checkBasicMode() and checkReaper()
+ */
 public class EletroSchyte extends WeaponCard
 {
 

@@ -9,12 +9,24 @@ import java.util.stream.Collectors;
 
 import static it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons.playersReachable;
 
-
+/**
+ * @author Karroot
+ * It represents the card TractatorBeam
+ * it uses two method for the two alternative modality checkMoveBasicMode() and checkPunisherMode ()
+ */
 public class TractorBeam extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[2];
 
-    public TractorBeam( Color color, int weaponID, boolean isLoaded) {
+    /**
+     * Create the card TractatotBeam
+     * @param color color of weapon
+     * @param weaponID Id of the card
+     * @param isLoaded Indicates if the weapon is loaded or not
+     * @exception NullPointerException if color is null
+     */
+    public TractorBeam( Color color, int weaponID, boolean isLoaded)  throws NullPointerException
+    {
         super( color, weaponID, isLoaded);
         this.name = "Raggio Traente";
         yellowAmmoCost = 0;
@@ -130,8 +142,9 @@ public class TractorBeam extends WeaponCard
     /**
      * Return the list of all target available for using the punisher mode of this weapon
      * @return all player that can be affected with the lock rifle in basic mode
+     * @exception IllegalStateException if the punisher mode can't be used
      */
-    public List<ColorId> checkPunisherMode () throws IllegalStateException
+    public List<ColorId> checkPunisherMode() throws IllegalStateException
     {
         if (!checkAvailableMode()[1])
             throw  new IllegalStateException("Modalità punisher dell'arma "+name+" non eseguibile.");
@@ -161,6 +174,7 @@ public class TractorBeam extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param colorPlayer player affected by weapon
+     * @throws  IllegalStateException if the aviable mode [0] is non true
      */
     public void basicMode(ColorId colorPlayer, int x, int y) throws IllegalStateException
     {
@@ -197,6 +211,7 @@ public class TractorBeam extends WeaponCard
     /**
      * It uses the punisher mode of the lock rifle
      * @param colorPlayer player affected by weapon
+     * @throws  IllegalStateException if the aviable mode [1] is non true
      */
     public void punisherMode(ColorId colorPlayer) throws  IllegalStateException
     {

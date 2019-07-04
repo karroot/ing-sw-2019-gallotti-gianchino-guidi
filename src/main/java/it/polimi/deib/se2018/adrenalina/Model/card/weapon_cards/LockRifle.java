@@ -7,7 +7,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * @author Karroot
+ * It represents the card LockRifle
+ * it uses two method to check if the weapon can be used checkBasicMode() and checkSecondLock()
+ */
 public class LockRifle extends WeaponCard
 {
     private boolean[] availableMethod = new boolean[2];

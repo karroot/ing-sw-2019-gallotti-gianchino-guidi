@@ -11,7 +11,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import java.util.*;
 
 import java.util.stream.Collectors;
-
+/**
+ * @author Karroot
+ * It represents the card PlasmaGun
+* it uses two method to check if the weapon can be used checkAllTarget() and checkPhaseGlide()
+ */
 public class PlasmaGun extends WeaponCard
 {
 
@@ -99,8 +103,9 @@ public class PlasmaGun extends WeaponCard
     /**
      * It uses the basic mode of the PlasmaGun
      * @param colorPlayer player affected by weapon
-     * @throws IllegalStateException
-     * @throws IllegalArgumentException
+     * @throws IllegalStateException if the basic mode can't be used
+     * @throws IllegalArgumentException if the basic mode can't be used
+     * @throws IllegalAccessException if if useWeapon can't be used
      */
     public void basicMode(ColorId colorPlayer,String[] orderEffect,int x,int y) throws IllegalStateException, IllegalArgumentException, IllegalAccessException {
 
@@ -179,7 +184,7 @@ public class PlasmaGun extends WeaponCard
         return squares.stream().map(Square::toStringCoordinates).collect(Collectors.toList());
     }
 
-// dovrebbe essere inutile siccome il controller ti da solo opzioni sensate
+
     /**
      * It say if a player can reach another player from a defined position decide by the phase glide
      * @param x player choice of movement x
@@ -210,7 +215,10 @@ public class PlasmaGun extends WeaponCard
        return ListPlayerReach;
     }
 
-
+    /**
+     * this method is used to check all the square from which player can shoot
+     * @return a map with square reachable and player that you see from this square
+     */
     public  Map<String,List<ColorId>> checkAllTarget()
     {
         Player dummie = new Player(null,"a","a",false);

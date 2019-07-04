@@ -3,7 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 import java.io.Serializable;
 
 /**
- * @author Gallotti
+ * @author Karroot
  * It represents the structure of Track
  */
 public class Track implements Serializable
@@ -25,6 +25,10 @@ public class Track implements Serializable
         return pointCounter;
     }
 
+    /**
+     * this method is used to return the string of player's color and his point
+     * @return the string of player's color and his point
+     */
     @Override
     public String toString() {
         return "{" +

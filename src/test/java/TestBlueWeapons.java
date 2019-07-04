@@ -8,8 +8,8 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 import java.util.*;
-import java.util.stream.Collectors;
-import org.junit.After;
+
+ import org.junit.After;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +22,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TestBlueWeapons {
+    //here we declare attribute for the tests
     private Player test;
     private Player enemy;
 
@@ -36,7 +37,7 @@ public class TestBlueWeapons {
 
 
 
-    private ColorId getPl(List<ColorId> pl,Player pg) throws  IllegalArgumentException
+    private ColorId getPl(List<ColorId> pl,Player pg) throws  IllegalArgumentException // this method is used to check if the player is in the list and return the color of the inserted player
     {
         for(ColorId i : pl)
         {
@@ -51,7 +52,7 @@ public class TestBlueWeapons {
 
 
 
-
+    //here we declare the weapons
     private EletroSchyte  w0 = new EletroSchyte(Color.BLUE,0,true);
 
     private LockRifle w1 = new LockRifle(Color.BLUE,1,true);
@@ -62,15 +63,15 @@ public class TestBlueWeapons {
     private MachineGun w6 = new MachineGun(Color.BLUE,6,true);
 
     @Before
-    public void setup()
+    public void setup()     //here we setup the weapons and the players
     {
 
 
 
 
 
-        test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
-        enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
+        test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false); // is always the attacker
+        enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false); // are always attacked
         enemy2 = new Player(ColorId.BLUE,"Marco","Stringa di prova",false);
 
 
@@ -88,7 +89,7 @@ public class TestBlueWeapons {
 
 
     @After
-    public void reset()
+    public void reset() // this method is used to reset the damage point
     {
         test.setNumberOfDamagePoint(0);
         enemy.setNumberOfDamagePoint(0);
@@ -98,7 +99,7 @@ public class TestBlueWeapons {
 
 
     @Test
-    public void testInsertWeapon()
+    public void testInsertWeapon() // this method is used to insert the weapon
     {
         //Check if player has'nt weapons
         assertTrue(test.getWeaponCardList().isEmpty());
@@ -109,7 +110,7 @@ public class TestBlueWeapons {
         assertTrue(!test.getWeaponCardList().isEmpty() && test.getWeaponCardList().contains(w0));
     }
     @Test
-    public void testChangeWeapon()
+    public void testChangeWeapon() // this method is used to check the change of weapon
     {
         test.addWeapon(w0);//Add a weapon
 
@@ -120,6 +121,8 @@ public class TestBlueWeapons {
 
     }
 
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon death Scythe in basic and reaper mode
     @Test
     public void testDeathSchytle() throws SquareNotInGameBoard {
 
@@ -216,7 +219,8 @@ public class TestBlueWeapons {
 
     }
 
-
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Lock Rifle in basic and SecondLock mode
     @Test
     public void testLockRifle() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -345,6 +349,8 @@ public class TestBlueWeapons {
         }
 
 
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Whisper in basic mode
     @Test
     public void testWhisper() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -425,6 +431,8 @@ public class TestBlueWeapons {
     }
 
 
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Thor in basic ,ChainReaction and HighVoltage
     @Test
     public void testThor() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -594,7 +602,8 @@ public class TestBlueWeapons {
 
 
     }
-
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Machine Gun in basic ,Focus Shot Mode and Turret Tripode Mode
     @Test
     public void testMachineGun() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);
@@ -641,7 +650,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w6.checkFocusShotcMode();
+            w6.checkFocusShotMode();
             fail();
         }
         catch (IllegalStateException e)
@@ -673,7 +682,7 @@ public class TestBlueWeapons {
         assertEquals(availableMethod1[2],true);
 
         List<ColorId> list1 = w6.checkBasicMode();
-        List<ColorId> list2 = w6.checkFocusShotcMode();
+        List<ColorId> list2 = w6.checkFocusShotMode();
         List<ColorId> list3 = w6.checkTurretTripodeMode();
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy.getColor()));
@@ -791,9 +800,13 @@ public class TestBlueWeapons {
 
 
 
-
-        @Test
-        public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Plasma Gun in all his possible combination of use that are
+    // first move ,shot and finally add damage
+    // first shot , move and finally add damage
+    // first shoot , add damage and finally move
+    @Test
+    public  void testPlasmaGun() throws SquareNotInGameBoard, IllegalAccessException {
             String[] orderEffect = new String[3];
 
             g1.setAllPlayer(enemy2);
@@ -980,6 +993,8 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
             }
         }
 
+    // this method is used to check if the weapon throw error if not correctly setup with player and
+    //  to check if the weapon Tractator Beam in basic and Punisher mode
     @Test
     public void testTractatorBeam() throws SquareNotInGameBoard {
         g1.setAllPlayer(enemy2);

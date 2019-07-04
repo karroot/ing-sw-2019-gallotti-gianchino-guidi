@@ -217,7 +217,7 @@ public class RequestPlasmaGun extends  RequestInput
 
     }
     //Ask at the user to choice a square where to move
-    protected void choseSquare()
+    private void choseSquare()
     {
         List<String> squares;
 

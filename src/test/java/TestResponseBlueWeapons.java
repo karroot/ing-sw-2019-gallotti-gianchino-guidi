@@ -1,4 +1,4 @@
-/*
+
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestResponseBlueWeapons {
-
+    //here we declare attribute for the tests
     private Player test;
     private Player enemy;
     private Player enemy2;
@@ -27,7 +27,7 @@ public class TestResponseBlueWeapons {
 
 
     @Before
-    public void setup()
+    public void setup()  //here we setup the players
     {
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
@@ -35,6 +35,7 @@ public class TestResponseBlueWeapons {
         enemy3 = new Player(ColorId.GREEN,"Alice","Stringa di prova",false);
     }
 
+    //here
     @Test
     public void testElectroSchyte() throws SquareNotInGameBoard {
 
@@ -91,12 +92,12 @@ public class TestResponseBlueWeapons {
         MethodsWeapons.moveTarget(enemy,2,1);
         MethodsWeapons.moveTarget(enemy2,2,1);
 
-        ResponsePlasmaGun resp = new ResponsePlasmaGun(enemy.getColor(),enemy2.getColor(),2,1,orderEffect);
+        ResponsePlasmaGun resp = new ResponsePlasmaGun(enemy.getColor(),2,1,orderEffect);
 
         assertEquals(resp.getX(),2);
         assertEquals(resp.getY(),1);
         assertEquals(resp.getTargetBasicEffect(),enemy.getColor());
-        assertEquals(resp.getTargetForchargedEffect(),enemy2.getColor());
+
         assertEquals(resp.getOrderEffect()[0],orderEffect[0]);
         assertEquals(resp.getOrderEffect()[1],orderEffect[1]);
         assertEquals(resp.getOrderEffect()[2],orderEffect[2]);
@@ -233,7 +234,7 @@ public class TestResponseBlueWeapons {
         assertEquals(respbasi.getTargetBasicModeSecond(),enemy2.getColor());
         assertEquals(respbasi.getTargetAdditionalMode(),enemy.getColor());
 
-        ResponseMachineGun respbas = new ResponseMachineGun(enemy.getColor(),enemy2.getColor(),enemy.getColor(),enemy3.getColor());
+        ResponseMachineGun respbas = new ResponseMachineGun(enemy.getColor(),enemy2.getColor(),enemy.getColor(),enemy3.getColor(),true);
 
 
 
@@ -242,7 +243,7 @@ public class TestResponseBlueWeapons {
         assertEquals(respbas.getTargetSecondAdditionalMode(),enemy.getColor());
         assertEquals(respbas.getTargetSecondAdditionalModeSecond(),enemy3.getColor());
 
-        ResponseMachineGun respba = new ResponseMachineGun(enemy.getColor(),enemy2.getColor(),enemy.getColor(),enemy3.getColor(),enemy2.getColor());
+        ResponseMachineGun respba = new ResponseMachineGun(enemy.getColor(),enemy2.getColor(),enemy.getColor(),enemy3.getColor(),enemy2.getColor(),true);
 
 
 
@@ -297,10 +298,9 @@ public class TestResponseBlueWeapons {
         assertEquals(resp.getTargetAdditionalMode(),enemy2.getColor());
         assertEquals(res.getTargetSecondAdditionalMode(),enemy3.getColor());
 
-        assertEquals(res.isMode(),true);
+        assertEquals(res.isMode(),false);
         assertEquals(res.isSecondMode(),true);
     }
 
 
 }
-*/
