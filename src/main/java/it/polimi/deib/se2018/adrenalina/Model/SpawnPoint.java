@@ -40,7 +40,7 @@ public class SpawnPoint extends Square
     }
 
     /**
-     * //todo
+     *
      * @param weaponCardList
      */
     public void setWeaponCardList(List<WeaponCard> weaponCardList) {

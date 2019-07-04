@@ -156,9 +156,18 @@ public class GrenadeLauncher extends WeaponCard
         int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsString);
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+
         if (squareToMoveCoordinatesAsString != null)
-            moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
+        {
+            if (this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+                moveTarget(player.getSquare().getGameBoard().getTermi(), x, y);
+            else
+                moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
+        }
 
         isLoaded = false;
     }
@@ -236,8 +245,12 @@ public class GrenadeLauncher extends WeaponCard
         if (square != null) {
             for (Player playerIterate : square.getPlayerList())
             {
-                if (!playerIterate.equals(player))
-                     doDamage(playerIterate, 1);//Do one damage
+                if (!playerIterate.equals(player)) {
+                    if (this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                        doDamage(player.getSquare().getGameBoard().getTermi(), 1);
+                    else
+                        doDamage(playerIterate, 1);//Do one damage
+                }
             }
         }
 

@@ -126,7 +126,10 @@ public class RocketLauncher extends WeaponCard
             ytarget = MethodsWeapons.getXFromString(squareCoordinatesAsStringTargetToMove);
         }
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerTarget.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),2);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0),2);
 
         if (squareCoordinatesAsStringTargetToMove != null)
             rememberToMoveTarget = true;
@@ -134,7 +137,11 @@ public class RocketLauncher extends WeaponCard
         if (withFragWar)
             for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
             {
-                doDamage(playerIterate, 1);
+                if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                    doDamage(player.getSquare().getGameBoard().getTermi(),1);
+                else
+                    doDamage(playerIterate, 1);
+
                 this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
             }
 
@@ -146,7 +153,10 @@ public class RocketLauncher extends WeaponCard
 
         if (rememberToMoveTarget)
         {
-            moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0), xplayer, yplayer);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerTarget.equals(ColorId.PURPLE))
+                moveTarget(player.getSquare().getGameBoard().getTermi(), xtarget, ytarget);
+            else
+                moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget)).collect(Collectors.toList()).get(0), xtarget, ytarget);
         }
 
         this.isLoaded = false;

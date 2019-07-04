@@ -134,11 +134,17 @@ public class Hellion extends WeaponCard
     public void basicMode(ColorId colorPlayer) throws IllegalStateException
     {
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
         for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
         {
-            markTarget(playerIterate,1);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                markTarget(player.getSquare().getGameBoard().getTermi(),1);
+            else
+                markTarget(playerIterate,1);
         }
 
         isLoaded = false;
@@ -165,11 +171,17 @@ public class Hellion extends WeaponCard
     public void nanoTracerMode(ColorId colorPlayer) throws IllegalStateException
     {
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),1);
 
         for (Player playerIterate : player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0).getSquare().getPlayerList())
         {
-            markTarget(playerIterate,2);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                markTarget(player.getSquare().getGameBoard().getTermi(),2);
+            else
+                markTarget(playerIterate,2);
         }
 
         player.setAmmoRed(player.getAmmoRed()-1);

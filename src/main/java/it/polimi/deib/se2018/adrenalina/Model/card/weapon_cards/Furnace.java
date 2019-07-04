@@ -113,7 +113,10 @@ public class Furnace extends WeaponCard
 
         for (Player playerIterate : room.getPlayerRoomList())
         {
-            doDamage(playerIterate, 1);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                doDamage(player.getSquare().getGameBoard().getTermi(),1);
+            else
+                doDamage(playerIterate, 1);
         }
 
         isLoaded = false;
@@ -164,8 +167,15 @@ public class Furnace extends WeaponCard
         {
             for (Player playerIterate : square.getPlayerList())
                {
-                   doDamage(playerIterate, 1);
-                   markTarget(playerIterate, 1);
+                   if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                       doDamage(player.getSquare().getGameBoard().getTermi(),1);
+                   else
+                       doDamage(playerIterate, 1);
+
+                   if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                       markTarget(player.getSquare().getGameBoard().getTermi(),1);
+                   else
+                       markTarget(playerIterate, 1);
                }
         }
         else

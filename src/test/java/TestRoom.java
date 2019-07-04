@@ -62,7 +62,6 @@ import java.util.List;
 
          assertTrue(roomTest.getPlayerRoomList().isEmpty());
 
-//todo errore in pratica bisognerebbe aggiornare la lista dei player a mano! Si può fare in automatico?
          player1.setSquare(roomTest.getSquareList().get(0));
          roomTest.getSquareList().get(0).addPlayer(player1);
 
@@ -80,11 +79,6 @@ import java.util.List;
          roomTest.updatePlayerRoomList();
 
          assertEquals(3, roomTest.getPlayerRoomList().size());
-
-         //getter di lista player?
-         //assertTrue(roomTest.getPlayerRoomList().containsAll(roomTest.getSquareList().));
-
-
 
      }
 

@@ -44,7 +44,7 @@ public class Room
 
 
     /**
-     * //todo
+     *
      * @return
      */
     public List<Player> getPlayerRoomList ()
@@ -54,7 +54,7 @@ public class Room
 
 
     /**
-     * //todo
+     * /
      * @param player
      */
     public void removePlayerFromRoomList (Player player)

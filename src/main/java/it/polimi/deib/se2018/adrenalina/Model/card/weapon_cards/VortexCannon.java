@@ -169,10 +169,16 @@ public class VortexCannon extends WeaponCard
         int x = MethodsWeapons.getXFromString(squareToMoveCoordinatesAsString);
         int y = MethodsWeapons.getYFromString(squareToMoveCoordinatesAsString);
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),2);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0),2);
 
 
-        MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayer.equals(ColorId.PURPLE))
+            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getTermi(), x, y);
+        else
+            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer)).collect(Collectors.toList()).get(0), x, y);
 
         isLoaded = false;
     }
@@ -191,18 +197,28 @@ public class VortexCannon extends WeaponCard
         int x = MethodsWeapons.getXFromString(vortexSquareAsString);
         int y = MethodsWeapons.getYFromString(vortexSquareAsString);
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget1)).collect(Collectors.toList()).get(0),1);
-        MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget1)).collect(Collectors.toList()).get(0), x, y);
+        doDamageAndMoveTarget(playerTarget1, x, y);
 
         if (playerTarget2 != null)
         {
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0),1);
-            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0), x, y);
+            doDamageAndMoveTarget(playerTarget2, x, y);
         }
 
         player.setAmmoRed(player.getAmmoRed() - 1);
         isLoaded = false;
 
+    }
+
+    private void doDamageAndMoveTarget(ColorId playerTarget2, int x, int y) {
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget2.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0),1);
+
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerTarget2.equals(ColorId.PURPLE))
+            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getTermi(), x, y);
+        else
+            MethodsWeapons.moveTarget(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(playerTarget2)).collect(Collectors.toList()).get(0), x, y);
     }
 
     /**

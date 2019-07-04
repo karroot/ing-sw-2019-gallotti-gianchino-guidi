@@ -4,7 +4,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 
 /**
  * This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
- *  Todo: when we use this we must remeber to call the drawPowerUp action
+ *
  *
  * @author giovanni
  */
@@ -23,7 +23,7 @@ public class PowerAndAmmo implements AmmoTiles
      * @param ammoCardID is the unique int that identifies a single card. We will use the same ID that are in the file containings the images of the cards
      * @param singleAmmo indicates the first ammo drawn
      * @param secondSingleAmmo indicates the second ammo drawn
-     *                         //todo document
+     *
      */
     public PowerAndAmmo(int ammoCardID, Color singleAmmo, Color secondSingleAmmo)
     {

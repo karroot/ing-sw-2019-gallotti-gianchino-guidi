@@ -60,7 +60,7 @@ public class AmmoPoint extends Square
     }
 
     /**
-     * /todo
+     *
      * @param ammoTiles
      */
     public void setAmmoTiles (AmmoTiles ammoTiles)

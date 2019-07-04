@@ -223,10 +223,18 @@ public class Flamethrower extends WeaponCard
         if (!checkAvailableMode()[0]) //check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
-        doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget1)).collect(Collectors.toList()).get(0),1);//Do one damage
-        if (colorPlayerTarget2 != null)
-            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget2)).collect(Collectors.toList()).get(0),1);
+        if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerTarget1.equals(ColorId.PURPLE))
+            doDamage(player.getSquare().getGameBoard().getTermi(),1);
+        else
+            doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget1)).collect(Collectors.toList()).get(0),1);//Do one damage
 
+        if (colorPlayerTarget2 != null)
+        {
+            if (this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerTarget1.equals(ColorId.PURPLE))
+                doDamage(player.getSquare().getGameBoard().getTermi(), 1);
+            else
+                doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayerTarget2)).collect(Collectors.toList()).get(0), 1);
+        }
         isLoaded = false;
     }
 
@@ -273,13 +281,19 @@ public class Flamethrower extends WeaponCard
 
         for (Player playerIterate : square1Target.getPlayerList())
         {
-            doDamage(playerIterate,2);
+            if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                doDamage(player.getSquare().getGameBoard().getTermi(),2);
+            else
+                doDamage(playerIterate,2);
         }
         if (squareBehindTarget != null)
         {
             for (Player playerIterate : squareBehindTarget.getPlayerList())
             {
-                doDamage(playerIterate,1);
+                if(this.player.getSquare().getGameBoard().isTerminatorMode() && playerIterate.getColor().equals(ColorId.PURPLE))
+                    doDamage(player.getSquare().getGameBoard().getTermi(),1);
+                else
+                    doDamage(playerIterate,1);
             }
         }
 
