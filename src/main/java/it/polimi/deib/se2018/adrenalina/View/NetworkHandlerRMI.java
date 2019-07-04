@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * @author Cysko7927
+ * This class implements a network handler that handles the comunication through RMI
  */
 public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceNetworkHandlerRMI, Observer<ResponseInput>
 {
@@ -110,9 +111,11 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
      * Create a network handler tha handle the communication between the client and server
      * using RMI
      * This constructor instances the server RMI and do the rebind of the interface of the network handler
-     * on the port 5000
-     * @throws RemoteException if there were problems with RMI
-     * @throws MalformedURLException if there were problems with RMI
+     * on the port 6000
+     * @param view private view that will receive and will send the messages
+     * @param ip IPV4 address of the server
+     * @param port port TCP of the server
+     * @throws IOException if there were problems of connections
      */
     public NetworkHandlerRMI(PrivateView view,String ip, int port) throws IOException
     {
@@ -321,10 +324,9 @@ public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceN
      * The method saves the message in his buffer and after this message will take by server
      * using the method "getResponseMessage"
      * @param message message of ResponseInput to send at the server
-     * @throws Exception
      */
     @Override
-    public void update(ResponseInput message) throws Exception
+    public void update(ResponseInput message)
     {
         synchronized (msg)
         {

@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 
 /**
  * @author Cysko7927
+ * This class implements a network handler that handles the comunication through the sockets
  */
 public class NetworkHandlerSocket extends Observable<RequestInput> implements Observer<ResponseInput>
 {
@@ -103,6 +104,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
      * Create a network Handler that handles the connection between the client and the server
      * @param ip IPV4 address of the server
      * @param port port TCP of the server
+     * @param view private view that will receive and will send the messages
      * @throws UnknownHostException if the ipv4 address is wrong
      */
     public  NetworkHandlerSocket(String ip, int port,PrivateView view)  throws IOException
@@ -128,6 +130,7 @@ public class NetworkHandlerSocket extends Observable<RequestInput> implements Ob
      * This method can be called by view to reactive the socket after a disconnection
      * @param ip Ip address of the server
      * @param port port tcp of the process running on server
+     * @throws IOException if there were problems of connections
      */
     public void startConnection(String ip, int port) throws IOException
     {

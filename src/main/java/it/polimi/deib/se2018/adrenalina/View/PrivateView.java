@@ -31,7 +31,9 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      * @param ip ip address of the server
      * @param port port tcp of the server
      * @param gui it represent if the user chooses the gui or not
-     * @throws Exception if there are problem with the network handler
+     * @param action_hero_comment action-hero comment inserted by user
+     * @param name name inserted by user
+     * @throws IOException if there are problem with the network handler
      */
     public PrivateView(int technology,String ip,int port,boolean gui,String name,String action_hero_comment) throws IOException
     {

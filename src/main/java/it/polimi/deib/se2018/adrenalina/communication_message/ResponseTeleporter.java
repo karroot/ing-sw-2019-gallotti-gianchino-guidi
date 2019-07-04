@@ -18,6 +18,7 @@ public class ResponseTeleporter extends ResponseInput
     }
 
     /**
+     * the coordinate x chosen by user
      * @return get the coordinate x chosen by user
      */
     public int getX()
@@ -26,7 +27,8 @@ public class ResponseTeleporter extends ResponseInput
     }
 
     /**
-     * @return @return get the coordinate x chosen by user
+     * Getter for the coordinate y chosen by user
+     * @return @return get the coordinate y chosen by user
      */
     public int getY()
     {

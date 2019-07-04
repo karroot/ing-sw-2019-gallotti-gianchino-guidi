@@ -4,7 +4,10 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.PowerUpCardImmutable;
 
-
+/**
+ * @author Cysko7927
+ * This class represents a generic power up card
+ */
 public abstract class PowerUpCard extends Card
 {
 

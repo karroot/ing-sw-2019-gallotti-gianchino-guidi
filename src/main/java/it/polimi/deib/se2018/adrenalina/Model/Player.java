@@ -309,8 +309,8 @@ public class Player
 
 
     /**
-     * Set tne number of blue ammo
-     * @param ammoYellow
+     * Set tne number of yellow ammo
+     * @param ammoYellow number of yellow ammo
      */
     public void setAmmoYellow(int ammoYellow)
     {
@@ -321,8 +321,8 @@ public class Player
     }
 
     /**
-     * Set tne number of blue ammo
-     * @param ammoRed
+     * Set tne number of red ammo
+     * @param ammoRed number of red ammo
      */
     public void setAmmoRed(int ammoRed)
     {
@@ -334,7 +334,7 @@ public class Player
 
     /**
      * Set tne number of blue ammo
-     * @param ammoBlue
+     * @param ammoBlue number of blue ammo
      */
     public void setAmmoBlue(int ammoBlue)
     {
@@ -367,7 +367,7 @@ public class Player
 
     /**
      * set number of the damage point to a defined value
-     * @param last
+     * @param last number of the damage point
      */
     public void setNumberOfDamagePoint(int last) {
         this.last = last;

@@ -11,7 +11,8 @@ public class ResponseTargettingScope extends ResponseInput
 
     /**
      * Create the response message for TargettingScope in basic mode
-     * @param targetBasicMode target for LockRifle
+     * @param targetBasicMode target for targetting scope
+     * @param targetAmmo color of the ammo to use
      */
     public ResponseTargettingScope(ColorId targetBasicMode, Color targetAmmo)
     {

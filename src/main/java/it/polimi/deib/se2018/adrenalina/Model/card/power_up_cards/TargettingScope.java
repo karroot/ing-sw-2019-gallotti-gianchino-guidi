@@ -37,6 +37,7 @@ public class TargettingScope extends PowerUpCard
      * this method add a damage to target player
      * @param colorPlayer the player that will get the extra damage
      * @param ammoColor the color of ammo to use for the payment
+     * @throws IllegalStateException if there aren't enough blue ammo
      */
     public void usePowerUp(ColorId colorPlayer, Color ammoColor) throws IllegalStateException
     {

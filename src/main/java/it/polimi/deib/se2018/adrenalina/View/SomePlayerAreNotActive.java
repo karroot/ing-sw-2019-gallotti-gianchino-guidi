@@ -37,7 +37,9 @@ public class SomePlayerAreNotActive implements StateVirtualView
         }
         catch (InterruptedException e)
         {
+            Thread.currentThread().interrupt();
             System.out.println(e);
+            throw new ThreadDeath();
         }
         while (true) // sospendo il controller e  aspetta 200 ms e se tutti i thread del pool (executor) sono terminati restituisco true
         {
@@ -76,7 +78,9 @@ public class SomePlayerAreNotActive implements StateVirtualView
             }
             catch (InterruptedException e)
             {
+                Thread.currentThread().interrupt();
                 System.out.println(e);
+                throw new ThreadDeath();
             }
             view.getConnections().remove(oldConnectionSocket);//Remove the old connection
             view.getConnections().add(connection);//Add the new connection to the list

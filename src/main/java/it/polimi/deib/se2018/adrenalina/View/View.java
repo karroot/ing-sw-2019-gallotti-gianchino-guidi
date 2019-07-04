@@ -56,7 +56,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
      * @param timer timeout used by server to wait the user after at least three user will connect.
      *              it being used by Network Handler also to wait the input of user
      */
-    public View(int PORT,int timer) throws Exception
+    public View(int PORT,int timer)
     {
         this.PORT = PORT;
         this.lenghtTimer = timer;
@@ -105,8 +105,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
      * This method suspend the controller until the message doesn't arrive and at the End it calls the method update
      * of the controller passing the response input
      * @param player player that send the response
-     * @return message of response with the inputs of the users
-     * @throws Exception
+     * @throws Exception if there are problem of connection
      */
     public void getResponseWithInputs(ColorId player) throws Exception //Beta Version
     {
@@ -250,7 +249,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
     /**
      * Obtain the duration of the timer in seconds
-     * @return
+     * @return duration of the timer in seconds
      */
     public int getLenghtTimer()
     {
@@ -259,7 +258,7 @@ public class View extends Observable<ResponseInput> implements Observer<UpdateMo
 
     /**
      * Say if the phase of login of the player is finished
-     * @return
+     * @return true if the phase of login of the player is finished
      */
     public boolean isCreationIsFinished() {
         return creationIsFinished;

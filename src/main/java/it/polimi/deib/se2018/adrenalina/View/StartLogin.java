@@ -63,7 +63,9 @@ public class StartLogin implements StateVirtualView
         }
         catch (InterruptedException e)
         {
+            Thread.currentThread().interrupt();
             System.out.println(e);
+            throw new ThreadDeath();
         }
 
         try
@@ -75,7 +77,9 @@ public class StartLogin implements StateVirtualView
         }
         catch (InterruptedException e)
         {
-            //Do nothing
+            Thread.currentThread().interrupt();
+            System.out.println(e);
+            throw new ThreadDeath();
         }
 
         System.out.println("Player:"+connection.getName()+" "+connection.getPlayer()+" " + connection.getAction_hero_comment()+" si è connesso");

@@ -11,6 +11,7 @@ import java.util.Set;
 
 /**
  * @author Cysko7927
+ * This class represents a generic card
  */
 public abstract class Card
 {

@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Cysko7927
- * Implements a graph of Square
+ * Implements a graph of Squares
  */
 public class Graph
 {

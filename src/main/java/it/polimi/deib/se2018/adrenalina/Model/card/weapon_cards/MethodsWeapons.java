@@ -56,8 +56,8 @@ public class MethodsWeapons {
      * @param e starting square
      * @param x coordinate x of the square to check
      * @param y coordinate y of the square to check
+     * @return true if the square "e" is located to North or East or South or West
      */
-
     public static boolean checkSquareOneDirectionTwoMoves(Square e, int x, int y) {
         if ((x == e.getX() + 1 && y == e.getY()) || (x == e.getX() + 2 && y == e.getY()))//If the square (x,y) is at east
             return true;

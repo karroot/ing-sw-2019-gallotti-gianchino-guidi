@@ -20,6 +20,7 @@ public class RequestShockwave extends WeaponWithModeAlternative
     /**
      * Create a message of request for the weapon Shockwave
      * @param playersBasicMode targets available for the basic mode
+     * @param availableMethod array of booleans for the available mode
      */
     public RequestShockwave(boolean[] availableMethod, Map<String,List<ColorId>> playersBasicMode)
     {

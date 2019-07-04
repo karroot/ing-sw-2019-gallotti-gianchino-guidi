@@ -12,6 +12,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseRailgun;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Cysko7927
+ * This class represents the request that the conrollere sends at the client if the player decided
+ * to use the weapon Railgun
+ */
 public class Railgun extends WeaponCard
 {
 
@@ -162,6 +167,10 @@ public class Railgun extends WeaponCard
     }
 
 
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseRailgun msg = (ResponseRailgun) responseMessage;
@@ -172,18 +181,19 @@ public class Railgun extends WeaponCard
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget1(),player.getSquare().getGameBoard()));
     }
 
+    /**
+     * Generate the request message for the railgun to send through the network
+     * @return request message for the railgun
+     */
     @Override
     public RequestInput getRequestMessage()
     {
-        if (checkAvailableMode()[0] && checkAvailableMode()[1])
+        if (checkAvailableMode()[0] || checkAvailableMode()[1])
 
             return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
-
-        else if(checkAvailableMode()[0] && !checkAvailableMode()[1])
-
-            return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
-
         else
-            return new RequestRailgun(checkAvailableMode(),checkBasicModeOrPiercingMode());
+            return new RequestRailgun(checkAvailableMode(),new HashMap<>());
+
+
     }
 }

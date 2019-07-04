@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * This class implements the jframe that is the window with all the images and the information of the match
  * to show at the user
+ * @author Cysko7927
  */
 public class BoardGUI
 {

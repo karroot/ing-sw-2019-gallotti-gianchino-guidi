@@ -41,7 +41,7 @@ public class RequestTeleporter extends RequestInput
 
     /**
      * Ask at the user in which square he wants to move
-     * @param terminal
+     * @param terminal terminal of the private view to print and ask the inputs
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)

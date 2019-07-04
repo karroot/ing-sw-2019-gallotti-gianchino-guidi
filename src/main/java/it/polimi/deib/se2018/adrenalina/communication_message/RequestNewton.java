@@ -30,7 +30,7 @@ public class RequestNewton extends RequestInput
 
     /**
      * Ask at the user which player wants to move and in which square put him
-     * @param terminal
+     * @param terminal terminal of the private view to print and ask the inputs
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)

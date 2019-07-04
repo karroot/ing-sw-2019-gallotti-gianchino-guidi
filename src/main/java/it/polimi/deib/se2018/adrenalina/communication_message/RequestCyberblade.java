@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * @author Cysko7927
+ * This class represents the request that the conrollere sends at the client if the player decided
+ * to use the weapon Cyberblade
  */
 public class RequestCyberblade extends RequestInput
 {
@@ -60,7 +62,7 @@ public class RequestCyberblade extends RequestInput
      * 1) to move onto a square and whack 2 people
      * 2)whack somebody, move, and whack somebody else
      * 3) or whack 2 people and then move
-     * @param terminal
+     * @param terminal terminal of the private view to print and ask the inputs
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)

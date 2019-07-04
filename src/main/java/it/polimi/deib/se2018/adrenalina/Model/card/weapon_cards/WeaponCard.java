@@ -100,6 +100,7 @@ public abstract class WeaponCard extends Card
      * it uses it to use this weapon during the match
      * The response message travels from client to Server and the controller give it to the CardWeapon
      * @param responseMessage response message specified for the weapon
+     * @throws Exception if there are error in the response message
      */
     public abstract void useWeapon (ResponseInput responseMessage) throws Exception;
 
