@@ -1,6 +1,7 @@
 package it.polimi.deib.se2018.adrenalina.Controller;
 
 import it.polimi.deib.se2018.adrenalina.Model.*;
+import it.polimi.deib.se2018.adrenalina.Model.card.Card;
 import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.*;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.MethodsWeapons;
 
@@ -20,13 +21,17 @@ import java.util.stream.Collectors;
 
 /**
  * This class is used to communicate with the view using different type of request and use the response to interact with model
- * @author giovanni
+ * @author Karroot
  */
 public class Controller implements Observer<ResponseInput>
 {
 
 
     public static final  Map<ColorId, Set<ColorId>> roundDamageList = new HashMap<>();
+
+    public Map<ColorId, Set<ColorId>> getRoundDamageList() {
+        return roundDamageList;
+    }
 
     private boolean frenzy;
     private boolean salta;
@@ -2457,6 +2462,7 @@ if(filteredPlayer!=null){
         {
             p.setAfk(false);
         }
+        updateModel();
         askForPowerUpTagBackGranadeTerminator();
         updateModel();
         msg=null;
@@ -2464,7 +2470,7 @@ if(filteredPlayer!=null){
 
     private void  askForPowerUpTagBackGranadeTerminator() throws ExecutionException, InterruptedException {
     Set<ColorId> attackedPlayers = new HashSet<>();
-    attackedPlayers = roundDamageList.get(roundPlayer.getColor());
+    attackedPlayers = roundDamageList.get(ColorId.PURPLE);
     Set<ColorId> filteredPlayer=null;
 
     if(attackedPlayers!=null)
@@ -2649,6 +2655,7 @@ if(filteredPlayer!=null){
                 if(target!=null)
                 {
                     target.doDamage(termi.getColor());
+                   Card.addToRoundDamageList(target.getColor(),termi.getColor());
                     if (termi.getNumberOfDamagePoint() >= 6)
                     {
 

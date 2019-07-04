@@ -126,11 +126,11 @@ public class EletroSchyte extends WeaponCard
 
 
                 }
-                else{
+
                     for(Player pla : player.getSquare().getGameBoard().getAllPlayer()){
                     if(pla.getColor().equals(p))
                         doDamage(pla,1);
-                    }
+
                 }
 
             }
@@ -180,13 +180,13 @@ public class EletroSchyte extends WeaponCard
 
 
         }
-        else{
+
             for (ColorId p : colorPlayerList) {
 
                 for(Player pla : player.getSquare().getGameBoard().getAllPlayer()){
                     if(pla.getColor().equals(p))
                         doDamage(pla,2);}
-            }
+
         }
             isLoaded = false;
         this.player.setAmmoBlue(this.player.getAmmoBlue() - 1);

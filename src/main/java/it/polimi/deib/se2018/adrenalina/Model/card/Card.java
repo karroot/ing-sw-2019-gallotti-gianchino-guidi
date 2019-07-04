@@ -47,7 +47,7 @@ public abstract class Card
      * @param attacked
      * @param attacker
      */
-    private void addToRoundDamageList(ColorId attacked , ColorId attacker ){
+    public static void addToRoundDamageList(ColorId attacked, ColorId attacker){
         Map<ColorId, Set<ColorId>> roundDamageList = Controller.roundDamageList;
         if(roundDamageList.containsKey(attacker))
         {
