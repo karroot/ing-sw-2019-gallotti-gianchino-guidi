@@ -191,6 +191,9 @@ public class MachineGun extends WeaponCard
 
 
 
+            checkDoDamageTerminator(colorPlayer1);
+
+
         if (colorPlayer2!= null) {
             checkDoDamageTerminator(colorPlayer2);
 

@@ -600,7 +600,7 @@ public class Controller implements Observer<ResponseInput>
 
         //end of user round
 
-        if (g1.isTerminatorMode())
+        if (g1.isTerminatorMode() && !(roundPlayer.isFirst() && firstRound))
             executeTerminator();
 
         for (Player p : g1.getAllPlayer()) {
@@ -1596,9 +1596,9 @@ if(filteredPlayer!=null){
             termi.respawn((SpawnPoint) resp);
         else
         {
-            if (resp != null)
+            if (resp != null){
                 termi.setSquare(resp);
-            MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());
+                MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());}
         }
 
 
