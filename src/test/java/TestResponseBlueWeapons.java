@@ -14,6 +14,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestResponseBlueWeapons {
+
+    //here we spawn the player and add them in the enemy list
     //here we declare attribute for the tests
     private Player test;
     private Player enemy;
@@ -29,15 +31,19 @@ public class TestResponseBlueWeapons {
     @Before
     public void setup()  //here we setup the players
     {
+
+    //here we spawn the player and add them in the enemy list
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
         enemy2 = new Player(ColorId.BLUE,"Marco","Stringa di prova",false);
         enemy3 = new Player(ColorId.GREEN,"Alice","Stringa di prova",false);
     }
 
-    //here
+    //here we test the response of the weapon electro schyte 
     @Test
     public void testElectroSchyte() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
 
         g1.setAllPlayer(enemy2);
@@ -56,6 +62,7 @@ public class TestResponseBlueWeapons {
         enemyList.add(enemy.getColor());
         enemyList.add(enemy2.getColor());
 
+    //here we use the methods with the given enemy list to get the response
 
         ResponseElectroSchyte respbasic = new ResponseElectroSchyte(enemyList,true);
 
@@ -71,9 +78,11 @@ public class TestResponseBlueWeapons {
 
 
     }
-
+    //here we test the response of the weapon plasma gun 
     @Test
     public void testPlasma() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
         String[] orderEffect = new String[3];
         // spara, muoviti ,aggiungi danno
@@ -91,6 +100,7 @@ public class TestResponseBlueWeapons {
         MethodsWeapons.moveTarget(test,1,1);
         MethodsWeapons.moveTarget(enemy,2,1);
         MethodsWeapons.moveTarget(enemy2,2,1);
+        //here we use the methods with the given enemy list to get the response
 
         ResponsePlasmaGun resp = new ResponsePlasmaGun(enemy.getColor(),2,1,orderEffect);
 
@@ -103,9 +113,11 @@ public class TestResponseBlueWeapons {
         assertEquals(resp.getOrderEffect()[2],orderEffect[2]);
     }
 
-
+    //here we test the response of the weapon lock rifle
     @Test
     public void testLockRifle() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
 
         g1.setAllPlayer(enemy2);
@@ -123,7 +135,7 @@ public class TestResponseBlueWeapons {
         List<ColorId> enemyList = new LinkedList<>();
         enemyList.add(enemy.getColor());
         enemyList.add(enemy2.getColor());
-
+        //here we use the methods with the given enemy list to get the response
 
         ResponseLockRifle respbasic = new ResponseLockRifle(enemy.getColor(),enemy2.getColor());
 
@@ -139,9 +151,11 @@ public class TestResponseBlueWeapons {
         ResponseLockRifle resp = new ResponseLockRifle(enemy2.getColor());
         assertEquals(resp.getTargetBasicMode(),enemy2.getColor());
     }
-
+    //here we test the response of the weapon tractator beam
     @Test
     public void testTractatorBeam() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
 
         g1.setAllPlayer(enemy2);
@@ -156,7 +170,7 @@ public class TestResponseBlueWeapons {
         MethodsWeapons.moveTarget(enemy,2,1);
         MethodsWeapons.moveTarget(enemy2,2,1);
 
-
+        //here we use the methods with the given enemy list to get the response
 
         ResponseTractatorBeam respbasic = new ResponseTractatorBeam(enemy.getColor(),2,1);
 
@@ -170,9 +184,11 @@ public class TestResponseBlueWeapons {
 
         assertEquals(resp.getTargetAlternativeMode(),enemy2.getColor());
     }
-
+    //here we test the response of the weapon whisper
     @Test
     public void testWhisper() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
 
  
@@ -191,7 +207,7 @@ public class TestResponseBlueWeapons {
         enemyList.add(enemy.getColor());
         enemyList.add(enemy2.getColor());
 
-
+        //here we use the methods with the given enemy list to get the response
         ResponseWhisper respbasic = new ResponseWhisper(enemy.getColor());
 
 
@@ -199,9 +215,11 @@ public class TestResponseBlueWeapons {
 
 
     }
-
+    //here we test the response of the weapon machine gun
     @Test
     public void testMachinGun() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
         g1.setAllPlayer(enemy3);
         g1.setAllPlayer(enemy2);
@@ -218,7 +236,7 @@ public class TestResponseBlueWeapons {
         MethodsWeapons.moveTarget(enemy2,2,1);
         MethodsWeapons.moveTarget(enemy3,2,1);
 
-
+        //here we use the methods with the given enemy list to get the response
 
         ResponseMachineGun respbasic = new ResponseMachineGun(enemy.getColor(),null);
 
@@ -258,9 +276,11 @@ public class TestResponseBlueWeapons {
 
 
     }
-
+    //here we test the response of the weapon thor
     @Test
     public void testThor() throws SquareNotInGameBoard {
+
+    //here we spawn the player and add them in the enemy list
 
 
 
@@ -279,7 +299,7 @@ public class TestResponseBlueWeapons {
         MethodsWeapons.moveTarget(enemy2,2,1);
         MethodsWeapons.moveTarget(enemy3,2,1);
 
-
+        //here we use the methods with the given enemy list to get the response
         ResponseTHOR respbasic = new ResponseTHOR(enemy.getColor());
 
 

@@ -126,19 +126,22 @@ public class TestBlueWeapons {
     @Test
     public void testDeathSchytle() throws SquareNotInGameBoard {
 
-
+    //here we set players in gameboard and spawn them 
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
 
         test.setSquare(g1.getArena().getSquare(1,1));
         enemy.setSquare(g1.getArena().getSquare(2,1));
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,1);
         test.addWeapon(w0);//Add a weapon
+//first we check if weapon fail if is not set to any player
         try
         {
-            w0.checkBasicMode();
+            w0.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -147,13 +150,13 @@ public class TestBlueWeapons {
         }
 
         w0.setPlayer(test);
-        w0.setLoaded(true);
-        boolean[] availableMethod = w0.checkAvailableMode();
+        w0.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod = w0.checkAvailableMode(); // it return the available modality to use the weapon
         assertFalse(availableMethod[0]);
         assertFalse(availableMethod[1]);
         try
         {
-            w0.checkBasicMode();
+            w0.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -163,7 +166,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w0.checkReaper();
+            w0.checkReaper(); // this method return the target for reaper mode
             fail();
         }
         catch (IllegalStateException e)
@@ -171,40 +174,44 @@ public class TestBlueWeapons {
             System.out.println("modalità avanzata non utilizzabile");
         }
 
-        //tutto disponibile
+        //all mode available
 
 
-        MethodsWeapons.moveTarget(enemy,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,1);
         test.setAmmoBlue(2);
-        boolean[] availableMethod1 = w0.checkAvailableMode();
+        boolean[] availableMethod1 = w0.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0],true);
         assertEquals(availableMethod1[1],true);
 
-        List<ColorId> list1 = w0.checkBasicMode();
-        List<ColorId> list2 = w0.checkReaper();
+        List<ColorId> list1 = w0.checkBasicMode(); // this method return the target for basic mode
+        List<ColorId> list2 = w0.checkReaper();// this method return the target for reaper mode
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy.getColor()));
+        //here we use the basic mode
         w0.basicMode(list1);
         assertEquals(enemy.getNumberOfDamagePoint(),1);
         assertFalse(w0.isLoaded());
-        w0.setLoaded(true);
+        w0.setLoaded(true); // here we load the weapon
+        //here we use the reaper mode
         w0.reaper(list2);
         assertEquals(enemy.getNumberOfDamagePoint(),3);
 
-        //solo basic disponibil
+        //only basic available
 
-        w0.setLoaded(true);
-        boolean[] availableMethod2 = w0.checkAvailableMode();
+        w0.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod2 = w0.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod2[0],true);
         assertEquals(availableMethod2[1],false);
 
-        List<ColorId> list3 = w0.checkBasicMode();
+        List<ColorId> list3 = w0.checkBasicMode(); // this method return the target for basic mode
 
         assertTrue(list3.contains(enemy.getColor()));
         w0.basicMode(list3);
         assertEquals(enemy.getNumberOfDamagePoint(),4);
         assertFalse(w0.isLoaded());
-        w0.setLoaded(true);
+        w0.setLoaded(true); // here we load the weapon
+        //here we see if the weapon fail to use reaper mode if the mode is not available due to lack of ammo
         try
         {
             w0.reaper(list3);
@@ -223,6 +230,7 @@ public class TestBlueWeapons {
     //  to check if the weapon Lock Rifle in basic and SecondLock mode
     @Test
     public void testLockRifle() throws SquareNotInGameBoard {
+        //here we set players in gameboard and spawn them 
         g1.setAllPlayer(enemy2);
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
@@ -232,60 +240,66 @@ public class TestBlueWeapons {
         enemy2.setSquare(g1.getArena().getSquare(2,2));
 
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
         test.addWeapon(w1);//Add a weapon
+        //first we check if weapon fail if is not set to any player
         try {
-            w1.checkBasicMode();
+            w1.checkBasicMode(); // this method return the target for basic mode
             fail();
         } catch (IllegalStateException e) {
             System.out.println("player is null");
         }
 
         w1.setPlayer(test);
-        w1.setLoaded(true);
+        w1.setLoaded(true); // here we load the weapon
 
 
-
-        boolean[] availableMethod = w1.checkAvailableMode();
+//here we check that weapon mode are not available if weapon is not loaded
+        boolean[] availableMethod = w1.checkAvailableMode(); // it return the available modality to use the weapon
         assertFalse(availableMethod[0]);
         assertFalse(availableMethod[1]);
         try {
-            w1.checkBasicMode();
+            w1.checkBasicMode(); // this method return the target for basic mode
             fail();
         } catch (IllegalStateException e) {
             System.out.println("modalità base non utilizzabile");
         }
 
         try {
-            w1.checkSecondLock();
+            w1.checkSecondLock(); // this method return the target for second lock mode
             fail();
         } catch (IllegalStateException e) {
             System.out.println("modalità avanzata non utilizzabile");
         }
 
-        //tutto disponibile
+        //all mode available
 
 
 
-        w1.setLoaded(true);
+        w1.setLoaded(true); // here we load the weapon
         test.setAmmoRed(2);
 
 
-        MethodsWeapons.moveTarget(enemy,1,2);
-        MethodsWeapons.moveTarget(enemy2,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,3);
 
-        w1.setLoaded(true);
+        w1.setLoaded(true); // here we load the weapon
         test.setAmmoRed(2);
         test.setAmmoBlue(2);
 
-        boolean[] availableMethod1 = w1.checkAvailableMode();
+        boolean[] availableMethod1 = w1.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0], true);
         assertEquals(availableMethod1[1], true);
 
-        List<ColorId> list1 = w1.checkBasicMode();
-        List<ColorId> list2 = w1.checkSecondLock();
+        List<ColorId> list1 = w1.checkBasicMode(); // this method return the target for basic mode
+        List<ColorId> list2 = w1.checkSecondLock(); // this method return the target for second lock mode
 
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy.getColor()));
@@ -293,7 +307,7 @@ public class TestBlueWeapons {
         assertTrue(list2.contains(enemy2.getColor()));
 
 
-
+//here we use basic mode
         w1.basicMode(getPl(list1, enemy), getPl(list2, enemy2), true);
 
         assertEquals(enemy.getNumberOfDamagePoint(), 2);
@@ -301,7 +315,7 @@ public class TestBlueWeapons {
         assertEquals(enemy2.checkMarker(test.getColor()), 1);
         assertFalse(w1.isLoaded());
 
-        //solo basic disponibile
+        //only basic mode available
 
 
         test.setAmmoBlue(0);
@@ -309,19 +323,19 @@ public class TestBlueWeapons {
         test.setAmmoYellow(0);
 
 
-        w1.setLoaded(true);
-        boolean[] availableMethod2 = w1.checkAvailableMode();
+        w1.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod2 = w1.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod2[0], true);
         assertEquals(availableMethod2[1], false);
 
-        List<ColorId> list3 = w1.checkBasicMode();
+        List<ColorId> list3 = w1.checkBasicMode(); // this method return the target for basic mode
 
         assertTrue(list3.contains(enemy.getColor()));
 
         w1.basicMode(getPl(list3, enemy), null, false);
         assertEquals(enemy.getNumberOfDamagePoint(), 5);
         assertFalse(w1.isLoaded());
-        w1.setLoaded(true);
+        w1.setLoaded(true); // here we load the weapon
         try {
             w1.basicMode(list3.get(0), null, true);
         } catch (IllegalStateException e) {
@@ -341,7 +355,7 @@ public class TestBlueWeapons {
             assertFalse(w1.isLoaded());
             assertEquals(enemy2.getNumberOfDamagePoint(), 3);
             assertEquals(enemy2.checkMarker(test.getColor()), 1);
-        w1.setLoaded(true);
+        w1.setLoaded(true); // here we load the weapon
             w1.basicMode(getPl(list3, enemy2), null, false);
             assertFalse(w1.isLoaded());
             assertEquals(enemy2.getNumberOfDamagePoint(), 6);
@@ -360,14 +374,17 @@ public class TestBlueWeapons {
         test.setSquare(g1.getArena().getSquare(1,1));
         enemy.setSquare(g1.getArena().getSquare(2,2));
         enemy2.setSquare(g1.getArena().getSquare(2,2));
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
         test.addWeapon(w4);//Add a weapon
-
+//first we check if weapon fail if is not loaded
         try
         {
-            w4.checkBasicMode();
+            w4.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -395,30 +412,32 @@ public class TestBlueWeapons {
         {
             System.out.println(e);
         }
-        w4.setLoaded(true);
-        boolean[] availableMethod = w4.checkAvailableMode();
+        w4.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod = w4.checkAvailableMode(); // it return the available modality to use the weapon
         assertFalse(availableMethod[0]);
         try
         {
-            w4.checkBasicMode();
+            w4.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
         {
             System.out.println(e);
         }
-        //tutto disponibile
+        //all mode available
 
 
 
-        MethodsWeapons.moveTarget(enemy,1,3);
-        MethodsWeapons.moveTarget(enemy2,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,3);
         assertTrue(w4.isLoaded());
-        boolean[] availableMethod1 = w4.checkAvailableMode();
+        boolean[] availableMethod1 = w4.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0],true);
 
 
-        List<ColorId> list1 = w4.checkBasicMode();
+        List<ColorId> list1 = w4.checkBasicMode(); // this method return the target for basic mode
 
         assertTrue(list1.contains(enemy2.getColor()));
 
@@ -446,16 +465,20 @@ public class TestBlueWeapons {
         enemy2.setSquare(g1.getArena().getSquare(2,2));
         enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
-        MethodsWeapons.moveTarget(enemy3,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
 
         test.addWeapon(w3);//Add a weapon
-
+//first we check if weapon fail if is not set to any player
         try
         {
-            w3.checkBasicMode();
+            w3.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -483,12 +506,12 @@ public class TestBlueWeapons {
         {
             System.out.println(e);
         }
-        w3.setLoaded(true);
-        boolean[] availableMethod = w3.checkAvailableMode();
+        w3.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod = w3.checkAvailableMode(); // it return the available modality to use the weapon
         assertFalse(availableMethod[0]);
         try
         {
-            w3.checkBasicMode();
+            w3.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -496,24 +519,27 @@ public class TestBlueWeapons {
             System.out.println(e);
         }
 
-        //tutto disponibile
+        //all mode available
 
 
 
-        MethodsWeapons.moveTarget(enemy,1,3);
-        MethodsWeapons.moveTarget(enemy2,2,3);
-        MethodsWeapons.moveTarget(enemy3,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
         test.setAmmoBlue(2);
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w3.isLoaded());
-        boolean[] availableMethod1 = w3.checkAvailableMode();
+        boolean[] availableMethod1 = w3.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0],true);
 
 
-        List<ColorId> list1 = w3.checkBasicMode();
-        List<ColorId> list2 = w3.checkChainReaction();
-        List<ColorId> list3 = w3.checkHighVoltage();
+        List<ColorId> list1 = w3.checkBasicMode(); // this method return the target for basic mode
+        List<ColorId> list2 = w3.checkChainReaction(); // this method return the target for chain reaction mode , it return only players that can be seen by a player that you can see
+        List<ColorId> list3 = w3.checkHighVoltage();// this method return the target for high voltage mode , it return only players that can be seen by players that can be seen by a player that you can see
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy2.getColor()));
         assertTrue(list3.contains(enemy3.getColor()));
@@ -555,7 +581,7 @@ public class TestBlueWeapons {
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
         assertEquals(enemy3.getNumberOfDamagePoint(),2);
         assertFalse(w3.isLoaded());
-        w3.setLoaded(true);
+        w3.setLoaded(true); // here we load the weapon
 
         test.setAmmoBlue(1);
         test.setAmmoYellow(1);
@@ -584,16 +610,21 @@ public class TestBlueWeapons {
             System.out.println(e);
         }
 
-        MethodsWeapons.moveTarget(test,2,2);
-        MethodsWeapons.moveTarget(enemy,2,3);
-        MethodsWeapons.moveTarget(enemy2,1,3);
-        MethodsWeapons.moveTarget(enemy3,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,1,2);
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w3.setLoaded(true);
-        list1 = w3.checkBasicMode();
-        list2 = w3.checkChainReaction();
-        list3 = w3.checkHighVoltage();
+        w3.setLoaded(true); // here we load the weapon
+        list1 = w3.checkBasicMode(); // this method return the target for basic mode
+        list2 = w3.checkChainReaction(); // this method return the target for chain reaction mode , it return only players that can be seen by a player that you can see
+        list3 = w3.checkHighVoltage();// this method return the target for high voltage mode , it return only players that can be seen by players that can be seen by a player that you can see
+
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy2.getColor()));
         assertTrue(list3.contains(enemy3.getColor()));
@@ -617,14 +648,19 @@ public class TestBlueWeapons {
         enemy2.setSquare(g1.getArena().getSquare(2,2));
         enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
-        MethodsWeapons.moveTarget(enemy3,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
         test.addWeapon(w6);//Add a weapon
+        //first we check if weapon fail if is not set to any player
         try
         {
-            w6.checkBasicMode();
+            w6.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -633,14 +669,14 @@ public class TestBlueWeapons {
         }
 
         w6.setPlayer(test);
-        w6.setLoaded(true);
-        boolean[] availableMethod = w6.checkAvailableMode();
+        w6.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod = w6.checkAvailableMode(); // it return the available modality to use the weapon
         assertFalse(availableMethod[0]);
         assertFalse(availableMethod[1]);
         assertFalse(availableMethod[2]);
         try
         {
-            w6.checkBasicMode();
+            w6.checkBasicMode(); // this method return the target for basic mode
             fail();
         }
         catch (IllegalStateException e)
@@ -650,7 +686,7 @@ public class TestBlueWeapons {
 
         try
         {
-            w6.checkFocusShotMode();
+            w6.checkFocusShotMode();  // this method return the target for focus shot mode
             fail();
         }
         catch (IllegalStateException e)
@@ -659,7 +695,7 @@ public class TestBlueWeapons {
         }
         try
         {
-            w6.checkTurretTripodeMode();
+            w6.checkTurretTripodeMode();  // this method return the target for focus turret tripode mode
             fail();
         }
         catch (IllegalStateException e)
@@ -668,22 +704,25 @@ public class TestBlueWeapons {
         }
 
 
-        //tutto disponibile
+        //all mode available
 
 
-        MethodsWeapons.moveTarget(enemy,1,2);
-        MethodsWeapons.moveTarget(enemy2,1,3);
-        MethodsWeapons.moveTarget(enemy3,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,1,2);
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        boolean[] availableMethod1 = w6.checkAvailableMode();
+        boolean[] availableMethod1 = w6.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0],true);
         assertEquals(availableMethod1[1],true);
         assertEquals(availableMethod1[2],true);
 
-        List<ColorId> list1 = w6.checkBasicMode();
-        List<ColorId> list2 = w6.checkFocusShotMode();
-        List<ColorId> list3 = w6.checkTurretTripodeMode();
+        List<ColorId> list1 = w6.checkBasicMode(); // this method return the target for basic mode
+        List<ColorId> list2 = w6.checkFocusShotMode();  // this method return the target for focus shot mode
+        List<ColorId> list3 = w6.checkTurretTripodeMode(); // this method return the target for focus turret tripode mode
         assertTrue(list1.contains(enemy.getColor()));
         assertTrue(list2.contains(enemy.getColor()));
         assertTrue(list3.contains(enemy.getColor()));
@@ -706,15 +745,15 @@ public class TestBlueWeapons {
         assertEquals(enemy3.getNumberOfDamagePoint(),1);
         assertFalse(w6.isLoaded());
 
-        //solo basic disponibile
+        //only basic mode available
         test.setAmmoYellow(0);
         test.setAmmoBlue(0);
-        w6.setLoaded(true);
-        boolean[] availableMethod2 = w6.checkAvailableMode();
+        w6.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod2 = w6.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod2[0],true);
         assertEquals(availableMethod2[1],false);
         assertEquals(availableMethod2[2],false);
-       list3 = w6.checkBasicMode();
+       list3 = w6.checkBasicMode(); // this method return the target for basic mode
 
         assertTrue(list3.contains(enemy.getColor()));
         assertTrue(list3.contains(enemy2.getColor()));
@@ -730,7 +769,7 @@ public class TestBlueWeapons {
         {
             System.out.println(e);
         }
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
 
         w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,null,false,false,false);
 
@@ -740,12 +779,12 @@ public class TestBlueWeapons {
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
         w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,getPl(list1,enemy3),getPl(list1,enemy2),false,true,true);
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
         try
         {
             w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),getPl(list1,enemy2),getPl(list1,enemy),null,true,true,true);
@@ -758,7 +797,7 @@ public class TestBlueWeapons {
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
         try
         {
             w6.basicMode(getPl(list1,enemy),getPl(list1,enemy),null,null,null,true,false,true);
@@ -771,7 +810,7 @@ public class TestBlueWeapons {
 
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
         try
         {
             w6.basicMode(getPl(list1,enemy2),getPl(list1,enemy),null,null,getPl(list1,enemy3),true,true,true);
@@ -783,7 +822,7 @@ public class TestBlueWeapons {
         }
         test.setAmmoYellow(2);
         test.setAmmoBlue(2);
-        w6.setLoaded(true);
+        w6.setLoaded(true); // here we load the weapon
         try
         {
             w6.basicMode(getPl(list1,enemy),getPl(list1,enemy2),null,null,null,true,true,false);
@@ -820,10 +859,14 @@ public class TestBlueWeapons {
             enemy2.setSquare(g1.getArena().getSquare(2,2));
             enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-            MethodsWeapons.moveTarget(test,1,1);
-            MethodsWeapons.moveTarget(enemy,2,2);
-            MethodsWeapons.moveTarget(enemy2,2,2);
-            MethodsWeapons.moveTarget(enemy3,2,2);
+           // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
 
             test.addWeapon(w5);//Add a weapon
 
@@ -832,7 +875,7 @@ public class TestBlueWeapons {
             orderEffect[0] = "basic";
             orderEffect[1] = "with phase glide";
             orderEffect[2] = "with charged shot";
-
+//first we check if weapon fail if is not set to any player
             try
             {
                 w5.basicMode(enemy.getColor(),orderEffect,1,1);
@@ -856,13 +899,15 @@ public class TestBlueWeapons {
             }
 
 
-            w5.setLoaded(true);
+            w5.setLoaded(true); // here we load the weapon
 
 
 
 
-            MethodsWeapons.moveTarget(test,1,3);
-            MethodsWeapons.moveTarget(enemy,4,1);
+           // here we move the player
+ MethodsWeapons.moveTarget(test,1,3);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy,4,1);
 
 
             List<String> reachableSquare = new LinkedList<>();
@@ -871,7 +916,7 @@ public class TestBlueWeapons {
 
 
 
-            reachableSquare= w5.checkPhaseGlide();
+            reachableSquare= w5.checkPhaseGlide(); // this method return the reachable squares
 
 
 
@@ -880,15 +925,17 @@ public class TestBlueWeapons {
 
 
 
-            MethodsWeapons.moveTarget(enemy,1,3);
-            MethodsWeapons.moveTarget(test,1,1);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,3);
+           // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
 
 
             test.setAmmoBlue(3);
-            reachableBasicPlayer = w5.checkAllTarget();
+            reachableBasicPlayer = w5.checkAllTarget(); // this method return a map of squares and player that you can see by moving into that square
 
-            reachableSquare= w5.checkPhaseGlide();
-            reachableBeforeMovePlayer = w5.checkAllTarget();
+            reachableSquare= w5.checkPhaseGlide(); // this method return the reachable squares
+            reachableBeforeMovePlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
 
             assertFalse(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,2).toStringCoordinates()).contains(enemy3.getColor()));
             w5.basicMode(getPl(reachableBasicPlayer.get(test.getSquare().getGameBoard().getArena().getSquare(1,2).toStringCoordinates()),enemy),orderEffect,1,2);
@@ -900,8 +947,10 @@ public class TestBlueWeapons {
 
 
 
-            MethodsWeapons.moveTarget(test,1,1);
-            MethodsWeapons.moveTarget(enemy,2,3);
+           // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,3);
 
 
 
@@ -910,10 +959,10 @@ public class TestBlueWeapons {
             orderEffect[0] = "with phase glide";
             orderEffect[2] = "with charged shot";
             test.setAmmoBlue(3);
-            w5.setLoaded(true);
+            w5.setLoaded(true); // here we load the weapon
 
-            reachableSquare= w5.checkPhaseGlide();
-            reachableBeforeMovePlayer = w5.checkAllTarget();
+            reachableSquare= w5.checkPhaseGlide(); // this method return the reachable squares
+            reachableBeforeMovePlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
             assertTrue(reachableSquare.contains(g1.getArena().getSquare(1,3).toStringCoordinates()));
             List<ColorId> templ = reachableBeforeMovePlayer.get(g1.getArena().getSquare(1,3).toStringCoordinates());
          assertTrue(templ.contains(enemy.getColor()));
@@ -929,9 +978,12 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
 
 
 
-            MethodsWeapons.moveTarget(test,1,1);
-            MethodsWeapons.moveTarget(enemy,2,2);
-            MethodsWeapons.moveTarget(enemy2,1,3);
+           // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+           // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,3);
 
             // muoviti, spara ,aggiungi danno
             orderEffect[0] = "with phase glide";
@@ -939,11 +991,11 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
             orderEffect[2] = "with charged shot";
 
             test.setAmmoBlue(3);
-            w5.setLoaded(true);
+            w5.setLoaded(true); // here we load the weapon
             assertTrue(enemy.getSquare().equals(g1.getArena().getSquare(2,2)));
 
-            reachableBasicPlayer = w5.checkAllTarget();
-            reachableBeforeMovePlayer = w5.checkAllTarget();
+            reachableBasicPlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
+            reachableBeforeMovePlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
 
 
             Square squareTest= new SpawnPoint(2,2,g1,null,null);
@@ -961,7 +1013,7 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
 
             try
             {
-                reachableBeforeMovePlayer = w5.checkAllTarget();
+                reachableBeforeMovePlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
                 fail();
             }
             catch(IllegalStateException e)
@@ -970,17 +1022,17 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
             }
             try
             {
-                reachableSquare= w5.checkPhaseGlide();
+                reachableSquare= w5.checkPhaseGlide(); // this method return the reachable squares
                 fail();
             }
             catch(IllegalStateException e)
             {
                 System.out.println(e);
             }
-            w5.setLoaded(true);
-            reachableBasicPlayer = w5.checkAllTarget();
+            w5.setLoaded(true); // here we load the weapon
+            reachableBasicPlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
 
-            reachableBeforeMovePlayer = w5.checkAllTarget();
+            reachableBeforeMovePlayer = w5.checkAllTarget();  // this method return a map of squares and player that you can see by moving into that square
             test.setAmmoBlue(0);
             try
             {
@@ -1008,14 +1060,19 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         enemy2.setSquare(g1.getArena().getSquare(2,2));
         enemy3.setSquare(g1.getArena().getSquare(2,2));
 
-        MethodsWeapons.moveTarget(test,1,1);
-        MethodsWeapons.moveTarget(enemy,2,2);
-        MethodsWeapons.moveTarget(enemy2,2,2);
-        MethodsWeapons.moveTarget(enemy3,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
         test.addWeapon(w2);//Add a weapon
+        //first we check if weapon fail if is not set to any player
         try
         {
-            w2.checkMoveBasicMode();
+            w2.checkMoveBasicMode(); // this method return the target for basic mode as a map of player's color and string of where you can move them
             fail();
         }
         catch (IllegalStateException e)
@@ -1024,29 +1081,32 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         }
 
         w2.setPlayer(test);
-        w2.setLoaded(true);
-        boolean[] availableMethod = w2.checkAvailableMode();
+        w2.setLoaded(true); // here we load the weapon
+        boolean[] availableMethod = w2.checkAvailableMode(); // it return the available modality to use the weapon
         assertTrue(availableMethod[0]);
         assertTrue(availableMethod[1]);
 
 
-        //tutto disponibile
+        //all mode available
 
 
 
-        MethodsWeapons.moveTarget(enemy,1,3);
-        MethodsWeapons.moveTarget(enemy2,2,3);
-        MethodsWeapons.moveTarget(enemy3,2,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,2,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy3,2,2);
         test.setAmmoBlue(3);
         test.setAmmoYellow(2);
         test.setAmmoRed(2);
         assertTrue(w2.isLoaded());
-        boolean[] availableMethod1 = w2.checkAvailableMode();
+        boolean[] availableMethod1 = w2.checkAvailableMode(); // it return the available modality to use the weapon
         assertEquals(availableMethod1[0],true);
 
 
-        Map<ColorId,List<String>> list1 = w2.checkMoveBasicMode();
-        List<ColorId> list2 = w2.checkPunisherMode();
+        Map<ColorId,List<String>> list1 = w2.checkMoveBasicMode();  // this method return the target for basic mode as a map of player's color and string of where you can move them
+        List<ColorId> list2 = w2.checkPunisherMode();  // this method return the target for punisher mode
 
         assertFalse(list1.containsKey(test.getColor()));
         assertTrue(list1.containsKey(enemy.getColor()));
@@ -1061,12 +1121,12 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         w2.basicMode(enemy2.getColor(),1,3);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
 
-        w2.setLoaded(true);
+        w2.setLoaded(true); // here we load the weapon
 
         w2.punisherMode(getPl(list2,enemy3));
         assertEquals(enemy3.getNumberOfDamagePoint(),3);
 
-        w2.setLoaded(true);
+        w2.setLoaded(true); // here we load the weapon
         test.setAmmoBlue(0);
         test.setAmmoYellow(0);
         test.setAmmoRed(0);
@@ -1076,27 +1136,30 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
           System.out.println(e);
       }
 
-        //tutto disponibile test 2
+        //all mode available test 2
 
-        MethodsWeapons.moveTarget(enemy,1,2);
-        MethodsWeapons.moveTarget(enemy2,1,1);
-        MethodsWeapons.moveTarget(test,3,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,3,3);
         assertEquals(enemy.getNumberOfDamagePoint(),0);
         assertEquals(enemy2.getNumberOfDamagePoint(),1);
-        w2.setLoaded(true);
+        w2.setLoaded(true); // here we load the weapon
         test.setAmmoBlue(3);
         test.setAmmoRed(3);
         test.setAmmoYellow(3);
-        list1 = w2.checkMoveBasicMode();
+        list1 = w2.checkMoveBasicMode();  // this method return the target for basic mode as a map of player's color and string of where you can move them
        try{
-           list2 = w2.checkPunisherMode();
+           list2 = w2.checkPunisherMode(); // this method return the target for punisher mode
            fail();
        }
        catch (IllegalStateException e)
        {
            System.out.println(e);
        }
-        boolean[] availableMethods = w2.checkAvailableMode();
+        boolean[] availableMethods = w2.checkAvailableMode(); // it return the available modality to use the weapon
         assertTrue(availableMethods[0]);
         assertFalse(availableMethods[1]);
 
@@ -1108,24 +1171,27 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         assertEquals(enemy.getNumberOfDamagePoint(),1);
         assertTrue(enemy.getSquare().equals(enemy.getSquare().getGameBoard().getArena().getSquare(1,3)));
 
-        w2.setLoaded(true);
+        w2.setLoaded(true); // here we load the weapon
         w2.basicMode(enemy2.getColor(),2,2);
 
         assertEquals(enemy2.getNumberOfDamagePoint(),2);
         assertTrue(enemy2.getSquare().equals(enemy2.getSquare().getGameBoard().getArena().getSquare(2,2)));
 
 
-        //tutto disponibile test 3
+        //all mode available test 3
 
-        MethodsWeapons.moveTarget(enemy,1,2);
-        MethodsWeapons.moveTarget(enemy2,1,1);
-        MethodsWeapons.moveTarget(test,2,3);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy,1,2);
+       // here we move the player
+ MethodsWeapons.moveTarget(enemy2,1,1);
+       // here we move the player
+ MethodsWeapons.moveTarget(test,2,3);
         assertEquals(enemy.getNumberOfDamagePoint(),1);
         assertEquals(enemy2.getNumberOfDamagePoint(),2);
-        w2.setLoaded(true);
-        list1 = w2.checkMoveBasicMode();
-        list2 = w2.checkPunisherMode();
-        boolean[] availableMethodss = w2.checkAvailableMode();
+        w2.setLoaded(true); // here we load the weapon
+        list1 = w2.checkMoveBasicMode(); // this method return the target for basic mode as a map of player's color and string of where you can move them
+        list2 = w2.checkPunisherMode(); // this method return the target for punisher mode
+        boolean[] availableMethodss = w2.checkAvailableMode(); // it return the available modality to use the weapon
         assertTrue(availableMethodss[0]);
         assertTrue(availableMethodss[1]);
 
@@ -1138,7 +1204,7 @@ assertTrue(enemy.getNumberOfDamagePoint()==3);
         assertEquals(enemy.getNumberOfDamagePoint(),2);
         assertTrue(enemy.getSquare().equals(enemy.getSquare().getGameBoard().getArena().getSquare(1,3)));
 
-        w2.setLoaded(true);
+        w2.setLoaded(true); // here we load the weapon
         w2.basicMode(enemy2.getColor(),2,2);
 
         assertEquals(enemy2.getNumberOfDamagePoint(),3);

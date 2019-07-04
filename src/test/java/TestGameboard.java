@@ -38,7 +38,7 @@ public class TestGameboard {
 
     @Before
     public void setUp() {
-
+        //here we setup the elements of the gameboard
 
 
         powerUpCardStack.add(teleport);
@@ -55,7 +55,7 @@ public class TestGameboard {
 
 
     @Test
-    public void InizializeSkull() {
+    public void InizializeSkull() { //here we setup the elements of the skull counter
 
 
             test.setSkullCounter(5);
@@ -67,14 +67,14 @@ public class TestGameboard {
             test.setSkullCounter(-3);
             fail();
         } catch (IllegalArgumentException e) {
-            System.out.println("SkullTestOK");
+            System.out.println(e);
         }
 
     }
     @Test
-    public void InizializeKillShotTrack() {
+    public void InizializeKillShotTrack() { //here we setup the elements of the kill shot track
 
-        test.setKillShotTrack(ColorId.YELLOW, 2);
+        test.setKillShotTrack(ColorId.YELLOW, 2); // this method add a track for player yellow with 2 point counter
         test.setKillShotTrack(ColorId.GREY, 1);
         assertEquals(test.getKillShotPlayer(test.getKillShotTrack(0)),ColorId.YELLOW );
         assertEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),2 );
@@ -86,16 +86,16 @@ public class TestGameboard {
         assertNotEquals(test.getKillShotPointCounter(test.getKillShotTrack(0)),1 );
 
         try {
-            test.setKillShotTrack(ColorId.GREEN, 0);
+            test.setKillShotTrack(ColorId.GREEN, 0); // here we try to add a track  with 0 point counter and must throw an exception
             fail();
         } catch (IllegalArgumentException e) {
-            System.out.println("KillShotTrackOK");
+            System.out.println(e);
         }
 
     }
 
 @Test
-    public void InizializeWeaponStack() {
+    public void InizializeWeaponStack() { //here we setup the weapon stack
 
             for (int i=0; i < 1 ; i++)
             {
@@ -105,16 +105,17 @@ public class TestGameboard {
             test.drawWeaponCard();
             assertTrue(test.getWeaponCardStack().isEmpty());
             try
-            { test.drawWeaponCard();
+            { test.drawWeaponCard(); // if we try to draw a card when the weapon stack is empty it must throw an exception
             fail();
         } catch (NullPointerException e) {
-            System.out.println("WeaponStackOK");
+            System.out.println(e);
         }
     }
 
     @Test
     public void weaponCardTest ()
     {
+        //here we control if weapon card is created in a proper way
         WeaponCard weaponCard = new RocketLauncher(Color.RED,211, true);
 
         assertEquals("Lanciarazzi", weaponCard.getName());

@@ -25,6 +25,7 @@ public class TestTargettingScope
     @Before
     public void setup()
     {
+        //here we setup players
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
         }
@@ -32,6 +33,7 @@ public class TestTargettingScope
 
     @Test
     public void testScope() throws SquareNotInGameBoard {
+        //here we spawn players
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
 
@@ -42,7 +44,7 @@ public class TestTargettingScope
         MethodsWeapons.moveTarget(test,1,1);
         MethodsWeapons.moveTarget(enemy,2,1);
         test.setAmmoYellow(2);
-
+        // here we get the response for the use of targetting scope
         ResponseTargettingScope response = new ResponseTargettingScope(enemy.getColor(), Color.YELLOW);
 
         assertEquals(response.getTargetAmmo(),Color.YELLOW);

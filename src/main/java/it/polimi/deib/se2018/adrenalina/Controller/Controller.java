@@ -42,19 +42,10 @@ public class Controller implements Observer<ResponseInput>
     private boolean terminatorMode = false;
     private int codeArena;
     public static boolean first;
-    //Controller deve avere un riferimento alla virtual view
-    /*
-    Quando il controller deve richiedere un input prima crea un thread che
-    esegue in parallelo i metodi requestInput e getResponseWithInputs della virtual view e poi passa la risposta
-    attraverso il metodo update
-    Poi si mette in pausa fino a quando il thread non finisce
-    */
+
 
     private ExecutorService executor = Executors.newFixedThreadPool(1); //numero max thread contemporanei
 
-    public Map<ColorId, Set<ColorId>> getRoundDamageList() {
-        return roundDamageList;
-    }
 
     /**
      * This method say how many players are connected
@@ -73,7 +64,7 @@ public class Controller implements Observer<ResponseInput>
      * Hint: using when the phase of login is completed
      * @return number of player connected and active
      */
-    private int numberOfPlayerActive()
+    public int numberOfPlayerActive()
     {
 
         int cont = 0;
@@ -131,7 +122,13 @@ public class Controller implements Observer<ResponseInput>
         return virtualView.getConnections().get(index -1).getPlayer();
     }
 
-
+    /**
+     *this is the constructor of the controller
+     * @param terminatorMode if true the terminator mode is active
+     * @param codeArena it indicate the code of the arena
+     * @param skullCounter number of skull counter
+     * @param virtualView the virtual view used
+     */
     public Controller(boolean terminatorMode,int codeArena,int skullCounter,View virtualView)
     {
         this.setup = new Setup(this);
@@ -142,8 +139,13 @@ public class Controller implements Observer<ResponseInput>
 
     }
 
+
+// START GAME AND ROUND METHODS
     /**
      * this method is used to start the game
+     * first it check if we are in terminator mode and in that case create the player terminator called termi and set it to the gameboard
+     * the it set all player in gameboard and while the endgame flag is false or the number of active player are more than 2 it continue to execute a for cycle on all player in the gameboard
+     * in that for we execute the round for each player with a distinction only if we are in final frenzy mode
      */
     public void startGame()
     {
@@ -159,7 +161,7 @@ public class Controller implements Observer<ResponseInput>
             termi = new Player(ColorId.PURPLE, "teminator", "terminator", false);
             g1.setTermi(termi);
         }
-        //aggiungi terminator in updatemodel
+
 
 
         g1.setAllPlayerList(setup.createPlayers());
@@ -209,227 +211,8 @@ public class Controller implements Observer<ResponseInput>
 
     }
 
-    // AUXILIARY FUNCTIONS
-
-
-    /**
-     * this method will set the point of all player when another player is death
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
-    private void getPointAndRespawn() throws ExecutionException, InterruptedException {
-        Map<ColorId,Integer> temppoint;
-        List<ColorId> lastKillerColor= new LinkedList<>();
-        //chiedi come fare calcolo punteggi
-        for(Player p : g1.getAllPlayer())
-        {
-            if(p.isDead())
-            {
-
-                if(g1.getSkullCounter()>0)
-                    g1.setSkullCounter(g1.getSkullCounter()-1);
-
-
-
-
-                temppoint = p.calculateScoreForEachPlayer();
-                for(Player c : g1.getAllPlayer()) {
-                    if (c.getColor()!=null && temppoint.get(c.getColor())!= null)
-                    {
-                        c.setScore(c.getScore() + temppoint.get(c.getColor()));
-
-                        if (p.getDamageCounter()[10].equals(c.getColor())) {
-
-                            if (lastKillerColor.contains(c.getColor())) // calculate additional point for double kill
-                                c.setScore(c.getScore() + 1);
-                            g1.setKillShotTrack(c.getColor(), 1);
-
-                            if (p.getDamageCounter()[11] != null) {
-                                if (p.getDamageCounter()[11].equals(c.getColor())) {
-                                    g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
-                                    c.addMark(p.getColor());
-                                }
-                            }
-                            lastKillerColor.add(c.getColor());
-                        }
-                        //if terminator mode is active
-                        if (g1.isTerminatorMode()) {
-                            termi.setScore(termi.getScore() + temppoint.get(termi.getColor()));
-                            if (p.getDamageCounter()[10].equals(termi.getColor())) {
-
-                                if (lastKillerColor.contains(termi.getColor()))
-                                    termi.setScore(termi.getScore() + 1);
-                                g1.setKillShotTrack(termi.getColor(), 1);
-
-
-                                lastKillerColor.add(termi.getColor());
-                            }
-                        }
-                    }
-                }
-
-
-
-                if(g1.getSkullCounter()==0)
-                {
-                    frenzy=true;
-                }
-
-                askForRespawn(p);
-            }
-
-        }
-
-        if(g1.isTerminatorMode())
-        {
-            if(termi.isDead())
-            {
-                if(g1.getSkullCounter()>0)
-                    g1.setSkullCounter(g1.getSkullCounter()-1);
-
-
-
-
-                temppoint = termi.calculateScoreForEachPlayer();
-                for(Player c : g1.getAllPlayer())
-                {
-                    c.setScore(temppoint.get(c.getColor()));
-                    if(termi.getDamageCounter()[10].equals(c.getColor())) {
-
-                        if( lastKillerColor.contains(c.getColor()))
-                            c.setScore(c.getScore()+1);
-                        g1.setKillShotTrack(c.getColor(), 1);
-
-                        if (termi.getDamageCounter()[11].equals(c.getColor())) {
-                            g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
-                            c.addMark(termi.getColor());
-                        }
-                        lastKillerColor.add(c.getColor());
-                    }
-                }
-
-
-
-                if(g1.getSkullCounter()==0)
-                {
-                    frenzy=true;
-                }
-
-                askForRespawn(termi);
-
-            }
-        }
-
-
-        if(frenzy)
-        {
-            for(Player c : g1.getAllPlayer())
-            {
-                c.setFrenzy(true);
-            }
-        }
-
-    }
-
-    /**
-     * auxiliary function to check if a boolean array has at least one available mode
-     * @param arr the array to check
-     * @return true only if there is at least one element true
-     */
-    private boolean checkBooleanArray(boolean[] arr)
+    private void startRoundFrenzy(Player rp) throws ExecutionException, InterruptedException  //this method start round only for frenzy , rp is  player of the round
     {
-        for(boolean i : arr)
-        {
-            if (i)
-                return true;
-        }
-    
-        return false;
-    }
-
-    /**
-     * auxiliary method to change a set of square into a list of square
-     * @param squareSet the set of square that wfrom wich we take the square
-     * @return a list of squares
-     */
-    private List<String> changeToList (Set<Square> squareSet)
-    {
-        List<String> stringList = new ArrayList<>();
-
-        for (Square squareIterate : squareSet)
-        {
-            stringList.add(squareIterate.toStringCoordinates());
-        }
-
-        return stringList;
-    }
-
-    /**
-     * auxiliary method that check if a player have a grenade power up 
-     * @param pg player to check
-     * @return true if the player has at least one grenade
-     */
-    private boolean checkPlayerForGranade(ColorId pg)
-    {
-        Player currentPlayer=null;
-        List<PowerUpCard> pcList= new LinkedList<>();
-        boolean ret=false;
-        for (Player pla : g1.getAllPlayer() )
-        {
-            if(pla.getColor().equals(pg))
-                currentPlayer=pla;
-        }
-        if(currentPlayer!=null)
-        {
-            pcList = currentPlayer.getPowerupCardList();
-            for (PowerUpCard cp : pcList) {
-                if (cp.powerToString().equals("Granata Venom:BLUE") || cp.powerToString().equals("Granata Venom:YELLOW") || cp.powerToString().equals("Granata Venom:RED")) {
-                    ret = true;
-                }
-            }
-        }
-        return ret;
-    }
-
-    //drawpowerup for roundplayer
-    private void drawPowerup(boolean respawn){
-        PowerUpCard pc= g1.drawPowerUpCard();
-
-        if(respawn)
-            roundPlayer.addPowerUpRespawn(pc);
-        else
-            roundPlayer.addPowerUp(pc);
-        pc.setPlayer(roundPlayer);
-    }
-    private void drawPowerup(boolean respawn,Player p){
-        PowerUpCard pc= g1.drawPowerUpCard();
-
-        if(respawn)
-            p.addPowerUpRespawn(pc);
-        else
-            p.addPowerUp(pc);
-        pc.setPlayer(p);
-    }
-
-    // END OF AUXILIARY FUNCTIONS
-
-
-    /**
-     * check if the player is afk
-     * @return true if player is afk
-     */
-    private boolean checkForAfk()
-    {
-        if(msg instanceof Afk )
-        {
-            roundPlayer.setAfk(true);
-            virtualView.sendMessageGenericBroadcast(new GenericMessage(roundPlayer.getName() + " " + roundPlayer.getColor() + " è afk"));
-        }
-        return roundPlayer.isAfk();
-    }
-
-    //this method start round only for frenzy
-    private void startRoundFrenzy(Player rp) throws ExecutionException, InterruptedException {
 
         for(Player p : g1.getAllPlayer())
         {
@@ -438,10 +221,10 @@ public class Controller implements Observer<ResponseInput>
                 roundPlayer=p;
         }
 
-       if(roundPlayer.isFirst())
-       {
-           first=true;
-       }
+        if(roundPlayer.isFirst())
+        {
+            first=true;
+        }
 
         updateModel();
 
@@ -470,7 +253,7 @@ public class Controller implements Observer<ResponseInput>
 
 
             if (!s){ salta=true;
-                    return;}
+                return;}
             if (checkForAfk())
                 return;
             try
@@ -496,63 +279,59 @@ public class Controller implements Observer<ResponseInput>
             setup.replenishBoard(g1);
         }
         else
-            {
-                List<Callable<Boolean>> callableList = new LinkedList<>();
-                callableList.add(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
+        {
+            List<Callable<Boolean>> callableList = new LinkedList<>();
+            callableList.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
 
-                        try {
-                            virtualView.requestInput(new StartFrenesyB(), rp.getColor());
-                            return true;
-                        } catch (Exception e) {
-                            return false;
-                        }
-
+                    try {
+                        virtualView.requestInput(new StartFrenesyB(), rp.getColor());
+                        return true;
+                    } catch (Exception e) {
+                        return false;
                     }
-                });
 
-                boolean s = executor.invokeAny(callableList);
-
-
-                if (!s){ salta=true;
-                    return;}
-                if (checkForAfk())
-                    return;
-
-                try
-                {
-                    switcherFrenzyB(rp.getColor());
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+            });
 
-                //end of user round
-                if(g1.isTerminatorMode())
-                    executeTerminator();
+            boolean s = executor.invokeAny(callableList);
 
-                for(Player p: g1.getAllPlayer())
-                {
-                    p.setAfk(false);
-                }
 
-                msg=null;
-                getPointAndRespawn();
-                setup.replenishBoard(g1);
+            if (!s){ salta=true;
+                return;}
+            if (checkForAfk())
+                return;
+
+            try
+            {
+                switcherFrenzyB(rp.getColor());
             }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            //end of user round
+            if(g1.isTerminatorMode())
+                executeTerminator();
+
+            for(Player p: g1.getAllPlayer())
+            {
+                p.setAfk(false);
+            }
+
+            msg=null;
+            getPointAndRespawn();
+            setup.replenishBoard(g1);
+        }
 
     }
 
 
-    /**
-     * this method start the round of a player
-     * @param rp player of the round
-     * @throws InterruptedException 
-     * @throws ExecutionException
-     */
-    private void startRound(Player rp) throws InterruptedException, ExecutionException {
+
+    private void startRound(Player rp) throws InterruptedException, ExecutionException //  this method start the round of a player , rp is  player of the round
+    {
 
         for (Player p : g1.getAllPlayer()) {
 
@@ -566,54 +345,54 @@ public class Controller implements Observer<ResponseInput>
         }
         if (!roundPlayer.isAfk()){
             List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
+            callableList.add(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
 
-                try {
-                    virtualView.requestInput(new RequestStartRound(), rp.getColor());
-                    return true;
-                } catch (Exception e) {
-                    return false;
+                    try {
+                        virtualView.requestInput(new RequestStartRound(), rp.getColor());
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+
                 }
+            });
 
+            boolean s = executor.invokeAny(callableList);
+
+
+            if (!s) {
+                salta = true;
+                return;
             }
-        });
 
-        boolean s = executor.invokeAny(callableList);
+            checkForAfk(); // here we check if the response message is that player is afk
+            for (Player p : g1.getAllPlayer()) {
+                p.setAfk(false);
+            }
+            msg = null;
 
 
-        if (!s) {
-            salta = true;
-            return;
+            try {
+                switcher(rp.getColor());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //end of user round
+
+            if (g1.isTerminatorMode() && !(roundPlayer.isFirst() && firstRound))
+                executeTerminator();
+
+            for (Player p : g1.getAllPlayer()) {
+                p.setAfk(false);
+            }
+
+            msg = null;
+            getPointAndRespawn();
+            setup.replenishBoard(g1);
         }
-
-        checkForAfk();
-        for (Player p : g1.getAllPlayer()) {
-            p.setAfk(false);
-        }
-        msg = null;
-
-
-        try {
-            switcher(rp.getColor());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //end of user round
-
-        if (g1.isTerminatorMode() && !(roundPlayer.isFirst() && firstRound))
-            executeTerminator();
-
-        for (Player p : g1.getAllPlayer()) {
-            p.setAfk(false);
-        }
-
-        msg = null;
-        getPointAndRespawn();
-        setup.replenishBoard(g1);
-    }
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
@@ -621,16 +400,96 @@ public class Controller implements Observer<ResponseInput>
         msg=null;
     }
 
+    // AUXILIARY FUNCTIONS
 
+    private List<ColorId> resolveParity(Set<ColorId> players, List<ColorId> playersByOccurency) // this method is used to order the player for final score
+    {
+        List<ColorId> playersOrd = new LinkedList<>();//Create the list that will contain the ordered players
+
+
+        for (ColorId colorIdIterate : playersByOccurency) //For each damage points
+        {
+            if (players.contains(colorIdIterate) && !playersOrd.contains(colorIdIterate))//If the player that he did that points isn't in the list
+                playersOrd.add(colorIdIterate); //Add him
+        }
+
+        return playersOrd; //Return the ordered list
+
+    }
+
+
+    private boolean checkBooleanArray(boolean[] arr) // auxiliary function to check if a boolean array has at least one available mode, arr is the array to check, this method return true only if there is at least one element true
+    {
+        for(boolean i : arr)
+        {
+            if (i)
+                return true;
+        }
+    
+        return false;
+    }
+
+    private List<String> changeToList (Set<Square> squareSet) // auxiliary method to change a set of square into a list of square , squareSet is  the set of square that wfrom wich we take the square, this method return a list of squares
+    {
+        List<String> stringList = new ArrayList<>();
+
+        for (Square squareIterate : squareSet)
+        {
+            stringList.add(squareIterate.toStringCoordinates());
+        }
+
+        return stringList;
+    }
+
+
+    private boolean checkPlayerForGranade(ColorId pg) // auxiliary method that check if a player have a grenade power up ,pg is the  player to check this method return true if the player has at least one grenade
+    {
+        Player currentPlayer=null;
+        List<PowerUpCard> pcList= new LinkedList<>();
+        boolean ret=false;
+        for (Player pla : g1.getAllPlayer() )
+        {
+            if(pla.getColor().equals(pg))
+                currentPlayer=pla;
+        }
+        if(currentPlayer!=null)
+        {
+            pcList = currentPlayer.getPowerupCardList();
+            for (PowerUpCard cp : pcList) {
+                if (cp.powerToString().equals("Granata Venom:BLUE") || cp.powerToString().equals("Granata Venom:YELLOW") || cp.powerToString().equals("Granata Venom:RED")) {
+                    ret = true;
+                }
+            }
+        }
+        return ret;
+    }
+
+
+    private void drawPowerup(boolean respawn) //drawpowerup for roundplayer
+    {
+        PowerUpCard pc= g1.drawPowerUpCard();
+
+        if(respawn)
+            roundPlayer.addPowerUpRespawn(pc);
+        else
+            roundPlayer.addPowerUp(pc);
+        pc.setPlayer(roundPlayer);
+    }
+
+    private boolean checkForAfk() // check if the player is afk this method return true if player is afk
+    {
+        if(msg instanceof Afk )
+        {
+            roundPlayer.setAfk(true);
+            virtualView.sendMessageGenericBroadcast(new GenericMessage(roundPlayer.getName() + " " + roundPlayer.getColor() + " è afk"));
+        }
+        return roundPlayer.isAfk();
+    }
 
     
-//Switch function
-    /**
-     * the switcher wait for a request from the view and then it execute the called method
-     * @param player color of the player that ask from the virtual view
-     * @throws Exception
-     */
-    private void switcherFrenzy(ColorId player) throws Exception
+//SWITCH METHODS
+
+    private void switcherFrenzy(ColorId player) throws Exception //  the switcher wait for a request from the view and then it execute the called method, this is frenzy case when first is false  , player is the color of the player that ask from the virtual view
     {
 
 
@@ -712,12 +571,9 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    /**
-     * the switcher wait for a request from the view and then it execute the called method, this is frenzy case when first is true
-     * @param player color of the player that ask from the virtual view
-     * @throws Exception if the connection fail in frenzy mode
-     */
-    private void switcherFrenzyB(ColorId player) throws Exception
+
+    private void switcherFrenzyB(ColorId player) throws Exception //  the switcher wait for a request from the view and then it execute the called method, this is frenzy case when first is true  , player is the color of the player that ask from the virtual view
+
     {
 
 
@@ -769,7 +625,7 @@ public class Controller implements Observer<ResponseInput>
                }
            }
 
-
+            // at the end of round
 
             updateModel();
 
@@ -794,12 +650,8 @@ public class Controller implements Observer<ResponseInput>
     }
 
 
-    /**
-     * the switcher wait for a request from the view and then it execute the called method
-     * @param player color of the player that ask from the virtual view
-     * @throws Exception if the connection fail
-     */
-    private void switcher(ColorId player) throws Exception
+
+    private void switcher(ColorId player) throws Exception // the switcher wait for a request from the view and then it execute the called method, player is the color of the player that ask from the virtual view
     {
         MessageNet messageNet = null;
 
@@ -808,7 +660,7 @@ virtualView.getResponseWithInputs(player);
      messageNet = msg;
 
 
-        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
+        while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta) // there we wait for a request to use a method from virtual view
         {
             if (messageNet instanceof AskMoveAround)
             {
@@ -820,7 +672,7 @@ virtualView.getResponseWithInputs(player);
             }
             else if (messageNet instanceof AskShoot)
             {
-                if(roundPlayer.getState() instanceof  Adrenalized2)
+                if(roundPlayer.getState() instanceof  Adrenalized2) // if round player is adrenalized in second state befor shooting he can move himself
                 {
                     askMove();
                 }
@@ -847,11 +699,11 @@ virtualView.getResponseWithInputs(player);
 
 
 
-            updateModel();
-            checkForAfk();
+            updateModel(); 
+            checkForAfk(); // here we check if the response message is that player is afk
 
 
-            if(!roundPlayer.isAfk() && !salta)
+            if(!roundPlayer.isAfk() && !salta)   // only if player is available we check the next request
             {
                virtualView.getResponseWithInputs(player);
 
@@ -861,30 +713,27 @@ virtualView.getResponseWithInputs(player);
 
 
         }
+        // at the end of round
 
-        if(!roundPlayer.isAfk() && !salta)
+        if(!roundPlayer.isAfk() && !salta)  // only if player is available we check the use of tag back granade
             askForPowerUpTagBackGranade();
 
-        for(Player p: g1.getAllPlayer())
+        for(Player p: g1.getAllPlayer()) // here we reset all player to not afk
         {
             p.setAfk(false);
         }
 
-        msg=null;
-        salta=false;
+        msg=null; // here we set the msg to null in order to not get into a loop of afk
+        salta=false; // here we reset salta to false
 
-    // at the end of round
+
 
 
 
 
     }
 
-    /**
-     * check if player have one power up teleport or newton and for every card ask if they want to use it and call the method to use it
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
+// ACTIONS METHODS
     private void askForPowerUpTeleportOrNewton() throws InterruptedException, ExecutionException {
         boolean vuota=false;
 
@@ -992,13 +841,9 @@ virtualView.getResponseWithInputs(player);
                 return;
             }
         }
-    }
+    } // check if player have one power up teleport or newton and for every card ask if they want to use it and call the method to use it
 
-    /**
-     * check if player have one power up grenade and for every card ask if they want to use it and call the method to use it
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
+
     private void askForPowerUpTagBackGranade() throws InterruptedException, ExecutionException {
 
         Set<ColorId> attackedPlayers = new HashSet<>();
@@ -1116,14 +961,10 @@ if(filteredPlayer!=null){
             }
 
         }}
-    }
+    } // check if player have one power up grenade and for every card ask if they want to use it and call the method to use it
 
 
-    /**
-     * check if player have one power up targetting scope and for every card ask if they want to use it and call the method to use it
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
+
     private void askForPowerUpTargettingScope() throws InterruptedException, ExecutionException {
         boolean empty=false;
         List<String> powerUpList = new LinkedList<>();
@@ -1228,15 +1069,10 @@ if(filteredPlayer!=null){
                 return;
             }
         }
-    }
+    } // check if player have one power up targetting scope and for every card ask if they want to use it and call the method to use it
 
-    /**
-     * this method ask the player on which square he want to move using teleport
-     * @param choice the chosen card
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    public void askForTeleport(String choice) throws InterruptedException, ExecutionException {
+
+    private void askForTeleport(String choice) throws InterruptedException, ExecutionException {
         Teleporter tele=null;
         List<Callable<Boolean>> callableList = new LinkedList<>();
         callableList.add(new Callable<Boolean>() {
@@ -1278,14 +1114,9 @@ if(filteredPlayer!=null){
         if(tele != null)
             tele.usePowerUp(sq.getX(), sq.getY());
 
-        }
+        } // this method ask the player on which square he want to move using teleport , choice is the chosen card to be used
 
-    /**
-     *  this method ask the player which enemy and on which square he want to move this enemy using newton
-     * @param choice the chosen card
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
+
     private void askForNewton(String choice) throws InterruptedException, ExecutionException {
         int index=0;
         Newton card=null;
@@ -1343,14 +1174,9 @@ if(filteredPlayer!=null){
 
         //aggiungi a pila scarti
 
-    }
+    } //  this method ask the player which enemy and on which square he want to move this enemy using newton, choice is the chosen card to be used
 
-    /**
-     * this method ask the player on which enemy he want to use the targetting scope
-     * @param choice the chosen card
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
+
     private void askForTargettingScope(String choice) throws InterruptedException, ExecutionException {
         int index=0;
         TargettingScope card=null;
@@ -1401,16 +1227,10 @@ if(filteredPlayer!=null){
         scope.usePowerUp(sq.getTargetBasicMode(),sq.getTargetAmmo());
         //aggiungi a pila scarti
 
-    }
+    } //  this method ask the player on which enemy he want to use the targetting scope , choice is the chosen card to be used
 
-    /**
-     *  this method ask to  temp player if he want to use the tag back grenade on roundplayer
-     * @param choice the chosen card
-     * @param tempPlayer one of the attacked player
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void askForTagBackGranade(String choice,Player tempPlayer) throws InterruptedException, ExecutionException
+
+    private void askForTagBackGranade(String choice,Player tempPlayer) throws InterruptedException, ExecutionException // this method ask to  temp player if he want to use the tag back grenade on roundplayer , choice  is the chosen card and tempPlayer is one of the attacked player
     {
         TagbackGranade cardpower=null;
         for(PowerUpCard pc : tempPlayer.getPowerupCardList())
@@ -1432,12 +1252,8 @@ if(filteredPlayer!=null){
     }
 
 
-    /**
-     * this method is used when you want to use a powerupas an ammo
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void askForAllPowerUp() throws InterruptedException, ExecutionException
+
+    private void askForAllPowerUp() throws InterruptedException, ExecutionException // this method is used when you want to use a powerup as an ammo
     {
         boolean empty=false;
         int index=0;
@@ -1563,49 +1379,8 @@ if(filteredPlayer!=null){
         }
     }
 
-    /**
-     * this method is used to spawn the terminator
-     * @param index index of the power up to use for spawn
-     */
-    private void spawnTerminator(int index)
-    {
-
-        Square resp = null;
-
-        if (index==2) {
-            try {
-                resp = g1.getArena().getSquare(3,3);
-            } catch (SquareNotInGameBoard squareNotInGameBoard) {
-                System.out.println(squareNotInGameBoard);
-            }
-        }
-
-        if (index==3) {
-            try {
-                resp = g1.getArena().getSquare(4,1);
-            } catch (SquareNotInGameBoard squareNotInGameBoard) {
-                System.out.println(squareNotInGameBoard);
-            }
-        }
-        if (index==1) {
-            try {
-                resp = g1.getArena().getSquare(1,2);
-            } catch (SquareNotInGameBoard squareNotInGameBoard) {
-                System.out.println(squareNotInGameBoard);
-            }
-        }
-
-        if(termi.getSquare()!=null)
-            termi.respawn((SpawnPoint) resp);
-        else
-        {
-            if (resp != null){
-                termi.setSquare(resp);
-                MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());}
-        }
 
 
-    }
     /**
      * this method spawn the player
      * @param index of the power up to use for spawn
@@ -1652,13 +1427,9 @@ if(filteredPlayer!=null){
 
         }
 
-    /**
-     * this method ask the player what power up he want to use for respawn
-     * @param p the player that has to respawn
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void askForRespawn(Player p) throws InterruptedException, ExecutionException {
+    
+    private void askForRespawn(Player p) throws InterruptedException, ExecutionException // this method ask the player what power up he want to use for respawn ,p  is the player that has to respawn
+    {
 
         //if first round and firstplayer he have to spawn terminator
         if (p.isFirst() && firstRound && g1.isTerminatorMode())
@@ -1849,12 +1620,8 @@ if(filteredPlayer!=null){
         }
     }
 
-    /**
-     * this method ask the player what power up he want to use for spawn
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void askForFirstSpawn() throws InterruptedException, ExecutionException
+
+    private void askForFirstSpawn() throws InterruptedException, ExecutionException //this method ask the player what power up he want to use for spawn
     {
         if(roundPlayer.getPowerupCardList().isEmpty()){
             drawPowerup(false);
@@ -1867,69 +1634,62 @@ if(filteredPlayer!=null){
 
 
     }
-    /**
- * this method ask the player where he want to move
- * @throws InterruptedException
- * @throws ExecutionException
- */
-private void runAround(boolean terminator) throws InterruptedException, ExecutionException
-{ List<Callable<Boolean>> callableList = new LinkedList<>();
-    Set<Square> squareToChange= new HashSet<>();
 
-    if(g1.isTerminatorMode() && terminator)
-        squareToChange = termi.getSquare().getGameBoard().getArena().squareReachableNoWall(termi.getSquare().getX(), termi.getSquare().getY(), 1);
-    else {
-    squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+
+    private void runAround(boolean terminator) throws InterruptedException, ExecutionException //this method ask the player where he want to move
+    { List<Callable<Boolean>> callableList = new LinkedList<>();
+        Set<Square> squareToChange= new HashSet<>();
+
+        if(g1.isTerminatorMode() && terminator)
+            squareToChange = termi.getSquare().getGameBoard().getArena().squareReachableNoWall(termi.getSquare().getX(), termi.getSquare().getY(), 1);
+        else {
+        squareToChange = roundPlayer.lookForRunAround(roundPlayer);
+
+        }
+
+
+        Set<Square> finalSquareToChange = squareToChange;
+        callableList.add(new Callable<Boolean>()
+        {
+            @Override
+            public Boolean call() throws Exception {
+
+                try {
+                    virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
+                    virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                    return true;
+                }
+                catch (Exception e){
+                    return  false;
+                }
+            }
+        });
+
+
+
+        boolean s = executor.invokeAny(callableList);
+        if(!s){
+            salta=true;
+            return;}
+        if(checkForAfk())
+            return;
+
+
+        ResponseRunAround response = (ResponseRunAround) msg;
+
+        int chosenSquareX = response.getX();
+        int chosenSquareY = response.getY();
+
+        if(terminator)
+            MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
+        else
+            MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
+
 
     }
 
-
-    Set<Square> finalSquareToChange = squareToChange;
-    callableList.add(new Callable<Boolean>()
-    {
-        @Override
-        public Boolean call() throws Exception {
-
-            try {
-                virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
-                virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-                return true;
-            }
-            catch (Exception e){
-                return  false;
-            }
-        }
-    });
-
-
-
-    boolean s = executor.invokeAny(callableList);
-    if(!s){
-        salta=true;
-        return;}
-    if(checkForAfk())
-        return;
-
-
-    ResponseRunAround response = (ResponseRunAround) msg;
-
-    int chosenSquareX = response.getX();
-    int chosenSquareY = response.getY();
-
-    if(terminator)
-        MethodsWeapons.moveTarget(termi,chosenSquareX,chosenSquareY);
-    else
-        MethodsWeapons.moveTarget(roundPlayer,chosenSquareX,chosenSquareY);
-
-
-}
-    /**
-     * this method ask the player where he want to move
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void askMove() throws InterruptedException, ExecutionException
+    private void askMove() throws InterruptedException, ExecutionException //this method ask the player where he want to move when he is in adrenalized second state
     { List<Callable<Boolean>> callableList = new LinkedList<>();
 
         callableList.add(new Callable<Boolean>()
@@ -1972,12 +1732,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
     }
-    /**
-     * this method ask the player where he want to move
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void runSingleFrenzy(boolean singolo) throws InterruptedException, ExecutionException
+
+
+    private void runSingleFrenzy(boolean singolo) throws InterruptedException, ExecutionException //this method ask the player where he want to move in frenzy mode
     { List<Callable<Boolean>> callableList = new LinkedList<>();
         Set<Square> squareToChange = new HashSet<>();
         if(singolo)
@@ -2025,146 +1782,14 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
     }
 
-    /**
-     * this method
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
-    private void executeTerminator() throws ExecutionException, InterruptedException {
-
-        List<Callable<Boolean>> callableList = new LinkedList<>();
-        callableList.add(new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-
-                try {
-                    virtualView.requestInput(new StartTerminator(), roundPlayer.getColor());
 
 
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return  false;
-                }
-            }});
-        Boolean resp = executor.invokeAny(callableList);
-        if(!resp) {
-         salta=true;
-            return;
-        }
-        if(checkForAfk())
-            return;
-        runAround(true);
-        updateModel();
-        shootTerminator();
 
-        checkForAfk();
-        for(Player p: g1.getAllPlayer())
-        {
-            p.setAfk(false);
-        }
 
-        msg=null;
-    }
-
-    private void shootTerminator() throws InterruptedException, ExecutionException
+   
+     
+    private void shotEnemy() throws Exception  // this method ask the player what weapon he want to use and ask him to use it
     {
-        List<ColorId> enemiesColors=new LinkedList<>();
-        if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
-        {
-            for(Player p: termi.playerThatSee(termi.getSquare().getGameBoard()))
-            {
-                if(!p.equals(termi))
-                    enemiesColors.add(p.getColor());
-            }
-
-            if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
-            {
-                List<Callable<Boolean>> callableList = new LinkedList<>();
-                callableList.add(new Callable<Boolean>() {
-
-                    @Override
-                    public Boolean call() throws Exception {
-
-                        try {
-                            virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
-                            virtualView.getResponseWithInputs(roundPlayer.getColor());
-
-                            return true;
-                        }
-                        catch (Exception e)
-                        {
-                            return  false;
-                        }
-                    }
-                });
-
-
-
-                Boolean resp = executor.invokeAny(callableList);
-                if(!resp){
-                    salta=true;
-                    return;}
-                if(checkForAfk())
-                    return;
-
-                ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
-                Player target= null;
-                for(Player p : g1.getAllPlayer())
-                {
-                    if(p.getColor().equals(response.getTarget()))
-                        target=p;
-
-                }
-                if(target!=null)
-                {
-                    target.doDamage(termi.getColor());
-                    if (termi.getNumberOfDamagePoint() >= 6)
-                    {
-
-                        target.addMark(termi.getColor());
-                    }
-                }
-            }
-
-            else
-                {
-                    List<Callable<Boolean>> callableList = new LinkedList<>();
-                    callableList.add(new Callable<Boolean>() {
-
-                        @Override
-                        public Boolean call() throws Exception {
-
-                            try {
-                                virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
-
-
-                                return true;
-                            }
-                            catch (Exception e)
-                            {
-                                return  false;
-                            }
-                        }
-                    });
-
-                }
-
-
-        }
-    }
-
-
-
-
-    /**
-     * this method ask the player what weapon he want to use and ask him to use it
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void shotEnemy() throws Exception {
 
 
         boolean vuota = false;
@@ -2293,6 +1918,7 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
      * this method ask the player where he want to move to grab
      * @throws InterruptedException
      * @throws ExecutionException
+     * @throws SquareNotInGameBoard if square is not in gameboard
      */
     public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard {
         Set<Square> squareToChange = roundPlayer.lookForGrabStuff(roundPlayer);
@@ -2437,12 +2063,10 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
             MethodsWeapons.moveTarget(roundPlayer, chosenSquareX, chosenSquareY);
         }
     }
-    /**
-     * this method ask the player wich weapon he want to reload
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    private void reload() throws InterruptedException, ExecutionException
+ 
+   
+
+    private void reload() throws InterruptedException, ExecutionException  // this method ask the player which weapon he want to reload
     {
 
         List<WeaponCard> chargableWeapons =  roundPlayer.checkReload(roundPlayer);
@@ -2514,45 +2138,8 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
     }
 
 
-    private void calculateRapidScore()
-    {
-        List<Score> scores = new ArrayList<Score>();
-        List<String> printableScore=new LinkedList<>();
-        for( Player p : g1.getAllPlayer())
-        {
-            scores.add(new Score(p.getScore(), p.getName()));
 
-        }
-        Collections.sort(scores);
-        for(Score sc : scores )
-        {
-            String point = Integer.toString(sc.score);
-            printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
-        }
-        virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-    public void updateModel()
-    {
-
-        virtualView.update(new UpdateModel(g1));
-
-    }
-
-
-
-    private void removeAmmoCost(Player p,WeaponCard weaponCard)
+    private void removeAmmoCost(Player p,WeaponCard weaponCard) // this methods remove the ammo cost of weapon card from player p
     {
         if(weaponCard.getColor().equals(Color.BLUE)) {
             p.setAmmoBlue(p.getAmmoBlue() - (weaponCard.getBlueAmmoCost() - 1));
@@ -2573,8 +2160,9 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
 
 
 
-
-    public Map<ColorId,Integer>  finalScore () {
+    // this method calculate the scores calculated from the kill shot track  that have to be add to the player
+    //it return a map with key the color of the player and as value his point from the track
+    private Map<ColorId,Integer>  finalScore () {
 
         int[] scorePoint = new int[5];
 
@@ -2644,64 +2232,367 @@ private void runAround(boolean terminator) throws InterruptedException, Executio
         }
 
         return fin;
-    } // mappa con punti da sommare al player con colorId
+    }
 
 
+// POINT AND SCORE METHODS
 
 
-
-
-
-    private List<ColorId> resolveParity(Set<ColorId> players, List<ColorId> playersByOccurency)
+    private void getPointAndRespawn() throws ExecutionException, InterruptedException // this method will set the point of all player when another player is death
     {
-        List<ColorId> playersOrd = new LinkedList<>();//Create the list that will contain the ordered players
-
-
-        for (ColorId colorIdIterate : playersByOccurency) //For each damage points
+        Map<ColorId,Integer> temppoint;
+        List<ColorId> lastKillerColor= new LinkedList<>();
+        //chiedi come fare calcolo punteggi
+        for(Player p : g1.getAllPlayer())
         {
-            if (players.contains(colorIdIterate) && !playersOrd.contains(colorIdIterate))//If the player that he did that points isn't in the list
-                playersOrd.add(colorIdIterate); //Add him
+            if(p.isDead())
+            {
+
+                if(g1.getSkullCounter()>0)
+                    g1.setSkullCounter(g1.getSkullCounter()-1);
+
+
+
+
+                temppoint = p.calculateScoreForEachPlayer();
+                for(Player c : g1.getAllPlayer()) {
+                    if (c.getColor()!=null && temppoint.get(c.getColor())!= null)
+                    {
+                        c.setScore(c.getScore() + temppoint.get(c.getColor()));
+
+                        if (p.getDamageCounter()[10].equals(c.getColor())) {
+
+                            if (lastKillerColor.contains(c.getColor())) // calculate additional point for double kill
+                                c.setScore(c.getScore() + 1);
+                            g1.setKillShotTrack(c.getColor(), 1);
+
+                            if (p.getDamageCounter()[11] != null) {
+                                if (p.getDamageCounter()[11].equals(c.getColor())) {
+                                    g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
+                                    c.addMark(p.getColor());
+                                }
+                            }
+                            lastKillerColor.add(c.getColor());
+                        }
+                        //if terminator mode is active
+                        if (g1.isTerminatorMode()) {
+                            termi.setScore(termi.getScore() + temppoint.get(termi.getColor()));
+                            if (p.getDamageCounter()[10].equals(termi.getColor())) {
+
+                                if (lastKillerColor.contains(termi.getColor()))
+                                    termi.setScore(termi.getScore() + 1);
+                                g1.setKillShotTrack(termi.getColor(), 1);
+
+
+                                lastKillerColor.add(termi.getColor());
+                            }
+                        }
+                    }
+                }
+
+
+
+                if(g1.getSkullCounter()==0)
+                {
+                    frenzy=true;
+                }
+
+                askForRespawn(p);
+            }
+
         }
 
-        return playersOrd; //Return the ordered list
+        if(g1.isTerminatorMode())
+        {
+            if(termi.isDead())
+            {
+                if(g1.getSkullCounter()>0)
+                    g1.setSkullCounter(g1.getSkullCounter()-1);
+
+
+
+
+                temppoint = termi.calculateScoreForEachPlayer();
+                for(Player c : g1.getAllPlayer())
+                {
+                    c.setScore(temppoint.get(c.getColor()));
+                    if(termi.getDamageCounter()[10].equals(c.getColor())) {
+
+                        if( lastKillerColor.contains(c.getColor()))
+                            c.setScore(c.getScore()+1);
+                        g1.setKillShotTrack(c.getColor(), 1);
+
+                        if (termi.getDamageCounter()[11].equals(c.getColor())) {
+                            g1.getKillShotTrack().get(g1.getKillShotTrack().size() - 1).setPointCounter(2);
+                            c.addMark(termi.getColor());
+                        }
+                        lastKillerColor.add(c.getColor());
+                    }
+                }
+
+
+
+                if(g1.getSkullCounter()==0)
+                {
+                    frenzy=true;
+                }
+
+                askForRespawn(termi);
+
+            }
+        }
+
+
+        if(frenzy)
+        {
+            for(Player c : g1.getAllPlayer())
+            {
+                c.setFrenzy(true);
+            }
+        }
 
     }
 
-private void calculateFinalScore()
-{
-    Map<ColorId,Integer> map = finalScore(); //map of final score
-    List<String> printableScore = new LinkedList<>();
-    for(Player p : g1.getAllPlayer())
+    private void calculateRapidScore() // this method is used to calculate the score when  there are only two player
     {
-        if(map.get(p.getColor())!=null)
-            p.setScore(p.getScore() + map.get(p.getColor()));
+        List<Score> scores = new ArrayList<Score>();
+        List<String> printableScore=new LinkedList<>();
+        for( Player p : g1.getAllPlayer())
+        {
+            scores.add(new Score(p.getScore(), p.getName()));
+
+        }
+        Collections.sort(scores);
+        for(Score sc : scores )
+        {
+            String point = Integer.toString(sc.score);
+            printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
+        }
+        virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
+
     }
 
-    if(g1.isTerminatorMode())
+
+    private void calculateFinalScore() // this method is used to calculate final score
     {
-        termi.setScore(termi.getScore() + map.get(termi.getColor())); //todo chiedere a gio se in final score c'è terminator
+        Map<ColorId,Integer> map = finalScore(); //map of final score
+        List<String> printableScore = new LinkedList<>();
+        for(Player p : g1.getAllPlayer())
+        {
+            if(map.get(p.getColor())!=null)
+                p.setScore(p.getScore() + map.get(p.getColor()));
+        }
+
+        if(g1.isTerminatorMode())
+        {
+            termi.setScore(termi.getScore() + map.get(termi.getColor())); //todo chiedere a gio se in final score c'è terminator
+        }
+
+        List<Score> scores = new ArrayList<Score>();
+        if(g1.isTerminatorMode())
+        {
+            scores.add(new Score(termi.getScore(),termi.getName()));
+        }
+        for( Player p : g1.getAllPlayer())
+        {
+            scores.add(new Score(p.getScore(), p.getName()));
+
+        }
+        Collections.sort(scores);
+
+        for(Score sc : scores )
+        {
+            String point = Integer.toString(sc.score);
+            printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
+        }
+        virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
     }
 
-    List<Score> scores = new ArrayList<Score>();
-    if(g1.isTerminatorMode())
+
+// TERMINATOR METHODS
+
+    private void executeTerminator() throws ExecutionException, InterruptedException  // this method execute the actions of the terminator
     {
-        scores.add(new Score(termi.getScore(),termi.getName()));
+
+        List<Callable<Boolean>> callableList = new LinkedList<>();
+        callableList.add(new Callable<Boolean>() {
+
+            @Override
+            public Boolean call() throws Exception {
+
+                try {
+                    virtualView.requestInput(new StartTerminator(), roundPlayer.getColor());
+
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return  false;
+                }
+            }});
+        Boolean resp = executor.invokeAny(callableList);
+        if(!resp) {
+            salta=true;
+            return;
+        }
+        if(checkForAfk())
+            return;
+        runAround(true);
+        updateModel();
+        shootTerminator();
+
+        checkForAfk(); // here we check if the response message is that player is afk
+        for(Player p: g1.getAllPlayer())
+        {
+            p.setAfk(false);
+        }
+
+        msg=null;
     }
-    for( Player p : g1.getAllPlayer())
+
+    private void shootTerminator() throws InterruptedException, ExecutionException // this method is used when the terminator can shoot
     {
-        scores.add(new Score(p.getScore(), p.getName()));
+        List<ColorId> enemiesColors=new LinkedList<>();
+        if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
+        {
+            for(Player p: termi.playerThatSee(termi.getSquare().getGameBoard()))
+            {
+                if(!p.equals(termi))
+                    enemiesColors.add(p.getColor());
+            }
 
+            if(termi.playerThatSee(termi.getSquare().getGameBoard()).size()>1)
+            {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try {
+                            virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
+                            virtualView.getResponseWithInputs(roundPlayer.getColor());
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return  false;
+                        }
+                    }
+                });
+
+
+
+                Boolean resp = executor.invokeAny(callableList);
+                if(!resp){
+                    salta=true;
+                    return;}
+                if(checkForAfk())
+                    return;
+
+                ResponseShootPeopleTerminator response = (ResponseShootPeopleTerminator) msg;
+                Player target= null;
+                for(Player p : g1.getAllPlayer())
+                {
+                    if(p.getColor().equals(response.getTarget()))
+                        target=p;
+
+                }
+                if(target!=null)
+                {
+                    target.doDamage(termi.getColor());
+                    if (termi.getNumberOfDamagePoint() >= 6)
+                    {
+
+                        target.addMark(termi.getColor());
+                    }
+                }
+            }
+
+            else
+            {
+                List<Callable<Boolean>> callableList = new LinkedList<>();
+                callableList.add(new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+
+                        try {
+                            virtualView.requestInput(new RequestShootTerminator(enemiesColors), roundPlayer.getColor());
+
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            return  false;
+                        }
+                    }
+                });
+
+            }
+
+
+        }
     }
-    Collections.sort(scores);
 
-    for(Score sc : scores )
+    private void spawnTerminator(int index) // this method is used to spawn the terminator , index is the response from the virtual view
     {
-        String point = Integer.toString(sc.score);
-        printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
-    }
-    virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
-}
 
+        Square resp = null;
+
+        if (index==2) {
+            try {
+                resp = g1.getArena().getSquare(3,3);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+
+        if (index==3) {
+            try {
+                resp = g1.getArena().getSquare(4,1);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+        if (index==1) {
+            try {
+                resp = g1.getArena().getSquare(1,2);
+            } catch (SquareNotInGameBoard squareNotInGameBoard) {
+                System.out.println(squareNotInGameBoard);
+            }
+        }
+
+        if(termi.getSquare()!=null)
+            termi.respawn((SpawnPoint) resp);
+        else
+        {
+            if (resp != null){
+                termi.setSquare(resp);
+                MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());}
+        }
+
+
+    }
+
+
+//UPDATE METHODS
+
+    private void updateModel()  //this method is used to send to virtual view an update of the model
+    {
+
+        virtualView.update(new UpdateModel(g1));
+
+    }
+
+
+    /**
+     * this method is used to take the response of the different query to the virtual view
+     * @param message message of update
+     */
     @Override
     public void update (ResponseInput message)
     {
@@ -2712,6 +2603,11 @@ private void calculateFinalScore()
 
 }
 
+// AUXILIARY CLASS
+
+/**
+ * this class is used to save the score of the player in order to order the score
+ */
 class Score implements Comparable<Score> {
     int score;
     String name;

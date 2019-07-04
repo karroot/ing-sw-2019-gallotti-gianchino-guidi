@@ -26,6 +26,7 @@ public class TestPowerUp
     @Before
     public void setup()
     {
+        //here we setup the players
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
 
@@ -35,7 +36,7 @@ public class TestPowerUp
 
 
     @After
-    public void reset()
+    public void reset() //here we reset the damage counter of the players
     {
         test.setNumberOfDamagePoint(0);
         enemy.setNumberOfDamagePoint(0);
@@ -43,7 +44,7 @@ public class TestPowerUp
     }
 
     @Test
-    public void testAmmoScopePowerUp() throws SquareNotInGameBoard {
+    public void testAmmoScopePowerUp() throws SquareNotInGameBoard { //here check if the power up targetting scope work properly
         List<Color> listOfColor;
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
@@ -113,7 +114,7 @@ public class TestPowerUp
     }
 
     @Test
-    public void testAmmoGranadePowerUp() throws SquareNotInGameBoard {
+    public void testAmmoGranadePowerUp() throws SquareNotInGameBoard { //here check if the power up granade work properly
 
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);

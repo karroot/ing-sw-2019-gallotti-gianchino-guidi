@@ -26,6 +26,7 @@ public class TestGranade
     @Before
     public void setup()
     {
+        //here we setup the players
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
         enemy = new Player(ColorId.GREY,"Carlo","Stringa di prova",false);
     }
@@ -33,6 +34,7 @@ public class TestGranade
 
     @Test
     public void testGranade() throws SquareNotInGameBoard {
+        //here we spawn the players
         g1.setAllPlayer(enemy);
         g1.setAllPlayer(test);
 
@@ -43,7 +45,7 @@ public class TestGranade
         MethodsWeapons.moveTarget(test,1,1);
         MethodsWeapons.moveTarget(enemy,2,1);
 
-
+        // here we use the method to get the response for the use of tag back granade
         ResponseTagbackGranade response = new ResponseTagbackGranade(enemy.getColor());
 
 
