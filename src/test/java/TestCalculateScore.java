@@ -9,12 +9,16 @@ public class TestCalculateScore
 {
     private Player test;
 
+    //Create a player for the calculate of the score
     @Before
     public void setUp()
     {
         test = new Player(ColorId.YELLOW,"Claudio","Stringa di prova",false);
     }
 
+    /*
+        Calculate of the score in case of three players that hit the player "Claudio" and there isn't Overkill
+     */
     @Test
     public void test3playerNoOver()
     {
@@ -37,6 +41,9 @@ public class TestCalculateScore
         assertEquals(6,scores.get(ColorId.GREY).intValue());
     }
 
+    /*
+      Calculate of the score in case of three players that hit the player "Claudio" and there is the Overkill
+    */
     @Test
     public void test3playerOver()
     {
@@ -70,7 +77,9 @@ public class TestCalculateScore
         assertEquals(9,scores.get(ColorId.PURPLE).intValue());
         assertEquals(4,scores.get(ColorId.GREY).intValue());
     }
-
+    /*
+          Calculate of the score in case of five players that hit the player "Claudio" and there is no parity
+       */
     @Test
     public void test5playerNoParity()
     {
@@ -100,6 +109,9 @@ public class TestCalculateScore
         assertEquals(1,scores.get(ColorId.GREEN).intValue());
     }
 
+    /*
+      Calculate of the score in case of five players that hit the player "Claudio" and there is some parity
+   */
     @Test
     public void test5playerParity()
     {
@@ -130,6 +142,9 @@ public class TestCalculateScore
         assertEquals(1,scores.get(ColorId.GREEN).intValue());
     }
 
+    /*
+      Calculate of the score in case of four players that hit the player "Claudio" and all are in parity
+   */
     @Test
     public void test4playerAllParity()
     {

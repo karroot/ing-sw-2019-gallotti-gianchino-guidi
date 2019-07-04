@@ -22,6 +22,7 @@ public class ShotgunTest {
     Shotgun weap = new Shotgun(Color.YELLOW,0,true);
     Square start;
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -46,6 +47,10 @@ public class ShotgunTest {
         board.setAllPlayer(pBlue);
     }
 
+    /*
+        Test if the calculate of the available mode of the weapon works if
+        The weapons is given at different players
+     */
     @Test
     public void checkAvailableMode()
     {
@@ -69,6 +74,9 @@ public class ShotgunTest {
     }
 
 
+    /*
+        Test if the calculate of the targets for the basic mode works
+     */
     @Test
     public void checkBasicMode()
     {
@@ -99,7 +107,9 @@ public class ShotgunTest {
 
     }
 
-
+    /*
+        Test if the calculate of the square for the movement of the basic mode works
+     */
     @Test
     public void checkMoveBasicMode() throws Exception
     {
@@ -131,6 +141,9 @@ public class ShotgunTest {
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
 
+    /*
+        Test if the basic mode of the weapon works
+    */
     @Test
     public void basicMode() throws Exception
     {
@@ -165,7 +178,9 @@ public class ShotgunTest {
         assertEquals(board.getArena().getSquare(4,3),pPurple.getSquare());
     }
 
-
+    /*
+    Test if the calculate of the targets for the In long Barrel mode works
+    */
     @Test
     public void checkInLongBarrelMode() throws Exception
     {
@@ -196,6 +211,9 @@ public class ShotgunTest {
         assertTrue(effOut.containsAll(targets)&& effOut.size() ==targets.size());
     }
 
+    /*
+        Test if the in long barrel mode of the weapon works
+    */
     @Test
     public void inLongBarrelMode() throws Exception
     {

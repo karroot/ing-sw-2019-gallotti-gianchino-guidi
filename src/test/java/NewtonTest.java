@@ -18,6 +18,7 @@ public class NewtonTest {
     private PowerUpCard upCard;
     private Square destinationTeleport;
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -42,6 +43,9 @@ public class NewtonTest {
         destinationTeleport = board.getArena().getSquare(3,3);
     }
 
+    /*
+       Test if the calculate of the player and the square where they can be moved is correct (Case 1)
+     */
     @Test
     public void usePowerUp1() throws SquareNotInGameBoard
     {
@@ -61,6 +65,9 @@ public class NewtonTest {
         assertTrue(out.get(ColorId.YELLOW).containsAll(effout.stream().map(Square::toStringCoordinates).collect(Collectors.toSet())) && out.get(ColorId.YELLOW).size() == effout.size());
     }
 
+    /*
+        Test if the calculate of the player and the square where they can be moved is correct (Case 2)
+     */
     @Test
     public void usePowerUp2() throws SquareNotInGameBoard
     {
@@ -85,6 +92,10 @@ public class NewtonTest {
     }
 
 
+    /*
+        Test if the powerUp is used correctly with a target
+        and this target is moved on correct square
+     */
     @Test
     public void checkMoveTarget() throws SquareNotInGameBoard
     {

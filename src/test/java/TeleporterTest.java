@@ -16,7 +16,8 @@ public class TeleporterTest {
     private Player player;
     private PowerUpCard upCard;
     private Square destinationTeleport;
-    
+
+    //Create an arena with the player put in a square ready to be teleported
     @Before
     public void setUp() throws Exception 
     {
@@ -30,6 +31,10 @@ public class TeleporterTest {
 
 
 
+    /*
+        Test if the power up is used correctly and teleports the player in correct
+        square
+     */
     @Test
     public void usePowerUpTest() throws SquareNotInGameBoard
     {

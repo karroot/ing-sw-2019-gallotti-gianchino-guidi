@@ -111,7 +111,7 @@ public class BoardGUI
         centerWindow.add(panelScore);
 
         //Load the image of the skulls
-        ImageIcon im = new ImageIcon(AppClient.path+"skulls.png");
+        ImageIcon im = new ImageIcon(getClass().getClassLoader().getResource("skulls.png"));
         panelSkulls.setIcon(im);
 
         panelPower.add(power1);
@@ -367,9 +367,9 @@ public class BoardGUI
         if (nameWeapon == null)
             imageIcon = null;
         else if (!reloaded)//If the weapon is not reloaded
-            imageIcon = new ImageIcon(AppClient.path+"noreload.png");
+            imageIcon = new ImageIcon(getClass().getClassLoader().getResource("noreload.png"));
         else
-            imageIcon = new ImageIcon(AppClient.path+nameWeapon+".png");
+            imageIcon = new ImageIcon(getClass().getClassLoader().getResource(nameWeapon+".png"));
 
 
         switch (index)
@@ -402,7 +402,7 @@ public class BoardGUI
             imageIcon = null;
         else
         {
-            imageIcon = new ImageIcon(AppClient.path+"AD_powerups_IT_0" + Pdu+".png");
+            imageIcon = new ImageIcon(getClass().getClassLoader().getResource("AD_powerups_IT_0" + Pdu+".png"));
 
         }
 
@@ -429,7 +429,7 @@ public class BoardGUI
      */
     public void setPlayerBoard(ColorId colorId)
     {
-        ImageIcon imageIcon = new ImageIcon((AppClient.path+"board"+colorId+".PNG"));
+        ImageIcon imageIcon = new ImageIcon(getClass().getClassLoader().getResource("board"+colorId+".png"));
         playerBoard.setIcon(imageIcon);
 
     }
@@ -459,7 +459,7 @@ public class BoardGUI
      */
     public void setArena(int codeArena)
     {
-        arena.setIcon(new ImageIcon(AppClient.path+codeArena+".png"));
+        arena.setIcon(new ImageIcon(getClass().getClassLoader().getResource(codeArena+".png")));
     }
 
 
@@ -470,7 +470,7 @@ public class BoardGUI
     public void setSkullForScore(int deaths)
     {
         ImageIcon im;
-        im = new ImageIcon(AppClient.path+"skull.png");
+        im = new ImageIcon(getClass().getClassLoader().getResource("skull.png"));
 
 
         for (int i = 0;i < deaths && i < skullForScore.length;i++)
@@ -486,7 +486,7 @@ public class BoardGUI
      */
     public void setFlipped(ColorId colorId)
     {
-        playerBoard.setIcon(new ImageIcon(AppClient.path+"boardF"+colorId+".png"));
+        playerBoard.setIcon(new ImageIcon(getClass().getClassLoader().getResource("boardF"+colorId+".png")));
     }
 
 
@@ -503,7 +503,7 @@ public class BoardGUI
             if (damagesPoints[i]==null)
                 im = null;
              else
-                im = new ImageIcon(AppClient.path+damagesPoints[i]+".png");
+                im = new ImageIcon(getClass().getClassLoader().getResource(damagesPoints[i]+".png"));
 
 
             damages[i].setIcon(im);
@@ -521,7 +521,7 @@ public class BoardGUI
         int j=0;
         for (int i = 8- SkullCounter; j<tracks.size();i++)
         {
-            allSkulls[i].setIcon(new ImageIcon(AppClient.path+tracks.get(j).getPlayer()+".png"));
+            allSkulls[i].setIcon(new ImageIcon(getClass().getClassLoader().getResource(tracks.get(j).getPlayer()+".png")));
             j++;
         }
     }

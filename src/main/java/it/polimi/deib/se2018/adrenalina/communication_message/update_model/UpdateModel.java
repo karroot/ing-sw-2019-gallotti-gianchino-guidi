@@ -19,7 +19,7 @@ public class UpdateModel extends MessageNet
     private BoardImmutable dataOfBoard;
 
     /**
-     * Create the object that contains all the model
+     * Create the object that contains all the necessary information of the model to show on CLI or GUI
      * @param board board of the model
      */
     public UpdateModel(GameBoard board)

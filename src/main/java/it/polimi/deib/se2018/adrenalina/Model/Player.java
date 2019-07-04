@@ -104,56 +104,101 @@ public class Player
 
     //Getter
     //-----------------------------
+
+    /**
+     * Getter for the player's color
+     * @return player's color
+     */
     public ColorId getColor()
     {
         return color;
     }
 
+    /**
+     * Getter for the all player's marks
+     * @return list of all player's marks
+     */
     public List<ColorId> getMarkCounter()
     {
         return new ArrayList<>(markCounter);
     }
 
+    /**
+     * Getter for the player's yellow ammo
+     * @return player's yellow ammo
+     */
     public int getAmmoYellow()
     {
         return ammoYellow;
     }
 
+    /**
+     * Getter for the player's red ammo
+     * @return player's red ammo
+     */
     public int getAmmoRed()
     {
         return ammoRed;
     }
 
+    /**
+     * Getter for the player's blue ammo
+     * @return player's blue ammo
+     */
     public int getAmmoBlue()
     {
         return ammoBlue;
     }
 
+    /**
+     * Getter for the player's name
+     * @return player's name
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * Getter for the player's Action_hero_comment
+     * @return player's Action_hero_comment
+     */
     public String getAction_hero_comment()
     {
         return action_hero_comment;
     }
 
+    /**
+     * Say if the player is the first of the match or not
+     * @return true if the player is the first of the match
+     */
     public boolean isFirst()
     {
         return isFirst;
     }
 
+    /**
+     * Getter for the player's score
+     * @return player's score
+     */
     public int[] getScorePoint()
     {
         return scorePoint.clone();
     }
 
+    /**
+     * Say if the player is in frenzy mode or not
+     * @return true if the player is in frenzy mode
+     */
     public boolean isFrenzy()
     {
         return frenzy;
     }
 
+    /**
+     * Say if the player is a terminator or not
+     * @return true if the player is a terminator
+     */
     public boolean isTerminator() {
         return terminator;
     }
@@ -167,6 +212,10 @@ public class Player
         return damageCounter.clone();
     }
 
+    /**
+     * Getter for the player's numbers of deaths
+     * @return player's numbers of deaths
+     */
     public int getDeathsCounter()
     {
         return deathsCounter;
@@ -181,6 +230,10 @@ public class Player
         return score;
     }
 
+    /**
+     * Say if the player has the board flipped for mode frenzy or not
+     * @return true if the player has the board flipped for mode frenzy
+     */
     public boolean isFlipped()
     {
         return flipped;
@@ -244,6 +297,10 @@ public class Player
         return false;
     }
 
+    /**
+     * Say if the player is overkilled or not
+     * @return true if the player is overkilled
+     */
     public boolean isOverKill()
     {
         return overKill;
@@ -289,6 +346,10 @@ public class Player
             this.ammoBlue = ammoBlue;
     }
 
+    /**
+     * Set that the player is a terminator or not
+     * @param terminator true if the player is a terminator
+     */
     public void setTerminator(boolean terminator) {
         this.terminator = terminator;
     }
@@ -351,10 +412,18 @@ public class Player
 
     }
 
+    /**
+     * Say if the player has to do the first round or not
+     * @return true if the player has to do the first round
+     */
     public boolean isFirstRound() {
         return firstRound;
     }
 
+    /**
+     * Set that the player will have to do the first round
+     * @param firstRound true if the player will have to do the first round
+     */
     public void setFirstRound(boolean firstRound) {
         this.firstRound = firstRound;
     }
@@ -695,26 +764,51 @@ public class Player
 
     }
 
+    /**
+     * Set if the player is afk or not
+     * @param afk true if the player is afk
+     */
     public void setAfk(boolean afk) {
         this.afk = afk;
     }
 
+    /**
+     * Calculate all the square where the player can move him
+     * The output depends by player's state
+     * @param player this player
+     * @return A set of squares where the player can move him
+     */
     public  Set<Square> lookForRunAround(Player player)
     {
         return state.lookForRunAround(player);
     }
 
-
+    /**
+     * Calculate all the square where the player can grab
+     * The output depends by player's state
+     * @param player this player
+     * @return A set of squares where the player can grab
+     */
     public  Set<Square> lookForGrabStuff(Player player) // solo grab null
     {
         return state.lookForGrabStuff(player);
     }
 
+    /**
+     * Calculate all the players that this player can see
+     * @param player this player
+     * @return A list of all the players that this player can see
+     */
     public List<Player> lookForShootPeople(Player player)
     {
         return state.lookForShootPeople(player);
     }
 
+    /**
+     * Calculate all the weapons that this player can reload
+     * @param player this player
+     * @return A list of all the weapons that this player can reload
+     */
     public List<WeaponCard> checkReload(Player player)
     {
         return state.checkReload(player);
@@ -811,6 +905,10 @@ public class Player
 
     }
 
+    /**
+     * Getter for the player's state
+     * @return player's state
+     */
     public StatePlayer getState() {
         return state;
     }

@@ -19,6 +19,9 @@ public class TestGraphGameboard1
     private Square n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11;
     private Set<Square> expectedOut;
 
+    /*
+        create all the squares to add in the graph
+     */
     @Before
     public void setUp()
     {
@@ -40,9 +43,6 @@ public class TestGraphGameboard1
         //Create a set of square empty
         expectedOut = new LinkedHashSet<>();
 
-        //Tutta questa roba verrà fatta dal factory
-
-
     }
     @After
     public void tearDown()
@@ -50,6 +50,9 @@ public class TestGraphGameboard1
         expectedOut.clear();
     }
 
+    /*
+     Create a graph and test if the method squareReachableNoWall with coordinate wrong returns an empty Set of Square
+     */
     @Test
     public void createGraph()
     {
@@ -89,8 +92,6 @@ public class TestGraphGameboard1
 
         test.addEdge(n10,n11,SideType.OPEN);
 
-        //Tutta questa roba verrà fatta dalla factory
-
         try
         {
             test.getSquare(5,6); //Test for launching exception
@@ -108,6 +109,10 @@ public class TestGraphGameboard1
 
     }
 
+    /*
+    Create a graph and test if the method squareReachableNoWall with coordinate 1,1 returns an Set with all
+    the square to distance 2
+    */
     @Test
     public void squareReachableL2()
     {
@@ -160,6 +165,10 @@ public class TestGraphGameboard1
     }
 
 
+    /*
+    Create a graph and test if the method squareReachableNoWall with coordinate 2,2 returns an Set with all
+    the square to distance 3
+    */
     @Test
     public void squareReachableL3()
     {
@@ -220,6 +229,10 @@ public class TestGraphGameboard1
 
     }
 
+    /*
+    Create a graph and test if the method squareReachableNoWall with coordinate 4,2 returns an Set with all
+    the square to distance 3
+    */
     @Test
     public void squareReachableL3_1()
     {
@@ -289,6 +302,10 @@ public class TestGraphGameboard1
 
     }
 
+    /*
+    Create a graph using the constructor of the gameboard and test if the method squareReachableNoWall with coordinate 1,1 returns an Set with all
+    the square to distance 1
+    */
     @Test
     public void extremeTestSquareReachable()
     {

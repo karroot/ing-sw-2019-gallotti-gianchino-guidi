@@ -23,6 +23,7 @@ public class SledgehammerTest {
     Sledgehammer weap = new Sledgehammer(Color.YELLOW,0,true);
     Square start;
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -47,6 +48,10 @@ public class SledgehammerTest {
         board.setAllPlayer(pBlue);
     }
 
+    /*
+        Test if the calculate of the available mode of the weapon works if
+        The weapons is given at different players
+     */
     @Test
     public void checkAvailableMode()
     {
@@ -69,7 +74,9 @@ public class SledgehammerTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
-
+    /*
+        Test if the calculate of the targets for the two modes of the weapon
+     */
     @Test
     public void checkTargetForModes()
     {
@@ -98,6 +105,9 @@ public class SledgehammerTest {
         assertTrue(targets.containsAll(effOut) && targets.size()==effOut.size());
     }
 
+    /*
+        Test if the basic mode of the weapon works
+    */
     @Test
     public void basicMode()
     {
@@ -122,6 +132,9 @@ public class SledgehammerTest {
         assertEquals(2,pBlue.getNumberOfDamagePoint());
     }
 
+    /*
+        Test if the calculate of the square for the alternative mode works
+     */
     @Test
     public void checkMoveForAlternativeMode() throws Exception
     {
@@ -153,6 +166,9 @@ public class SledgehammerTest {
         assertTrue(targets.containsAll(effOut) && targets.size()==effOut.size());
     }
 
+    /*
+        Test if the in pulverize mode of the weapon works
+     */
     @Test
     public void inPulverizeMode() throws Exception
     {

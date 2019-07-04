@@ -6,12 +6,13 @@ import it.polimi.deib.se2018.adrenalina.View.AppClient;
 import javax.swing.*;
 
 /**
- * This class represents a square component with all the component to show the player on
+ * This class represents a square component with all the component to show the players on
  * a square of the arena
  * @author Cysko7927
  */
 public class SquareComponentGui
 {
+    //All the Jlabels that will contain the icons of the players and ammoTiles
     protected JLabel blue;
     protected JLabel yellow;
     protected JLabel purple;
@@ -21,6 +22,12 @@ public class SquareComponentGui
     protected JLabel ammoTiles;
 
 
+    /**
+     * Create a square component with the coordinate x,y (Pixels) to add at the Jlabel that contains the arena image
+     * @param arena Jlabel that contains the arena image
+     * @param y height of the square component compared to arena image
+     * @param x width of the square component compared to arena image
+     */
     public SquareComponentGui(JLabel arena,int y,int x)
     {
         blue = new JLabel();
@@ -64,9 +71,13 @@ public class SquareComponentGui
         layout.putConstraint(SpringLayout.WEST,ammoTiles,1,SpringLayout.EAST,grey);
     }
 
+    /**
+     * Add the icon of a player represented by the color in this square component
+     * @param player player's color to add
+     */
     public void addPlayer(ColorId player)
     {
-        ImageIcon im = new ImageIcon(AppClient.path + player+".PNG");
+        ImageIcon im = new ImageIcon(getClass().getClassLoader().getResource(player+".png"));
 
         switch (player)
         {
@@ -91,12 +102,19 @@ public class SquareComponentGui
         }
     }
 
+    /**
+     * Add the icon of ammotile represented by the code
+     * @param code code that represents the ammoTile
+     */
     public void addAmmoTiles(int code)
     {
-        ImageIcon im = new ImageIcon(AppClient.path+"AD_ammo_0"+code+".png");
+        ImageIcon im = new ImageIcon(getClass().getClassLoader().getResource("AD_ammo_0"+code+".png"));
         ammoTiles.setIcon(im);
     }
 
+    /**
+     * Remove all the icons of the players and the ammo tiles
+     */
     public void clearSquare()
     {
         blue.setIcon(null);

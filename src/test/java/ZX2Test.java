@@ -27,7 +27,7 @@ public class ZX2Test
     Square start;
 
 
-
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -52,6 +52,10 @@ public class ZX2Test
         board.setAllPlayer(p5);
     }
 
+    /*
+        Test if the calculate of the available mode of the weapon works if
+        The weapons is given at different players
+    */
     @Test
     public void checkAvailableModeTest()
     {
@@ -68,7 +72,9 @@ public class ZX2Test
         assertTrue(zx2.checkAvailableMode()[0] && zx2.checkAvailableMode()[1]);
     }
 
-
+    /*
+        Test if the calculate of the targets for the basic mode is correct
+     */
     @Test
     public void checkBasicMode()
     {
@@ -97,6 +103,9 @@ public class ZX2Test
 
     }
 
+    /*
+        Test if the basic mode of the weapon works
+    */
     @Test
     public void basicMode()
     {
@@ -120,6 +129,9 @@ public class ZX2Test
     }
 
 
+    /*
+        Test if the calculate of the targets for the In scanner mode works
+     */
     @Test
     public void checkInScannerMode()
     {
@@ -150,6 +162,9 @@ public class ZX2Test
 
 
 
+    /*
+        Test if the in scanner Mode of the weapon works
+    */
     @Test
     public void inScannerMode()
     {

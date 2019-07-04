@@ -25,6 +25,7 @@ public class RailgunTest {
     Railgun weap = new Railgun(Color.YELLOW,0,true);
     Square start;
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -49,6 +50,10 @@ public class RailgunTest {
         board.setAllPlayer(pBlue);
     }
 
+    /*
+        Test if the calculate of the available mode of the weapon works if
+        The weapons is given at different players
+     */
     @Test
     public void checkAvailableMode()
     {
@@ -64,6 +69,10 @@ public class RailgunTest {
         assertTrue(weap.checkAvailableMode()[0] && !weap.checkAvailableMode()[1]);
     }
 
+    /*
+        Test if the calculate of the targets with the cardinal directions for the basic and alternative mode
+        of the weapon works
+     */
     @Test
     public void checkBasicModeOrPiercingMode()
     {
@@ -97,6 +106,9 @@ public class RailgunTest {
 
     }
 
+    /*
+        Test if the basic mode of the weapon works
+     */
     @Test
     public void basicMode()
     {
@@ -108,6 +120,7 @@ public class RailgunTest {
         assertEquals(3,pYellow.getNumberOfDamagePoint());
     }
 
+    //Test if the Piercing mode of the weapon works
     @Test
     public void inPiercingMode()
     {

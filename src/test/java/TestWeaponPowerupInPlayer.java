@@ -151,6 +151,9 @@ public class TestWeaponPowerupInPlayer
     }
 
 
+    /*
+        Test the main getter and the setter of the class "Player"
+     */
     @Test
     public void testGetterAndSetter()
     {

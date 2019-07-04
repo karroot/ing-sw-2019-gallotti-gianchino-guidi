@@ -23,6 +23,7 @@ public class ShockwaveTest {
     Shockwave weap = new Shockwave(Color.YELLOW,0,true);
     Square start;
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -47,6 +48,10 @@ public class ShockwaveTest {
         board.setAllPlayer(pBlue);
     }
 
+    /*
+        Test if the calculate of the available mode of the weapon works if
+        The weapons is given at different players
+     */
     @Test
     public void checkAvailableMode()
     {
@@ -69,6 +74,9 @@ public class ShockwaveTest {
 
     }
 
+    /*
+        Test if the calculate of the squares and the targets for the basic mode works
+     */
     @Test
     public void checkBasicMode()
     {
@@ -104,6 +112,9 @@ public class ShockwaveTest {
         assertTrue(targets.get("x = "+3+": y = "+2).contains(pGrey.getColor()) && targets.get("x = "+3+": y = "+2).size() == 1);
     }
 
+    /*
+    Test if the basic mode of the weapon works
+ */
     @Test
     public void basicMode()
     {
@@ -135,6 +146,9 @@ public class ShockwaveTest {
         assertEquals(1,pGrey.getNumberOfDamagePoint());
     }
 
+    /*
+    Test if the in Tsunamir mode of the weapon works
+    */
     @Test
     public void inTsunamirMode()
     {

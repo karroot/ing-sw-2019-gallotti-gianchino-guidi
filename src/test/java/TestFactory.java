@@ -14,6 +14,9 @@ public class TestFactory
 {
     private GameBoard board;
 
+    /*
+        Test if the arena with a code correct is created
+     */
     @Test
     public void TestcreateArena()
     {
@@ -28,7 +31,7 @@ public class TestFactory
     }
 
     /*
-    This method tests if the creation with a illegal code for the arena launches an exception
+        This method tests if the creation with a illegal code for the arena launches an exception
      */
     @Test
     public void TestcreateArenaFail()

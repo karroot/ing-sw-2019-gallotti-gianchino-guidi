@@ -14,6 +14,11 @@ public class TestResponseMessageYellowWeapons {
     ColorId player1;
     ColorId player2;
 
+    /*
+        This class test that all the response message for the yellow weapons are created
+        correctly
+     */
+
     @Before
     public void setUp() throws Exception
     {

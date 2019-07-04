@@ -23,6 +23,7 @@ public class CyberbladeTest
     Square start;
 
 
+    //Create an arena with the player put in some squares
     @Before
     public void setUp() throws Exception
     {
@@ -47,6 +48,8 @@ public class CyberbladeTest
         board.setAllPlayer(pBlue);
     }
 
+    //Test if the calculate of the available mode of the weapon works if
+    //The weapons is given at different players
     @Test
     public void checkAvailableMode()
     {
@@ -77,6 +80,7 @@ public class CyberbladeTest
         assertTrue(weap.checkAvailableMode()[0] && weap.checkAvailableMode()[1] && !weap.checkAvailableMode()[2]);
     }
 
+    //Test if the target calculated for the basic mode are corrects
     @Test
     public void checkBasicModeAllTargetPossible()
     {
@@ -141,6 +145,7 @@ public class CyberbladeTest
         assertTrue(effOut.keySet().containsAll(targets.keySet())&& effOut.keySet().size() ==targets.keySet().size());
     }
 
+    //Test if the square calculated for the effect WithShadowStep are corrects
     @Test
     public void checkWithShadowStep()
     {
@@ -171,6 +176,7 @@ public class CyberbladeTest
         assertTrue(effOut.containsAll(target)&& effOut.size() ==target.size());
     }
 
+    //Test if the basic mode of the weapon works(Case 1)
     @Test
     public void basicMode1() throws Exception
     {
@@ -204,6 +210,7 @@ public class CyberbladeTest
         assertEquals(board.getArena().getSquare(4,1),pYellow.getSquare());
     }
 
+    //Test if the basic mode of the weapon works(Case 2)
     @Test
     public void basicMode2() throws Exception
     {
