@@ -177,6 +177,8 @@ public class TractorBeam extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param colorPlayer player affected by weapon
+     * @param x coordinates x where player want to move enemy colorplayer
+     * @param y coordinates y where player want to move enemy colorplayer
      * @throws  IllegalStateException if the aviable mode [0] is non true
      */
     public void basicMode(ColorId colorPlayer, int x, int y) throws IllegalStateException

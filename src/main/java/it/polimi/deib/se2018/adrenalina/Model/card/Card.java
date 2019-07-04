@@ -42,8 +42,8 @@ public abstract class Card
 
     /**
      * it adds the colorid of the attacker to the list of attacked player
-     * @param attacked
-     * @param attacker
+     * @param attacked player attacked
+     * @param attacker attacker player
      */
     public static void addToRoundDamageList(ColorId attacked, ColorId attacker){
         Map<ColorId, Set<ColorId>> roundDamageList = Controller.roundDamageList;

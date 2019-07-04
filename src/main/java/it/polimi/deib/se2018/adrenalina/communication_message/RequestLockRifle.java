@@ -49,7 +49,10 @@ public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
         return new ResponseLockRifle(targetBasicMode);
     }
 
-
+    /**
+     * this method will print all the available actions and ask the player to respond to requests
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {

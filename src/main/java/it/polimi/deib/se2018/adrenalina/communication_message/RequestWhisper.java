@@ -27,7 +27,10 @@ public class RequestWhisper extends RequestInput  {
 
         responseIsReady = false;
     }
-
+    /**
+     * this method will print all the available actions and ask the player to respond to requests
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         choseTarget();
@@ -35,7 +38,11 @@ public class RequestWhisper extends RequestInput  {
 
     }
 
-
+    /**
+     *Generate the response message for the Whisper with all player's choice
+     * @return response message
+     * @throws IllegalStateException if the method printAction wasn't called yet
+     */
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");

@@ -36,6 +36,7 @@ public class RequestMachineGun extends RequestInput {
      * @param availableMethod mode available
      * @param playerBasicMode target for the basic mode
      * @param playerAdditionalMode target for the alternative mode
+     * @param playerSecondAdditionalMode target for additional mode
      */
     public RequestMachineGun(boolean[] availableMethod, List<ColorId> playerBasicMode, List<ColorId> playerAdditionalMode,List<ColorId> playerSecondAdditionalMode)
     {
@@ -48,7 +49,10 @@ public class RequestMachineGun extends RequestInput {
         responseIsReady = false;
     }
 
-
+    /**
+     * this method will print all the available actions and ask the player to respond to requests
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         int choice = 0; //Da completare

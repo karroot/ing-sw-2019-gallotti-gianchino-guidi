@@ -268,7 +268,7 @@ public class Controller implements Observer<ResponseInput>
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                System.out.println(e);
             }
 
             //end of user round
@@ -315,7 +315,7 @@ public class Controller implements Observer<ResponseInput>
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                System.out.println(e);
             }
 
             //end of user round
@@ -383,7 +383,7 @@ public class Controller implements Observer<ResponseInput>
             try {
                 switcher(rp.getColor());
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
 
             //end of user round
@@ -1193,7 +1193,8 @@ if(filteredPlayer!=null){
     } //  this method ask the player which enemy and on which square he want to move this enemy using newton, choice is the chosen card to be used
 
 
-    private void askForTargettingScope(String choice) throws InterruptedException, ExecutionException {
+    private void askForTargettingScope(String choice) throws InterruptedException, ExecutionException //  this method ask the player on which enemy he want to use the targetting scope , choice is the chosen card to be used
+    {
         int index=0;
         TargettingScope card=null;
         int i=0;
@@ -1243,8 +1244,7 @@ if(filteredPlayer!=null){
         scope.usePowerUp(sq.getTargetBasicMode(),sq.getTargetAmmo());
         //aggiungi a pila scarti
 
-    } //  this method ask the player on which enemy he want to use the targetting scope , choice is the chosen card to be used
-
+    }
 
     private void askForTagBackGranade(String choice,Player tempPlayer) throws InterruptedException, ExecutionException // this method ask to  temp player if he want to use the tag back grenade on roundplayer , choice  is the chosen card and tempPlayer is one of the attacked player
     {
@@ -1400,6 +1400,7 @@ if(filteredPlayer!=null){
     /**
      * this method spawn the player
      * @param index of the power up to use for spawn
+     * @param p play to spawn
      */
     public void spawn(int index,Player p)
     {
@@ -1936,7 +1937,8 @@ if(filteredPlayer!=null){
      * @throws ExecutionException if executor.invokeAny fail
      * @throws SquareNotInGameBoard if square is not in gameboard
      */
-    public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard {
+    public void grab() throws InterruptedException, ExecutionException, SquareNotInGameBoard
+    {
         Set<Square> squareToChange = roundPlayer.lookForGrabStuff(roundPlayer);
         List<Callable<Boolean>> callableList = new LinkedList<>();
         callableList.add(new Callable<Boolean>() {
@@ -2178,7 +2180,8 @@ if(filteredPlayer!=null){
 
     // this method calculate the scores calculated from the kill shot track  that have to be add to the player
     //it return a map with key the color of the player and as value his point from the track
-    private Map<ColorId,Integer>  finalScore () {
+    private Map<ColorId,Integer>  finalScore ()
+    {
 
         int[] scorePoint = new int[5];
 
@@ -2469,7 +2472,8 @@ if(filteredPlayer!=null){
         msg=null;
     }
 
-    private void  askForPowerUpTagBackGranadeTerminator() throws ExecutionException, InterruptedException {
+    private void  askForPowerUpTagBackGranadeTerminator() throws ExecutionException, InterruptedException // this method ask to use tagbackgranade for the terminator
+    {
     Set<ColorId> attackedPlayers = new HashSet<>();
     attackedPlayers = roundDamageList.get(ColorId.PURPLE);
     Set<ColorId> filteredPlayer=null;

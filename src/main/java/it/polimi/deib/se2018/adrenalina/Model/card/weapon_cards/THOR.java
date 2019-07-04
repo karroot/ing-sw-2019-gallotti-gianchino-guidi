@@ -147,8 +147,10 @@ public class THOR extends WeaponCard
     /**
      * It uses the basic mode of the lock rifle
      * @param colorPlayer1 player affected by weapon
-     * @param  colorPlayer2 second player affected by weapon
+     * @param colorPlayer2 second player affected by weapon
      * @param colorPlayer3 third player affected by this weapon
+     * @param ChainReaction boolean that indicate if chain reaction mode is active
+     * @param highVoltage boolean that indicate if chain reaction mode is active
      * @exception IllegalStateException if the basic mode can't be used
      */
     public void basicMode(ColorId colorPlayer1, ColorId colorPlayer2 , ColorId colorPlayer3, boolean ChainReaction , boolean highVoltage ) throws  IllegalStateException
@@ -157,7 +159,7 @@ public class THOR extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
 
-        if(highVoltage==true && ChainReaction==false)
+        if(highVoltage && !ChainReaction)
             throw new IllegalArgumentException("you can't use highvoltage alone");
         if(ChainReaction)
         {

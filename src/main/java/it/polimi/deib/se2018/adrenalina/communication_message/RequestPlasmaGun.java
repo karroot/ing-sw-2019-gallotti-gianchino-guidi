@@ -57,7 +57,7 @@ public class RequestPlasmaGun extends  RequestInput
      * 1) to move onto a square and shoot
      * 2)shoot somebody, move, and add damage
      * 3) or shoot people and then move
-     * @param terminal
+     * @param terminal terminal that will print the text and the option input at the user
      */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)

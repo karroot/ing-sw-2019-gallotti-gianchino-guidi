@@ -48,7 +48,7 @@ public class PlasmaGun extends WeaponCard
         try {
             basicMode(msg.getTargetBasicEffect(),msg.getOrderEffect(),msg.getX(),msg.getY());
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
 
     }
@@ -104,6 +104,9 @@ public class PlasmaGun extends WeaponCard
     /**
      * It uses the basic mode of the PlasmaGun
      * @param colorPlayer player affected by weapon
+     * @param orderEffect the vector of string of the effect chosen
+     * @param x the x coordinate where player want to move
+     * @param y the y coordinate where player want to move
      * @throws IllegalStateException if the basic mode can't be used
      * @throws IllegalArgumentException if the basic mode can't be used
      * @throws IllegalAccessException if if useWeapon can't be used
