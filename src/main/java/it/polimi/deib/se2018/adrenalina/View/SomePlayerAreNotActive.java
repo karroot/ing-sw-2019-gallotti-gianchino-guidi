@@ -33,7 +33,7 @@ public class SomePlayerAreNotActive implements StateVirtualView
         view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials
         try
         {
-            Thread.sleep(400);
+            Thread.sleep(800);
         }
         catch (InterruptedException e)
         {
@@ -74,7 +74,7 @@ public class SomePlayerAreNotActive implements StateVirtualView
             view.getExecutor().submit(new Thread(connection));//Run a thread to ask the credentials(Sending colorId)
             try
             {
-                Thread.sleep(400);
+                Thread.sleep(800);
             }
             catch (InterruptedException e)
             {

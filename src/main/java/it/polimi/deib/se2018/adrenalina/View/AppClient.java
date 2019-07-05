@@ -25,6 +25,14 @@ public class AppClient
 
     public static void main(String[] args)
     {
+        if (args.length != 1)
+        {
+            System.out.println("Parametri sbagliati");
+            return;
+        }
+
+        AppClient.timerAFK = Integer.parseInt(args[0]);
+
         AppClient app = new AppClient();
 
         app.startSetup();

@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Cysko7927
+ * this Is the initial state of the server in virtual view
+ * In this state the new connections are inserted and become players for the match.
+ * If there are three player connected the method insertConnection starts also a timer.
+ * If a new player is inserted the timer is resetted.
  */
 public class StartLogin implements StateVirtualView
 {
@@ -59,7 +63,7 @@ public class StartLogin implements StateVirtualView
 
         try
         {
-            Thread.sleep(400);
+            Thread.sleep(800);
         }
         catch (InterruptedException e)
         {

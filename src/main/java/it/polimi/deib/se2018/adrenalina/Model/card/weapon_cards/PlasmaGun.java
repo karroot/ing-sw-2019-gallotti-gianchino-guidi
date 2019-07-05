@@ -241,7 +241,8 @@ List<ColorId> tempList ;
         Set<Square> squares = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 2);
 
         for (Square t:squares) //For each squares
-        { moveTarget(dummie,t.getX(),t.getY());
+        {
+            moveTarget(dummie,t.getX(),t.getY());
             if (dummie.playerThatSee(dummie.getSquare().getGameBoard()).size() > 1) //If dummie see some player
             {
                 String coordinates = t.toStringCoordinates();//Save the coordinates
@@ -270,9 +271,9 @@ List<ColorId> tempList ;
 
         }
 
-       dummie.getSquare().getRoom().removePlayerFromRoomList(dummie); //Remove player from room
+       dummie.getSquare().getRoom().removePlayerFromRoomList(dummie); //Remove dummie from room
 
-        dummie.getSquare().removePlayer(dummie);//Remove the player from his square
+        dummie.getSquare().removePlayer(dummie);//Remove the dummie from his square
 
         dummie.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     return result;

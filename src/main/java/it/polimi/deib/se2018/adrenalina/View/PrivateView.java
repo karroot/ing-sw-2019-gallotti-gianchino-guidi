@@ -582,6 +582,18 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
      */
     private RequestInput getMessageFromNetwHandl()
     {
+        //Wait 800 ms(To resolve latency problems)
+        try
+        {
+            Thread.sleep(800);
+        }
+        catch (InterruptedException e)
+        {
+            Thread.currentThread().interrupt();
+            System.out.println(e);
+            throw new ThreadDeath();
+        }
+
         synchronized (msg)
         {
             while (messageBuffer == null)

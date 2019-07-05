@@ -3,11 +3,21 @@ package it.polimi.deib.se2018.adrenalina.View;
 import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
+/**
+ * @author Cysko7927
+ * This class extend and implement the class connection and represent the connection beetwen the server and the client that it will use
+ * RMI
+ */
 public class ConnectionRMI extends Connection implements Runnable
 {
 
     InterfaceNetworkHandlerRMI client;
 
+    /**
+     * Create the connection RMI
+     * @param view virtual view where there is the server
+     * @param client interface remote of the client that being used to send and receive message
+     */
     public ConnectionRMI(View view, InterfaceNetworkHandlerRMI client)
     {
         this.view = view;
