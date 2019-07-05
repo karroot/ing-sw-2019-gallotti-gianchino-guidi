@@ -1,4 +1,3 @@
-import it.polimi.deib.se2018.adrenalina.Controller.Controller;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.Model.GameBoard;
 import it.polimi.deib.se2018.adrenalina.Model.Player;

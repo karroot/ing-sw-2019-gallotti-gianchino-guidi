@@ -4,8 +4,6 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.Teleporter;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 import static it.polimi.deib.se2018.adrenalina.Model.Color.*;

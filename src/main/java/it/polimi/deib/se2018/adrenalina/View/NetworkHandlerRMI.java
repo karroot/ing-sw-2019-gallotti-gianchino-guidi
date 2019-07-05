@@ -6,7 +6,6 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Updat
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
 import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
