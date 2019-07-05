@@ -249,6 +249,8 @@ public class GrenadeLauncher extends WeaponCard
      * It implements the extra grenade effect for this weapon.
      *
      * @param squareTargetCoordinatesAsString is the square target where I will deal 1 damage
+     *
+     * @throws Exception if the square is not valid
      */
     public void extraGrenade (String squareTargetCoordinatesAsString) throws Exception
     {
@@ -283,6 +285,16 @@ public class GrenadeLauncher extends WeaponCard
      * This method extracts the targets for the modes of the weapon.
      *
      * @param responseInput is the response generated for the weapon.
+     *
+     */
+
+
+    /**
+     * This method extracts the targets for the modes of the weapon.
+     *
+     * @param responseInput is the response generated for the weapon.
+     *
+     * @throws Exception if the square is not valid
      */
     @Override
     public void useWeapon(ResponseInput responseInput) throws Exception

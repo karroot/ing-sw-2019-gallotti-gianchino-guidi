@@ -115,6 +115,8 @@ public abstract class WeaponCard extends Card
     /**
      * This is the public setter for the attribute color.
      *
+     * @param loaded is the loaded boolean value to set
+     *
      */
     public void setLoaded(boolean loaded)
     {
@@ -123,6 +125,8 @@ public abstract class WeaponCard extends Card
 
     /**
      * This is the public setter for the attribute name.
+     *
+     * @param name is the name string to set
      *
      */
     public void setName(String name)

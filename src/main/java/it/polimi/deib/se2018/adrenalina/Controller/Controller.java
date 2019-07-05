@@ -599,10 +599,7 @@ public class Controller implements Observer<ResponseInput>
 
         while (!(messageNet instanceof EndRound)&& !roundPlayer.isAfk() && !salta)
         {
-           /* if (messageNet instanceof AskMoveAround)
-            {
-                runAround(false);    in questo caso il giocatore non può usare il runaround
-            }*/
+
            if (messageNet instanceof AskGrab)
             {
                 grab();

@@ -172,6 +172,8 @@ public class Furnace extends WeaponCard
      * This method implements the alternative mode of the weapon.
      *
      * @param squareTargetCoordinatesAsString is the target square
+     *
+     * @throws Exception if the square is not valid
      */
     public void inCozyFireMode (String squareTargetCoordinatesAsString) throws Exception
     {
@@ -213,6 +215,8 @@ public class Furnace extends WeaponCard
      * This method extracts the targets for the modes of the weapon.
      *
      * @param responseInput is the response generated for the weapon.
+     *
+     * @throws Exception if the square is not valid
      */
     @Override
     public void useWeapon(ResponseInput responseInput) throws Exception
