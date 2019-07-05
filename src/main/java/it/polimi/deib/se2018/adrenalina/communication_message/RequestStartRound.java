@@ -7,14 +7,28 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
  * to start his round
  * @author Cysko7927
  */
-public class RequestStartRound extends  RequestInput {
-    @Override
-    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
+public class RequestStartRound extends  RequestInput
+{
 
+    /**
+     * This method sets the terminal.
+     *
+     * @param terminal is the terminal parameter to be set
+     */
+    @Override
+    public void printActionsAndReceiveInput(Terminal terminal)
+    {
+        this.terminal=terminal;
     }
 
+    /**
+     * This method will generate a new response for the start round.
+     *
+     * @return the response input
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
+    public ResponseInput generateResponseMessage()
+    {
         return new ResponseStartRound();
     }
 
