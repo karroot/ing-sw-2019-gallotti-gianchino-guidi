@@ -43,6 +43,7 @@ public class ResponseTHOR extends ResponseInput {
     }
 
     /**
+     * get the target for THOR in basic mode
      * @return get the target for THOR in basic mode
      */
     public ColorId getTargetBasicMode()
@@ -51,6 +52,7 @@ public class ResponseTHOR extends ResponseInput {
     }
 
     /**
+     * get the target for THOR in additional mode
      * @return get the target for THOR in additional mode
      */
     public ColorId getTargetAdditionalMode()
@@ -59,6 +61,7 @@ public class ResponseTHOR extends ResponseInput {
     }
 
     /**
+     * get the target for THOR in second additional mode
      * @return get the target for THOR in second additional mode
      */
     public ColorId getTargetSecondAdditionalMode()
@@ -67,6 +70,7 @@ public class ResponseTHOR extends ResponseInput {
     }
 
     /**
+     * Say which mode chose the user
      * @return Say which mode chose the user
      */
     public boolean isMode()
@@ -74,6 +78,7 @@ public class ResponseTHOR extends ResponseInput {
         return mode;
     }
     /**
+     * Say which mode chose the user
      * @return Say which mode chose the user
      */
     public boolean isSecondMode()

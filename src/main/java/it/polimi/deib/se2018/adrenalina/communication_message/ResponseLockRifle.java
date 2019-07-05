@@ -38,7 +38,7 @@ public class ResponseLockRifle extends ResponseInput {
         return targetBasicMode;
     }
 
-    /**
+    /**targets for LockRifle in alternative mode
      * @return get the targets for LockRifle in alternative mode
      */
     public ColorId getTargetsAdditionalMode()
@@ -46,7 +46,7 @@ public class ResponseLockRifle extends ResponseInput {
         return targetsAdditionalMode;
     }
 
-    /**
+    /** Say which mode chose the user
      * @return Say which mode chose the user
      */
     public boolean isMode()

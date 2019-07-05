@@ -13,8 +13,8 @@ public class ResponsePlasmaGun  extends ResponseInput
      * Create the response message for PlasmaGun
      * @param targetBasicEffect Target chosen for the basic effect
 
-     * @param x Coordinate x for the square chosen by user in the shadowstep effect
-     * @param y Coordinate y for the square chosen by user in the shadowstep effect
+     * @param x Coordinate x for the square chosen by user in the phase glide effect
+     * @param y Coordinate y for the square chosen by user in the phase glide effect
      * @param orderEffect array that represent the order of the effect chosen by user
      */
     public ResponsePlasmaGun(ColorId targetBasicEffect, int x, int y, String[] orderEffect) {
@@ -25,7 +25,7 @@ public class ResponsePlasmaGun  extends ResponseInput
         this.orderEffect = orderEffect;
     }
 
-    /**
+    /**it return all targets for basic mode
      * @return get the target for PlasmaGun chosen for the basic effect
      */
     public ColorId getTargetBasicEffect()
@@ -34,8 +34,8 @@ public class ResponsePlasmaGun  extends ResponseInput
     }
 
 
-    /**
-     * @return get the coordinate x chosen by user for shadowstep effect
+    /**it return x coordinate where player want to move
+     * @return get the coordinate x chosen by user for phase glide effect
      */
     public int getX()
     {
@@ -43,7 +43,7 @@ public class ResponsePlasmaGun  extends ResponseInput
     }
 
     /**
-     * @return get the coordinate y chosen by user for shadowstep effect
+     * @return get the coordinate y chosen by user for phase glide effect
      */
     public int getY()
     {

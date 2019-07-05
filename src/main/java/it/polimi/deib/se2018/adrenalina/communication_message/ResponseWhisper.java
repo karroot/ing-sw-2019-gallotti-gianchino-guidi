@@ -20,6 +20,7 @@ public class ResponseWhisper extends ResponseInput {
 
 
     /**
+     * get the target for Whisper in basic mode
      * @return get the target for Whisper in basic mode
      */
     public ColorId getTargetBasicMode()

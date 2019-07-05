@@ -16,7 +16,10 @@ public class RequestTargettingScope  extends RequestInput{
     protected ColorId targetBasicMode;//Target chosen for the basic mode
     protected Color targetAmmo;
 
-
+    /**
+     * this method will print all the available actions and ask the player to respond to requests
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     { this.terminal=terminal;
@@ -24,12 +27,21 @@ public class RequestTargettingScope  extends RequestInput{
         responseIsReady = true;
     }
 
+    /**
+     * request to use the targetting scope power up
+     * @param playersBasicMode set of player to add damage
+     * @param playerAmmo list of ammo in which chose one to discard
+     */
     public RequestTargettingScope(Set<ColorId> playersBasicMode, List<Color> playerAmmo) {
         this.playersBasicMode = new ArrayList<>(playersBasicMode);
         this.playerAmmo = playerAmmo;
     }
 
-
+    /**
+     * this method generate the response message ResponseTargettingScope
+     * @return the Response of the Targetting Scope
+     * @throws IllegalStateException if response is not ready
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
@@ -37,6 +49,7 @@ public class RequestTargettingScope  extends RequestInput{
 
         return new ResponseTargettingScope(targetBasicMode,targetAmmo);
     }
+
     protected void inputBasicMode()
     {
 

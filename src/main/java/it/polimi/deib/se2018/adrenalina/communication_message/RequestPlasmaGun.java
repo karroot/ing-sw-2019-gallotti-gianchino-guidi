@@ -54,8 +54,8 @@ public class RequestPlasmaGun extends  RequestInput
     /**
      *Ask at the user which effect to use and the targets to hit
      * The user can choice the effect in three possible mode:
-     * 1) to move onto a square and shoot
-     * 2)shoot somebody, move, and add damage
+     * 1) to move onto a square and shoot and add damage
+     * 2)shoot somebody add damage and move
      * 3) or shoot people and then move
      * @param terminal terminal that will print the text and the option input at the user
      */
@@ -63,7 +63,7 @@ public class RequestPlasmaGun extends  RequestInput
     public void printActionsAndReceiveInput(Terminal terminal)
     { this.terminal=terminal;
         terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the first effect
-
+        List<String> showedAction= new LinkedList<>();
         int choice;
 
         if (playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart)!= null)
@@ -103,15 +103,19 @@ public class RequestPlasmaGun extends  RequestInput
 
         terminal.addTextInput("Scegli il secondo effetto:");
 
-        for (String t:printItalian) //Ask to the user the second effect
+        for (String t:orderAva) //Ask to the user the second effect
         {
-            terminal.addOptionInput(i+":"+printItalian.get(i-1));
+            if(!orderAva.get(i-1).equals("with charged shot"))
+            {
+            terminal.addOptionInput(i+":"+orderAva.get(i-1));
+                showedAction.add(t);
             i++;
+            }
         }
 
         choice = terminal.inputInt(1, i - 1);
 
-        if (orderAva.get(choice-1).equals("with phase glide"))//Ask the necessary dates to do the effect
+        if (showedAction.get(choice-1).equals("with phase glide"))//Ask the necessary dates to do the effect
         {
             choseSquare();
             orderAva.remove("with phase glide");
@@ -122,30 +126,7 @@ public class RequestPlasmaGun extends  RequestInput
             choseTarget();
         }
 
-        if (!orderAva.isEmpty()) //It there is a third effect possible
-        {
-            terminal.addTextInput("Scegli il terzo effetto:"); //Ask at the user if he wants to use it
-            terminal.addOptionInput("1:Si");
-            terminal.addOptionInput("2:No");
 
-            int choice1 = terminal.inputInt(1, 2);
-
-            if (choice1 ==1) // if the user said yes
-            {
-                if (orderAva.get(0).equals("with phase glide"))//Ask the necessary dates to do the effect
-                {
-                    choseSquare();
-                    orderAva.remove("with phase glide");
-                    orderTemp.add("with phase glide");
-                }
-                else
-                {
-                    choseTarget();
-                }
-            }
-
-
-        }
 
         orderEffect = new String[orderTemp.size()]; //Creates the array that represents the order of the effects chosen by user
 
@@ -201,7 +182,7 @@ public class RequestPlasmaGun extends  RequestInput
             orderAva.remove("basic");
             orderTemp.add("basic");
 
-  if (availableMethod[2]) {
+  if (availableMethod[1]) {
       terminal.addTextInput("Cosa vuoi fare:"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
 

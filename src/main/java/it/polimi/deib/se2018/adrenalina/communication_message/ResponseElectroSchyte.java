@@ -20,7 +20,7 @@ public class ResponseElectroSchyte extends ResponseInput{
     }
 
 
-    /**
+    /**it return all targets for basic mode
      * @return get the target for ElectroSchyte in basic mode
      */
     public List<ColorId> getTargetBasicMode()
@@ -28,7 +28,7 @@ public class ResponseElectroSchyte extends ResponseInput{
         return targets;
     }
 
-    /**
+    /**it return all targets for alternative mode
      * @return get the targets for ElectroSchyte in alternative mode
      */
     public List<ColorId> getTargetsAlternativeMode()
@@ -36,7 +36,7 @@ public class ResponseElectroSchyte extends ResponseInput{
         return targets;
     }
 
-    /**
+    /**it return if mode is active
      * @return Say which mode chose the user
      */
     public boolean isMode()

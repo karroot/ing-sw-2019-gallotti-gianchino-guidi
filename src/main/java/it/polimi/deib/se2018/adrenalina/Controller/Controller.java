@@ -567,6 +567,7 @@ public class Controller implements Observer<ResponseInput>
         {
             p.setAfk(false);
         }
+        roundDamageList.clear();
         msg=null;
         salta=false;
         // at the end of round
@@ -649,6 +650,7 @@ public class Controller implements Observer<ResponseInput>
         {
             p.setAfk(false);
         }
+        roundDamageList.clear();
         msg=null;
         salta=false;
 
@@ -729,6 +731,7 @@ virtualView.getResponseWithInputs(player);
             p.setAfk(false);
         }
 
+        roundDamageList.clear();
         msg=null; // here we set the msg to null in order to not get into a loop of afk
         salta=false; // here we reset salta to false
 

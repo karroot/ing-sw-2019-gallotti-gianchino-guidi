@@ -27,7 +27,8 @@ public class ResponseTargettingScope extends ResponseInput
     }
 
     /**
-     * @return get the target for TargettingScope in basic mode
+     * get the target for TargettingScope in basic mode
+     * @return the target for TargettingScope in basic mode
      */
 
 

@@ -10,17 +10,28 @@ public class RequestTagbackGranade extends RequestInput
 
     //Attribute for the response
     protected ColorId targetBasicMode;//Target chosen for the basic mode
-
+    /**
+     * request to use the tag back grenade power up
+     * @param playersBasicMode player to add mark
+     */
     public RequestTagbackGranade(ColorId playersBasicMode) {
         this.playerBasicMode = playersBasicMode;
     }
 
+    /**
+     * this method will print all the available actions and ask the player to respond to requests
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
-
+    /**
+     * this method generate the response message ResponseTagbackGranade
+     * @return the Response of Tag back Grenade
+     * @throws IllegalStateException if response is not ready
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

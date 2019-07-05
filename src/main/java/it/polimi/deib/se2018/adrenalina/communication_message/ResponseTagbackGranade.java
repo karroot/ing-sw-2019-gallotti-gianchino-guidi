@@ -14,8 +14,8 @@ public class ResponseTagbackGranade extends ResponseInput
         this.targetBasicMode = targetBasicMode;
 
     }
-    /**
-     * @return get the target for TagbackGranade
+    /**get the target for TagbackGranade
+     * @return the target for TagbackGranade
      */
     public ColorId getTargetBasicMode()
     {

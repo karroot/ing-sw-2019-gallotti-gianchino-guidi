@@ -25,10 +25,18 @@ public class ResponseTractatorBeam extends ResponseInput
         mode = false;
     }
 
+    /**
+     * x coordinate
+     * @return x coordinate
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *  y coordinate
+     * @return y coordinate
+     */
     public int getY() {
         return y;
     }
@@ -44,6 +52,7 @@ public class ResponseTractatorBeam extends ResponseInput
     }
 
     /**
+     * get the target for TractatorBeam in basic mode
      * @return get the target for TractatorBeam in basic mode
      */
     public ColorId getTargetBasicMode()
@@ -52,6 +61,7 @@ public class ResponseTractatorBeam extends ResponseInput
     }
 
     /**
+     * get the targets for TractatorBeam in alternative mode
      * @return get the targets for TractatorBeam in alternative mode
      */
     public ColorId getTargetAlternativeMode()
@@ -60,6 +70,7 @@ public class ResponseTractatorBeam extends ResponseInput
     }
 
     /**
+     * Say which mode chose the user
      * @return Say which mode chose the user
      */
     public boolean isMode()
