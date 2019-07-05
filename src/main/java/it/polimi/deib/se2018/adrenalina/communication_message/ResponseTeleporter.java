@@ -28,7 +28,7 @@ public class ResponseTeleporter extends ResponseInput
 
     /**
      * Getter for the coordinate y chosen by user
-     * @return @return get the coordinate y chosen by user
+     * @return get the coordinate y chosen by user
      */
     public int getY()
     {

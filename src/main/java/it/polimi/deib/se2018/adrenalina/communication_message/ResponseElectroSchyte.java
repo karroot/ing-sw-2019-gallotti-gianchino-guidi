@@ -12,6 +12,7 @@ public class ResponseElectroSchyte extends ResponseInput{
     /**
      * Create the response message for ElectroSchyte in basic mode
      * @param targets target for ElectroSchyte
+     * @param mode  mode of the weapon
      */
     public ResponseElectroSchyte(List<ColorId> targets, boolean mode)
     {

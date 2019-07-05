@@ -7,6 +7,7 @@ public enum ColorId
     BLUE,
     GREEN,
     PURPLE,
+    DUMMIE,
     TERMINATOR
 
 }

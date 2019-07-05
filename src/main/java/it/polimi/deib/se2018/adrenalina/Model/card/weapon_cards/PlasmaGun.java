@@ -165,7 +165,7 @@ public class PlasmaGun extends WeaponCard
         i++;
         }
 
-        this.isLoaded = false;
+       isLoaded = false;
     }
 
 
@@ -198,7 +198,7 @@ public class PlasmaGun extends WeaponCard
     private List<ColorId> checkTargetAfterMove(int x,int y)
     {
 
-        Player dummie2 = new Player(null,"a","a",false);
+        Player dummie2 = new Player(ColorId.DUMMIE,"a","a",false);
         List<ColorId> ListPlayerReach = new LinkedList();
         Set<ColorId> playerReachable = new HashSet<>();
         try {
@@ -209,13 +209,15 @@ public class PlasmaGun extends WeaponCard
         if  (dummie2.playerThatSee(dummie2.getSquare().getGameBoard()).size() > 0)
             for (Player p : dummie2.playerThatSee(dummie2.getSquare().getGameBoard()) )
             {
-                playerReachable.add(p.getColor());
+                if(!p.equals(dummie2) && !p.getColor().equals(this.player.getColor()))
+                    playerReachable.add(p.getColor());
             }
         ListPlayerReach.addAll(playerReachable);//Returns all targets
 
-       if (ListPlayerReach.contains(player.getColor()))
-            ListPlayerReach.remove(player.getColor());
 
+
+        if(dummie2!=null)
+            dummie2.setSquare(null);
        return ListPlayerReach;
     }
 
@@ -225,7 +227,7 @@ public class PlasmaGun extends WeaponCard
      */
     public  Map<String,List<ColorId>> checkAllTarget()
     {
-        Player dummie = new Player(null,"a","a",false);
+        Player dummie = new Player(ColorId.DUMMIE,"a","a",false);
         if (!checkAvailableMode()[2]) //check mode
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 List<ColorId> tempList ;
@@ -246,7 +248,7 @@ List<ColorId> tempList ;
                     List<ColorId> temp =result.get(coordinates);
                     for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
                     {
-                        if(p.getColor()!=null && !p.getColor().equals(this.player.getColor()))
+                        if(!p.getColor().equals(ColorId.DUMMIE) && !p.getColor().equals(this.player.getColor()))
                             temp.add(p.getColor());
                     }
                 }
@@ -255,7 +257,7 @@ List<ColorId> tempList ;
                         List<ColorId> colorList = new LinkedList<>();
                         for(Player p : dummie.playerThatSee(dummie.getSquare().getGameBoard()) )
                         {
-                            if(p.getColor()!=null && !p.getColor().equals(this.player.getColor()))
+                            if(!p.getColor().equals(ColorId.DUMMIE)  && !p.getColor().equals(this.player.getColor()))
                                 colorList.add(p.getColor());
                         }
                         result.put(coordinates, colorList);
@@ -264,6 +266,8 @@ List<ColorId> tempList ;
             }
 
         }
+        if(dummie!=null)
+            dummie.setSquare(null);
     return result;
     }
 }

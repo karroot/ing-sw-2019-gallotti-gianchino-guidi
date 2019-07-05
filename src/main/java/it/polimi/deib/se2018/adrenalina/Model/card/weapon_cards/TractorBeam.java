@@ -210,7 +210,7 @@ public class TractorBeam extends WeaponCard
                 moveTarget(p,x,y);//Move the target
             }
         }
-        this.isLoaded = false;
+        isLoaded = false;
     }
 
     /**
@@ -248,7 +248,7 @@ public class TractorBeam extends WeaponCard
                     moveTarget(p,player.getSquare().getX(),player.getSquare().getY());//Move the target
             }
         }
-        this.isLoaded = false;
+        isLoaded = false;
         this.player.setAmmoRed(this.player.getAmmoRed() - 1);
         this.player.setAmmoYellow(this.player.getAmmoYellow() - 1);
     }

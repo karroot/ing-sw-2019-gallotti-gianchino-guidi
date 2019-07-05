@@ -22,6 +22,7 @@ public class ResponseLockRifle extends ResponseInput {
     /**
      * Create the response message for LockRifle in alternative mode
      * @param targetsAdditionalMode targets for LockRifle
+     * @param targetBasicMode target for basic mode
      */
     public ResponseLockRifle(ColorId targetBasicMode,ColorId targetsAdditionalMode)
     {

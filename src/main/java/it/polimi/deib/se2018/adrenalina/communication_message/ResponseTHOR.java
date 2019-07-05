@@ -23,6 +23,7 @@ public class ResponseTHOR extends ResponseInput {
     /**
      * Create the response message for THOR in alternative mode
      * @param targetAdditionalMode target for THOR
+     * @param targetBasicMode target for basic mode
      */
     public ResponseTHOR(ColorId targetBasicMode,ColorId targetAdditionalMode)
     {
@@ -33,6 +34,9 @@ public class ResponseTHOR extends ResponseInput {
     /**
      * Create the response message for THOR in alternative mode
      * @param targetSecondAdditionalMode target for THOR
+     * @param targetBasicMode target for basic mode
+     * @param targetAdditionalMode target for additional mode
+     *
      */
     public ResponseTHOR(ColorId targetBasicMode,ColorId targetAdditionalMode,ColorId targetSecondAdditionalMode)
     {
