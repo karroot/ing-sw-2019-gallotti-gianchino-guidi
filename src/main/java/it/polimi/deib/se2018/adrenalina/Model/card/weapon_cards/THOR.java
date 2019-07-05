@@ -91,8 +91,9 @@ public class THOR extends WeaponCard
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
         availableMethod[0] = false;
-        availableMethod[1] = false;
         availableMethod[2] = false;
+        availableMethod[1] = false;
+
         for(Player i : player.playerThatSee(player.getSquare().getGameBoard()))
         {
             reach1+=i.playerThatSee(i.getSquare().getGameBoard()).size();
@@ -131,10 +132,13 @@ public class THOR extends WeaponCard
             throw  new IllegalStateException("Modalità base dell'arma "+name+" non eseguibile.");
 
         List<ColorId> playerList = new LinkedList<>();
+
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
+
             if(!p.equals(this.player))
                 playerList.add(p.getColor());
+            char sw;
         }
 
 
@@ -192,7 +196,7 @@ public class THOR extends WeaponCard
             {
 
                 doDamage(player.getSquare().getGameBoard().getTermi(),1);
-
+                char qwssw;
             }
             else
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
@@ -208,7 +212,7 @@ public class THOR extends WeaponCard
         {
 
             doDamage(player.getSquare().getGameBoard().getTermi(),2);
-
+            char sdw;
         }
         else
             doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),2);

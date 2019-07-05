@@ -254,7 +254,7 @@ public class Controller implements Observer<ResponseInput>
 
                 }
             });
-
+            int dsqw=0;
             boolean s = executor.invokeAny(callableList);
 
 
@@ -277,6 +277,7 @@ public class Controller implements Observer<ResponseInput>
 
             for(Player p: g1.getAllPlayer())
             {
+                int z=0;
                 p.setAfk(false);
             }
 
@@ -302,7 +303,7 @@ public class Controller implements Observer<ResponseInput>
             });
 
             boolean s = executor.invokeAny(callableList);
-
+            char ssh;
 
             if (!s){ salta=true;
                 return;}
@@ -324,10 +325,13 @@ public class Controller implements Observer<ResponseInput>
 
             for(Player p: g1.getAllPlayer())
             {
+
                 p.setAfk(false);
             }
 
             msg=null;
+
+
             getPointAndRespawn();
             setup.replenishBoard(g1);
         }
@@ -393,6 +397,7 @@ public class Controller implements Observer<ResponseInput>
 
             for (Player p : g1.getAllPlayer()) {
                 p.setAfk(false);
+                int l=0;
             }
 
             msg = null;
@@ -525,11 +530,13 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskForAllPowerups)
             {
+                char check;
                 askForAllPowerUp();
             }
             else if (messageNet instanceof AskTargetingScope)
             {
                 askForPowerUpTargettingScope();
+                int t=0;
             }
             else if (messageNet instanceof AskPowerUPTeleOrNew)
             {
@@ -540,13 +547,14 @@ public class Controller implements Observer<ResponseInput>
                 if(!first)
                 {
                     runSingleFrenzy(true);
-
+                    char check;
                 }
                 else
                 {
                     runSingleFrenzy(false);
 
                 }
+
             }
 
 
@@ -566,6 +574,7 @@ public class Controller implements Observer<ResponseInput>
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
+            char not;
         }
         roundDamageList.clear();
         msg=null;
@@ -604,6 +613,7 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskReload)
             {
+                char chwk;
                 reload();
             }
             else if (messageNet instanceof AskForAllPowerups)
@@ -613,6 +623,7 @@ public class Controller implements Observer<ResponseInput>
             else if (messageNet instanceof AskTargetingScope)
             {
                 askForPowerUpTargettingScope();
+                int ls;
             }
             else if (messageNet instanceof AskPowerUPTeleOrNew)
             {
@@ -648,7 +659,9 @@ public class Controller implements Observer<ResponseInput>
 
         for(Player p: g1.getAllPlayer())
         {
+            int r=0;
             p.setAfk(false);
+            int j=0;
         }
         roundDamageList.clear();
         msg=null;
@@ -725,7 +738,7 @@ virtualView.getResponseWithInputs(player);
 
         if(!roundPlayer.isAfk() && !salta)  // only if player is available we check the use of tag back granade
             askForPowerUpTagBackGranade();
-
+        int pp=0;
         for(Player p: g1.getAllPlayer()) // here we reset all player to not afk
         {
             p.setAfk(false);
@@ -733,6 +746,7 @@ virtualView.getResponseWithInputs(player);
 
         roundDamageList.clear();
         msg=null; // here we set the msg to null in order to not get into a loop of afk
+
         salta=false; // here we reset salta to false
 
 
@@ -780,6 +794,7 @@ virtualView.getResponseWithInputs(player);
             boolean s = executor.invokeAny(callableList);
             if(!s) {
                 salta=true;
+                int testA=0;
                 return;
             }
             if(checkForAfk())
@@ -803,6 +818,7 @@ virtualView.getResponseWithInputs(player);
             callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
+                    char lookA=0;
                     try {
                         virtualView.requestInput(new End(), roundPlayer.getColor());
                         return true;
@@ -817,6 +833,7 @@ virtualView.getResponseWithInputs(player);
 
 
             Boolean end =  executor.invokeAny(callableListA);
+            char sr;
             if(!end) {
              salta=true;
                 return;
@@ -826,7 +843,7 @@ virtualView.getResponseWithInputs(player);
         {
             List<Callable<Boolean>> callableListA = new LinkedList<>();
             callableListA.add(new Callable<Boolean>() {
-
+                int setLO=0;
                 @Override
                 public Boolean call() throws Exception {
 
@@ -864,6 +881,7 @@ virtualView.getResponseWithInputs(player);
 if(filteredPlayer!=null){
         for (ColorId granadeAttacked : filteredPlayer) {
             boolean vuota = false;
+            int prov=0;
             List<String> powerUpList = new LinkedList<>();
             Player granadeAttackedPlayer = null;
             for (Player p : g1.getAllPlayer()) {
@@ -872,8 +890,10 @@ if(filteredPlayer!=null){
             }
             if(granadeAttackedPlayer!= null)
             {
+                int plov=0;
                 for (PowerUpCard pc : granadeAttackedPlayer.getPowerupCardList())
                 {
+                    char r;
                     if (pc.getName().equals("Granata Venom"))
                         powerUpList.add(pc.powerToString());
                 }
@@ -886,6 +906,7 @@ if(filteredPlayer!=null){
                 callableIniz.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
+                        int prova=0;
 
                         try{
                             virtualView.requestInput(new RequestToUseGrenade(), granadeAttacked);
@@ -909,6 +930,7 @@ if(filteredPlayer!=null){
                 callableList.add(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
+                        int tr=0;
 
                         try{
                             virtualView.requestInput(new RequestPowerUp(powerUpList), granadeAttacked);
@@ -996,6 +1018,7 @@ if(filteredPlayer!=null){
 
                    try {
                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                       char x;
                   
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
@@ -1014,6 +1037,7 @@ if(filteredPlayer!=null){
              salta=true;
                 return;
             }
+            char er;
             if(checkForAfk())
                return;
 
@@ -1035,6 +1059,7 @@ if(filteredPlayer!=null){
                 public Boolean call() throws Exception {
                     try {
                         virtualView.requestInput(new End(), roundPlayer.getColor());
+                        char dsqww;
                         return true;
                     }
                     catch(Exception e)
@@ -1059,7 +1084,7 @@ if(filteredPlayer!=null){
 
                 @Override
                 public Boolean call() throws Exception {
-
+                int n=0;
                     try {
                         virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
 
@@ -1148,7 +1173,7 @@ if(filteredPlayer!=null){
                 try {
                     virtualView.requestInput(new RequestNewton(finalCard.checkMoveTarget(roundPlayer.getSquare().getGameBoard())), roundPlayer.getColor()); // come gli passo la richiesta ?
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
-
+                    char ld;
                     return true;
                 }
                 catch (Exception e)
@@ -1291,8 +1316,11 @@ if(filteredPlayer!=null){
             callableList.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-
-                    try{virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                    int y=0;
+                    try{
+                        int dsqwdfw=0;
+                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
+                        int dsqwdffw=0;
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
                     return true;}
@@ -1351,7 +1379,7 @@ if(filteredPlayer!=null){
             callableListA.add(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    try {
+                    try {int dsqwfwf=0;
                         virtualView.requestInput(new End(), roundPlayer.getColor());
                         return true;
                     }
@@ -1366,6 +1394,7 @@ if(filteredPlayer!=null){
 
             Boolean end =  executor.invokeAny(callableListA);
             if(!end){
+                int dsqwffwfcw=0;
                 salta=true;
                 return;}
 
@@ -1380,7 +1409,7 @@ if(filteredPlayer!=null){
 
                     try {
                         virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-
+                        int dswefqw=0;
                         return true; }
                     catch (Exception e)
                     {
@@ -1459,9 +1488,10 @@ if(filteredPlayer!=null){
                 @Override
                 public Boolean call() throws Exception
                 {
-
+                    int m=0;
                     try
                     {
+                        int dsqwddfw=0;
                         virtualView.requestInput(new RespawnTerminator(), p.getColor());
 
 
@@ -1486,11 +1516,11 @@ if(filteredPlayer!=null){
                 @Override
                 public Boolean call() throws Exception
                 {
-
+                    int re=0;
                     try
                     {virtualView.requestInput(new RequestRespawnTerminator(), p.getColor());
                         virtualView.getResponseWithInputs(p.getColor());
-
+                        int lor=0;
                         return true;}
                     catch(Exception e)
                     {
@@ -1498,16 +1528,18 @@ if(filteredPlayer!=null){
                     }
                 }
             });
+
             boolean s = executor.invokeAny(callableList);
 
 
 
             if (!s){ salta=true;
                     return;}
-            if (checkForAfk())
-                return;
+            if (checkForAfk()){
+                int dsqw=0;
+                return;}
 
-
+            int lora=0;
             ResponseRespawn prove = (ResponseRespawn) msg;
             spawnTerminator(prove.getTargetSpawnPoint());
         }
@@ -1526,7 +1558,7 @@ if(filteredPlayer!=null){
                     try
                     {
                         virtualView.requestInput(new RespawnTerminator(), p.getColor());
-
+                        int dsqewdfw=0;
 
                         return true;}
                     catch(Exception e)
@@ -1541,6 +1573,7 @@ if(filteredPlayer!=null){
 
             if (!an){ salta=true;
                 return;}
+            int dsqw=0;
             if (checkForAfk())
                 return;
 
@@ -1595,8 +1628,11 @@ if(filteredPlayer!=null){
             });
 
             boolean an = executor.invokeAny(callableListA);
+
             if (!an){ salta=true;
+                int dswecy=0;
                 return;}
+            int dsqw=0;
             if (checkForAfk())
                 return;
 
@@ -1625,7 +1661,9 @@ if(filteredPlayer!=null){
 
 
             boolean s = executor.invokeAny(callableList);
+            int dsqwwed=0;
             if (!s){ salta=true;
+                int dsqwewe=0;
                     return;}
             if (checkForAfk())
                 return;
@@ -1673,7 +1711,7 @@ if(filteredPlayer!=null){
         {
             @Override
             public Boolean call() throws Exception {
-
+                int ltor=0;
                 try {
                     virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
@@ -1681,6 +1719,7 @@ if(filteredPlayer!=null){
                     return true;
                 }
                 catch (Exception e){
+                    int w=0;
                     return  false;
                 }
             }
@@ -1721,6 +1760,7 @@ if(filteredPlayer!=null){
                     squareToChange = roundPlayer.getSquare().getGameBoard().getArena().squareReachableNoWall(roundPlayer.getSquare().getX(), roundPlayer.getSquare().getY(), 1);
 
                 try {
+                    int lorrre=0;
                     virtualView.requestInput(new RequestRunAround(changeToList(squareToChange)), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
@@ -1741,6 +1781,7 @@ if(filteredPlayer!=null){
         if(checkForAfk())
             return;
 
+        int see=0;
 
         ResponseRunAround response = (ResponseRunAround) msg;
 
@@ -1772,7 +1813,7 @@ if(filteredPlayer!=null){
                 try {
                     virtualView.requestInput(new RequestRunAround(changeToList(finalSquareToChange)), roundPlayer.getColor());
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
-
+                    int dsqwdws=0;
                     return true;
                 }
                 catch (Exception e){
@@ -1784,6 +1825,7 @@ if(filteredPlayer!=null){
 
 
         boolean s = executor.invokeAny(callableList);
+        int seep=0;
         if(!s){
             salta=true;
             return;}
@@ -1792,7 +1834,7 @@ if(filteredPlayer!=null){
 
 
         ResponseRunAround response = (ResponseRunAround) msg;
-
+        int swp=0;
         int chosenSquareX = response.getX();
         int chosenSquareY = response.getY();
 
@@ -1997,9 +2039,10 @@ if(filteredPlayer!=null){
                 public Boolean call() throws Exception {
 
                     try {
+                        int eep=0;
                         virtualView.requestInput(new RequestShootPeople(weaponsName), roundPlayer.getColor());
                         virtualView.getResponseWithInputs(roundPlayer.getColor());
-
+                        int eer=0;
                         return true;
                     } catch (Exception e) {
                         return false;
@@ -2049,9 +2092,10 @@ if(filteredPlayer!=null){
                         public Boolean call() throws Exception {
 
                             try {
+                                int eeq=1;
                                 virtualView.requestInput(new RequestShootPeople(playerWeaponsName), roundPlayer.getColor());
                                 virtualView.getResponseWithInputs(roundPlayer.getColor());
-
+                                int pre=3;
                                 return true;
                             } catch (Exception e) {
                                 return false;
@@ -2145,9 +2189,11 @@ if(filteredPlayer!=null){
             @Override
             public Boolean call() throws Exception {
                 try{
+                    int dssqw=0;
                 virtualView.requestInput(new End(), roundPlayer.getColor()); 
                 return true;}
                 catch (Exception e){
+                    int dsqw=0;
                     return  false;
                 }
             }
@@ -2228,6 +2274,7 @@ if(filteredPlayer!=null){
 
             for (Map.Entry<ColorId, Integer> v : temp) //Check if there are other players with the same damage points
             {
+                int dsqw=0;
                 if (z.hashCode() != v.hashCode() && v.getValue().equals(z.getValue())) //If player are different and the damage points are equals
                 {
                     playSamePoints.add(z.getKey()); //Add the two player to the list
@@ -2384,9 +2431,11 @@ if(filteredPlayer!=null){
             scores.add(new Score(p.getScore(), p.getName()));
 
         }
+        int control=2;
         Collections.sort(scores);
         for(Score sc : scores )
         {
+            int con=2;
             String point = Integer.toString(sc.score);
             printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
         }
@@ -2427,6 +2476,7 @@ if(filteredPlayer!=null){
             String point = Integer.toString(sc.score);
             printableScore.add(sc.name + " ha totalizzato : " + point + "  punti" + "\n");
         }
+        int d=0;
         virtualView.sendMessageGenericBroadcast(new GenericMessage("Classifica  \n" + printableScore ));
     }
 
@@ -2488,6 +2538,7 @@ if(filteredPlayer!=null){
             boolean vuota = false;
             List<String> powerUpList = new LinkedList<>();
             Player granadeAttackedPlayer = null;
+            int dsqwewf=0;
             for (Player p : g1.getAllPlayer()) {
                 if (p.getColor().equals(granadeAttacked))
                     granadeAttackedPlayer = p;
@@ -2522,7 +2573,7 @@ if(filteredPlayer!=null){
                     }
                 });
                 Boolean si = executor.invokeAny(callableIniz);
-                if(!si) {
+                if(!si) {int ddsqw=0;
                     salta=true;
                     return;
                 }
@@ -2549,6 +2600,7 @@ if(filteredPlayer!=null){
 
                 Boolean s = executor.invokeAny(callableList);
                 if(!s) {
+                    int dsqda=0;
                     salta=true;
                     return;
                 }
@@ -2573,8 +2625,11 @@ if(filteredPlayer!=null){
                     public Boolean call() throws Exception {
                         try {
                             virtualView.requestInput(new End(), roundPlayer.getColor());
+                            int dsqq=0;
                             return true;
+
                         }
+
                         catch(Exception e)
                         {
                             return false;
@@ -2731,6 +2786,7 @@ if(filteredPlayer!=null){
             termi.respawn((SpawnPoint) resp);
         else
         {
+            int dsqw=0;
             if (resp != null){
                 termi.setSquare(resp);
                 MethodsWeapons.moveTarget(termi, resp.getX(), resp.getY());}

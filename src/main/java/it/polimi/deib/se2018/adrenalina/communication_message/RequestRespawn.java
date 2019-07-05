@@ -30,8 +30,8 @@ public class RequestRespawn extends  RequestInput
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
-        throw new IllegalStateException("Input non ancora presi");
-
+            throw new IllegalStateException("Input non ancora presi");
+        char ler;
         return new ResponseRespawn(targetSpawnPoint);
     }
     protected void inputBasicMode()

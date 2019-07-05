@@ -113,18 +113,21 @@ public class MachineGun extends WeaponCard
         if (!checkAvailableMode()[0])
             throw  new IllegalStateException("Modalità basic dell'arma: "+name+" non eseguibile");
 
+        return getColorIds();
+    }
+
+    private List<ColorId> getColorIds() {
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
+            char ssa;
             if(!p.equals(this.player))
                 playerList.add(p.getColor());
         }
 
 
-
         return playerList;//Returns all targets
     }
-
 
 
     /**
@@ -209,7 +212,7 @@ public class MachineGun extends WeaponCard
     private void checkDoDamageTerminator(ColorId colorPlayerCheck) {
         if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerCheck.equals(ColorId.PURPLE))
         {
-
+            char ssa;
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
         }
@@ -253,18 +256,7 @@ public class MachineGun extends WeaponCard
         if (!checkAvailableMode()[2])
             throw  new IllegalStateException("Modalità avanzata dell'arma "+name+" non eseguibile.");
 
-        List<ColorId> playerList = new LinkedList<>();
-        for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
-        {
-            if(!p.equals(this.player))
-                playerList.add(p.getColor());
-        }
-
-
-
-
-
-        return playerList;//Returns all targets
+        return getColorIds();
     }
 
 

@@ -57,11 +57,13 @@ public class RequestTHOR  extends RequestInput{
 
         if (availableMethod[0])//Print the possible effects
         {
+            int w=0;
             terminal.addOptionInput("1:modalità base da sola");
             acceptedInt.add(1);
         }
         if (availableMethod[1])//Print the possible effects
         {
+            char s;
             terminal.addOptionInput("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }
@@ -179,14 +181,16 @@ public class RequestTHOR  extends RequestInput{
         List<ColorId> playersa;
 
         playersa = playersBasicMode;
-        int i = 1;
+        int i;
+        i = 1;
         terminal.addTextInput("Scegli bersaglio:");
         for (ColorId t:playersa)//Ask to user the target
         {
             terminal.addOptionInput(i+" :"+t);
             i++;
         }
-        int choice = terminal.inputInt(1, i - 1);
+        int choice;
+        choice = terminal.inputInt(1, i - 1);
         targetBasicMode = playersa.get(choice-1);
 
 

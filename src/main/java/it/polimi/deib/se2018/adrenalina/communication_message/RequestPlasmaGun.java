@@ -68,8 +68,10 @@ public class RequestPlasmaGun extends  RequestInput
 
         if (playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart)!= null)
         {
+            int s=0;
             terminal.addOptionInput("1:Colpire");
             terminal.addOptionInput("2:Spostarti");
+            int w=0;
             choice = terminal.inputInt(1, 2);
         }
         else
@@ -88,6 +90,7 @@ public class RequestPlasmaGun extends  RequestInput
         else
         {
             choseSquare();
+            int dsqw=0;
             orderAva.remove("with phase glide");
             orderTemp.add("with phase glide");
         }
@@ -132,7 +135,7 @@ public class RequestPlasmaGun extends  RequestInput
 
         for (int j = 0;j<orderEffect.length;j++)
             orderEffect[j] = orderTemp.get(j);
-
+        int j=0;
         responseIsReady = true;
     }
     /**
@@ -157,6 +160,7 @@ public class RequestPlasmaGun extends  RequestInput
             players = playersWithSquaresBasicMode.get("x = " + xStart + ", y = " + yStart);//use the starting coordinates
         else//Else
         {
+            int h=0;
             players = playersWithSquaresBasicMode.get("x = " + x + ", y = " + y);//Use the new coordinates
             if (players== null)
             {
@@ -168,9 +172,10 @@ public class RequestPlasmaGun extends  RequestInput
         terminal.addTextInput("Scegli un bersaglio :");
 
         int i = 1;
-
+        char ssa;
         for (ColorId t:players)//Ask to user the target
         {
+            char sssaw;
             terminal.addOptionInput(i+" : "+t);
             i++;
         }
@@ -213,6 +218,7 @@ public class RequestPlasmaGun extends  RequestInput
 
         for (String t:squares)//Ask the square at the user
         {
+            int k=0;
             terminal.addOptionInput(i+" : "+t);
             i++;
         }
@@ -221,6 +227,7 @@ public class RequestPlasmaGun extends  RequestInput
 
         //Save the coordinate
         x = Integer.parseInt(squares.get(choice -1).substring(4,5));//Works if the coordinates are between 1 and 9
+        char saswa;
         y = Integer.parseInt(squares.get(choice -1).substring(11));
 
     }

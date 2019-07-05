@@ -56,13 +56,16 @@ public class RequestMachineGun extends RequestInput {
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         int choice = 0; //Da completare
-        List<Integer> acceptedInt = new LinkedList<>();
+        List<Integer> acceptedInt;
+        acceptedInt = new LinkedList<>();
 
         terminal.addTextInput("Scegli modalità Arma:");
 
         if (availableMethod[0])//Print the possible effects
         {
+
             terminal.addOptionInput("1:modalità base da sola");
+            int w=0;
             acceptedInt.add(1);
         }
         if (availableMethod[1])//Print the possible effects
