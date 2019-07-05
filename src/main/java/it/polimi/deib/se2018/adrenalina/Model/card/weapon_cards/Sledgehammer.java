@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+/**
+ * @author Cysko7927
+ * This class represents the weapon Sledgehammer
+ */
 public class Sledgehammer extends WeaponCard
 {
 
@@ -134,6 +137,10 @@ public class Sledgehammer extends WeaponCard
     }
 
 
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseSledgehammer msg = (ResponseSledgehammer) responseMessage;
@@ -145,6 +152,10 @@ public class Sledgehammer extends WeaponCard
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTarget(),player.getSquare().getGameBoard()));
     }
 
+    /**
+     * Generate the request message for the Sledgehammer to send through the network
+     * @return request message for the Sledgehammer
+     */
     @Override
     public RequestInput getRequestMessage()
     {

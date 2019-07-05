@@ -15,6 +15,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * @author Cysko7927
+ * This class represents the weapon ShockWave
+ */
 public class Shockwave extends WeaponCard
 {
 
@@ -134,6 +138,10 @@ public class Shockwave extends WeaponCard
         isLoaded = false;
     }
 
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseShockwave msg = (ResponseShockwave) responseMessage;
@@ -144,6 +152,10 @@ public class Shockwave extends WeaponCard
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetsBasicMode(),player.getSquare().getGameBoard()));
     }
 
+    /**
+     * Generate the request message for the Shockwave to send through the network
+     * @return request message for the Shockwave
+     */
     @Override
     public RequestInput getRequestMessage()
     {

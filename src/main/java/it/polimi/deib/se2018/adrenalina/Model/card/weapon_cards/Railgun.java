@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Cysko7927
- * This class represents the request that the conrollere sends at the client if the player decided
- * to use the weapon Railgun
+ * This class represents the weapon Railgun
  */
 public class Railgun extends WeaponCard
 {

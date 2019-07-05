@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @author Cysko7927
- * This class represents the request that the conrollere sends at the client if the player decided
+ * This class represents the request that the conroller sends at the client if the player decided
  * to use the weapon Cyberblade
  */
 public class RequestCyberblade extends RequestInput

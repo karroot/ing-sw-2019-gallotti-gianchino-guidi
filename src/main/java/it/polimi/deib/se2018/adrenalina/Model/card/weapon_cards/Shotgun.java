@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Cysko7927
+ * This class represents the weapon Shotgun
  */
 public class Shotgun extends WeaponCard
 {
@@ -165,6 +166,10 @@ public class Shotgun extends WeaponCard
     }
 
 
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseShotgun msg = (ResponseShotgun) responseMessage;
@@ -184,6 +189,10 @@ public class Shotgun extends WeaponCard
         }
     }
 
+    /**
+     * Generate the request message for the Shotgun to send through the network
+     * @return request message for the Shotgun
+     */
     @Override
     public RequestInput getRequestMessage() {
         if (checkAvailableMode()[0] && checkAvailableMode()[1])

@@ -7,6 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cysko7927
+ * This class represents the request that the conroller sends at the client if the player decided
+ * to use the weapon PowerGlove
+ */
 public class RequestPowerGlove extends WeaponWithModeAlternative
 {
     //Attribute for the request

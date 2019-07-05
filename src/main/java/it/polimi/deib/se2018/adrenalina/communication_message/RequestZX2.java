@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * @author Cysko7927
+ * This class represents the request that the conrollere sends at the client if the player decided
+ * to use the weapon ZX2
  */
 public class RequestZX2 extends WeaponWithModeAlternative
 {

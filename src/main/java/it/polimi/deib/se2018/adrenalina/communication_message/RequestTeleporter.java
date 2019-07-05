@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * @author Cysko7927
+ * This class represents the request that the conrollere sends at the client if the player decided
+ * to use the teleporter
  */
 public class RequestTeleporter extends RequestInput
 {

@@ -13,6 +13,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+/**
+ * @author Cysko7927
+ * This class represents the weapon Cyberblade
+ */
 public class Cyberblade extends WeaponCard
 {
 
@@ -164,7 +168,10 @@ public class Cyberblade extends WeaponCard
         isLoaded = false; //Weapon now is out ammo
     }
 
-
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseCyberblade msg = (ResponseCyberblade) responseMessage;
@@ -183,6 +190,10 @@ public class Cyberblade extends WeaponCard
         basicMode(player,msg.getOrderEffect(),player2,msg.getX(),msg.getY());
     }
 
+    /**
+     * Generate the request message for the Cyberblade to send through the network
+     * @return request message for the Cyberblade
+     */
     @Override
     public RequestInput getRequestMessage()
     {

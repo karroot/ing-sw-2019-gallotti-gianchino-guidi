@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * @author Cysko7927
+ * This class represents the weapon ZX2
+ */
 public class ZX2 extends WeaponCard
 {
 
@@ -129,7 +133,10 @@ public class ZX2 extends WeaponCard
         isLoaded = false;
     }
 
-
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponseZX2 msg = (ResponseZX2) responseMessage;
@@ -140,6 +147,10 @@ public class ZX2 extends WeaponCard
             basicMode(MethodsWeapons.ColorToPlayer(msg.getTargetBasicMode(),player.getSquare().getGameBoard()));
     }
 
+    /**
+     * Generate the request message for the ZX2 to send through the network
+     * @return request message for the ZX2
+     */
     @Override
     public RequestInput getRequestMessage()
     {

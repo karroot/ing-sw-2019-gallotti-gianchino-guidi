@@ -12,6 +12,10 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePowerGlove
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Cysko7927
+ * This class represents the weapon powerglow
+ */
 public class PowerGlow extends WeaponCard
 {
 
@@ -187,6 +191,10 @@ public class PowerGlow extends WeaponCard
     }
 
 
+    /**
+     * Use the weapons taking the targets from response message
+     * @param responseMessage response message specified for the weapon
+     */
     public void useWeapon(ResponseInput responseMessage)
     {
         ResponsePowerGlove msg = (ResponsePowerGlove) responseMessage;
@@ -201,6 +209,10 @@ public class PowerGlow extends WeaponCard
 
     }
 
+    /**
+     * Generate the request message for the PowerGlow to send through the network
+     * @return request message for the PowerGlow
+     */
     @Override
     public RequestInput getRequestMessage()
     {

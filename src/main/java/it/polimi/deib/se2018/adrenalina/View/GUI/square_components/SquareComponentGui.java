@@ -103,10 +103,16 @@ public class SquareComponentGui
 
     /**
      * Add the icon of ammotile represented by the code
+     * if the square haven't got an ammotiles (code = 0) the icon will not add
      * @param code code that represents the ammoTile
      */
     public void addAmmoTiles(int code)
     {
+        if (code == 0)
+        {
+            ammoTiles.setIcon(null);
+            return;
+        }
         ImageIcon im = new ImageIcon(getClass().getClassLoader().getResource("AD_ammo_0"+code+".png"));
         ammoTiles.setIcon(im);
     }
