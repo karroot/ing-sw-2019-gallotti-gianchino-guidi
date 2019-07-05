@@ -12,24 +12,42 @@ import java.util.List;
 public class RequestPowerUp extends RequestInput {
 
     //Attribute for the request
-    protected List<String> powerUptoChose;//Targets for the basic mode
+    private List<String> powerUptoChose;//Targets for the basic mode
 
     //Attribute for the response
-    protected List<String> chosenPowerUp;//Target chosen for the basic mode
+    private List<String> chosenPowerUp;//Target chosen for the basic mode
 
+    /**
+     * This is the public constructor for the class.
+     *
+     * @param powerUptoChose is the stringList of powerUp to set
+     */
     public RequestPowerUp(List<String> powerUptoChose) {
         this.chosenPowerUp= new LinkedList<>();
         this.powerUptoChose = powerUptoChose;
     }
 
+    /**
+     * This method will prepare the chosen powerUp for the response.
+     *
+     * @param terminal  terminal that will print the text and the option input at the user
+     */
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
+    public void printActionsAndReceiveInput(Terminal terminal)
+    {
+        this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
 
+    /**
+     * This method will generate the reponse message to use the powerUp
+     *
+     * @return the response with the chosen powerUp
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
+    public ResponseInput generateResponseMessage()
+    {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi.");
 
@@ -37,6 +55,10 @@ public class RequestPowerUp extends RequestInput {
     }
 
 
+    /**
+     * This method will ask the user which powerUp he wants to use.
+     *
+     */
     protected void inputBasicMode()
     {
         int anInt=0;
@@ -55,7 +77,14 @@ public class RequestPowerUp extends RequestInput {
 
 
     }
-    public List<String> getPowerUptoChose() {
+
+    /**
+     * This is the public getter for the attribute powerUptoChose
+     *
+     * @return the value of the attribute powerUptoChose
+     */
+    public List<String> getPowerUptoChose()
+    {
         return powerUptoChose;
     }
 

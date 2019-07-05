@@ -6,14 +6,20 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
  *  to respawn user
  * @author Karroot
  */
-public class RespawnTerminator extends RequestInput {
+
+
+public class RespawnTerminator extends RequestInput
+{
+
     @Override
-    public void printActionsAndReceiveInput(Terminal terminal) {
+    public void printActionsAndReceiveInput(Terminal terminal)
+    {
 
     }
 
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
+    public ResponseInput generateResponseMessage() throws IllegalStateException
+    {
         return null;
     }
 }
