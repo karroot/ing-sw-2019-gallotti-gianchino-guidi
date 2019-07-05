@@ -22,6 +22,11 @@ public class Setup
 
     Controller controller;
 
+    /**
+     * This is the public constructor of the class.
+     *
+     * @param controller is the controller to set
+     */
     public Setup(Controller controller)
     {
         this.controller = controller;
@@ -29,6 +34,11 @@ public class Setup
     }
 
 
+    /**
+     * This method creates and initializes the weaponCardStack
+     *
+     * @return the weaponCardStack created
+     */
     public Stack<WeaponCard> createWeaponCardStack ()
     {
         Stack<WeaponCard> weaponCardStack = new Stack<>();
@@ -83,6 +93,11 @@ public class Setup
 
     }
 
+    /**
+     * This method creates and initializes the powerUpStack
+     *
+     * @return the powerUpStack created
+     */
     public Stack<PowerUpCard> createPowerUpStack ()
     {
         Stack<PowerUpCard> powerUpCardStack = new Stack<>();
@@ -150,6 +165,11 @@ public class Setup
 
     }
 
+    /**
+     * This method creates and initializes the ammoTilesStack
+     *
+     * @return the ammoTilesStack created
+     */
     public Stack<AmmoTiles> createAmmoTilesStack ()
     {
         Stack<AmmoTiles> ammoTilesStack = new Stack<>();
@@ -238,6 +258,11 @@ public class Setup
     }
 
 
+    /**
+     * This method creates and initializes the players
+     *
+     * @return a list with the player created
+     */
     public List<Player> createPlayers ()
     {
         List<Player> playerList = new ArrayList<>();
@@ -261,6 +286,11 @@ public class Setup
         return playerList;
     }
 
+    /**
+     * This method will replenish the weapons and the ammotiles in the board
+     *
+     * @param gameBoard
+     */
     public void replenishBoard (GameBoard gameBoard)
     {
         for (Room roomIterate : gameBoard.getRoomList())
