@@ -216,8 +216,11 @@ public class PlasmaGun extends WeaponCard
 
 
 
-        if(dummie2!=null)
-            dummie2.setSquare(null);
+        dummie2.getSquare().getRoom().removePlayerFromRoomList(dummie2); //Remove player from room
+
+        dummie2.getSquare().removePlayer(dummie2);//Remove the player from his square
+
+        dummie2.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
        return ListPlayerReach;
     }
 
@@ -266,8 +269,12 @@ List<ColorId> tempList ;
             }
 
         }
-        if(dummie!=null)
-            dummie.setSquare(null);
+
+       dummie.getSquare().getRoom().removePlayerFromRoomList(dummie); //Remove player from room
+
+        dummie.getSquare().removePlayer(dummie);//Remove the player from his square
+
+        dummie.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     return result;
     }
 }
