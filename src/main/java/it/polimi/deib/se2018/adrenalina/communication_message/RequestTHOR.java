@@ -146,7 +146,7 @@ public class RequestTHOR  extends RequestInput{
         for (ColorId t:players)//Ask to user the target
         {
             if(!t.equals(targetBasicMode)) {
-                terminal.addOptionInput(i + " : " + t);
+                terminal.addOptionInput(i + ": " + t);
                 showedPlayers.add(t);
                 i++;
             }

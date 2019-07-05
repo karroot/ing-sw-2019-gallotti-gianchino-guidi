@@ -6,7 +6,10 @@ import java.util.List;
 
 
 /**
+ * This class implements the request that the controller sends to the client if the player decided to use the weapon Furnace
+ *
  * @author gioguidi
+ *
  */
 public class RequestFurnace extends WeaponWithModeAlternative {
 
@@ -19,6 +22,13 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     private String targetAlternativeMode;//Target chosen for the alternative mode
 
 
+    /**
+     * This method implement the request for the weapon.
+     *
+     * @param availableMethod is a vector of boolean that indicates the available mode of the weapon
+     * @param roomsBasicMode are the possible room targets for the basic mode
+     * @param squaresAlternativeMode are the possible squares target for the alternative mode
+     */
     public RequestFurnace(boolean[] availableMethod, List<ColorRoom> roomsBasicMode, List<String> squaresAlternativeMode)
     {
         this.availableMethod = availableMethod;
@@ -29,6 +39,11 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     }
 
 
+    /**
+     * This method generates the response message for the weapon with all the choices of the player
+     *
+     * @return the response message
+     */
     @Override
     public ResponseInput generateResponseMessage()
     {
@@ -43,7 +58,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
 
     /**
-     *
+     * This method  the targets to use the basic mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputBasicMode()
@@ -56,7 +71,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (ColorRoom colorRoomIterate : colorRoomList) {
-            terminal.addOptionInput(i + " : " + colorRoomIterate);
+            terminal.addOptionInput(i + ": " + colorRoomIterate);
             i++;
         }
 
@@ -68,7 +83,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
 
     /**
-     *
+     * This method sets the targets to use the alternative mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputAlternativeMode()
@@ -81,7 +96,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         terminal.addTextInput("Scegli uno square bersaglio:");
 
         for (String squareAsStringIterate : stringList) {
-            terminal.addOptionInput(i + " : " + squareAsStringIterate);
+            terminal.addOptionInput(i + ": " + squareAsStringIterate);
             i++;
         }
 

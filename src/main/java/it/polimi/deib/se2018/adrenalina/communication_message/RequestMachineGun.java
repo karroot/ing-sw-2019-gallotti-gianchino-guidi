@@ -200,7 +200,7 @@ public class RequestMachineGun extends RequestInput {
                 {
                     if(!t.equals(targetBasicMode)&& !t.equals(targetBasicModeSecond))
                     {
-                    terminal.addOptionInput(i + " : " + t);
+                    terminal.addOptionInput(i + ": " + t);
                     showedPlayers.add(t);
                     i++;
                     }

@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * This class implements the request that the controller sends to the client if the player decided to use the weapon Grenade Launcher
+ *
  * @author gioguidi
+ *
  */
 public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 {
@@ -28,12 +31,13 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
     /**
+     * This method implement the request for the weapon.
      *
-     * @param availableMethod
-     * @param playerBasicMode
-     * @param squaresExtraGrenadeAsString
-     * @param hashMapToMovePlayers
-     * @param allSquaresPlayerSees
+     * @param availableMethod is a vector of boolean that indicates the available mode of the weapon
+     * @param playerBasicMode are the possible targets for the basic mode
+     * @param squaresExtraGrenadeAsString are the possible square target for the extra grenade
+     * @param hashMapToMovePlayers is an hashmap with as key the players and values the possible squares to move them
+     * @param allSquaresPlayerSees is a list of all the squares seen by the player
      */
     public RequestGrenadeLauncher(boolean[] availableMethod,  HashMap<ColorId, String> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers, List<String> allSquaresPlayerSees)
     {
@@ -48,8 +52,9 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
 
     /**
+     * This method generates the response message for the weapon with all the choices of the player
      *
-     * @return
+     * @return the response message
      */
     public ResponseInput generateResponseMessage()
     {
@@ -71,6 +76,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     }
 
     /**
+     * This method will ask the user to choose which modes to use.
      *
      * @param terminal terminal that will print the text and the option input at the user
      */
@@ -110,8 +116,9 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
     }
 
+
     /**
-     *
+     * This method  the targets to use the basic mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputBasicMode()
@@ -123,7 +130,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (ColorId colorIdIterate : playerBasicMode.keySet())
         {
-            terminal.addOptionInput(i + " : " + colorIdIterate);
+            terminal.addOptionInput(i + ": " + colorIdIterate);
             colorIdList.add(colorIdIterate);
             i++;
         }
@@ -158,7 +165,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresAsString)
         {
-            terminal.addOptionInput(w+" : "+ squareAsStringIterate);
+            terminal.addOptionInput(w+": "+ squareAsStringIterate);
             w++;
         }
 
@@ -178,7 +185,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     }
 
     /**
-     *
+     * This method sets the targets to use the additional mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputAdditionalMode()
@@ -191,7 +198,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresToTargetForAdditionalGrenade)
         {
-            terminal.addOptionInput(i + " : " + squareAsStringIterate);
+            terminal.addOptionInput(i + ": " + squareAsStringIterate);
             i++;
         }
 

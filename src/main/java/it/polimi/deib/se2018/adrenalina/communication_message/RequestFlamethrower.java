@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @author gioguidi
  *
- *
  */
 public class RequestFlamethrower extends WeaponWithModeAlternative
 {
@@ -29,9 +28,10 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
 
     /**
+     * This method implement the request for the weapon.
      *
-     * @param availableMethod
-     * @param hashMapForModes
+     * @param availableMethod is a vector of boolean that indicates the available mode of the weapon
+     * @param hashMapForModes is an hashmap of cardinaldirection and a vector of arraylist of color of the targets in that direction
      */
     public RequestFlamethrower (boolean [] availableMethod, HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapForModes)
     {
@@ -42,9 +42,9 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
     }
 
     /**
+     * This method generates the response message for the weapon with all the choices of the player
      *
-     * @return
-     * @throws IllegalStateException
+     * @return the response message
      */
     @Override
     public ResponseInput generateResponseMessage() {
@@ -59,7 +59,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
 
     /**
-     *
+     * This method sets the targets to use the alternative mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputAlternativeMode()
@@ -72,7 +72,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         terminal.addTextInput("Scegli una direzione bersaglio:");
 
         for (CardinalDirection cardinalDirectionIterate : cardinalDirections) {
-            terminal.addOptionInput(i + " : " + cardinalDirectionIterate);
+            terminal.addOptionInput(i + ": " + cardinalDirectionIterate);
             i++;
         }
 
@@ -88,7 +88,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
     }
 
     /**
-     *
+     * This method  the targets to use the basic mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputBasicMode()
@@ -116,7 +116,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
         for (ColorId colorIdIterate : colorIdTargets[0])
         {
-            terminal.addOptionInput(j + " : " + colorIdIterate);
+            terminal.addOptionInput(j + ": " + colorIdIterate);
             j++;
         }
 
@@ -132,7 +132,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
             for (ColorId colorIdIterate : colorIdTargets[1])
             {
-                terminal.addOptionInput(k + " : " + colorIdIterate);
+                terminal.addOptionInput(k + ": " + colorIdIterate);
                 j++;
             }
 

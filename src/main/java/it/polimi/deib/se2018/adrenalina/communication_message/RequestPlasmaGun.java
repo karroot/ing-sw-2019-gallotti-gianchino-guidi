@@ -176,7 +176,7 @@ public class RequestPlasmaGun extends  RequestInput
         for (ColorId t:players)//Ask to user the target
         {
             char sssaw;
-            terminal.addOptionInput(i+" : "+t);
+            terminal.addOptionInput(i+": "+t);
             i++;
         }
 
@@ -219,7 +219,7 @@ public class RequestPlasmaGun extends  RequestInput
         for (String t:squares)//Ask the square at the user
         {
             int k=0;
-            terminal.addOptionInput(i+" : "+t);
+            terminal.addOptionInput(i+": "+t);
             i++;
         }
 

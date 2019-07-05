@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * This class implements the request that the controller sends to the client if the player decided to use the weapon Hellion
+ *
  * @author gioguidi
+ *
  */
 public class RequestHellion extends WeaponWithModeAlternative
 {
@@ -27,10 +30,11 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
+     * This method implement the request for the weapon.
      *
-     * @param availableMethod
-     * @param hashMapBasicMode
-     * @param hashMapNanoTracerMode
+     * @param availableMethod is a vector of boolean that indicates the available mode of the weapon
+     * @param hashMapBasicMode contains the possible targets for the basic mode
+     * @param hashMapNanoTracerMode  contains the possible targets for the alternative mode
      */
     public RequestHellion(boolean[] availableMethod, HashMap<String, List<ColorId>> hashMapBasicMode, HashMap<String, List<ColorId>> hashMapNanoTracerMode)
     {
@@ -43,9 +47,9 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
+     * This method generates the response message for the weapon with all the choices of the player
      *
-     * @return
-     * @throws IllegalStateException
+     * @return the response message
      */
     @Override
     public ResponseInput generateResponseMessage()
@@ -62,6 +66,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
+     * This is a private method to choose the square target.
      *
      */
     private void inputBasicModeSquare()
@@ -78,7 +83,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (String squareAsStringIterate : stringSquaresList)
         {
-            terminal.addOptionInput(i + " : " + squareAsStringIterate);
+            terminal.addOptionInput(i + ": " + squareAsStringIterate);
             i++;
         }
 
@@ -87,6 +92,10 @@ public class RequestHellion extends WeaponWithModeAlternative
         targetBasicModeSquare = stringSquaresList.get(choice - 1);
     }
 
+    /**
+     * This is a private method to choose the player target.
+     *
+     */
     private void inputBasicModePlayer()
     {
         int i = 1;
@@ -97,7 +106,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            terminal.addOptionInput(i + " : " + colorIdIterate);
+            terminal.addOptionInput(i + ": " + colorIdIterate);
             i++;
         }
 
@@ -109,7 +118,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
-     *
+     * This method  the targets to use the basic mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputBasicMode ()
@@ -123,6 +132,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
+     * This private method will ask the user to choose the square target for the alternative mode.
      *
      */
     private void inputAlternativeModeSquare()
@@ -137,7 +147,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (String squareAsStringIterate : stringSquaresList)
         {
-            terminal.addOptionInput(i + " : " + squareAsStringIterate);
+            terminal.addOptionInput(i + ": " + squareAsStringIterate);
             i++;
         }
 
@@ -148,6 +158,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
+     * This private method will ask the user to choose the target player for the alternative mode.
      *
      */
     private void inputAlternativeModePlayer()
@@ -160,7 +171,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            terminal.addOptionInput(i + " : " + colorIdIterate);
+            terminal.addOptionInput(i + ": " + colorIdIterate);
             i++;
         }
 
@@ -173,7 +184,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
 
     /**
-     *
+     * This method sets the targets to use the alternative mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputAlternativeMode()

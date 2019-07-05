@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * This class implements the request that the controller sends to the client if the player decided to use the weapon Vortex Cannon
+ *
  * @author gioguidi
+ *
  */
 public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 {
@@ -25,9 +28,10 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
 
     /**
+     * This method implement the request for the weapon.
      *
-     * @param availableMethod
-     * @param hashMapBasicMode
+     * @param availableMethod is a vector of boolean that indicates the available mode of the weapon
+     * @param hashMapBasicMode contains the targets for the basic and alternative mode
      */
     public RequestVortexCannon(boolean[] availableMethod, HashMap<String, List<ColorId>> hashMapBasicMode)
     {
@@ -39,8 +43,9 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
 
     /**
+     * This method generates the response message for the weapon with all the choices of the player
      *
-     * @return
+     * @return the response message
      */
     public ResponseInput generateResponseMessage()
     {
@@ -56,6 +61,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     }
 
     /**
+     * This method will ask the user the mode to use and then invoke the moths to choose the targets.
      *
      * @param terminal terminal that will print the text and the option input at the user
      */
@@ -100,8 +106,9 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
     }
 
 
+
     /**
-     *
+     * This method  the targets to use the basic mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputBasicMode()
@@ -122,7 +129,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
         for (ColorId colorIdIterate : playersSelectedSquareAsList)
         {
-            terminal.addOptionInput(j + " : " + colorIdIterate);
+            terminal.addOptionInput(j + ": " + colorIdIterate);
             i++;
         }
 
@@ -134,10 +141,11 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
 
     /**
+     * This method will ask the user where to open the vortex.
      *
-     * @param i
-     * @param squaresPossiblesForVortexAsString
-     * @return
+     * @param i is the index to cycle
+     * @param squaresPossiblesForVortexAsString are the possible squares to open the vortex
+     * @return the index i
      */
     private int askSquareAndPlayerTarget(int i, List<String> squaresPossiblesForVortexAsString)
     {
@@ -145,7 +153,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresPossiblesForVortexAsString)
         {
-            terminal.addOptionInput(i + " : " + squareAsStringIterate);
+            terminal.addOptionInput(i + ": " + squareAsStringIterate);
             i++;
         }
 
@@ -157,7 +165,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
 
 
     /**
-     *
+     * This method sets the targets to use the additional mode. The player will choose the input from the possible targets value.
      */
     @Override
     protected void inputAdditionalMode() {
@@ -183,7 +191,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         terminal.addTextInput("Scegli il player bersaglio per la modalità base:");
 
         for (ColorId colorIdIterate : playersSelectedSquareAsList2) {
-            terminal.addOptionInput(j + " : " + colorIdIterate);
+            terminal.addOptionInput(j + ": " + colorIdIterate);
             i++;
         }
 
@@ -198,11 +206,9 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
         int k = 1;
 
         for (ColorId colorIdIterate : playersSelectedSquareAsList2) {
-            terminal.addOptionInput(k + " : " + colorIdIterate);
+            terminal.addOptionInput(k + ": " + colorIdIterate);
             k++;
         }
-
-        int u = 0;
 
         int choice1 = terminal.inputInt(1, k - 1);
 
@@ -217,7 +223,7 @@ public class RequestVortexCannon extends WeaponWithOneAdditionalEffects
             terminal.addTextInput("Scegli un secondo bersaglio per la modalità buco nero:");
 
             for (ColorId colorIdIterate : playersSelectedSquareAsList2) {
-                terminal.addOptionInput(i + " : " + colorIdIterate);
+                terminal.addOptionInput(i + ": " + colorIdIterate);
                 l++;
             }
 
