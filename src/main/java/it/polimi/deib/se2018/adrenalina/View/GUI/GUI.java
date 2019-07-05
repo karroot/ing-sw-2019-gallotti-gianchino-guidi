@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Implements a GUI with all the method needed to handles to shows the information on the game window
  * @author Cysko7927
- * Implements a GUI with all the method needed to handle
  */
 public class GUI implements Terminal
 {

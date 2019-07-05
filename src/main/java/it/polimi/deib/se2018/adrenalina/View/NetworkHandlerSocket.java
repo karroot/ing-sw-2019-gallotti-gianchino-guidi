@@ -12,8 +12,8 @@ import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
 /**
- * @author Cysko7927
  * This class implements a network handler that handles the comunication through the sockets
+ * @author Cysko7927
  */
 public class NetworkHandlerSocket extends Observable<RequestInput> implements Observer<ResponseInput>
 {

@@ -6,7 +6,11 @@ import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBo
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class implements special methods used by some weapons.
+ *
+ * @author gioguidi and Cysko7927
+ */
 public class MethodsWeapons {
     /**
      * Return all players reachable by a square with coordinate x and y that they are at a specified distance
@@ -71,25 +75,59 @@ public class MethodsWeapons {
     }
 
     //If the square (x,y) is at north of the square e (max 2 moves)
+
+    /**
+     * Return true If the square (x,y) is at north of the square e (max 2 moves) or not
+     * @param e square that is at south of the square (x,y)
+     * @param x coordinate x of the square that is at north of the square e (max 2 moves)
+     * @param y coordinate y of the square that is at north of the square e (max 2 moves)
+     * @return true If the square (x,y) is at north of the square e (max 2 moves)
+     */
     public static boolean checkSquareNorth(Square e, int x, int y) {
         return (x == e.getX() && y == e.getY() + 1) || (x == e.getX() && y == e.getY() + 2);
     }
 
     //If the square (x,y) is at south of the square e (max 2 moves)
+    /**
+     * Return true If the square (x,y) is at south of the square e (max 2 moves) or not
+     * @param e square that is at north of the square (x,y)
+     * @param x coordinate x of the square that is at south of the square e (max 2 moves)
+     * @param y coordinate y of the square that is at south of the square e (max 2 moves)
+     * @return true If the square (x,y) is at south of the square e (max 2 moves)
+     */
     public static boolean checkSquareSouth(Square e, int x, int y) {
         return (x == e.getX() && y == e.getY() - 1) || (x == e.getX() && y == e.getY() - 2);
     }
 
     //If the square (x,y) is at east of the square e (max 2 moves)
+    /**
+     * Return true If the square (x,y) is at east of the square e (max 2 moves) or not
+     * @param e square that is at west of the square (x,y)
+     * @param x coordinate x of the square that is at east of the square e (max 2 moves)
+     * @param y coordinate y of the square that is at east of the square e (max 2 moves)
+     * @return true If the square (x,y) is at east of the square e (max 2 moves)
+     */
     public static boolean checkSquareEast(Square e, int x, int y) {
         return (x == e.getX() + 1 && y == e.getY()) || (x == e.getX() + 2 && y == e.getY());
     }
 
     //If the square (x,y) is at west of the square e (max 2 moves)
+    /**
+     * Return true If the square (x,y) is at west of the square e (max 2 moves) or not
+     * @param e square that is at east of the square (x,y)
+     * @param x coordinate x of the square that is at west of the square e (max 2 moves)
+     * @param y coordinate y of the square that is at west of the square e (max 2 moves)
+     * @return true If the square (x,y) is at west of the square e (max 2 moves)
+     */
     public static boolean checkSquareWest(Square e, int x, int y) {
         return (x == e.getX() - 1 && y == e.getY()) || (x == e.getX() - 2 && y == e.getY());
     }
 
+    /**
+     * Calculate all the rooms that a player sees
+     * @param player player passed
+     * @return list of all the rooms that a player sees
+     */
     public static List<Room> roomsThatIsee(Player player) {
         Set<Square> temp = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1); //Obtain the square to distance 1
 
@@ -106,6 +144,11 @@ public class MethodsWeapons {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Calculate all the squares that a player sees
+     * @param player player passed
+     * @return Set of all the squares that a player sees
+     */
     public static Set<Square> squareThatSee(Player player) throws NullPointerException {
         if (player.getSquare().getGameBoard() == null)
             throw new NullPointerException("board ha valore nullo");
@@ -271,10 +314,11 @@ public class MethodsWeapons {
     }
 
     /**
-     *
-     * @param player
-     * @param x
-     * @param y
+     *This method move a player located in a square in an other square with coordinate x,y.
+     * The method updates all the data structures of the squares and of the rooms
+     * @param player player to move
+     * @param x coordinate x of the square where to move the player
+     * @param y coordinate y of the square where to move the player
      */
     public static void operationToMove(Player player, int x, int y)
     {
@@ -304,11 +348,23 @@ public class MethodsWeapons {
         player.getSquare().getRoom().updatePlayerRoomList(); //Update the list of player inside
     }
 
+    /**
+     * Take a string where are written the coordinates of a square and returns the coordinate x
+     * like integer
+     * @param stringOfCoordinates string where are written the coordinate
+     * @return coordinate x
+     */
     public static int getXFromString (String stringOfCoordinates)
     {
         return Integer.parseInt(stringOfCoordinates.substring(4,5));//Works if the coordinates are between 1 and 9
     }
 
+    /**
+     * Take a string where are written the coordinates of a square and returns the coordinate y
+     * like integer
+     * @param stringOfCoordinates string where are written the coordinate
+     * @return coordinate y
+     */
     public static int getYFromString (String stringOfCoordinates)
     {
          return Integer.parseInt(stringOfCoordinates.substring(11));

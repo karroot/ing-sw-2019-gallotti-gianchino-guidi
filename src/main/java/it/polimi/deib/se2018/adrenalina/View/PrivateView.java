@@ -12,6 +12,11 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Updat
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements the view of the client that handles the inputs the CLI or GUI and memorizes the copy
+ * Immutable of the model
+ * @author Cysko7927
+ */
 public class PrivateView extends Observable<ResponseInput> implements Observer<RequestInput>
 {
     private String name;

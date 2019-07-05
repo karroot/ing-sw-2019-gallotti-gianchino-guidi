@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Cysko7927
  * This class implements a network handler that handles the comunication through RMI
+ * @author Cysko7927
  */
 public class NetworkHandlerRMI extends UnicastRemoteObject implements InterfaceNetworkHandlerRMI, Observer<ResponseInput>
 {

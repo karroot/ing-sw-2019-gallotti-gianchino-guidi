@@ -8,9 +8,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * @author Cysko7927
  * Implements a graph of Squares
- *
- * * @author Cysko7927
  */
 public class Graph
 {

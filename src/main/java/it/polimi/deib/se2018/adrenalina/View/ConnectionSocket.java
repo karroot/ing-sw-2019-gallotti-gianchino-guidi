@@ -8,9 +8,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * @author Cysko7927
  * This class extend and implement the class connection and represent the connection beetwen the server and the client that they
  * will use the sockets to comunicate
+ * @author Cysko7927
  */
 public class ConnectionSocket extends Connection implements Runnable
 {

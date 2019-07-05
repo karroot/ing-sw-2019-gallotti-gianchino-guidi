@@ -4,9 +4,9 @@ import it.polimi.deib.se2018.adrenalina.communication_message.*;
 import it.polimi.deib.se2018.adrenalina.communication_message.update_model.UpdateModel;
 
 /**
- * @author Cysko7927
  * This class extend and implement the class connection and represent the connection beetwen the server and the client that it will use
  * RMI
+ * @author Cysko7927
  */
 public class ConnectionRMI extends Connection implements Runnable
 {

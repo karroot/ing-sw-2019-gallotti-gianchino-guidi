@@ -7,10 +7,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * @author Cysko7927
  * This is the remote interface of Network handler RMI that being downloaded and used by
  * server to send the request messages an to obtain the responses from a client.
  * The client if it will decides to use RMI , it create the Network Handler RMI that creates the RMI register with this interface
+ * @author Cysko7927
  */
 public interface InterfaceNetworkHandlerRMI extends Remote
 {

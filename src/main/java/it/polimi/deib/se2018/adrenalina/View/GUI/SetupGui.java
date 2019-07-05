@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * This class implements a frame to ask at the user the inputs to connect at the server
  * and start the match
+ * @author Cysko7927
  */
 public class SetupGui
 {

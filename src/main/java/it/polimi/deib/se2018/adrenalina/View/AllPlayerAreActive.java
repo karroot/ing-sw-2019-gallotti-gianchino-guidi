@@ -1,5 +1,10 @@
 package it.polimi.deib.se2018.adrenalina.View;
 
+/**
+ * This class implement the logic of the server about the insertion of new connection
+ * in case of there aren't players disconnected
+ * @author Cysko7927
+ */
 public class AllPlayerAreActive implements StateVirtualView
 {
     View view;

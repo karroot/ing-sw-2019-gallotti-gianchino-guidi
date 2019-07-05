@@ -4,9 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.communication_message.MessageNet;
 
 /**
- * @author Cysko7927
  * This class represent a connection between the client and the server and can be implemented in different ways
  * The implementation depends by thecnology
+ * @author Cysko7927
  */
 public abstract class Connection implements Runnable
 {

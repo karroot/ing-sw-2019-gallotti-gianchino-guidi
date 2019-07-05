@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * This class implement the logic of the server about the insertion of new connection
- * in case of some player are disconnected
+ * in case of some players are disconnected
  * @author Cysko7927
  */
 public class SomePlayerAreNotActive implements StateVirtualView
