@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * This class implements some methods used in many status related classes.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public class StateSpecialMethods

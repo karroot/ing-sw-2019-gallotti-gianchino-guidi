@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * This class is a case test for the Room.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -16,11 +16,8 @@ import static org.junit.Assert.assertTrue;
  {
 
 
-     Room roomTest;
-     Player player1, player2, player3;
-     Square square1, square2, square3;
-
-     int x1 = 1, x2 = 2, x3 = 3, y1 = 1, y2 = 1, y3 = 1;
+     private Room roomTest;
+     private Player player1, player2, player3;
 
      @Before
      public void setup ()
@@ -77,7 +74,5 @@ import static org.junit.Assert.assertTrue;
          assertEquals(3, roomTest.getPlayerRoomList().size());
 
      }
-
-
 
 }

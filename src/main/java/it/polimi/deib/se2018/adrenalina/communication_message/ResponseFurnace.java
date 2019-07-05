@@ -4,7 +4,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorRoom;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 
 public class ResponseFurnace extends ResponseInput
@@ -14,27 +14,33 @@ public class ResponseFurnace extends ResponseInput
     boolean mode;
 
 
-    public ResponseFurnace (ColorRoom targetBasicMode)
+    ResponseFurnace (ColorRoom targetBasicMode)
     {
         this.targetBasicMode = targetBasicMode;
         mode = false;
     }
 
-    public ResponseFurnace (String targetAlternativeMode)
+    ResponseFurnace (String targetAlternativeMode)
     {
         this.targetAlternativeMode = targetAlternativeMode;
         mode = true;
     }
 
-    public ColorRoom getTargetBasicMode() {
+
+    public ColorRoom getTargetBasicMode()
+    {
         return targetBasicMode;
     }
 
-    public String getTargetAlternativeMode() {
+
+    public String getTargetAlternativeMode()
+    {
         return targetAlternativeMode;
     }
 
-    public boolean isMode() {
+
+    public boolean isMode()
+    {
         return mode;
     }
 }

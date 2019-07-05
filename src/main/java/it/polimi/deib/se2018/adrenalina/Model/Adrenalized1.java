@@ -8,7 +8,7 @@ import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookFor
 /**
  * This class implements the adrenalized1 status of a player.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public class Adrenalized1 extends StatePlayer

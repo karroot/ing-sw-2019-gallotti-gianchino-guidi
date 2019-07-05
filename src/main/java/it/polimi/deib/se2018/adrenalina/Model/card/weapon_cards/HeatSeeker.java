@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Heatseeker.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 

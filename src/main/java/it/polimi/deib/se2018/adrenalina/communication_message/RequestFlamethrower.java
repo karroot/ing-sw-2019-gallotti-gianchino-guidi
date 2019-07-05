@@ -9,13 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author giovanni
+ * This class implements the request that the controller sends to the client if the player decided to use the weapon Flamethrower
+ *
+ * @author gioguidi
+ *
+ *
  */
 public class RequestFlamethrower extends WeaponWithModeAlternative
 {
 
     //Attributes for the request
-    HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapForModes;
+    private HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapForModes;
 
     //Attributes for the response
     private ColorId targetBasicMode1 = null;
@@ -24,6 +28,11 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
     private CardinalDirection targetDirectionBarbecueMode;
 
 
+    /**
+     *
+     * @param availableMethod
+     * @param hashMapForModes
+     */
     public RequestFlamethrower (boolean [] availableMethod, HashMap<CardinalDirection, ArrayList<ColorId>[]> hashMapForModes)
     {
         this.availableMethod = availableMethod;
@@ -32,10 +41,15 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         responseIsReady = false;
     }
 
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
+    public ResponseInput generateResponseMessage() {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
+            throw new IllegalStateException("Input non ancora presi.");
 
         if (mode)
             return new ResponseFlamethrower(targetDirectionBarbecueMode, targetBarbecueMode);
@@ -44,6 +58,9 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
     }
 
 
+    /**
+     *
+     */
     @Override
     protected void inputAlternativeMode()
     {
@@ -55,7 +72,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         terminal.addTextInput("Scegli una direzione bersaglio:");
 
         for (CardinalDirection cardinalDirectionIterate : cardinalDirections) {
-            terminal.addOptionInput(i + " " + cardinalDirectionIterate);
+            terminal.addOptionInput(i + " : " + cardinalDirectionIterate);
             i++;
         }
 
@@ -68,9 +85,11 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
         responseIsReady = true;
 
-
     }
 
+    /**
+     *
+     */
     @Override
     protected void inputBasicMode()
     {
@@ -82,7 +101,7 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
         terminal.addTextInput("Scegli una direzione bersaglio:");
 
         for (CardinalDirection cardinalDirectionIterate : cardinalDirections) {
-            terminal.addOptionInput(i + " " + cardinalDirectionIterate);
+            terminal.addOptionInput(i + "  :  " + cardinalDirectionIterate);
             i++;
         }
 
@@ -91,18 +110,19 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
         List<ColorId>[] colorIdTargets = hashMapForModes.get(targetDirectionBasicMode);
 
-        int j=1;
+        int j = 1;
 
         terminal.addTextInput("Scegli il primo player bersaglio:");
 
-        for (ColorId colorIdIterate : colorIdTargets[0]) {
-            terminal.addOptionInput(j + " " + colorIdIterate);
+        for (ColorId colorIdIterate : colorIdTargets[0])
+        {
+            terminal.addOptionInput(j + " : " + colorIdIterate);
             j++;
         }
 
         int choice1 = terminal.inputInt(1, j - 1);
 
-        targetBasicMode1 = colorIdTargets[0].get(choice - 1);
+        targetBasicMode1 = colorIdTargets[0].get(choice1 - 1);
 
         if (!colorIdTargets[1].isEmpty())
         {
@@ -110,14 +130,15 @@ public class RequestFlamethrower extends WeaponWithModeAlternative
 
             terminal.addTextInput("Scegli il secondo player bersaglio:");
 
-            for (ColorId colorIdIterate : colorIdTargets[1]) {
-                terminal.addOptionInput(k + " " + colorIdIterate);
+            for (ColorId colorIdIterate : colorIdTargets[1])
+            {
+                terminal.addOptionInput(k + " : " + colorIdIterate);
                 j++;
             }
 
             int choice2 = terminal.inputInt(1, k - 1);
 
-            targetBasicMode2 = colorIdTargets[1].get(choice - 1);
+            targetBasicMode2 = colorIdTargets[1].get(choice2 - 1);
 
         }
 

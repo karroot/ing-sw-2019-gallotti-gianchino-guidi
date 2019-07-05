@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Vortex Cannon.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -50,6 +50,8 @@ public class VortexCannon extends WeaponCard
      */
     public boolean[] checkAvailableMode()
     {
+        int h = 0;
+
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
 

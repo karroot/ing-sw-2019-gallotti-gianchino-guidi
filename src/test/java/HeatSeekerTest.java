@@ -9,21 +9,25 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 /**
- * @author giovanni
+ * This class is a case test for the HeatSeeker.
+ *
+ * @author gioguidi
  */
+
 public class HeatSeekerTest {
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),1,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    HeatSeeker heatSeeker = new HeatSeeker(Color.RED,0,true);
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private HeatSeeker heatSeeker = new HeatSeeker(Color.RED,0,true);
     Square start;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         start = board.getArena().getSquare(1,1);
         board.setAllPlayer(p1);
         board.setAllPlayer(p2);
@@ -38,7 +42,8 @@ public class HeatSeekerTest {
     }
 
     @Test
-    public void checkAvailableMode() {
+    public void checkAvailableMode()
+    {
         p2.setSquare(start);
         p3.setSquare(start);
         p4.setSquare(start);
@@ -57,7 +62,8 @@ public class HeatSeekerTest {
     }
 
     @Test
-    public void checkBasicMode() {
+    public void checkBasicMode()
+    {
         p2.setSquare(start);
         p3.setSquare(start);
         p4.setSquare(start);
@@ -87,7 +93,8 @@ public class HeatSeekerTest {
     }
 
     @Test
-    public void basicMode() {
+    public void basicMode()
+    {
         p2.setSquare(start);
         p3.setSquare(start);
 

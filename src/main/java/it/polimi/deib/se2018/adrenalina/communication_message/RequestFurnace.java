@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class RequestFurnace extends WeaponWithModeAlternative {
 
@@ -19,7 +19,8 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     private String targetAlternativeMode;//Target chosen for the alternative mode
 
 
-    public RequestFurnace(boolean[] availableMethod, List<ColorRoom> roomsBasicMode, List<String> squaresAlternativeMode) {
+    public RequestFurnace(boolean[] availableMethod, List<ColorRoom> roomsBasicMode, List<String> squaresAlternativeMode)
+    {
         this.availableMethod = availableMethod;
         this.nameAlternaivemode = "modalità fuoco confortevole";
         this.roomsBasicMode = roomsBasicMode;
@@ -29,9 +30,10 @@ public class RequestFurnace extends WeaponWithModeAlternative {
 
 
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException {
+    public ResponseInput generateResponseMessage()
+    {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
+            throw new IllegalStateException("Input non ancora presi.");
 
         if (mode)
             return new ResponseFurnace(targetAlternativeMode);
@@ -40,9 +42,13 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     }
 
 
-    //Ask at the user to choice a target for the basic mode
+    /**
+     *
+     */
     @Override
-    protected void inputBasicMode() {
+    protected void inputBasicMode()
+    {
+
         int i = 1;
 
         List<ColorRoom> colorRoomList = roomsBasicMode;
@@ -50,7 +56,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         terminal.addTextInput("Scegli una stanza bersaglio:");
 
         for (ColorRoom colorRoomIterate : colorRoomList) {
-            terminal.addOptionInput(i + " " + colorRoomIterate);
+            terminal.addOptionInput(i + " : " + colorRoomIterate);
             i++;
         }
 
@@ -61,8 +67,13 @@ public class RequestFurnace extends WeaponWithModeAlternative {
     }
 
 
+    /**
+     *
+     */
     @Override
-    protected void inputAlternativeMode() {
+    protected void inputAlternativeMode()
+    {
+
         int i = 1;
 
         List<String> stringList = squaresAlternativeMode;
@@ -70,7 +81,7 @@ public class RequestFurnace extends WeaponWithModeAlternative {
         terminal.addTextInput("Scegli uno square bersaglio:");
 
         for (String squareAsStringIterate : stringList) {
-            terminal.addOptionInput(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " : " + squareAsStringIterate);
             i++;
         }
 

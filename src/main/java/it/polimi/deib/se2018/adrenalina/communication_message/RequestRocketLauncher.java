@@ -10,11 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 
 public class RequestRocketLauncher extends RequestInput
 {
+
     private boolean[] availableMethod;
     private List<ColorId> colorIdListBasicMode;
     private HashMap<String, List<ColorId>> squaresAndTargetsRocketJump;
@@ -26,13 +27,17 @@ public class RequestRocketLauncher extends RequestInput
     private ColorId targetPlayerBasicMode;
     private String targetSquareCoordinatesAsStringPlayerToMove = null;
     private String targetSquareCoordinatesAsStringTargetToMove = null;
-    boolean withFragWarhead = false;
+    private boolean withFragWarhead = false;
 
 
-
-    private List<String> orderAva = new LinkedList<>();//List of support
-    private List<String> orderTemp = new LinkedList<>();//Second List of support
-
+    /**
+     *
+     * @param availableMethod
+     * @param colorIdListBasicMode
+     * @param squaresAndTargetsRocketJump
+     * @param hashToMovePlayerBasicMode
+     * @param allSquaresNoMove
+     */
     public RequestRocketLauncher (boolean[] availableMethod, List<ColorId> colorIdListBasicMode, HashMap<String, List<ColorId>> squaresAndTargetsRocketJump, HashMap<ColorId, List<String>> hashToMovePlayerBasicMode, List<String> allSquaresNoMove)
     {
         this.availableMethod = availableMethod;
@@ -45,6 +50,10 @@ public class RequestRocketLauncher extends RequestInput
     }
 
 
+    /**
+     *
+     * @param terminal
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
@@ -63,7 +72,7 @@ public class RequestRocketLauncher extends RequestInput
         {
              choice = terminal.inputInt(1, 2);
 
-            if (choice == 1) //Ask the necessary dates to do the effect
+            if (choice == 1)
             {
                 chooseTarget();
 
@@ -77,27 +86,38 @@ public class RequestRocketLauncher extends RequestInput
                 if (choice == 1)
                     moveTargetFromOriginalSquare();
 
-            } else {
+            } else
+                {
                 chooseSquare();
                 chooseTargetAfterMove();
-            }
+                }
         } else {
 
             choice = terminal.inputInt(1, 1);
             chooseTarget();
         }
+
         responseIsReady = true;
 
     }
 
+
+    /**
+     *
+     * @return
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException
+    public ResponseInput generateResponseMessage()
     {
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
         return new ResponseRocketLauncher(targetPlayerBasicMode, targetSquareCoordinatesAsStringPlayerToMove,  targetSquareCoordinatesAsStringTargetToMove, withFragWarhead);
     }
 
+
+    /**
+     *
+     */
     private void chooseTarget() {
 
         List<ColorId> players = colorIdListBasicMode;
@@ -117,8 +137,6 @@ public class RequestRocketLauncher extends RequestInput
 
         targetPlayerBasicMode = players.get(choice - 1);
 
-
-
         terminal.addOptionInput("1: sì");
         terminal.addOptionInput("2: no");
 
@@ -136,8 +154,6 @@ public class RequestRocketLauncher extends RequestInput
         }
 
 
-
-
         if (availableMethod[2]) {
             terminal.addTextInput("Vuoi utilizzare la modalità granata a frammentazione?"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
@@ -152,6 +168,12 @@ public class RequestRocketLauncher extends RequestInput
         }
     }
 
+
+    /**
+     *
+     * @param stringList
+     * @param j
+     */
     private void selectSquareToMoveTarget(List<String> stringList, int j) {
         for (String stringIterate : hashToMovePlayerBasicMode.get(targetPlayerBasicMode))
         {
@@ -164,7 +186,11 @@ public class RequestRocketLauncher extends RequestInput
         targetSquareCoordinatesAsStringTargetToMove = stringList.get(choice2 - 1);
     }
 
-    protected void chooseSquare()
+
+    /**
+     *
+     */
+    private void chooseSquare()
     {
         List<String> squares = new ArrayList<>();
 
@@ -174,6 +200,11 @@ public class RequestRocketLauncher extends RequestInput
 
     }
 
+
+    /**
+     *
+     * @param squares
+     */
     private void selectSquareToMove(List<String> squares) {
         terminal.addTextInput("Scegli un quadrato dove spostarti: ");
 
@@ -190,7 +221,11 @@ public class RequestRocketLauncher extends RequestInput
         targetSquareCoordinatesAsStringPlayerToMove = squares.get(choice - 1);
     }
 
-    protected void chooseTargetAfterMove ()
+
+    /**
+     *
+     */
+    private void chooseTargetAfterMove ()
     {
         List<ColorId> colorIdList = new ArrayList<>();
 
@@ -198,7 +233,7 @@ public class RequestRocketLauncher extends RequestInput
 
         int i = 1;
 
-        terminal.addTextInput("Scegli un bersaglio :");
+        terminal.addTextInput("Scegli un bersaglio:");
 
         for (ColorId colorIdIterate : colorIdList)//Ask to user the target
         {
@@ -227,9 +262,6 @@ public class RequestRocketLauncher extends RequestInput
             selectSquareToMoveTarget(stringList, j);
         }
 
-
-
-
         if (availableMethod[2]) {
             terminal.addTextInput("Vuoi utilizzare la modalità granata a frammentazione?"); //Ask to user the secondary effect , if user don't select this effect it wont be inserted in plasma basicmode so it wont be called
 
@@ -245,7 +277,11 @@ public class RequestRocketLauncher extends RequestInput
 
     }
 
-    protected void moveTargetFromOriginalSquare ()
+
+    /**
+     *
+     */
+    private void moveTargetFromOriginalSquare ()
     {
 
         List<String> stringList = new ArrayList<>();

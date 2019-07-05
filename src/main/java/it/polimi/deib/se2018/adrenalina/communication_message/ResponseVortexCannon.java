@@ -4,7 +4,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class ResponseVortexCannon extends ResponseInput
 {
@@ -15,7 +15,7 @@ public class ResponseVortexCannon extends ResponseInput
 
     boolean mode;
 
-    public ResponseVortexCannon (ColorId targetPlayerBasicMode, String targetVortexSquareAsString, ColorId target1BlackHoleMode, ColorId target2BlackHoleMode)
+    ResponseVortexCannon (ColorId targetPlayerBasicMode, String targetVortexSquareAsString, ColorId target1BlackHoleMode, ColorId target2BlackHoleMode)
     {
         if (targetPlayerBasicMode != null && targetVortexSquareAsString != null)
         {
@@ -35,23 +35,28 @@ public class ResponseVortexCannon extends ResponseInput
         }
     }
 
-    public ColorId getTargetPlayerBasicMode() {
+    public ColorId getTargetPlayerBasicMode()
+    {
         return targetPlayerBasicMode;
     }
 
-    public String getTargetVortexSquareAsString() {
+    public String getTargetVortexSquareAsString()
+    {
         return targetVortexSquareAsString;
     }
 
-    public ColorId getTarget1BlackHoleMode() {
+    public ColorId getTarget1BlackHoleMode()
+    {
         return target1BlackHoleMode;
     }
 
-    public ColorId getTarget2BlackHoleMode() {
+    public ColorId getTarget2BlackHoleMode()
+    {
         return target2BlackHoleMode;
     }
 
-    public boolean isMode() {
+    public boolean isMode()
+    {
         return mode;
     }
 }

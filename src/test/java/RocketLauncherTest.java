@@ -12,18 +12,18 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class RocketLauncherTest
 {
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
-    Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    RocketLauncher rocketLauncher = new RocketLauncher(Color.RED,0,true);
+    private Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private RocketLauncher rocketLauncher = new RocketLauncher(Color.RED,0,true);
     Square start;
 
     @Before
@@ -47,6 +47,8 @@ public class RocketLauncherTest
 
     }
 
+
+
     @Test
     public void checkAvailableMode()
     {
@@ -56,6 +58,8 @@ public class RocketLauncherTest
 
 
     }
+
+
 
     @Test
     public void checkSquaresToMoveTest()
@@ -74,9 +78,8 @@ public class RocketLauncherTest
 
         assertEquals(2, stringList.size());
 
-
-
     }
+
 
     @Test
     public void allSquaresNoMove ()
@@ -89,6 +92,7 @@ public class RocketLauncherTest
 
         assertEquals(5, stringList.size());
     }
+
 
     @Test
     public void checkWithFragmentingWarhead ()
@@ -112,6 +116,8 @@ public class RocketLauncherTest
         assertTrue(rocketLauncher.checkWithFragmentingWarheadRocketJump());
     }
 
+
+
     @Test
     public void checkPlayersBasicMode ()
     {
@@ -125,6 +131,8 @@ public class RocketLauncherTest
 
         assertEquals(2, colorIdList.size());
     }
+
+
 
     @Test
     public void basicMode ()
@@ -142,7 +150,6 @@ public class RocketLauncherTest
 
         assertEquals(start, p3.getSquare());
         assertEquals(start, p1.getSquare());
-
 
     }
 

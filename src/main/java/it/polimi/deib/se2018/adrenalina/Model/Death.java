@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * This class implements the death status of a player.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 

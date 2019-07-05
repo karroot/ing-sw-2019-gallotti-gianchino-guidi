@@ -13,7 +13,9 @@ import static org.junit.Assert.*;
 
 
 /**
- * @author giovanni
+ * This class is a case test for the Furnace.
+ *
+ * @author gioguidi
  */
 
 

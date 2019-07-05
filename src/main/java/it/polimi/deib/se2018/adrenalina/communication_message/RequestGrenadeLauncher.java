@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 {
@@ -27,7 +27,14 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     private boolean move;
 
 
-
+    /**
+     *
+     * @param availableMethod
+     * @param playerBasicMode
+     * @param squaresExtraGrenadeAsString
+     * @param hashMapToMovePlayers
+     * @param allSquaresPlayerSees
+     */
     public RequestGrenadeLauncher(boolean[] availableMethod,  HashMap<ColorId, String> playerBasicMode, List<String> squaresExtraGrenadeAsString, HashMap<ColorId, List<String>> hashMapToMovePlayers, List<String> allSquaresPlayerSees)
     {
         this.nameAdditionalmode = "modalità granata extra";
@@ -40,10 +47,14 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
     }
 
 
-    public ResponseInput generateResponseMessage() throws IllegalStateException
+    /**
+     *
+     * @return
+     */
+    public ResponseInput generateResponseMessage()
     {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
+            throw new IllegalStateException("Input non ancora presi.");
 
         if (mode)
         {
@@ -59,6 +70,10 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
     }
 
+    /**
+     *
+     * @param terminal terminal that will print the text and the option input at the user
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
@@ -74,8 +89,6 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
         {
             terminal.addOptionInput("2: attacco base e granata extra");
         }
-
-
 
         if (availableMethod[1])//Print the possible effects
         {
@@ -97,6 +110,9 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
     }
 
+    /**
+     *
+     */
     @Override
     protected void inputBasicMode()
     {
@@ -107,7 +123,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (ColorId colorIdIterate : playerBasicMode.keySet())
         {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " : " + colorIdIterate);
             colorIdList.add(colorIdIterate);
             i++;
         }
@@ -142,7 +158,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresAsString)
         {
-            terminal.addOptionInput(w+":"+ squareAsStringIterate);
+            terminal.addOptionInput(w+" : "+ squareAsStringIterate);
             w++;
         }
 
@@ -159,10 +175,11 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
             squaresExtraGrenadeAsString.remove(playerBasicMode.get(targetBasicMode));
         }
 
-
-
     }
 
+    /**
+     *
+     */
     @Override
     protected void inputAdditionalMode()
     {
@@ -174,7 +191,7 @@ public class RequestGrenadeLauncher extends WeaponWithOneAdditionalEffects
 
         for (String squareAsStringIterate : squaresToTargetForAdditionalGrenade)
         {
-            terminal.addOptionInput(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " : " + squareAsStringIterate);
             i++;
         }
 

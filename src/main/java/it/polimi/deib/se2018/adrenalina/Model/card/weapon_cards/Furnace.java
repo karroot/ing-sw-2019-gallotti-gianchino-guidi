@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Furnace.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public class Furnace extends WeaponCard
@@ -31,12 +31,13 @@ public class Furnace extends WeaponCard
      * @param weaponID is the unique id to identify the card
      * @param isLoaded to indicate if the weapon is loaded
      */
-    public Furnace( Color color, int weaponID, boolean isLoaded) {
+    public Furnace( Color color, int weaponID, boolean isLoaded)
+    {
         super( color, weaponID, isLoaded);
         this.name = "Vulcanizzatore";
+        redAmmoCost = 1;
         yellowAmmoCost = 0;
         blueAmmoCost = 1;
-        redAmmoCost = 1;
     }
 
 
@@ -51,6 +52,7 @@ public class Furnace extends WeaponCard
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
 
+        int f=0;
 
         availableMethod[0] = false;//I suppose that the modes can't be used
         availableMethod[1] = false;
@@ -59,6 +61,8 @@ public class Furnace extends WeaponCard
         if (isLoaded())
         {
             List<Room> roomList = new ArrayList<>();
+
+
 
             roomList = MethodsWeapons.roomsThatIsee(player);
             roomList.remove(player.getSquare().getRoom()); //remove myself from the playerList

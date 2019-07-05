@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * This abstract class implements the status of a player.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public abstract class StatePlayer {

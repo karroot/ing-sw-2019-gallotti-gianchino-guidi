@@ -4,18 +4,22 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class ResponseHeatSeeker extends ResponseInput
 {
     private ColorId targetBasicMode;
 
-    public ResponseHeatSeeker(ColorId targetBasicMode)
+
+    ResponseHeatSeeker(ColorId targetBasicMode)
     {
         this.targetBasicMode = targetBasicMode;
     }
 
-    public ColorId getTagetBasicMode() {
+
+    public ColorId getTagetBasicMode()
+    {
         return targetBasicMode;
     }
+
 }

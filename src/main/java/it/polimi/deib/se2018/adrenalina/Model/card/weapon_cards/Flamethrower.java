@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Flamethrower.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -37,8 +37,9 @@ public class Flamethrower extends WeaponCard
         super( color, weaponID, isLoaded);
         this.name = "Lanciafiamme";
         yellowAmmoCost = 0;
-        blueAmmoCost = 0;
         redAmmoCost = 1;
+        blueAmmoCost = 0;
+
     }
 
 
@@ -51,6 +52,8 @@ public class Flamethrower extends WeaponCard
      */
     public boolean[] checkAvailableMode()
     {
+        int g=0;
+
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore."); //If this card doesn't belong to any player, it launches an exception
 

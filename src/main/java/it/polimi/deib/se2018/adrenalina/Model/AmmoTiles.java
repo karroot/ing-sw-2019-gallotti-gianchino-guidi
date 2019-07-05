@@ -3,7 +3,7 @@ package it.polimi.deib.se2018.adrenalina.Model;
 /**
  * This interface will be extended by the classes JustAmmo and PowerAndAmmo.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public interface AmmoTiles

@@ -4,16 +4,16 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class ResponseGrenadeLauncher extends ResponseInput
 {
     private ColorId targetBasicMode;
     private String targetSquareToMoveBasicModeAsString;
     private String targetSquareExtraGrenadeAsString;
-    boolean extraEffect = false;
+    private boolean extraEffect = false;
 
-    public ResponseGrenadeLauncher(ColorId targetBasicMode, String targetSquareToMoveBasicModeAsString, String targetSquareExtraGrenadeAsString)
+    ResponseGrenadeLauncher(ColorId targetBasicMode, String targetSquareToMoveBasicModeAsString, String targetSquareExtraGrenadeAsString)
     {
         this.targetBasicMode = targetBasicMode;
         this.targetSquareToMoveBasicModeAsString = targetSquareToMoveBasicModeAsString;
@@ -24,19 +24,27 @@ public class ResponseGrenadeLauncher extends ResponseInput
         }
     }
 
-    public ColorId getTargetBasicMode() {
+    public ColorId getTargetBasicMode()
+    {
         return targetBasicMode;
     }
 
-    public String getTargetSquareToMoveBasicModeAsString() {
+
+    public String getTargetSquareToMoveBasicModeAsString()
+    {
         return targetSquareToMoveBasicModeAsString;
     }
 
-    public String getTargetSquareExtraGrenadeAsString() {
+
+    public String getTargetSquareExtraGrenadeAsString()
+    {
         return targetSquareExtraGrenadeAsString;
     }
 
-    public boolean isExtraEffect() {
+
+    public boolean isExtraEffect()
+    {
         return extraEffect;
     }
+
 }

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Rocket Laucher.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -48,12 +48,11 @@ public class RocketLauncher extends WeaponCard
     /**
      * It checks which modes of the weapon can be used
      * @return an array of boolean of which modes are available to the players
-     * @throws IllegalStateException if this card doesn't belong at a player
      */
-    public boolean[] checkAvailableMode() throws IllegalStateException
+    public boolean[] checkAvailableMode()
     {
         if (player == null)
-            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore");//If this card doesn't belong to any player, it launches an exception
+            throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, it launches an exception
 
 
         availableMethod[0] = false;//I suppose that the modes can't be used

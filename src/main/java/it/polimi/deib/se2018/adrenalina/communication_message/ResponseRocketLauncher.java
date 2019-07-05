@@ -4,7 +4,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 
 public class ResponseRocketLauncher extends ResponseInput
@@ -14,7 +14,7 @@ public class ResponseRocketLauncher extends ResponseInput
     private String targetSquareCoordinatesAsStringTargetToMove;
     private boolean withFragWarhead;
 
-    public ResponseRocketLauncher (ColorId targetBasicEffect, String targetSquareCoordinatesAsStringPlayerToMove, String targetSquareCoordinatesAsStringTargetToMove, boolean withFragWarhead)
+    ResponseRocketLauncher (ColorId targetBasicEffect, String targetSquareCoordinatesAsStringPlayerToMove, String targetSquareCoordinatesAsStringTargetToMove, boolean withFragWarhead)
     {
         this.targetPlayerBasicMode = targetBasicEffect;
         this.targetSquareCoordinatesAsStringPlayerToMove = targetSquareCoordinatesAsStringPlayerToMove;
@@ -22,20 +22,24 @@ public class ResponseRocketLauncher extends ResponseInput
         this.withFragWarhead = withFragWarhead;
     }
 
-    public ColorId getTargetPlayerBasicMode() {
+    public ColorId getTargetPlayerBasicMode()
+    {
         return targetPlayerBasicMode;
     }
 
-    public String getTargetSquareCoordinatesAsStringPlayerToMove() {
+    public String getTargetSquareCoordinatesAsStringPlayerToMove()
+    {
         return targetSquareCoordinatesAsStringPlayerToMove;
     }
 
-    public String getTargetSquareCoordinatesAsStringTargetToMove() {
+    public String getTargetSquareCoordinatesAsStringTargetToMove()
+    {
         return targetSquareCoordinatesAsStringTargetToMove;
     }
 
 
-    public boolean isWithFragWarhead() {
+    public boolean isWithFragWarhead()
+    {
         return withFragWarhead;
     }
 }

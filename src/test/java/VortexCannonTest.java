@@ -11,18 +11,22 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 /**
- * @author giovanni
+ * This class is a case test for the Vortex Cannon.
+ *
+ * @author gioguidi
  */
+
+
 public class VortexCannonTest
 {
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),4,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    VortexCannon vortexCannon = new VortexCannon(Color.RED,0,true);
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private VortexCannon vortexCannon = new VortexCannon(Color.RED,0,true);
     Square start;
 
 
@@ -40,15 +44,14 @@ public class VortexCannonTest
         p1.setSquare(start);
         p2.setSquare(start);
 
-
-
-
         MethodsWeapons.moveTarget(p1,1,1);
         MethodsWeapons.moveTarget(p2,2,3);
 
         p1.addWeapon(vortexCannon);
         vortexCannon.setPlayer(p1);
     }
+
+
 
     @Test
     public void checkAvailableMode()
@@ -70,6 +73,8 @@ public class VortexCannonTest
 
     }
 
+
+
     @Test
     public void checkBasicMode()
     {
@@ -85,8 +90,9 @@ public class VortexCannonTest
 
         assertFalse(hashMap.keySet().contains(p2.getSquare().toStringCoordinates()));
 
-
     }
+
+
 
     @Test
     public void basicMode()
@@ -101,6 +107,7 @@ public class VortexCannonTest
         assertEquals(1, p2.getSquare().getY());
         assertEquals(2, p2.getNumberOfDamagePoint());
     }
+
 
 
 

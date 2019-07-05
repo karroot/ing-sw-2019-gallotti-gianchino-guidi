@@ -8,15 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class RequestHellion extends WeaponWithModeAlternative
 {
     //Attribute for the request
     private HashMap<String, List<ColorId>> hashMapBasicMode;//Targets for the basic mode
     private HashMap<String, List<ColorId>> hashMapNanoTracerMode;//Targets for the basic mode
-
-    
 
     //Attribute for the response
     private String targetBasicModeSquare;//Target chosen for the basic mode
@@ -28,7 +26,12 @@ public class RequestHellion extends WeaponWithModeAlternative
     private ColorId targetAlternativeMode;
 
 
-
+    /**
+     *
+     * @param availableMethod
+     * @param hashMapBasicMode
+     * @param hashMapNanoTracerMode
+     */
     public RequestHellion(boolean[] availableMethod, HashMap<String, List<ColorId>> hashMapBasicMode, HashMap<String, List<ColorId>> hashMapNanoTracerMode)
     {
         this.availableMethod = availableMethod;
@@ -39,21 +42,28 @@ public class RequestHellion extends WeaponWithModeAlternative
     }
 
 
-
+    /**
+     *
+     * @return
+     * @throws IllegalStateException
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException
+    public ResponseInput generateResponseMessage()
     {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
+            throw new IllegalStateException("Input non ancora presi.");
 
         if (mode)
             return new ResponseHellion(null,targetAlternativeMode);
 
         return new ResponseHellion(targetBasicMode, null);
+
     }
 
 
-
+    /**
+     *
+     */
     private void inputBasicModeSquare()
     {
         int i = 1;
@@ -64,9 +74,11 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         terminal.addTextInput("Scegli lo square dove si trova il player bersaglio:");
 
+        int u = 0;
+
         for (String squareAsStringIterate : stringSquaresList)
         {
-            terminal.addOptionInput(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " : " + squareAsStringIterate);
             i++;
         }
 
@@ -85,16 +97,20 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " : " + colorIdIterate);
             i++;
         }
 
         int choice = terminal.inputInt(1, i - 1);
 
         targetBasicModePlayer = colorIdList.get(choice - 1);
+
     }
 
 
+    /**
+     *
+     */
     @Override
     protected void inputBasicMode ()
     {
@@ -106,6 +122,9 @@ public class RequestHellion extends WeaponWithModeAlternative
     }
 
 
+    /**
+     *
+     */
     private void inputAlternativeModeSquare()
     {
         int i = 1;
@@ -118,7 +137,7 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (String squareAsStringIterate : stringSquaresList)
         {
-            terminal.addOptionInput(i + " " + squareAsStringIterate);
+            terminal.addOptionInput(i + " : " + squareAsStringIterate);
             i++;
         }
 
@@ -127,6 +146,10 @@ public class RequestHellion extends WeaponWithModeAlternative
         targetAlternativeModeSquare = stringSquaresList.get(choice - 1);
     }
 
+
+    /**
+     *
+     */
     private void inputAlternativeModePlayer()
     {
         int i = 1;
@@ -137,9 +160,11 @@ public class RequestHellion extends WeaponWithModeAlternative
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " : " + colorIdIterate);
             i++;
         }
+
+        int g = 0;
 
         int choice = terminal.inputInt(1, i - 1);
 
@@ -147,6 +172,9 @@ public class RequestHellion extends WeaponWithModeAlternative
     }
 
 
+    /**
+     *
+     */
     @Override
     protected void inputAlternativeMode()
     {

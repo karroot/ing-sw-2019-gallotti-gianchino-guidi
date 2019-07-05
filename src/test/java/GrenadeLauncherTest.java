@@ -12,17 +12,21 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 /**
- * @author giovanni
+ * This class is a case test for the Grenade Launcher.
+ *
+ * @author gioguidi
  */
+
+
 public class GrenadeLauncherTest {
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),2,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    GrenadeLauncher grenadeLauncher = new GrenadeLauncher(Color.RED,0,true);
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private GrenadeLauncher grenadeLauncher = new GrenadeLauncher(Color.RED,0,true);
     Square start;
 
     @Before
@@ -80,16 +84,14 @@ public class GrenadeLauncherTest {
         colorIdList.add(p3.getColor());
         colorIdList.add(p4.getColor());
 
-
-
-
-     assertEquals(colorIdList.size(), grenadeLauncher.checkBasicMode().size());
+        assertEquals(colorIdList.size(), grenadeLauncher.checkBasicMode().size());
 
 
     }
 
     @Test
-    public void basicMode() {
+    public void basicMode()
+    {
         MethodsWeapons.moveTarget(p2,3,1);
         p3.setSquare(start);
         MethodsWeapons.moveTarget(p3,4,1);
@@ -116,7 +118,8 @@ public class GrenadeLauncherTest {
     }
 
     @Test
-    public void extraGrenade() throws Exception {
+    public void extraGrenade() throws Exception
+    {
         MethodsWeapons.moveTarget(p2,3,1);
         p3.setSquare(start);
         MethodsWeapons.moveTarget(p3,4,1);
@@ -126,8 +129,6 @@ public class GrenadeLauncherTest {
         assertEquals(1, p2.getNumberOfDamagePoint());
 
         assertFalse(grenadeLauncher.isLoaded());
-
-
     }
 
     @Test

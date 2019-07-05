@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author giovanni
+ * @author gioguidi
  *
  * This class implements a point where the player can spawn from
  */

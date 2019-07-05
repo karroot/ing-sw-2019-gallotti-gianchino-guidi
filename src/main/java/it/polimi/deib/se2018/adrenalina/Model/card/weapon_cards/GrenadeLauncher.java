@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Grenade Launcher.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -51,14 +51,14 @@ public class GrenadeLauncher extends WeaponCard
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");//If this card doesn't belong to any player, there is a runtime exception
 
+        int i=0;
 
-        availableMethod[0] = false; //I suppose that the modes can't be used
+        availableMethod[i] = false; //I suppose that the modes can't be used
         availableMethod[1] = false;
 
         if (isLoaded() && !player.playerThatSee(player.getSquare().getGameBoard()).isEmpty())
         {
                 availableMethod[0] = true;
-
         }
 
         if (availableMethod[0] && player.getAmmoRed() > 0)

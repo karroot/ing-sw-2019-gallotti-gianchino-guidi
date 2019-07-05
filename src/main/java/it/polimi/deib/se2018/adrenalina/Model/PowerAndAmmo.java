@@ -5,7 +5,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards.PowerUpCard;
 /**
  * This class implements the AmmoTile card that provides 2 ammo and a powerUP card.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public class PowerAndAmmo implements AmmoTiles

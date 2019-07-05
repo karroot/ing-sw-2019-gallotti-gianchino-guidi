@@ -121,14 +121,6 @@ public class Player
         return new ArrayList<>(markCounter);
     }
 
-    /**
-     * Getter for the player's yellow ammo
-     * @return player's yellow ammo
-     */
-    public int getAmmoYellow()
-    {
-        return ammoYellow;
-    }
 
     /**
      * Getter for the player's red ammo
@@ -137,6 +129,15 @@ public class Player
     public int getAmmoRed()
     {
         return ammoRed;
+    }
+
+    /**
+     * Getter for the player's yellow ammo
+     * @return player's yellow ammo
+     */
+    public int getAmmoYellow()
+    {
+        return ammoYellow;
     }
 
     /**

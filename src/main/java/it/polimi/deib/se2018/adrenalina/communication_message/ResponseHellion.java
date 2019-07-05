@@ -4,15 +4,23 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author giovanni
+ *
+ *
+ * @author gioguidi
  */
+
 public class ResponseHellion extends ResponseInput
 {
     private ColorId targetBasicMode;
     private ColorId targetAlternativeMode;
     boolean mode;
 
-    public ResponseHellion (ColorId targetBasicMode, ColorId targetAlternativeMode)
+    /**
+     *
+     * @param targetBasicMode
+     * @param targetAlternativeMode
+     */
+    ResponseHellion (ColorId targetBasicMode, ColorId targetAlternativeMode)
     {
         if (targetBasicMode != null)
         {
@@ -28,15 +36,21 @@ public class ResponseHellion extends ResponseInput
 
     }
 
-    public ColorId getTargetBasicMode() {
+
+    public ColorId getTargetBasicMode()
+    {
         return targetBasicMode;
     }
 
-    public ColorId getTargetAlternativeMode() {
+
+    public ColorId getTargetAlternativeMode()
+    {
         return targetAlternativeMode;
     }
 
-    public boolean isMode() {
+
+    public boolean isMode()
+    {
         return mode;
     }
 }

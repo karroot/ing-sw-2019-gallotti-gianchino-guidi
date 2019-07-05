@@ -5,7 +5,7 @@ import java.util.Collections;
 /**
  * This class implements an ammopoint: a square where there is an AmmoTile to grab.
  *
- * @author giovanni
+ * @author gioguidi
  */
 public class AmmoPoint extends Square
 {

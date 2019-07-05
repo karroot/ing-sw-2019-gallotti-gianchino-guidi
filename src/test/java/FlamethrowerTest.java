@@ -14,7 +14,9 @@ import static org.junit.Assert.*;
 
 
 /**
- * @author giovanni
+ * This class is a case test for the Flamethrower.
+ *
+ * @author gioguidi
  */
 
 
@@ -23,11 +25,11 @@ public class FlamethrowerTest
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),1,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    Flamethrower flamethrower = new Flamethrower(Color.RED,0,true);
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private Flamethrower flamethrower = new Flamethrower(Color.RED,0,true);
     Square start;
 
     @Before
@@ -101,7 +103,8 @@ public class FlamethrowerTest
         MethodsWeapons.moveTarget(p4,1,3);
         MethodsWeapons.moveTarget(p5,1,3);
 
-        hashMap = new HashMap<>();
+        hashMap.clear();
+
         hashMap = flamethrower.checkBasicModeForMessage();
 
         assertTrue(hashMap.keySet().contains(CardinalDirection.SOUTH));
@@ -143,7 +146,6 @@ public class FlamethrowerTest
 
         p1.setAmmoYellow(3);
 
-
         hashMap = flamethrower.checkBarbecueMode();
 
         assertEquals(colorIdList, hashMap.get(CardinalDirection.NORTH)[1]);
@@ -167,8 +169,6 @@ public class FlamethrowerTest
         p1.setAmmoYellow(3);
 
         flamethrower.barbecueMode(CardinalDirection.NORTH, p3.getColor());
-
-
 
         assertEquals(2, p3.getNumberOfDamagePoint());
         assertEquals(1, p4.getNumberOfDamagePoint());

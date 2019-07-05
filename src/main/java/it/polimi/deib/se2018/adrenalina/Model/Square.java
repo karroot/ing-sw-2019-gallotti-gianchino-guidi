@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author giovanni and Cysko7927
+ * @author gioguidi and Cysko7927
  *
  * This class implements a point where the player can spawn from
  */

@@ -7,7 +7,7 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 import java.util.List;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
 public class RequestHeatSeeker extends RequestInput
 {
@@ -18,6 +18,11 @@ public class RequestHeatSeeker extends RequestInput
     //Attribute for the response
     private ColorId targetBasicMode;
 
+    /**
+     *
+     * @param availableMethod
+     * @param colorIdListBasicMode
+     */
     public RequestHeatSeeker (boolean[] availableMethod, List<ColorId> colorIdListBasicMode)
     {
         this.availableMethod = availableMethod;
@@ -26,6 +31,10 @@ public class RequestHeatSeeker extends RequestInput
     }
 
 
+    /**
+     *
+     * @param terminal
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     {
@@ -38,9 +47,11 @@ public class RequestHeatSeeker extends RequestInput
 
         for (ColorId colorIdIterate : colorIdList)
         {
-            terminal.addOptionInput(i + " " + colorIdIterate);
+            terminal.addOptionInput(i + " : " + colorIdIterate);
             i++;
         }
+
+        int s = 0;
 
         int choice = terminal.inputInt(1, i - 1);
 
@@ -49,12 +60,15 @@ public class RequestHeatSeeker extends RequestInput
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public ResponseInput generateResponseMessage() throws IllegalStateException
+    public ResponseInput generateResponseMessage()
     {
         if (!responseIsReady)
-            throw new IllegalStateException("Input non ancora presi");
-
+            throw new IllegalStateException("Input non ancora presi.");
 
         return new ResponseHeatSeeker(targetBasicMode);
     }

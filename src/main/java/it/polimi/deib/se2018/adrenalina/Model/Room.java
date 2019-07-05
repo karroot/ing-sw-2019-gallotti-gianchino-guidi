@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class implements a room.
  *
- * @author giovanni
+ * @author gioguidi
  */
 public class Room
 {

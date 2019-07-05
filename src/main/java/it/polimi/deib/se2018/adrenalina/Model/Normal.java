@@ -8,7 +8,7 @@ import static it.polimi.deib.se2018.adrenalina.Model.StateSpecialMethods.lookFor
 /**
  * This class implements the normal status of a player.
  *
- * @author giovanni
+ * @author gioguidi
  */
 public class Normal extends StatePlayer {
 

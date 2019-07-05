@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * This class implements the weapon Hellion.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
@@ -53,8 +53,9 @@ public class Hellion extends WeaponCard
         if (player == null)
             throw new IllegalStateException("Carta: " + name + " non appartiene a nessun giocatore.");
 
+        int j=1;
         availableMethod[0] = false;//I suppose that the modes can't be used
-        availableMethod[1] = false;
+        availableMethod[j] = false;
 
         if (isLoaded()) //the basic mode requires that the player sees a target with a minimum distance of 1 square (the square must be different than the weapon owner's one)
         {

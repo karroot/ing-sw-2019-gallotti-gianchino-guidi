@@ -9,32 +9,27 @@ import java.util.List;
 import java.util.Stack;
 
 import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * This class is a case test for the AmmoPoint.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
+public class TestAmmoPoint
+{
 
-
-
-public class TestAmmoPoint {
-
-    AmmoPoint ammoPointTest;
+    private AmmoPoint ammoPointTest;
     GameBoard gameboard;
-    Stack<AmmoTiles> ammoTilesStack;
+    private Stack<AmmoTiles> ammoTilesStack;
 
-    AmmoTiles ammoTiles1;
-    AmmoTiles ammoTiles2;
-    AmmoTiles ammoTiles3;
-    AmmoTiles ammoTiles4;
+    private AmmoTiles ammoTiles1;
+    private AmmoTiles ammoTiles2;
+    private AmmoTiles ammoTiles3;
+    private AmmoTiles ammoTiles4;
 
     Player player;
-
-
 
 
 
@@ -63,15 +58,13 @@ public class TestAmmoPoint {
         ammoPointTest.setX(1);
         ammoPointTest.setY(1);
         player.setSquare(ammoPointTest);
+
     }
 
 
     @Test
-    public void testCreation ()
+    public void testCreation () throws Exception
     {
-        List<Room> roomList = new LinkedList<>();
-        roomList = gameboard.getRoomList();
-        Room room;
         Square square = null;
         int x = 1;
         int y = 1;
@@ -88,10 +81,14 @@ public class TestAmmoPoint {
             }
         }
 
+        assert square != null;
+
         assertEquals(square.getX(), ammoPointTest.getX());
         assertEquals(square.getY(), ammoPointTest.getY());
         assertEquals(square.getColor(), ammoPointTest.getColor());
     }
+
+
 
     @Test
     public void useAmmoTiles()
@@ -104,7 +101,7 @@ public class TestAmmoPoint {
         ammoPointTest.useAmmoTiles(player);
 
 
-        assertEquals(null, ammoPointTest.getAmmoTiles());
+        assertNull(ammoPointTest.getAmmoTiles());
         assertEquals(1, player.getAmmoRed());
         assertEquals(2, player.getAmmoBlue());
 
@@ -135,7 +132,6 @@ public class TestAmmoPoint {
         assertTrue(player.getSquare().getGameBoard().getPowerUpCardStack().isEmpty());
 
         AmmoTiles ammoTiles6 = new PowerAndAmmo(55, YELLOW, RED);
-        
 
         ammoPointTest.setAmmoTiles(ammoTiles5);
         ammoPointTest.useAmmoTiles(player);
@@ -153,8 +149,9 @@ public class TestAmmoPoint {
 
        assertEquals(3, player.getAmmoRed());
 
-
     }
+
+
 
     @Test
     public void testReplaceAmmoTiles ()

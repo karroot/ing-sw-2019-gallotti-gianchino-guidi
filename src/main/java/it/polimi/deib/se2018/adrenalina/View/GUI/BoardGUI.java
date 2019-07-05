@@ -229,7 +229,7 @@ public class BoardGUI
                     allBoardWindow.validate();
                     allBoardWindow.repaint();
                     allBoardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    JOptionPane.showMessageDialog(allBoardWindow, "Hai impiegato troppo tempo:Turno Saltato");
+                    JOptionPane.showMessageDialog(allBoardWindow, "Hai impiegato troppo tempo: turno saltato.");
                     Thread.currentThread().interrupt();
                     throw new ThreadDeath();
                 }
@@ -747,9 +747,9 @@ class ClickInput implements ActionListener
 
             //Create
             int n = JOptionPane.showOptionDialog(boardGUI.getAllBoardWindow(),
-                    "Hai Scelto:" + choice.getText()
+                    "Hai scelto:" + choice.getText()
                             + "\n Confermi?",
-                    "Confermi Scelta?",
+                    "Confermi scelta?",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
@@ -763,7 +763,7 @@ class ClickInput implements ActionListener
             }
             else
             {
-                JOptionPane.showMessageDialog(boardGUI.getAllBoardWindow(), "Scegli un altra opzione");
+                JOptionPane.showMessageDialog(boardGUI.getAllBoardWindow(), "Scegli un'altra opzione.'");
             }
         }
 

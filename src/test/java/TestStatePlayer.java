@@ -16,21 +16,19 @@ import static org.junit.Assert.*;
 /**
  * This class is a case test for the possibles states of the player.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public class TestStatePlayer {
     GameBoard board = new GameBoard(new Stack<>(), new Stack<>(), 4, 8, new Stack<>());
-    Player pYellow = new Player(ColorId.YELLOW, "caso", "ciao", true);
-    Player pGrey = new Player(ColorId.GREY, "caso", "ciao", false);
-    Player pGreen = new Player(ColorId.GREEN, "caso", "ciao", false);
-    Player pTerminator = new Player(ColorId.PURPLE, "caso", "ciao", false);
-    Player pBlue = new Player(ColorId.BLUE, "caso", "ciao", false);
+    private Player pYellow = new Player(ColorId.YELLOW, "caso", "ciao", true);
+    private Player pGrey = new Player(ColorId.GREY, "caso", "ciao", false);
+    private Player pGreen = new Player(ColorId.GREEN, "caso", "ciao", false);
+    private Player pTerminator = new Player(ColorId.PURPLE, "caso", "ciao", false);
+    private Player pBlue = new Player(ColorId.BLUE, "caso", "ciao", false);
 
 
     Square start;
-
-    Controller controller;
 
 
     @Before
@@ -78,7 +76,7 @@ public class TestStatePlayer {
         squareSet3.addAll(pYellow.lookForGrabStuff(pYellow));
 
         assertEquals(0, squareSet3.size()); //it is 0 because i did not setup the board, so there are no ammotiles or weapons to draw.
-                                                        // Checking the debugging with Breakpoint on model.adrenalized1 line 47 i see that the size it's 3, that is correct
+                                                        // Checking the debugging with Breakpoint on model.adrenalized1 i see that the size it's 3, that is correct
 
         pYellow.doDamage(pBlue.getColor());
         pYellow.doDamage(pBlue.getColor());
@@ -95,7 +93,7 @@ public class TestStatePlayer {
         squareSet5.addAll(pYellow.lookForGrabStuff(pYellow));
 
         assertEquals(0, squareSet5.size()); //it is 0 because i did not setup the board, so there are no ammotiles or weapons to draw.
-                                                        // Checking the debugging with Breakpoint on model.adrenalized2 line 49 i see that the size it's 3, that is correct
+                                                        // Checking the debugging with Breakpoint on model.adrenalized2 i see that the size it's 3, that is correct
 
         pYellow.setFrenzy(true);
 
@@ -112,8 +110,6 @@ public class TestStatePlayer {
         assertEquals(11, squareSet6.size());
 
         pYellow.setFrenzy(false);
-
-
 
         pYellow.doDamage(pBlue.getColor());
 

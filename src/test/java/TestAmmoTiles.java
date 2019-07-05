@@ -9,25 +9,23 @@ import static org.junit.Assert.assertEquals;
 /**
  * This class is a case test for the AmmoTile.
  *
- * @author giovanni
+ * @author gioguidi
  */
+
 
 public class TestAmmoTiles
 {
-    JustAmmo justAmmo1;
-    JustAmmo justAmmo2;
-    JustAmmo justAmmo3;
+    private JustAmmo justAmmo1;
+    private JustAmmo justAmmo2;
+    private JustAmmo justAmmo3;
 
-    PowerAndAmmo powerAndAmmo1;
-    PowerAndAmmo powerAndAmmo2;
-    PowerAndAmmo powerAndAmmo3;
+    private PowerAndAmmo powerAndAmmo1;
+    private PowerAndAmmo powerAndAmmo2;
+    private PowerAndAmmo powerAndAmmo3;
 
-    PowerUpCard teleporter;
+    private PowerUpCard teleporter;
 
     Player player;
-
-
-    //da testare: creazione +  public void useAmmoTilesCards(Player player)  in entrambi i casi
 
 
     @Before
@@ -48,7 +46,6 @@ public class TestAmmoTiles
         player.setAmmoBlue(0);
         player.setAmmoYellow(0);
         player.setAmmoRed(0);
-
 
     }
 

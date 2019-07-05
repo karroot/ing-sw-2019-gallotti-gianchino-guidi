@@ -3,6 +3,7 @@ import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Cyberblade;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Flamethrower;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.Furnace;
 import it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards.WeaponCard;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,25 +11,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * This class is a case test for the SpawnPoint.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 
 public class TestSpawnPoint
 {
-    SpawnPoint spawnPointTest;
+    private SpawnPoint spawnPointTest;
     GameBoard gameboard = new GameBoard(null,null,1,0,null);
     private Cyberblade cyberblade = new Cyberblade(Color.RED, 1, true);
     private Flamethrower flamethrower = new Flamethrower(Color.RED, 2, true);
     private Furnace furnace = new Furnace(Color.RED, 3, true);
     private Stack<WeaponCard> weaponCardStack = new Stack<>();
     private List<WeaponCard> weaponCardList;
+
+
     @Before
     public void setup ()
     {
@@ -66,16 +68,16 @@ public class TestSpawnPoint
             }
         }
 
+        assert square != null;
+
         assertEquals(square.getX(), spawnPointTest.getX());
         assertEquals(square.getY(), spawnPointTest.getY());
         assertEquals(square.getColor(), spawnPointTest.getColor());
-        assertEquals(square.getSide(), spawnPointTest.getSide());
     }
 
     @Test
     public void testDrawWeapon ()
     {
-        //carta tolta + carta restituita effettivamente quella
 
         WeaponCard weaponCard;
 
@@ -89,7 +91,7 @@ public class TestSpawnPoint
 
         weaponCard = spawnPointTest.drawWeapon(cyberblade);
 
-        assertEquals(false, spawnPointTest.getWeaponCardList().contains(cyberblade));
+        assertFalse(spawnPointTest.getWeaponCardList().contains(cyberblade));
         assertEquals(weaponCard, cyberblade);
 
     }
@@ -106,18 +108,17 @@ public class TestSpawnPoint
         spawnPointTest.setWeaponCardList(weaponCardList);
 
 
-
-
-        assertEquals(false, spawnPointTest.getWeaponCardList().contains(cyberblade));
+        assertFalse(spawnPointTest.getWeaponCardList().contains(cyberblade));
         assertTrue(spawnPointTest.getWeaponCardList().contains(flamethrower));
 
         weaponCard = spawnPointTest.swapWeapon(flamethrower,cyberblade);
 
-        assertEquals(weaponCard, flamethrower);
-        assertEquals(false, spawnPointTest.getWeaponCardList().contains(flamethrower));
+        Assert.assertEquals(weaponCard, flamethrower);
+        assertFalse(spawnPointTest.getWeaponCardList().contains(flamethrower));
         assertTrue(spawnPointTest.getWeaponCardList().contains(cyberblade));
 
     }
+
 
     @Test
     public void testAddNewWeapon ()

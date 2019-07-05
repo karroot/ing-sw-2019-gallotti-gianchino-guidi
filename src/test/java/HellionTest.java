@@ -12,18 +12,19 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 /**
- * @author giovanni
+ * @author gioguidi
  */
-public class HellionTest {
+public class HellionTest
+{
 
 
     GameBoard board = new GameBoard(new Stack<>(),new Stack<>(),1,8,new Stack<>());
     Player p1 = new Player(ColorId.YELLOW,"caso","ciao",true);;
-    Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
-    Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
-    Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
-    Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
-    Hellion hellion = new Hellion(Color.RED,0,true);
+    private Player p2 = new Player(ColorId.GREY,"caso","ciao",false);;
+    private Player p3 = new Player(ColorId.GREEN,"caso","ciao",false);;
+    private Player p4 = new Player(ColorId.PURPLE,"caso","ciao",false);;
+    private Player p5 = new Player(ColorId.BLUE,"caso","ciao",false);
+    private Hellion hellion = new Hellion(Color.RED,0,true);
     Square start;
 
 
@@ -45,6 +46,8 @@ public class HellionTest {
         hellion.setPlayer(p1);
 
     }
+
+
     @Test
     public void checkAvailableMode() {
         p2.setSquare(start);
@@ -58,6 +61,7 @@ public class HellionTest {
         assertTrue(hellion.checkAvailableMode()[1]);
 
     }
+
 
     @Test
     public void checkBasicMode() {
@@ -109,9 +113,6 @@ public class HellionTest {
         MethodsWeapons.moveTarget(p4,1,3);
         MethodsWeapons.moveTarget(p5,1,3);
 
-        square1 = p2.getSquare();
-        square2 = p4.getSquare();
-
         playerList1.add(p2);
         playerList1.add(p3);
         playerList2.add(p4);
@@ -124,10 +125,8 @@ public class HellionTest {
         assertEquals(1, p3.checkMarker(p1.getColor()));
 
 
-
-
         hellion.setLoaded(true);
-        hellion.basicMode(p2.getColor()); //si resetta mark??!
+        hellion.basicMode(p2.getColor());
         assertEquals(1, p2.checkMarker(p1.getColor()));
         assertEquals(3, p2.getNumberOfDamagePoint());
 
@@ -135,13 +134,14 @@ public class HellionTest {
     }
 
     @Test
-    public void checkNanoTracerMode() {
+    public void checkNanoTracerMode()
+    {
         checkBasicMode();
     }
 
     @Test
-    public void nanoTracerMode() {
-        Square square1, square2;
+    public void nanoTracerMode()
+    {
 
         List<Player> playerList1 = new ArrayList<>();
         List<Player> playerList2 = new ArrayList<>();
@@ -155,9 +155,6 @@ public class HellionTest {
         MethodsWeapons.moveTarget(p3,3,1);
         MethodsWeapons.moveTarget(p4,1,3);
         MethodsWeapons.moveTarget(p5,1,3);
-
-        square1 = p2.getSquare();
-        square2 = p4.getSquare();
 
         playerList1.add(p2);
         playerList1.add(p3);

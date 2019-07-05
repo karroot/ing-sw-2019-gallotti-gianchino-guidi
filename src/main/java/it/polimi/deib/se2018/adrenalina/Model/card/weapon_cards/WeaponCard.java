@@ -9,7 +9,7 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Weapo
 /**
  * This class implements a weapon.
  *
- * @author giovanni
+ * @author gioguidi
  */
 
 public abstract class WeaponCard extends Card
@@ -49,18 +49,9 @@ public abstract class WeaponCard extends Card
         return color;
     }
 
-    public int getWeaponID() {
-        return weaponID;
-    }
-
     public int getRedAmmoCost()
     {
         return redAmmoCost;
-    }
-
-    public int getYellowAmmoCost()
-    {
-        return yellowAmmoCost;
     }
 
     public int getBlueAmmoCost()
@@ -68,9 +59,18 @@ public abstract class WeaponCard extends Card
         return blueAmmoCost;
     }
 
+    public int getYellowAmmoCost()
+    {
+        return yellowAmmoCost;
+    }
+
     public String getName()
     {
         return name;
+    }
+
+    public int getWeaponID() {
+        return weaponID;
     }
 
     public boolean isLoaded()
