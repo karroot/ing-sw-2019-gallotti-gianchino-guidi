@@ -1,7 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-
+/**
+ * This class implements the response for this weapon.
+ *
+ * @author Karroot
+ */
 public class ResponseTHOR extends ResponseInput {
     private ColorId targetBasicMode;//Target for basic mode
     private ColorId targetAdditionalMode;//target for the alternative mode

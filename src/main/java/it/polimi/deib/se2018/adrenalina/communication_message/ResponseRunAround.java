@@ -1,5 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
-
+/**
+ * This class implements the response for this weapon.
+ *
+ * @author Karroot
+ */
 public class ResponseRunAround extends ResponseInput {
     private int x;
     private int y;

@@ -7,7 +7,11 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * This class represents the request that the controller sends at the client if the player decided
+ * to use the power up TargettingScope
+ * @author Karroot
+ */
 public class RequestTargettingScope  extends RequestInput{
     //Attribute for the request
     protected List<ColorId> playersBasicMode;//Targets for the basic mode

@@ -4,6 +4,11 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
 
+/**
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *  to grab ammo or power and ammo
+ * @author Karroot
+ */
 public class RequestGrabStuff extends RequestInput
 {
     //Attribute for the request

@@ -3,6 +3,7 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 /**
  * This class represents a generic message sent by controller containing a message that the client will print
  * on the terminal
+ * @author Cysko7927
  */
 public class GenericMessage extends MessageNet
 {

@@ -1,5 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
-
+/**
+ * This class implements the response for this grab ammo.
+ *
+ * @author Karroot
+ */
 public class ResponseGrabStuff extends ResponseInput
 {
     private int x;

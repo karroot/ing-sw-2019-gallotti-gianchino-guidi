@@ -1,7 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-
+/**
+ * This class implements the response for this weapon.
+ *
+ * @author Karroot
+ */
 public class ResponseMachineGun extends ResponseInput {
     private ColorId targetBasicMode;//Target for basic mode
     private ColorId targetBasicModeSecond;//second target chosen for the basic mode

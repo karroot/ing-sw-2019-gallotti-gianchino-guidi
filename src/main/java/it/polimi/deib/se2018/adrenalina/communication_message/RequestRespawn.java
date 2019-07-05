@@ -6,7 +6,11 @@ import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
-
+/**
+ * This class represents the request that the conroller sends at the client if the player decided
+ * to respawn
+ * @author Karroot
+ */
 public class RequestRespawn extends  RequestInput
 {
     //Attribute for the request

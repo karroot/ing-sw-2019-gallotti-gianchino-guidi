@@ -1,5 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
-
+/**
+ * This class implements the response for shooting.
+ *
+ * @author Karroot
+ */
 public class ResponseShootPeople extends ResponseInput
 {
     private int chosenWeapon;//Target for basic mode

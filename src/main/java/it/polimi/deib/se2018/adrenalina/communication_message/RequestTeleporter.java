@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
- * This class represents the request that the conrollere sends at the client if the player decided
+ * This class represents the request that the controller sends at the client if the player decided
  * to use the teleporter
+ * @author Cysko7927
  */
 public class RequestTeleporter extends RequestInput
 {

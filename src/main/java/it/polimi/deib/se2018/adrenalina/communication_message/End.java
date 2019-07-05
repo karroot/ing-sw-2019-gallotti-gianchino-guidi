@@ -5,6 +5,7 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 /**
  * This class represents an end message and being used by controller to say at the client
  * that there aren't more power up to use
+ * @author Cysko7927
  */
 public class End extends  RequestInput {
     @Override

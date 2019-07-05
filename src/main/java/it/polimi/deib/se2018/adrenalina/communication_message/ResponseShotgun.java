@@ -3,7 +3,9 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 /**
- * @author Cysko7927
+ * This class implements the response for this weapon.
+ *
+ *  @author Cysko7927
  */
 public class ResponseShotgun extends ResponseInput
 {

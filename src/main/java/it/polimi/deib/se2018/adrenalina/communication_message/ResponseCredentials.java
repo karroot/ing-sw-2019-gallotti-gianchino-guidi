@@ -3,9 +3,9 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import java.io.Serializable;
 
 /**
- * @author Cysko7927
  * This class represents the response message that the client will send at the server to say
  * the name and the hero comment of the user that has connected recently
+ * @author Cysko7927
  */
 public class ResponseCredentials extends ResponseInput implements Serializable
 {

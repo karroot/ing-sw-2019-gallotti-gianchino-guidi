@@ -6,7 +6,9 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 import java.util.LinkedList;
 import java.util.List;
 /**
- * @author gabriele
+ *   This class represents the request that the conroller sends at the client if the player decided
+ *   to use the weapon LockRifle
+ * @author Karroot
  */
 public class RequestLockRifle extends WeaponWithOneAdditionalEffects {
     //Attribute for the request

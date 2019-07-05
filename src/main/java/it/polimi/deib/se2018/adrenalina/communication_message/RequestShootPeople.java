@@ -4,7 +4,11 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
-
+/**
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *  to shot enemies
+ * @author Karroot
+ */
 public class RequestShootPeople extends RequestInput
 {
     //Attribute for the request

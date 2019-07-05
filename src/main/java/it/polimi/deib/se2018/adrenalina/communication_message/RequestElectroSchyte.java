@@ -4,7 +4,9 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 
 import java.util.List;
 /**
- * @author gabriele
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *  to use the weapon ElectroSchyte
+ * @author Karroot
  */
 public class RequestElectroSchyte extends WeaponWithModeAlternative {
     //Attribute for the request

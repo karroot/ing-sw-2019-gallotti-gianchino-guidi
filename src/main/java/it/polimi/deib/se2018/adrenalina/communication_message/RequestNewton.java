@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Cysko7927
- * This class represents the request that the conrollere sends at the client if the player decided
+ * This class represents the request that the controller sends at the client if the player decided
  * to use the Newton
+ * @author Cysko7927
  */
 public class RequestNewton extends RequestInput
 {

@@ -1,7 +1,11 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
-
+/**
+ * This class implements the response for this weapon.
+ *
+ * @author Cysko7927
+ */
 public class ResponseNewton extends ResponseInput
 {
     //Attribute for the response

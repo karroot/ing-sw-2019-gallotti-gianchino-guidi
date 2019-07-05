@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * This class represent a copy Immutable of an AmmoTiles generic that coming by model
+ * @author Cysko7927
  */
 public abstract class AmmoTilesImmutable implements Serializable
 {

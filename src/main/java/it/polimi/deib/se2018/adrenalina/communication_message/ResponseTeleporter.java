@@ -1,5 +1,9 @@
 package it.polimi.deib.se2018.adrenalina.communication_message;
-
+/**
+ * This class implements the response for this powerup.
+ *
+ *  @author Cysko7927
+ */
 public class ResponseTeleporter extends ResponseInput
 {
     //Attribute for the response

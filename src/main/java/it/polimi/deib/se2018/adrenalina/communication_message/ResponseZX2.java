@@ -5,7 +5,9 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import java.util.List;
 
 /**
- * @author Cysko7927
+ * This class implements the response for this weapon.
+ *
+ *  @author Cysko7927
  */
 public class ResponseZX2 extends ResponseInput
 {

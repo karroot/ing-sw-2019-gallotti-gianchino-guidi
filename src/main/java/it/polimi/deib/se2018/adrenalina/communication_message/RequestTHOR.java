@@ -5,7 +5,11 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *   to use the weapon Thor
+ * @author Karroot
+ */
 public class RequestTHOR  extends RequestInput{
     //Attribute for the request
     private List<ColorId> playersBasicMode;//target for the basic mode

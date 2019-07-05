@@ -5,7 +5,11 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ *   This class represents the request that the conroller sends at the client if the player decided
+ *   to use the weapon TractatorBeam
+ * @author Karroot
+ */
 public class RequestTractatorBeam extends WeaponWithModeAlternative {
 
     //Attribute for the request

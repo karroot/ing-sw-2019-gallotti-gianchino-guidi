@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *  to use the weapon PlasmaGun
+ * @author Karroot
+ */
 public class RequestPlasmaGun extends  RequestInput
 {
     //Attribute for the request

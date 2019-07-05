@@ -4,7 +4,11 @@ import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
 
 import java.util.List;
-
+/**
+ *  This class represents the request that the conroller sends at the client if the player decided
+ *  to use the weapon Whisper
+ * @author Karroot
+ */
 public class RequestWhisper extends RequestInput  {
 
     //Attribute for the request

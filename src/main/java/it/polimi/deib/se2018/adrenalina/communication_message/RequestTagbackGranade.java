@@ -2,7 +2,11 @@ package it.polimi.deib.se2018.adrenalina.communication_message;
 
 import it.polimi.deib.se2018.adrenalina.Model.ColorId;
 import it.polimi.deib.se2018.adrenalina.View.Terminal;
-
+/**
+ * This class represents the request that the controller sends at the client if the player decided
+ * to use the power up tagBackGrenade
+ * @author Karroot
+ */
 public class RequestTagbackGranade extends RequestInput
 {
     //Attribute for the request
