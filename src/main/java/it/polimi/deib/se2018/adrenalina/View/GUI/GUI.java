@@ -469,7 +469,7 @@ public class GUI implements Terminal
      * @return integer that represents the choice of the user
      */
     @Override
-    public int inputInt(List<Integer> acceptedInt)//todo chiedere a gabriele se va bene così
+    public int inputInt(List<Integer> acceptedInt)
     {
         int choice = boardGUI.getInputChoice();
 

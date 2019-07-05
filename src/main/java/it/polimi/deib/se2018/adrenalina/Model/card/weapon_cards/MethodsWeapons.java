@@ -131,10 +131,14 @@ public class MethodsWeapons {
     }
 
     /**
-     * @param squareList
-     * @return /todo
+     * This method checks if there is at least one player in all the squares I see but not mine.
+     *
+     * @param player is the user of the method
+     * @param squareList are the square to check
+     * @return true if i see at least one player
      */
-    public static boolean areSquareISeeNotMineNotEmpty(Player player, List<Square> squareList) {
+     static boolean areSquareISeeNotMineNotEmpty(Player player, List<Square> squareList)
+     {
         squareList.remove(player.getSquare());
 
         for (Square squareIterate : squareList) {
@@ -144,15 +148,16 @@ public class MethodsWeapons {
 
         return false;
 
-    }
+     }
 
     /**
-     * /todo
+     *  This method checks if there is at least one player at distance 1 from the user.
      *
-     * @param player
-     * @return
+     * @param player is the player that invoke the method
+     * @return true if i see at least a player
      */
-    public static boolean isThereAPlayerAtDistance1(Player player) {
+     static boolean isThereAPlayerAtDistance1(Player player)
+     {
         Set<Square> squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
         squareSet.remove(player.getSquare());
 
@@ -162,13 +167,16 @@ public class MethodsWeapons {
         }
 
         return false;
-    }
+     }
 
     /**
-     * @param player
-     * @return
+     * This method checks all the player at distance 1.
+     *
+     * @param player is the player that invokes the method
+     * @return the list of players at distance 1 the player see
      */
-    public static List<Player> playersAtDistance1(Player player) {
+    static List<Player> playersAtDistance1(Player player)
+    {
         Set<Square> squareSet = player.getSquare().getGameBoard().getArena().squareReachableNoWall(player.getSquare().getX(), player.getSquare().getY(), 1);
         squareSet.remove(player.getSquare());
         List<Player> playerList = new ArrayList<>();
@@ -182,11 +190,15 @@ public class MethodsWeapons {
 
 
     /**
-     * @param squareStart
-     * @param squareTarget
-     * @return
+     * This method check the square in the same direction at distance 2.
+     *
+     * @param squareStart is the square of the player that call the method
+     * @param squareTarget is the square at distance 1 that give the direction
+     *
+     * @return the square at distance 2 in that direction if it exists
      */
-    public static Square squareBehindThis(Square squareStart, Square squareTarget) {
+    static Square squareBehindThis(Square squareStart, Square squareTarget)
+    {
 
         AmmoPoint ammoPointTemp = new AmmoPoint(10, 10, null, null, null);
         Square squareReturn;
@@ -203,7 +215,6 @@ public class MethodsWeapons {
 
         if (squareTarget.getX() == squareStart.getX() + 1 && squareTarget.getY() == squareStart.getY())
         {
-            //isE = true;
 
             if (squareTarget.getSide()[1] == SideType.DOOR || squareTarget.getSide()[1] == SideType.OPEN)
             {
@@ -213,24 +224,26 @@ public class MethodsWeapons {
         }
 
 
-        if (squareTarget.getX() == squareStart.getX() && squareTarget.getY() == squareStart.getY() - 1) {
+        if (squareTarget.getX() == squareStart.getX() && squareTarget.getY() == squareStart.getY() - 1)
+        {
 
-            //isS = true;
             if (squareTarget.getSide()[2] == SideType.DOOR || squareTarget.getSide()[2] == SideType.OPEN) {
                 ammoPointTemp.setX(squareTarget.getX());
                 ammoPointTemp.setY(squareTarget.getY() - 1);
             }
         }
 
-        if (squareTarget.getX() == squareStart.getX() - 1 && squareTarget.getY() == squareStart.getY()) {
-            //isW = true;
+        if (squareTarget.getX() == squareStart.getX() - 1 && squareTarget.getY() == squareStart.getY())
+        {
+
             if (squareTarget.getSide()[3] == SideType.DOOR || squareTarget.getSide()[3] == SideType.OPEN) {
                 ammoPointTemp.setX(squareTarget.getX() - 1);
                 ammoPointTemp.setY(squareTarget.getY());
             }
         }
 
-        if (ammoPointTemp.getX() != 10 && ammoPointTemp.getY() != 10) {
+        if (ammoPointTemp.getX() != 10 && ammoPointTemp.getY() != 10)
+        {
             try {
                 squareReturn = squareStart.getGameBoard().getArena().getSquare(ammoPointTemp.getX(), ammoPointTemp.getY());
                 return squareReturn;
@@ -242,18 +255,28 @@ public class MethodsWeapons {
 
         return null;
 
-        //funzione ricerca square? non devo ritornare QUESTO, devo cercare nel grafo lo square con queste x e queste y e ritornare quello.
-        // getgameboard.getarena.getsquare(x,y)
-        // Se ritorno questo non è linkato a nulla!!
-
     }
 
-    public static void moveTarget(Player player, int x, int y) throws IllegalArgumentException, NullPointerException {
-
+    /**
+     * This method will invoke the right method to move the target.
+     *
+     * @param player is the player to move
+     * @param x coordinate x of the square to move him
+     * @param y coordinate y of the square to move him
+     */
+    public static void moveTarget(Player player, int x, int y)
+    {
         operationToMove(player, x, y);
     }
 
-    public static void operationToMove(Player player, int x, int y) {
+    /**
+     *
+     * @param player
+     * @param x
+     * @param y
+     */
+    public static void operationToMove(Player player, int x, int y)
+    {
         if (player == null)
             throw new NullPointerException("Parametro player o arena nullo");
 

@@ -442,7 +442,7 @@ public class PrivateView extends Observable<ResponseInput> implements Observer<R
         return terminal.selectAction();
     }
 
-    public void startFrenesy(boolean firstPlayerNotPassed) //todo
+    public void startFrenesy(boolean firstPlayerNotPassed)
     {
 
             //#######Player can use a teleporter or a newton###############

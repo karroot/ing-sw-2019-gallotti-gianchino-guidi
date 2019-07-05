@@ -20,7 +20,6 @@ public class Room
     /**
      * The initialization with null is needed to reset it everytime, and return an empty list if there are no player when it is called
      *
-     * @return a list of all the player in a room. Useful for certain weapons.
      */
     public void updatePlayerRoomList ()
     {
