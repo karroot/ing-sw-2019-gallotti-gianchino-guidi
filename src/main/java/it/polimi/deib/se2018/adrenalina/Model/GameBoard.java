@@ -8,8 +8,9 @@ import java.util.*;
 
 
 /**
+ *  It represents the gameboard and performs the available actions that he can do on the elements of gameboard
+ *
  * @author Karroot
- * It represents the gameboard and performs the aviable actions that he can do on the elements of gameboard
  */
 public class GameBoard {
 

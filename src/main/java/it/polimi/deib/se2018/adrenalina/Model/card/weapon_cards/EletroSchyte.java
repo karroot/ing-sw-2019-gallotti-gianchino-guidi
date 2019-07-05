@@ -13,9 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Karroot
  * It represents the card ElectroSchyte
  * it uses two method for the two alternative modality checkBasicMode() and checkReaper()
+ *
+ * @author Karroot
  */
 public class EletroSchyte extends WeaponCard
 {

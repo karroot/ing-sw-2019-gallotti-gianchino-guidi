@@ -6,8 +6,9 @@ import it.polimi.deib.se2018.adrenalina.communication_message.RequestTeleporter;
 
 
 /**
- * @author Cysko7927
  * This class represents the powerUp teleporter
+ *
+ * @author Cysko7927
  */
 public class Teleporter extends PowerUpCard
 {

@@ -15,8 +15,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
  * This class represents the weapon ZX2
+ *
+ * @author Cysko7927
  */
 public class ZX2 extends WeaponCard
 {

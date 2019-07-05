@@ -15,9 +15,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Karroot
+ *
  * It represents the card Thor
  * it uses three method for the three alternative modality checkBasicMode(),checkChainReaction() and checkHighVoltage()
+ *
+ * @author Karroot
  */
 public class THOR extends WeaponCard
 {

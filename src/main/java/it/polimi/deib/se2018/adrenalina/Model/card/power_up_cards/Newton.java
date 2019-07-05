@@ -9,8 +9,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
  * This class represents the powerUp Newton
+ *
+ * @author Cysko7927
  */
 public class Newton extends PowerUpCard
 {

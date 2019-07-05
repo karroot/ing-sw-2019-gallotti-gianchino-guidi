@@ -12,6 +12,11 @@ import java.util.Stack;
 
 import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 
+/**
+ * This class implements the methods for the setup of the gameboard.
+ *
+ * @author gioguidi
+ */
 public class Setup
 {
 

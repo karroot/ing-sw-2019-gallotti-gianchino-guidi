@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author gioguidi and Cysko7927
- *
  * This class implements a point where the player can spawn from
+ *
+ * @author gioguidi and Cysko7927
  */
 public abstract class Square
 {

@@ -15,9 +15,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Karroot
+ *
  * It represents the card Whisper
-* it uses one method to check if the weapon can be used checkBasicMode()
+ * it uses one method to check if the weapon can be used checkBasicMode()
+ *
+ * @author Karroot
  */
 public class Whisper extends WeaponCard
 {

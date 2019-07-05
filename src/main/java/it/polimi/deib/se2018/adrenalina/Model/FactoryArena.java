@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Cysko7927
+ *
  * It is a factory that produces an arena indicated by a code and the corresponding room list
  * The Roomlist is a list that contains all the room in an arena
  * The factory is static then it can be used without instantiate it
@@ -14,6 +14,8 @@ import java.util.List;
  * 1)To use the method getArena to obtain the arena indicating the code and the Gameboard
  * 2)After and only after the method get arena to has been used , to use the method getRooms to obtain the corresponding room list
  * The factory can't be used in other way!!
+ *
+ * @author Cysko7927
  */
 public class FactoryArena
 {

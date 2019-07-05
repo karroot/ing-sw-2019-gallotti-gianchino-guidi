@@ -12,9 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 /**
- * @author Karroot
  * It represents the card LockRifle
  * it uses two method to check if the weapon can be used checkBasicMode() and checkSecondLock()
+ *
+ * @author Karroot
  */
 public class LockRifle extends WeaponCard
 {

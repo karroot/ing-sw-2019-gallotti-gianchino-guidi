@@ -13,8 +13,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
  * This class represents the weapon Railgun
+ *
+ * @author Cysko7927
  */
 public class Railgun extends WeaponCard
 {

@@ -13,9 +13,10 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponsePlasmaGun;
 import java.util.*;
 import java.util.stream.Collectors;
 /**
- * @author Karroot
  * It represents the card PlasmaGun
-* it uses two method to check if the weapon can be used checkAllTarget() and checkPhaseGlide()
+ * it uses two method to check if the weapon can be used checkAllTarget() and checkPhaseGlide()
+ *
+ * @author Karroot
  */
 public class PlasmaGun extends WeaponCard
 {

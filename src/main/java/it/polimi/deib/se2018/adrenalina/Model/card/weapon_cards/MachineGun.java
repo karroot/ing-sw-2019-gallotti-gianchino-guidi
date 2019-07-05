@@ -12,9 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 /**
- * @author Karroot
  * It represents the card MachineGun
  * it uses three method for the three different modality checkBasicMode(),checkFocusShotMode() and checkTurretTripodeMode()
+ *
+ * @author Karroot
  */
 public class MachineGun extends WeaponCard
 {

@@ -4,9 +4,10 @@ import it.polimi.deib.se2018.adrenalina.Model.SideType;
 import it.polimi.deib.se2018.adrenalina.Model.Square;
 
 /**
- * @author Cysko7927
  * Implements the edge of the graph
  * Immutable Class
+ *
+ *  * @author Cysko7927
  */
 public class Edge
 {

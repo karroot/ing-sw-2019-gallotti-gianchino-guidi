@@ -16,8 +16,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
  * This class represents the weapon Shotgun
+ *
+ * @author Cysko7927
  */
 public class Shotgun extends WeaponCard
 {

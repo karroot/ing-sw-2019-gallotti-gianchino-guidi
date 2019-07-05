@@ -3,6 +3,11 @@ package it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards;
 import it.polimi.deib.se2018.adrenalina.Model.Color;
 import it.polimi.deib.se2018.adrenalina.Model.Player;
 
+/**
+ * This class implements the powerUp card Tagback Grenade.
+ *
+ * @author Karroot
+ */
 public class TagbackGranade extends PowerUpCard
 {
 

@@ -3,8 +3,10 @@ package it.polimi.deib.se2018.adrenalina.Model;
 import java.io.Serializable;
 
 /**
- * @author Karroot
  * It represents the structure of Track
+ *
+ * @author Karroot
+ *
  */
 public class Track implements Serializable
 {

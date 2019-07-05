@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 
 
 /**
- * @author Cysko7927
  * This class represents the weapon Cyberblade
+ *
+ * @author Cysko7927
  */
 public class Cyberblade extends WeaponCard
 {

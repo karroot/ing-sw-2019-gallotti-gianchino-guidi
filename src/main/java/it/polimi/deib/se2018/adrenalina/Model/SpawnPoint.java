@@ -6,9 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author gioguidi
- *
  * This class implements a point where the player can spawn from
+ *
+ *
+ * @author gioguidi
  */
 
 public class SpawnPoint extends Square

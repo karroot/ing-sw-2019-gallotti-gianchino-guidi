@@ -13,9 +13,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author Karroot
+ *
  * It represents the card TractatorBeam
  * it uses two method for the two alternative modality checkMoveBasicMode() and checkPunisherMode ()
+ *
+ * @author Karroot
  */
 public class TractorBeam extends WeaponCard
 {

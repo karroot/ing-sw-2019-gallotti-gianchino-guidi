@@ -10,6 +10,11 @@ import java.util.stream.Collectors;
 import static it.polimi.deib.se2018.adrenalina.Model.Color.*;
 
 
+/**
+ * This class implements the powerUp card Targetting Scoppe.
+ *
+ * @author Karroot
+ */
 public class TargettingScope extends PowerUpCard
 {
 

@@ -7,8 +7,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
+ *
  * It represents the player and performs the aviable actions an methods that modify his state
+ *
+ * @author Cysko7927
  */
 public class Player
 {

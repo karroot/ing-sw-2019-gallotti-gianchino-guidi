@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Cysko7927
  * This class represents a generic card
+ *
+ *  * @author Cysko7927
  */
 public abstract class Card
 {

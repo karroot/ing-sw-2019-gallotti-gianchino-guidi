@@ -15,8 +15,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Cysko7927
+ *
  * This class represents the weapon Sledgehammer
+ *
+ * @author Cysko7927
  */
 public class Sledgehammer extends WeaponCard
 {

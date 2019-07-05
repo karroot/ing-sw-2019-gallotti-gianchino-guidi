@@ -6,6 +6,7 @@ import it.polimi.deib.se2018.adrenalina.Model.graph.exceptions.SquareNotInGameBo
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class MethodsWeapons {
     /**
      * Return all players reachable by a square with coordinate x and y that they are at a specified distance

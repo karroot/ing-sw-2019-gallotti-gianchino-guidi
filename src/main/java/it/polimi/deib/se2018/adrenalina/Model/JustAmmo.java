@@ -1,5 +1,12 @@
 package it.polimi.deib.se2018.adrenalina.Model;
 
+
+/**
+ * This class implements the AmmoTile card that provides 3 ammo.
+ *
+ * @author gioguidi
+ */
+
 public class JustAmmo implements AmmoTiles
 {
 
