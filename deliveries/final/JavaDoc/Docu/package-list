@@ -1,0 +1,14 @@
+it.polimi.deib.se2018.adrenalina
+it.polimi.deib.se2018.adrenalina.Controller
+it.polimi.deib.se2018.adrenalina.Model
+it.polimi.deib.se2018.adrenalina.Model.card
+it.polimi.deib.se2018.adrenalina.Model.card.power_up_cards
+it.polimi.deib.se2018.adrenalina.Model.card.weapon_cards
+it.polimi.deib.se2018.adrenalina.Model.graph
+it.polimi.deib.se2018.adrenalina.Model.graph.exceptions
+it.polimi.deib.se2018.adrenalina.View
+it.polimi.deib.se2018.adrenalina.View.GUI
+it.polimi.deib.se2018.adrenalina.View.GUI.square_components
+it.polimi.deib.se2018.adrenalina.communication_message
+it.polimi.deib.se2018.adrenalina.communication_message.message_asking_controller
+it.polimi.deib.se2018.adrenalina.communication_message.update_model

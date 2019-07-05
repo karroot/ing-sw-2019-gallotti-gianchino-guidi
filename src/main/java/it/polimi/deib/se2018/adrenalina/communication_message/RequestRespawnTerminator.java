@@ -22,7 +22,7 @@ public class RequestRespawnTerminator extends  RequestInput {
     /**
      * this method generate the response message fot respawn
      * @return response respawn
-     * @throws IllegalStateException
+     * @throws IllegalStateException if the inputs there weren't taken
      */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
