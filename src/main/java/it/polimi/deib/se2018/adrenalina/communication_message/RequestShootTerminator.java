@@ -15,17 +15,29 @@ public class RequestShootTerminator extends  RequestInput {
 
     //Attribute for the response
     protected ColorId target;
-
+    /**
+     * Ask at the user who want to shot with terminator
+     * @param terminal terminal of the private view to print and ask the inputs
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
 
+    /**
+     * this method set the enemies attribute
+     * @param enemies list of enemies
+     */
     public RequestShootTerminator(List<ColorId> enemies) {
         this.enemies = enemies;
     }
 
+    /**
+     * this method return the response for shoot people terminator
+     * @return response for shoot people terminator
+     * @throws IllegalStateException in input is not take yet
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

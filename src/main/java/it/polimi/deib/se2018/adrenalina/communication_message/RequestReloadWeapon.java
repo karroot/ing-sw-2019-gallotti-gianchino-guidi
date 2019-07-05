@@ -12,17 +12,27 @@ public class RequestReloadWeapon extends RequestInput {
 
     //Attribute for the response
     protected int weaponToReload;//Target chosen for the basic mode
-
+    /**
+     * Ask at the user which weapon he want to reload
+     * @param terminal terminal of the private view to print and ask the inputs
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
-
+    /**
+     * this method is used to set the weapons that can be reload
+     * @param weaponsAvailableToReaload is the weapon that can be reload
+     */
     public RequestReloadWeapon(String weaponsAvailableToReaload) {
         this.weaponsAvailableToReaload = weaponsAvailableToReaload;
     }
-
+    /**
+     * this method return the response for reload
+     * @return response for reload
+     * @throws IllegalStateException if input are not taken yet
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

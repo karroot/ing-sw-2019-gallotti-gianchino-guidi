@@ -9,12 +9,21 @@ import it.polimi.deib.se2018.adrenalina.View.Terminal;
  */
 public class RequestRespawnTerminator extends  RequestInput {
     private int targetSpawnPoint;
+    /**
+     * Ask at the user in which square he wants to move
+     * @param terminal terminal of the private view to print and ask the inputs
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady = true;
     }
 
+    /**
+     * this method generate the response message fot respawn
+     * @return response respawn
+     * @throws IllegalStateException
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         char asw=0;

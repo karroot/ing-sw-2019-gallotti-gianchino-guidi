@@ -20,6 +20,10 @@ public class RequestRunAround extends RequestInput {
         this.squareToChose = squareToChose;
     }
 
+    /**
+     * this method print the coordinates where the player can move himself
+     * @param terminal terminal of the private view to print and ask the inputs
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal)
     { this.terminal=terminal;
@@ -27,6 +31,11 @@ public class RequestRunAround extends RequestInput {
         responseIsReady=true;
     }
 
+    /**
+     * this method return the response for run around
+     * @return response for  run around
+     * @throws IllegalStateException if input are not taken yet
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

@@ -17,20 +17,30 @@ public class RequestShootPeople extends RequestInput
     //Attribute for the response
     protected int weaponCardNameChosen;//Target chosen for the basic mode
 
+    /**
+     * Ask at the user which weapon he want to use
+     * @param terminal  terminal of the private view to print and ask the inputs
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady=true;
     }
 
+    /**
+     *  it set the weapon cards name
+     * @param weaponCardsName name of weapon card
+     */
     public RequestShootPeople(List<String> weaponCardsName) {
         this.weaponCardsName = weaponCardsName;
     }
 
-    public int getSizeWeaponCardsName() {
-        return weaponCardsName.size();
-    }
 
+    /**
+     * Generate the response message for the shoot with all player's choice
+     * @return Response Shoot People
+     * @throws IllegalStateException if the method printAction wasn't called yet
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)
