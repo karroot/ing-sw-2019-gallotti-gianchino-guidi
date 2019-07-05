@@ -289,7 +289,7 @@ public class Setup
     /**
      * This method will replenish the weapons and the ammotiles in the board
      *
-     * @param gameBoard
+     * @param gameBoard is the gameboard of the game
      */
     public void replenishBoard (GameBoard gameBoard)
     {

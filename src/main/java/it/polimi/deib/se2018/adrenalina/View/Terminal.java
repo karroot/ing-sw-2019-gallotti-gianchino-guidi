@@ -7,9 +7,9 @@ import it.polimi.deib.se2018.adrenalina.communication_message.update_model.Updat
 import java.util.List;
 
 /**
- * @author Cysko7927
  * This interface is used to implemets the two different technolgies(GUI or CLI) to aks the input at the user
  * and to show it all the information of the match
+ * @author Cysko7927
  */
 public interface Terminal
 {

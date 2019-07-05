@@ -18,16 +18,29 @@ public class RequestGrabStuff extends RequestInput
     private int x;
     private int y;
 
+    /**
+     * Create the request to send at the client
+     * @param squareAviableToGrab list of all squares that the player can choose
+     */
     public RequestGrabStuff(List<String> squareAviableToGrab) {
         this.squareAviableToGrab = squareAviableToGrab;
     }
 
+    /**
+     * Ask at the user to choose a square where to grab
+     * @param terminal terminal that represents the GUI or CLI
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
         inputBasicMode();
         responseIsReady=true;
     }
 
+    /**
+     * Generate the response Message with the coordinate of the square chosen by user
+     * @return response message
+     * @throws IllegalStateException if the inputs there weren't taken
+     */
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
         if (!responseIsReady)

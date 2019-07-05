@@ -9,6 +9,10 @@ import it.polimi.deib.se2018.adrenalina.communication_message.ResponseInput;
  */
 public class RequestToUseGrenade extends RequestInput
 {
+    /**
+     *
+     * Not used
+     */
     @Override
     public void printActionsAndReceiveInput(Terminal terminal) { this.terminal=terminal;
 
