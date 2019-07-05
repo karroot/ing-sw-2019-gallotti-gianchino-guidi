@@ -120,7 +120,7 @@ public class MachineGun extends WeaponCard
         List<ColorId> playerList = new LinkedList<>();
         for (Player p : player.playerThatSee(player.getSquare().getGameBoard()) )
         {
-            char ssa;
+            char ssa=0;
             if(!p.equals(this.player))
                 playerList.add(p.getColor());
         }
@@ -212,7 +212,7 @@ public class MachineGun extends WeaponCard
     private void checkDoDamageTerminator(ColorId colorPlayerCheck) {
         if(this.player.getSquare().getGameBoard().isTerminatorMode() && colorPlayerCheck.equals(ColorId.PURPLE))
         {
-            char ssa;
+            char ssa=0;
             doDamage(player.getSquare().getGameBoard().getTermi(),1);
 
         }

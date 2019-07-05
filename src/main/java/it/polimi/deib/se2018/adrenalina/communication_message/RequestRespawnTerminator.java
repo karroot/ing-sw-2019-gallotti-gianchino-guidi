@@ -15,7 +15,7 @@ public class RequestRespawnTerminator extends  RequestInput {
 
     @Override
     public ResponseInput generateResponseMessage() throws IllegalStateException {
-        char asw;
+        char asw=0;
         if (!responseIsReady)
             throw new IllegalStateException("Input non ancora presi");
 

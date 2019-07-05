@@ -63,7 +63,7 @@ public class RequestTHOR  extends RequestInput{
         }
         if (availableMethod[1])//Print the possible effects
         {
-            char s;
+            char s=0;
             terminal.addOptionInput("2: modalità base con  "+ nameAdditionalmode);
             acceptedInt.add(1);
         }

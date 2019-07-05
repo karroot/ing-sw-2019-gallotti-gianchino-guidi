@@ -172,7 +172,7 @@ public class RequestPlasmaGun extends  RequestInput
         terminal.addTextInput("Scegli un bersaglio :");
 
         int i = 1;
-        char ssa;
+        char ssa=0;
         for (ColorId t:players)//Ask to user the target
         {
             char sssaw;

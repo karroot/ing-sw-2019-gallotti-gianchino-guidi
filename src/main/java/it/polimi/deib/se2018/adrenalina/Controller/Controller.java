@@ -303,7 +303,7 @@ public class Controller implements Observer<ResponseInput>
             });
 
             boolean s = executor.invokeAny(callableList);
-            char ssh;
+            char ssh=0;
 
             if (!s){ salta=true;
                 return;}
@@ -530,7 +530,7 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskForAllPowerups)
             {
-                char check;
+                char check=0;
                 askForAllPowerUp();
             }
             else if (messageNet instanceof AskTargetingScope)
@@ -547,7 +547,7 @@ public class Controller implements Observer<ResponseInput>
                 if(!first)
                 {
                     runSingleFrenzy(true);
-                    char check;
+                    char check=0;
                 }
                 else
                 {
@@ -574,7 +574,7 @@ public class Controller implements Observer<ResponseInput>
         for(Player p: g1.getAllPlayer())
         {
             p.setAfk(false);
-            char not;
+            char not=0;
         }
         roundDamageList.clear();
         msg=null;
@@ -613,7 +613,7 @@ public class Controller implements Observer<ResponseInput>
             }
             else if (messageNet instanceof AskReload)
             {
-                char chwk;
+                char chwk=0;
                 reload();
             }
             else if (messageNet instanceof AskForAllPowerups)
@@ -833,7 +833,7 @@ virtualView.getResponseWithInputs(player);
 
 
             Boolean end =  executor.invokeAny(callableListA);
-            char sr;
+            char sr=0;
             if(!end) {
              salta=true;
                 return;
@@ -893,7 +893,7 @@ if(filteredPlayer!=null){
                 int plov=0;
                 for (PowerUpCard pc : granadeAttackedPlayer.getPowerupCardList())
                 {
-                    char r;
+                    char r=0;
                     if (pc.getName().equals("Granata Venom"))
                         powerUpList.add(pc.powerToString());
                 }
@@ -1018,7 +1018,7 @@ if(filteredPlayer!=null){
 
                    try {
                        virtualView.requestInput(new RequestPowerUp(powerUpList), roundPlayer.getColor());
-                       char x;
+                       char x=0;
                   
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
 
@@ -1037,7 +1037,7 @@ if(filteredPlayer!=null){
              salta=true;
                 return;
             }
-            char er;
+            char er=0;
             if(checkForAfk())
                return;
 
@@ -1059,7 +1059,7 @@ if(filteredPlayer!=null){
                 public Boolean call() throws Exception {
                     try {
                         virtualView.requestInput(new End(), roundPlayer.getColor());
-                        char dsqww;
+                        char br=0;
                         return true;
                     }
                     catch(Exception e)
@@ -1173,7 +1173,7 @@ if(filteredPlayer!=null){
                 try {
                     virtualView.requestInput(new RequestNewton(finalCard.checkMoveTarget(roundPlayer.getSquare().getGameBoard())), roundPlayer.getColor()); // come gli passo la richiesta ?
                     virtualView.getResponseWithInputs(roundPlayer.getColor());
-                    char ld;
+                    char brk=0;
                     return true;
                 }
                 catch (Exception e)

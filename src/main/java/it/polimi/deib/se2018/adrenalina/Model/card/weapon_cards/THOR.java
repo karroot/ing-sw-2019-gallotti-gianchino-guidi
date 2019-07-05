@@ -138,7 +138,7 @@ public class THOR extends WeaponCard
 
             if(!p.equals(this.player))
                 playerList.add(p.getColor());
-            char sw;
+            char sw=0;
         }
 
 
@@ -196,7 +196,7 @@ public class THOR extends WeaponCard
             {
 
                 doDamage(player.getSquare().getGameBoard().getTermi(),1);
-                char qwssw;
+                char qwssw=0;
             }
             else
                 doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer2)).collect(Collectors.toList()).get(0),1);
@@ -212,7 +212,7 @@ public class THOR extends WeaponCard
         {
 
             doDamage(player.getSquare().getGameBoard().getTermi(),2);
-            char sdw;
+            char sdw=0;
         }
         else
             doDamage(player.getSquare().getGameBoard().getAllPlayer().stream().filter(player1 -> player1.getColor().equals(colorPlayer1)).collect(Collectors.toList()).get(0),2);
