@@ -1,5 +1,15 @@
 # Adrenaline
 
+## The project
+Implementation in Java of a version of the game with the full set of rules and the terminator mode. The game can be played by different players on the same computer, or on a different computers connected on the same LAN. The project has been implemented with the Model-Controller-View design pattern.
+
+This version supports also the disconnection and reconnection of the players, in case of crash of one of the players.
+
+## The game
+In the future, war has left the world in complete destruction and split the people into factions. The factions have decided to stop the endless war and settle their dispute in the arena. A new virtual bloodsport was created. The Adrenaline tournament. Every faction has a champion, every champion has a chance to fight and the chance to win. Will you take the chance of becoming the next champion of the Adrenaline tournament?
+
+Play a first-person shooter on your gaming table. Grab some ammo, grab a gun, and start shooting. Build up an arsenal for a killer turn. Combat resolution is quick and diceless. And if you get shot, you get faster!
+
 ## To start the application follow the order below:
 1) Launch the server
 2) Launch clients (one per player)
