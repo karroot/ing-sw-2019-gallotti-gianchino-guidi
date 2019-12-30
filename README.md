@@ -1,10 +1,10 @@
 # Adrenaline
 
-To start the application follow the order below:
+## To start the application follow the order below:
 1) Launch the server
 2) Launch clients (one per player)
 
-How to set up clients:
+## How to set up clients:
 1) Insert in the window that opens the name and the effect phrase of the player
 2) Enter the local IPv4 address of the server
 3) Enter the port number (The server opens the TCP port on port 5000)
@@ -13,7 +13,7 @@ How to set up clients:
 
 Note: if by chance, due to network problems, a disconnection occurs during the game you must restart the client and re-enter the same name and effect phrase used to connect at the beginning of the game otherwise the server will refuse the connection
 
-Server parameters:
+##### Server parameters:
 The parameters must be entered from terminal after writing the jar file:
 
 java -jar Server.jar timer terminator numberTexes codeArena
@@ -31,7 +31,7 @@ terminator = false
 numbersTexes = 5
 codeArena = 4
 
-Client parameters:
+##### Client parameters:
 The parameters must be entered from terminal after writing the jar file:
 
 java -jar Client.jar timerAFK
