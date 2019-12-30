@@ -1,42 +1,39 @@
-# ing-sw-2019-gallotti-gianchino-guidi
-Per avviare l'applicazione:
-1)Avviare prima il server
-2)Poi avviare i client(uno per giocatore)
+# Adrenaline
 
-Impostare Il client:
-Appena si avvia il client si apre una finestra dove vengono richieste alcune informazioni
-1)Inserire il nome e la frase d'effetto del player
+To start the application follow the order below:
+1) Launch the server
+2) Launch clients (one per player)
 
-Nota:Se per caso per problemi di rete si ha una disconessione durante la partita bisogna riavviare il client e reinserire lo
-stesso nome e frase d'effetto usata per collegarsi all'inzio della partita altrimenti il server rifiuta la connessione
-2)Inserire l'indirizzo ipv4 locale del server
-3)inserire il numero di porta(Il server apre la porta TCP sulla porta 5000)
-4)Selezionare Gui se si vuole l'interfaccia grafica come modalità di visualizazzione(Se non si seleziona si avvia la CLI)
-5)Selezionare RMI o Socket per la comunicazione
+How to set up clients:
+1) Insert in the window that opens the name and the effect phrase of the player
+2) Enter the local IPv4 address of the server
+3) Enter the port number (The server opens the TCP port on port 5000)
+4) Select "GUI" if you want the GUI as interface mode, otherwise, if you do not select anything, the CLI will be selected automatically
+5) Select RMI or Socket for communication between client and server
 
--Parametri server:
-i parametri vanno inseriti da terminale dopo aver scritto il file jar così:
+Note: if by chance, due to network problems, a disconnection occurs during the game you must restart the client and re-enter the same name and effect phrase used to connect at the beginning of the game otherwise the server will refuse the connection
 
-java -jar Server.jar timer terminator numeroTeschi codiceArena
+Server parameters:
+The parameters must be entered from terminal after writing the jar file:
 
-timer : durata del timeout in secondi prima d'iniziare la partita che inizia quando si raggiungono i tre giocatori connessi
-terminator : può essere solo "true" o "false" e indica se si vuole il terminator o no
-numeroTeschi : indicare il numero di teschi da mettere nel tracciato dell'arena(5-8)
-codiceArena : setta che arena usare per la partita (1-4)
+java -jar Server.jar timer terminator numberTexes codeArena
 
-Nota:se si sbagliano i valori di alcuni parametri vengono inseriti quelli di default
+The editable parameters are as follows:
+- timer: timeout duration in seconds before starting the game. The game will start automatically once the three players are connected.
+- Terminator: Indicates whether you want to play with Terminator mode or not. It can only be "true" or "false".
+- numberTexes: indicate the number of skulls to put in the arena track(5-8)
+- codeArena: indicate which arena to use for the match (1-4)
+
+Note: If the values of some parameters are wrong, the default values are entered:
 
 timer = 10
 terminator = false
-numeroteschi = 5
-codearena = 4
+numbersTexes = 5
+codeArena = 4
 
--Parametri client:
-Vanno passati da terminale dopo aver scritto il file jar
+Client parameters:
+The parameters must be entered from terminal after writing the jar file:
 
 java -jar Client.jar timerAFK
 
-timerAFK : durate in milisecondi del timer che fa saltare il turno al player nel caso non faccia nessun input
-	   in quel tempo inserito
-
-Nota:Sono state implementate le regole complete
+timerAFK: indicate the duration in milliseconds of the timer that makes the player skip the turn in case it does not make any input in the entered time.
