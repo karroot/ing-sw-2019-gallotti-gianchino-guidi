@@ -1,7 +1,7 @@
 # Adrenaline
 
 ## The project
-We developed a software version, written in Java, of the board game Adrenalina. The main requirement was the implementation of a distributed system consisting of a single server able to manage one game at a time and multiple clients (one per player) that could participate in only one game at a time. The entire system was designed using the MVC (Model-View-Controller) design pattern.
+We developed a software version, written in Java, of the board game Adrenaline. The main requirement was the implementation of a distributed system consisting of a single server able to manage one game at a time and multiple clients (one per player) that could participate in only one game at a time. The entire system was designed using the MVC (Model-View-Controller) design pattern.
 
 We implemented a version that supports the full set of rules and the Terminator Mode.
 
