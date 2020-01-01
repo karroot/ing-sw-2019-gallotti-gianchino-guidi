@@ -1,7 +1,9 @@
 # Adrenaline
 
 ## The project
-Implementation in Java of a version of the game with the full set of rules and the terminator mode. The game can be played by different players on the same computer, or on a different computers connected on the same LAN. The project has been implemented with the Model-Controller-View design pattern.
+We developed a software version, written in Java, of the board game Adrenalina. The main requirement was the implementation of a distributed system consisting of a single server able to manage one game at a time and multiple clients (one per player) that could participate in only one game at a time. The entire system was designed using the MVC (Model-View-Controller) design pattern.
+
+We implemented a version that supports the full set of rules and the Terminator Mode.
 
 This version supports also the disconnection and reconnection of the players, in case of crash of one of the players.
 
